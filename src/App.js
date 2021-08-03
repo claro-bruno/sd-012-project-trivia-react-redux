@@ -4,14 +4,13 @@ import Login from './pages/Login';
 import './App.css';
 
 class App extends React.Component {
-  render(){
+  render() {
     return (
       <Switch>
-        <Route exact path="/" component={ Login }/>
+        <Route exact path="/" component={ Login } />
       </Switch>
-      );
+    );
   }
-  
 }
 
 export default App;

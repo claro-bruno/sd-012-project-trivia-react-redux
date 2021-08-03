@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { actionUserInfo } from '../redux/actions';
 
 class Login extends React.Component {
@@ -14,8 +15,9 @@ class Login extends React.Component {
       notValid: true,
       email: '',
       name: '',
-    }
+    };
   }
+
   handleOnChange({ target }) {
     const { name, value } = target;
     this.setState({ [name]: value }, () => this.validatingEmailandName());
@@ -35,7 +37,7 @@ class Login extends React.Component {
 
   render() {
     const { name, email, notValid } = this.state;
-    return(
+    return (
       <div>
         <label htmlFor="email-input">
           Email
@@ -61,9 +63,10 @@ class Login extends React.Component {
         </label>
         <div className="button-container">
           <button
-          disabled={ notValid }
-          data-testid="btn-play"
-          onClick={ this.handleOnClick }
+            disabled={ notValid }
+            type="button"
+            data-testid="btn-play"
+            onClick={ this.handleOnClick }
           >
             Jogar!
           </button>
@@ -74,7 +77,11 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  changingInfo: ( name, value) => dispatch(actionUserInfo( name, value )),
+  changingInfo: (name, value) => dispatch(actionUserInfo(name, value)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  changingInfo: PropTypes.func.isRequired,
+};

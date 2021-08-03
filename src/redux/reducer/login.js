@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 const loginReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case USER_INFO:
-    return { ...state, name: action.name, email: action.email }
+    return { ...state, name: action.name, email: action.email };
   default:
     return state;
   }
