@@ -59,4 +59,7 @@ class Login extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  myFirstDispatch: (state) => dispatch(newAction(state))});
+
 export default Login;
