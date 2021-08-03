@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 import logo from '../trivia.png';
 import * as fetchAPI from '../helpers/fetchAPI';
 
@@ -7,10 +8,12 @@ class Login extends React.Component {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
+    this.config = this.config.bind(this);
 
     this.state = {
       name: '',
       email: '',
+      redirect: false,
     };
   }
 
@@ -21,8 +24,18 @@ class Login extends React.Component {
     });
   }
 
+  config() {
+    this.setState({
+      redirect: true,
+    });
+  }
+
   render() {
-    const { name, email } = this.state;
+    const { name, email, redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/config/" />;
+    }
+
     return (
       <div className="App">
         <header className="App-header">
@@ -52,6 +65,13 @@ class Login extends React.Component {
             disabled={ name.length === 0 || email.length === 0 }
           >
             Jogar
+          </button>
+          <button
+            type="button"
+            data-testid="btn-settings"
+            onClick={ () => this.config() }
+          >
+            Configurações
           </button>
         </header>
       </div>
