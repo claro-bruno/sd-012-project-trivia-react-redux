@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import LoginForm from '../components/loginForm';
+import LoginForm from '../components/LoginForm';
 import logo from '../trivia.png';
 
 class LoginPage extends Component {
