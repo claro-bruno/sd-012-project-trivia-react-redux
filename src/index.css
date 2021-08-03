@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap');
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +12,19 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.main-header {
+  background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(14,174,87,1) 0%, rgba(12,116,117,1) 90% );
+  display: flex;
+  flex-flow: row wrap;
+  height: 80px;
+  justify-content: space-between;
+  padding: 10px;
+  padding-left: 20px;
+}
+
+.logo {
+  font-family: 'Love Ya Like A Sister', cursive;
+  font-size: 60px;
 }
