@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Nome from '../components/Nome';
 import { fetchQuestions } from '../actions';
+import Email from '../components/Email';
 
 class Login extends React.Component {
   constructor(props) {
@@ -46,26 +48,8 @@ class Login extends React.Component {
     return (
       <div className="inputs">
         <form className="forms">
-          <label htmlFor="name-input" className="label-input">
-            Nome:
-            <input
-              data-testid="input-player-name"
-              id="name-input"
-              name="name"
-              type="text"
-              onChange={ this.handleChange }
-            />
-          </label>
-          <label htmlFor="email-input" className="label-input">
-            E-mail:
-            <input
-              data-testid="input-gravatar-email"
-              id="email-input"
-              type="email"
-              name="email"
-              onChange={ this.handleChange }
-            />
-          </label>
+          <Nome onChange={ this.handleChange } />
+          <Email onChange={ this.handleChange } />
           <div className="btn">
             <button
               className="btn2"
@@ -81,6 +65,16 @@ class Login extends React.Component {
                 to="/trivia"
               >
                 Jogar
+              </Link>
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              data-testid="btn-settings"
+            >
+              <Link to="/settings">
+                Settings
               </Link>
             </button>
           </div>
