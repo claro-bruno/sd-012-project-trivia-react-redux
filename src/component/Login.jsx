@@ -21,6 +21,10 @@ class Login extends React.Component {
     });
   }
 
+  handleClick() {
+    fetchAPI.getToken();
+  }
+
   render() {
     const { name, email } = this.state;
     return (
@@ -46,7 +50,7 @@ class Login extends React.Component {
             />
           </div>
           <button
-            onClick={ fetchAPI.getToken }
+            onClick={ this.handleClick }
             type="button"
             data-testid="btn-play"
             disabled={ name.length === 0 || email.length === 0 }
