@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import addPlayerInfo from '../redux/actions';
-// import { Redirect } from 'react-router-dom';
+// import { getApiToken } from '../services/triviaApi';
 
 class Login extends React.Component {
   constructor() {
@@ -12,9 +13,11 @@ class Login extends React.Component {
       name: '',
       emailIsValid: false,
       nameIsValid: false,
+      shouldRedirect: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRedirect = this.handleRedirect.bind(this);
   }
 
   emailChecker(value) {
@@ -39,6 +42,13 @@ class Login extends React.Component {
     });
   }
 
+  async handleRedirect() {
+    const fetchAPI = await fetch('https://opentdb.com/api_token.php?command=request');
+    const { token } = await fetchAPI.json();
+    localStorage.setItem('token', token);
+    this.setState({ shouldRedirect: true });
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     const { login } = this.props;
@@ -50,9 +60,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { email, name, emailIsValid, nameIsValid } = this.state;
-
-    // if (shouldRedirect) return <Redirect to="/carteira" />;
+    const { email, name, emailIsValid, nameIsValid, shouldRedirect } = this.state;
 
     return (
       <form onSubmit={ this.handleSubmit }>
@@ -78,9 +86,11 @@ class Login extends React.Component {
           type="submit"
           data-testid="btn-play"
           disabled={ !(emailIsValid && nameIsValid) }
+          onClick={ this.handleRedirect }
         >
           Jogar
         </button>
+        { shouldRedirect && <Redirect to="/game" /> }
       </form>
     );
   }
