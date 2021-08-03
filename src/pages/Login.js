@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class Login extends React.Component {
   constructor() {
@@ -13,6 +14,7 @@ class Login extends React.Component {
 
     this.validation = this.validation.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   validation() {
@@ -33,6 +35,11 @@ class Login extends React.Component {
     this.setState({
       [target.id]: target.value,
     }, () => this.validation());
+  }
+
+  handleLogin() {
+    const { history } = this.props;
+    history.push('/game');
   }
 
   render() {
@@ -63,6 +70,7 @@ class Login extends React.Component {
           data-testid="btn-play"
           type="button"
           disabled={ buttonDisabled }
+          onClick={ this.handleLogin }
         >
           Jogar!
         </button>
@@ -71,5 +79,11 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default Login;
