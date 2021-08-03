@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { fetchToken } from '../redux/actions';
-import logo from '../trivia.png';
 import SettingsButton from '../components/SettingsButton';
 
 class Login extends React.Component {
@@ -40,13 +39,8 @@ class Login extends React.Component {
 
   render() {
     const { email, name, disable } = this.state;
-    const { userInfo } = this.props;
-    console.log(userInfo.token);
     return (
       <div>
-        <header>
-          <img src={ logo } alt="logo" />
-        </header>
         <form>
           <label htmlFor="input-player-name">
             Nome:
@@ -70,14 +64,6 @@ class Login extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
-          <button
-            data-testid="btn-play"
-            type="button"
-            disabled={ disable }
-          >
-            Jogar
-          </button>
-
           <SettingsButton />
           <Link to="/game">
             <button
