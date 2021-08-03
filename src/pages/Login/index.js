@@ -9,13 +9,19 @@ class Login extends Component {
       name: '',
       email: '',
       redirect: false,
+      redirectConfig: false,
     };
-    this.handlerChange = this.handlerChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleRedirect = this.handleRedirect.bind(this);
+    this.handleRedirectConfig = this.handleRedirectConfig.bind(this);
   }
 
-  handlerChange({ target: { name, value } }) {
+  handleChange({ target: { name, value } }) {
     this.setState({ [name]: value });
+  }
+
+  handleRedirectConfig() {
+    this.setState({ redirectConfig: true });
   }
 
   isValid(name, email) {
@@ -31,7 +37,7 @@ class Login extends Component {
   }
 
   render() {
-    const { name, email, redirect } = this.state;
+    const { name, email, redirect, redirectConfig } = this.state;
     return (
       <div className="App">
         <header>
@@ -40,22 +46,20 @@ class Login extends Component {
         </header>
         <main>
           <form>
-
             <input
               type="text"
               placeholder="nome"
               name="name"
               value={ name }
-              onChange={ this.handlerChange }
+              onChange={ this.handleChange }
               data-testid="input-player-name"
             />
-
             <input
               type="text"
               placeholder="email"
               name="email"
               value={ email }
-              onChange={ this.handlerChange }
+              onChange={ this.handleChange }
               data-testid="input-gravatar-email"
             />
             <button
@@ -67,6 +71,14 @@ class Login extends Component {
               Jogar
             </button>
             { redirect && <Redirect to="/game" /> }
+            <button
+              type="button"
+              data-testid="btn-settings"
+              onClick={ this.handleRedirectConfig }
+            >
+              Configurar
+            </button>
+            { redirectConfig && <Redirect to="/config" /> }
           </form>
         </main>
       </div>
