@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import logo from '../../trivia.png';
 
 class Login extends Component {
@@ -7,8 +8,10 @@ class Login extends Component {
     this.state = {
       name: '',
       email: '',
+      redirect: false,
     };
     this.handlerChange = this.handlerChange.bind(this);
+    this.handleRedirect = this.handleRedirect.bind(this);
   }
 
   handlerChange({ target: { name, value } }) {
@@ -20,8 +23,15 @@ class Login extends Component {
     return false;
   }
 
+  async handleRedirect() {
+    const fetchAPI = await fetch('https://opentdb.com/api_token.php?command=request');
+    const { token } = await fetchAPI.json();
+    localStorage.setItem('token', token);
+    this.setState({ redirect: true });
+  }
+
   render() {
-    const { name, email } = this.state;
+    const { name, email, redirect } = this.state;
     return (
       <div className="App">
         <header>
@@ -51,10 +61,12 @@ class Login extends Component {
             <button
               type="button"
               data-testid="btn-play"
+              onClick={ this.handleRedirect }
               disabled={ this.isValid(name, email) }
             >
               Jogar
             </button>
+            { redirect && <Redirect to="/game" /> }
           </form>
         </main>
       </div>
