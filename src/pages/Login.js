@@ -1,8 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
-// import { emailAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -22,6 +19,13 @@ class Login extends React.Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  async tokenRequire() {
+    const fetchAPI = await fetch('https://opentdb.com/api_token.php?command=request');
+    const response = await fetchAPI.json();
+    const { token } = response;
+    localStorage.setItem('token', JSON.stringify(token));
   }
 
   inputsValidation() {
@@ -60,7 +64,7 @@ class Login extends React.Component {
             disabled={ this.inputsValidation() }
             data-testid="btn-play"
             type="button"
-            onClick={ this.activeButton }
+            onClick={ this.tokenRequire }
           >
             JOGAR
           </button>
@@ -69,13 +73,4 @@ class Login extends React.Component {
   }
 }
 
-// Login.propTypes = {
-//   emailValue: PropTypes.func.isRequired,
-// };
-
-// const mapDispatchToProps = (dispatch) => ({
-//   emailValue: (value) => dispatch(emailAction(value)),
-// });
-
-// export default connect(null, mapDispatchToProps)(Login);
 export default Login;
