@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import addPlayerInfo from '../redux/actions';
 // import { Redirect } from 'react-router-dom';
-import { getApiToken, getApiQuestions } from '../services/triviaApi';
 
 class Login extends React.Component {
   constructor() {

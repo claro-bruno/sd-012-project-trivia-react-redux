@@ -5,13 +5,13 @@ export const getApiToken = () => {
     .then((response) => response.token)
     .catch((err) => err);
   return token;
-}
+};
 
 export const getApiQuestions = (token) => {
   const endpoint = `https://opentdb.com/api.php?amount=5&token=${token}`;
   const questions = fetch(endpoint)
-  .then((data) => data.json())
-  .then((response) => response.results)
-  .catch((err) => err);
+    .then((data) => data.json())
+    .then((response) => response.results)
+    .catch((err) => err);
   return questions;
-}
+};
