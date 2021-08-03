@@ -1,8 +1,5 @@
 import React from 'react';
-
-// Eu usei aqui um token fixo pq o requisito que guarda ele no local storage ainda nao ta pronto.
-const tokenTeste = '8ec695d52adb27ab3452474cc5f69a74473720a24f890ca8649aad7ff485af31';
-const apiRequest = `https://opentdb.com/api.php?amount=5&token=${tokenTeste}`;
+import getUserInfo from '../services/api';
 
 class Game extends React.Component {
   constructor() {
@@ -31,6 +28,13 @@ class Game extends React.Component {
   }
 
   async fetchApi() {
+    let tokenTeste = localStorage.getItem('token');
+    if (!tokenTeste) {
+      const userInfo = await getUserInfo();
+      localStorage.setItem('token', userInfo.token);
+      tokenTeste = localStorage.getItem('token');
+    }
+    const apiRequest = `https://opentdb.com/api.php?amount=5&token=${tokenTeste}`;
     const res = await fetch(apiRequest);
     const data = await res.json();
     this.setState({

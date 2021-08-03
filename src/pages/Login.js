@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import getUserInfo from '../services/api';
 
 class Login extends React.Component {
   constructor() {
@@ -37,7 +38,9 @@ class Login extends React.Component {
     }, () => this.validation());
   }
 
-  handleLogin() {
+  async handleLogin() {
+    const userInfo = await getUserInfo();
+    localStorage.setItem('token', userInfo.token);
     const { history } = this.props;
     history.push('/game');
   }
