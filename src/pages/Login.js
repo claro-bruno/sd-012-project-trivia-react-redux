@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchToken } from '../actions';
+import { fetchQuestions } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -15,6 +15,8 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.btnCondition = this.btnCondition.bind(this);
+    this.fetchToken = this.fetchToken.bind(this);
+    this.fetchQuestions = this.fetchQuestions.bind(this);
   }
 
   handleChange({ target }) {
@@ -28,10 +30,21 @@ class Login extends React.Component {
     return !(name !== '' && email !== '');
   }
 
-  render() {
-    const { getToken } = this.props;
-    return (
+  async fetchToken() {
+    const response = await fetch('https://opentdb.com/api_token.php?command=request');
+    const { token } = await response.json();
+    localStorage.setItem('token', token);
+  }
 
+  fetchQuestions() {
+    const { questions, getQuestions } = this.props;
+    const storage = localStorage.getItem('token');
+    getQuestions(storage);
+    console.log(questions);
+  }
+
+  render() {
+    return (
       <div className="inputs">
         <form className="forms">
           <label htmlFor="name-input" className="label-input">
@@ -63,7 +76,8 @@ class Login extends React.Component {
             >
               <Link
                 onClick={ () => {
-                  getToken();
+                  this.fetchToken();
+                  this.fetchQuestions();
                 } }
                 to="/trivia"
               >
@@ -79,18 +93,21 @@ class Login extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    token: state.trivia.token,
+    questions: state.trivia.questions,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getToken: () => dispatch(fetchToken()),
+    getQuestions: (token) => dispatch(fetchQuestions(token)),
   };
 }
 
 Login.propTypes = {
-  getToken: PropTypes.func.isRequired,
+  questions: PropTypes.arrayOf(
+    PropTypes.object.isRequired,
+  ).isRequired,
+  getQuestions: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
