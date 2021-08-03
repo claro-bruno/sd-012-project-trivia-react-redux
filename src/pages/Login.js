@@ -8,28 +8,33 @@ class Login extends React.Component {
 
     this.handleOnChange = this.handleOnChange.bind(this);
     this.validatingEmailandName = this.validatingEmailandName.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
 
     this.state = {
       notValid: true,
+      email: '',
+      name: '',
     }
   }
   handleOnChange({ target }) {
     const { name, value } = target;
-    const { onChangeInfo } = this.props;
-    onChangeInfo(name, value);
-    this.validatingEmailandName();
+    this.setState({ [name]: value }, () => this.validatingEmailandName());
   }
 
   validatingEmailandName() {
-    const { name, email } = this.props;
-    console.log(name, email)
+    const { name, email } = this.state;
     if (name && email) this.setState({ notValid: false });
     else this.setState({ notValid: true });
   }
 
+  handleOnClick() {
+    const { name, email } = this.state;
+    const { changingInfo } = this.props;
+    changingInfo(name, email);
+  }
+
   render() {
-    const { name, email } = this.props;
-    const { notValid } = this.state;
+    const { name, email, notValid } = this.state;
     return(
       <div>
         <label htmlFor="email-input">
@@ -40,7 +45,7 @@ class Login extends React.Component {
             name="email"
             value={ email }
             onChange={ this.handleOnChange }
-            data-testid="input-player-email"
+            data-testid="input-gravatar-email"
           />
         </label>
         <label htmlFor="name-input">
@@ -55,20 +60,21 @@ class Login extends React.Component {
           />
         </label>
         <div className="button-container">
-          <button disabled={ notValid } data-testid="btn-play">Jogar!</button>
+          <button
+          disabled={ notValid }
+          data-testid="btn-play"
+          onClick={ this.handleOnClick }
+          >
+            Jogar!
+          </button>
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  name: state.loginReducer.name,
-  email: state.loginReducer.email,
-});
-
 const mapDispatchToProps = (dispatch) => ({
-  onChangeInfo: ( name, value) => dispatch(actionUserInfo( name, value )),
+  changingInfo: ( name, value) => dispatch(actionUserInfo( name, value )),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);
