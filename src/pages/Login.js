@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../trivia.png';
+import SettingsButton from '../components/SettingsButton';
 
 class Login extends React.Component {
   constructor(props) {
@@ -63,6 +64,8 @@ class Login extends React.Component {
           >
             Jogar
           </button>
+
+          <SettingsButton />
         </form>
       </div>
     );
