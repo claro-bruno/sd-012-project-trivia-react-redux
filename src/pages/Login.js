@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import fetchToken from '../services/fetchToken';
@@ -70,5 +71,9 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.objectOf(string).isRequired,
+};
 
 export default Login;
