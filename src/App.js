@@ -10,6 +10,7 @@ export default function App() {
         <p>
           SUA VEZ
         </p>
+        <p>13 de sorte</p>
       </header>
     </div>
   );
