@@ -1,7 +1,7 @@
 import { USER_INFO } from '../actions';
 
 const INITIAL_STATE = {
-  nome: '',
+  name: '',
   email: '',
 };
 
