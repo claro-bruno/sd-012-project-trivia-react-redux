@@ -23,14 +23,14 @@ const mapStateToProps = (state) => ({
   profilePicture: state.user.profilePicture,
   name: state.user.name,
   score: state.trivia.score,
-  email: state.user.email,
+  // email: state.user.email,
 });
 
 Header.propTypes = {
   profilePicture: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
-  email: PropTypes.string.isRequired,
+  // email: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);
