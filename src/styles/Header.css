@@ -1,11 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@500&display=swap');
-
 .standard-header {
-  display: flex;
-  background-color: rgb(55, 37, 73);
-  justify-content: space-between;
   align-items: center;
+  background-color: rgb(55, 37, 73);
   box-shadow: 2px 1px 3px 1px rgb(44, 122, 167);
+  display: flex;
+  justify-content: space-between;
   padding-bottom: 10px;
 }
 
@@ -16,8 +14,8 @@
 }
 
 .player-info {
-  display: flex;
   align-items: center;
+  display: flex;
 }
 
 .player-info img {
@@ -25,10 +23,11 @@
 }
 
 .jogador-span {
-  margin: 16px;
-  font-family: 'Maven Pro', sans-serif;
-  font-size: larger;
   color: aliceblue;
+
+  /* font-family: 'Maven Pro', sans-serif; */
+  font-size: larger;
+  margin: 16px;
 }
 
 .player-name {
@@ -36,9 +35,10 @@
 }
 
 .player-score {
-  font-family: 'Maven Pro', sans-serif;
-  font-size: larger;
   color: aliceblue;
+
+  /* font-family: 'Maven Pro', sans-serif; */
+  font-size: larger;
 }
 
 .player-score-number {
