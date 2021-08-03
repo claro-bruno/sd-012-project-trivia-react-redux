@@ -9,7 +9,7 @@ class Login extends React.Component {
     this.state = {
       name: '',
       email: '',
-    }
+    };
   }
 
   handleChange({ target }) {
@@ -27,26 +27,30 @@ class Login extends React.Component {
           <img src={ logo } className="App-logo" alt="logo" />
         </header>
         <form>
-          <label htmlFor="name">Nome:</label>
-          <input
-            type="text"
-            id="name"
-            data-testid="input-player-name"
-            value={ name }
-            onChange={ this.handleChange }
-          />
-          <label htmlFor="email">E-mail:</label>
-          <input
-            type="email"
-            id="email"
-            data-testid="input-gravatar-email"
-            value={ email }
-            onChange={ this.handleChange }
-          />
+          <label htmlFor="name">
+            Nome:
+            <input
+              type="text"
+              id="name"
+              data-testid="input-player-name"
+              value={ name }
+              onChange={ this.handleChange }
+            />
+          </label>
+          <label htmlFor="email">
+            E-mail:
+            <input
+              type="email"
+              id="email"
+              data-testid="input-gravatar-email"
+              value={ email }
+              onChange={ this.handleChange }
+            />
+          </label>
           <button type="button" data-testid="btn-play">Jogar</button>
         </form>
       </main>
-    )
+    );
   }
 }
 

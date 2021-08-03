@@ -8,6 +8,6 @@ export default class App extends React.Component {
       <Switch>
         <Route path="/" component={ Login } />
       </Switch>
-    )
+    );
   }
 }
