@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { fetchToken } from '../redux/actions';
+import { fetchToken, actionUserInfo } from '../redux/actions';
 import SettingsButton from '../components/SettingsButton';
 
 class Login extends React.Component {
@@ -39,6 +39,7 @@ class Login extends React.Component {
 
   render() {
     const { email, name, disable } = this.state;
+    const { userNameEmail } = this.props;
     return (
       <div>
         <form>
@@ -65,7 +66,7 @@ class Login extends React.Component {
             />
           </label>
           <SettingsButton />
-          <Link to="/game">
+          <Link to="/game" onClick={ () => userNameEmail({ name, email }) }>
             <button
               data-testid="btn-play"
               type="button"
@@ -83,6 +84,7 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   getDataFromApi: (data) => dispatch(fetchToken(data)),
+  userNameEmail: (info) => dispatch(actionUserInfo(info)),
 });
 
 const mapStateToProps = (state) => ({
@@ -92,6 +94,7 @@ const mapStateToProps = (state) => ({
 Login.propTypes = {
   getDataFromApi: PropTypes.func.isRequired,
   userInfo: PropTypes.objectOf(PropTypes.object).isRequired,
+  userNameEmail: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

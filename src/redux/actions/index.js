@@ -25,3 +25,6 @@ export const fetchToken = () => (dispatch) => {
     })
     .catch((error) => dispatch(requestTokenError(error)));
 };
+
+export const USERINFOS = 'USERINFOS';
+export const actionUserInfo = (user) => ({ type: USERINFOS, user });
