@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../trivia.png';
+import * as fetchAPI from '../helpers/fetchAPI';
 
 class Login extends React.Component {
   constructor(props) {
@@ -45,6 +46,7 @@ class Login extends React.Component {
             />
           </div>
           <button
+            onClick={ fetchAPI.getToken }
             type="button"
             data-testid="btn-play"
             disabled={ name.length === 0 || email.length === 0 }
