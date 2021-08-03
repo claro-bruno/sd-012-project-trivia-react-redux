@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-// import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
 
 class LoginForm extends Component {
   constructor() {
@@ -12,6 +12,7 @@ class LoginForm extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleLoginInfo = this.handleLoginInfo.bind(this);
+    this.handleTokenThing = this.handleTokenThing.bind(this);
   }
 
   handleLoginInfo() {
@@ -24,6 +25,12 @@ class LoginForm extends Component {
     this.setState({ [name]: value });
   }
 
+  handleTokenThing() {
+    fetch('https://opentdb.com/api_token.php?command=request')
+      .then((response) => response.json())
+      .then((data) => localStorage.setItem('token', data.token));
+  }
+
   render() {
     const { email, name } = this.state;
     return (
@@ -32,7 +39,7 @@ class LoginForm extends Component {
           type="email"
           placeholder="Email"
           name="email"
-          data-testod="input-gravatar-email"
+          data-testid="input-gravatar-email"
           onChange={ this.handleChange }
           value={ email }
         />
@@ -49,6 +56,7 @@ class LoginForm extends Component {
             type="button"
             data-testid="btn-play"
             disabled={ !this.handleLoginInfo() }
+            onClick={ () => this.handleTokenThing() }
           >
             Play
           </button>
@@ -57,9 +65,5 @@ class LoginForm extends Component {
     );
   }
 }
-
-// const mapDispatchToProps = (dispatch) => {
-
-// };
 
 export default LoginForm;
