@@ -1,4 +1,4 @@
-import requestTrivia from '../../services';
+import { requestTrivia } from '../../services';
 
 const REQUEST_TRIVIA = 'REQUEST_TRIVIA';
 const REQUEST_ERROR = 'REQUEST_ERROR';
