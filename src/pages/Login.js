@@ -22,7 +22,7 @@ class Login extends React.Component {
     // valida email e name
     const emailFormat = /^[a-z0-9_.-]+@[a-z]+\.[a-z]{2,3}(?:\.[a-z]{2})?$/;
     if (id === 'email') {
-      if(emailFormat.test(value)) {
+      if (emailFormat.test(value)) {
         this.setState({
           emailCheck: true,
         });
@@ -33,7 +33,7 @@ class Login extends React.Component {
       }
     }
     if (id === 'name') {
-      if(value !== '') {
+      if (value !== '') {
         this.setState({
           nameCheck: true,
         });
