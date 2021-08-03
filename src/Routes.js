@@ -7,7 +7,7 @@ function Routes() {
   return (
     <Switch>
       <Route exact path="/"><Login /></Route>
-      <Route><Config/></Route>
+      <Route><Config /></Route>
     </Switch>
   );
 }

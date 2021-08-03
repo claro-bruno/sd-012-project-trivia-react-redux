@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
 import logo from '../trivia.png';
 
 class Login extends React.Component {
@@ -25,16 +25,16 @@ class Login extends React.Component {
 
   config() {
     this.setState({
-      redirect: true
-    })
+      redirect: true,
+    });
   }
 
   render() {
-    const { name, email } = this.state;
-    if(this.state.redirect) {
-      return <Redirect to="/config/" />
+    const { name, email, redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/config/" />;
     }
-    else {
+
     return (
       <div className="App">
         <header className="App-header">
@@ -67,7 +67,7 @@ class Login extends React.Component {
           <button
             type="button"
             data-testid="btn-settings"
-            onClick={() => this.config()}
+            onClick={ () => this.config() }
           >
             Configurações
           </button>
@@ -75,7 +75,6 @@ class Login extends React.Component {
       </div>
     );
   }
-}
 }
 
 export default Login;
