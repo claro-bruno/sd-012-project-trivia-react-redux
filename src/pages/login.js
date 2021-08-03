@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 class Login extends Component {
   constructor(props) {
@@ -7,12 +7,12 @@ class Login extends Component {
     this.state = {
       name: '',
       email: '',
-    }
-    
+    };
+
     this.handleChange = this.handleChange.bind(this);
     this.btnCondition = this.btnCondition.bind(this);
   }
-  
+
   handleChange({ target }) {
     this.setState({
       [target.name]: target.value,
@@ -21,12 +21,13 @@ class Login extends Component {
 
   btnCondition() {
     const { name, email } = this.state;
-    return (name == '' && email == '');
+    return (name === '' && email === '');
   }
+
   render() {
-    return(
+    return (
       <div className="inputs">
-        <form className="forms"> 
+        <form className="forms">
           <label htmlFor="name-input" className="label-input">
             Nome:
             <input
@@ -34,7 +35,7 @@ class Login extends Component {
               id="name-input"
               name="name"
               type="text"
-              onChange={this.handleChange}
+              onChange={ this.handleChange }
             />
           </label>
           <label htmlFor="email-input" className="label-input">
@@ -44,7 +45,7 @@ class Login extends Component {
               id="email-input"
               type="email"
               name="email"
-              onChange={this.handleChange}
+              onChange={ this.handleChange }
             />
           </label>
           <div className="btn">
@@ -52,17 +53,16 @@ class Login extends Component {
               className="btn2"
               data-testid="btn-play"
               type="button"
-              disabled={this.btnCondition()}
+              disabled={ this.btnCondition() }
             >
               Jogar
             </button>
 
           </div>
-        </form> 
+        </form>
       </div>
-    )    
+    );
   }
-
 }
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(null, mapDispatchToProps)(Login);
