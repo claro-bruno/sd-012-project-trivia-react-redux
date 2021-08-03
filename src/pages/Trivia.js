@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Trivia extends Component {
-  constructor() {
-    super();
-    this.state = {
-      currentQuestion: 0,
-    };
-  }
-
   render() {
     return (
       <div>
