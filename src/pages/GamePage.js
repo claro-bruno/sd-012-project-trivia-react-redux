@@ -6,6 +6,7 @@ class GamePage extends Component {
     return (
       <body>
         <HeaderPlayer />
+        Jogo
       </body>
     );
   }
