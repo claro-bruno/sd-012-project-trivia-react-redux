@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import logo from '../trivia.png';
 import Input from '../components/Input';
 import ADD_NEW_PLAYER from '../redux/action';
@@ -12,9 +13,11 @@ class Login extends Component {
     this.state = {
       name: '',
       email: '',
+      config: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   onclick(newUser) {
@@ -28,6 +31,10 @@ class Login extends Component {
     });
   }
 
+  handleClick() {
+    this.setState({ config: true });
+  }
+
   buttonDisable() {
     const { email, name } = this.state;
     if (email.length > 0 && name.length > 0) return false;
@@ -36,6 +43,10 @@ class Login extends Component {
 
   render() {
     const { newUser } = this.props;
+    const { config } = this.state;
+    if (config) {
+      return <Redirect to="/config" />;
+    }
     return (
       <div className="App">
         <header className="App-header">
@@ -67,6 +78,13 @@ class Login extends Component {
               Jogar
             </button>
           </p>
+          <button
+            type="button"
+            data-testid="btn-settings"
+            onClick={ this.handleClick }
+          >
+            Configurações
+          </button>
         </header>
       </div>
     );
