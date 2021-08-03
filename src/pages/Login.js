@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../trivia.png';
 
 class Login extends Component {
   constructor() {
@@ -38,6 +39,9 @@ class Login extends Component {
     const { disableBtn, nameInput } = this.state;
     return (
       <section>
+        <header className="App-header">
+          <img src={ logo } className="App-logo" alt="logo" />
+        </header>
         <label htmlFor="name-input">
           Nome
           <input
