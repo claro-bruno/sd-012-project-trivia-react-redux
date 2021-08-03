@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { saveLogin } from '../redux/actions';
+import { saveLogin, fetchTrivia } from '../redux/actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.verifyButton = this.verifyButton.bind(this);
     this.submit = this.submit.bind(this);
+    this.saveToken = this.saveToken.bind(this);
   }
 
   async handleChange({ target }) {
@@ -36,10 +37,17 @@ class Login extends React.Component {
     });
   }
 
-  submit() {
+  async submit() {
     const { playerName, email } = this.state;
-    const { setLogin } = this.props;
+    const { setLogin, setToken } = this.props;
     setLogin(playerName, email);
+    await setToken();
+    this.saveToken();
+  }
+
+  saveToken() {
+    const { token } = this.props;
+    localStorage.setItem('token', JSON.stringify(token));
   }
 
   render() {
@@ -74,7 +82,7 @@ class Login extends React.Component {
               disabled={ disabled }
               data-testid="btn-play"
             >
-              Entrar
+              Jogar
             </button>
           </form>
         </div>
@@ -83,11 +91,16 @@ class Login extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  setLogin: (name, email) => dispatch(saveLogin(name, email)),
+const mapStateToProps = (state) => ({
+  token: state.login.token,
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapDispatchToProps = (dispatch) => ({
+  setLogin: (name, email) => dispatch(saveLogin(name, email)),
+  setToken: () => dispatch(fetchTrivia()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   setLogin: PropTypes.func,
