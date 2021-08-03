@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import logo from '../trivia.png';
 import Input from '../components/Input';
+import { Redirect } from "react-router-dom";
 
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       name: '',
       email: '',
+      game: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -20,6 +22,14 @@ class Login extends Component {
       [name]: value,
     });
   }
+  
+  handlePlay() {
+    const { game } = this.state;
+    this.setState((state) => ({
+      ...state,
+      game = true,
+    }))
+  }
 
   buttonDisable() {
     const { email, name } = this.state;
@@ -28,6 +38,10 @@ class Login extends Component {
   }
 
   render() {
+    const { game } = this.state;
+    if(game) {
+      return <Redirect to="/game" />
+    }
     return (
       <div className="App">
         <header className="App-header">
@@ -40,7 +54,6 @@ class Login extends Component {
               type="text"
               testid="input-player-name"
               onChange={ this.handleChange }
-
             />
             <Input
               id="email"
