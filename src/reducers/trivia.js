@@ -9,7 +9,7 @@ function trivia(state = INITIAL_STATE, action) {
   case GET_QUESTIONS_SUCCESS:
     return { ...state, questions: [...action.payload] };
   default:
-    return state;
+    return { ...state };
   }
 }
 

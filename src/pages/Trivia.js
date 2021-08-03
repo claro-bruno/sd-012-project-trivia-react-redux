@@ -1,13 +1,27 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Trivia extends Component {
+  constructor() {
+    super();
+    this.state = {
+      currentQuestion: 0,
+    };
+  }
+
   render() {
     return (
       <div>
-        Trivia
+        <span>Trivia</span>
       </div>
     );
   }
 }
 
-export default Trivia;
+function mapStateToProps(state) {
+  return {
+    questions: state.trivia.questions,
+  };
+}
+
+export default connect(mapStateToProps)(Trivia);
