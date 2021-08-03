@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import getInfo from '../services/api';
 
 export default class Login extends Component {
   constructor() {
@@ -11,6 +13,12 @@ export default class Login extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.getLogin = this.getLogin.bind(this);
+  }
+
+  async getLogin() {
+    const login = await getInfo();
+    return login;
   }
 
   handleChange({ target }) {
@@ -48,16 +56,22 @@ export default class Login extends Component {
             value={ email }
             onChange={ this.handleChange }
           />
-          {validateEmail && userName.length >= minLength && disabled
-            ? (
-              <button data-testid="btn-play" type="submit">
-                Jogar
-              </button>
-            ) : (
-              <button data-testid="btn-play" disabled type="submit">
-                Jogar
-              </button>
-            )}
+          <Link to="/game">
+            {validateEmail && userName.length >= minLength && disabled
+              ? (
+                <button
+                  data-testid="btn-play"
+                  type="button"
+                  onClick={ () => this.getLogin() }
+                >
+                  Jogar
+                </button>
+              ) : (
+                <button data-testid="btn-play" disabled type="button">
+                  Jogar
+                </button>
+              )}
+          </Link>
         </form>
       </div>
     );
