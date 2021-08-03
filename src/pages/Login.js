@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { Link } from 'react-router-dom';
 
 class Login extends PureComponent {
   constructor() {
@@ -10,10 +11,28 @@ class Login extends PureComponent {
     };
 
     this.handleInput = this.handleInput.bind(this);
+    this.settingsButton = this.settingsButton.bind(this);
   }
 
   componentDidUpdate() {
     this.handleButton();
+  }
+
+  settingsButton() {
+    return (
+      <div>
+        <Link
+          to="/settings"
+        >
+          <button
+            data-testid="btn-settings"
+            type="button"
+          >
+            Configurações
+          </button>
+        </Link>
+      </div>
+    );
   }
 
   handleInput({ target }) {
@@ -74,6 +93,8 @@ class Login extends PureComponent {
         >
           Jogar
         </button>
+
+        { this.settingsButton() }
       </div>
     );
   }
