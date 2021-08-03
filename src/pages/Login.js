@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import getUserInfo from '../services/api';
 
 class Login extends React.Component {
   constructor() {
@@ -12,6 +14,7 @@ class Login extends React.Component {
 
     this.validation = this.validation.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   validation() {
@@ -32,6 +35,11 @@ class Login extends React.Component {
     this.setState({
       [target.id]: target.value,
     }, () => this.validation());
+  }
+
+  async handleClick() {
+    const userInfo = await getUserInfo();
+    localStorage.setItem('token', userInfo.token);
   }
 
   render() {
@@ -58,13 +66,17 @@ class Login extends React.Component {
             type="email"
           />
         </label>
-        <button
-          data-testid="btn-play"
-          type="button"
-          disabled={ buttonDisabled }
-        >
-          Jogar!
-        </button>
+        <Link to="/trivia">
+          <button
+            data-testid="btn-play"
+            type="button"
+            disabled={ buttonDisabled }
+            onClick={ this.handleClick }
+          >
+            Jogar!
+          </button>
+        </Link>
+        <Link data-testid="btn-settings" to="/settings">Configurações</Link>
       </div>
     );
   }
