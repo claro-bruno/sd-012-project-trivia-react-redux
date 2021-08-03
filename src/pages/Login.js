@@ -1,4 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { fetchToken } from '../redux/actions';
 import logo from '../trivia.png';
 import SettingsButton from '../components/SettingsButton';
 
@@ -13,6 +17,13 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.validateLogin = this.validateLogin.bind(this);
+    this.getToken = this.getToken.bind(this);
+  }
+
+  getToken() {
+    const { getDataFromApi, userInfo } = this.props;
+    getDataFromApi();
+    window.localStorage.setItem('token', userInfo.token);
   }
 
   handleChange({ target: { name, value } }) {
@@ -29,6 +40,8 @@ class Login extends React.Component {
 
   render() {
     const { email, name, disable } = this.state;
+    const { userInfo } = this.props;
+    console.log(userInfo.token);
     return (
       <div>
         <header>
@@ -66,10 +79,33 @@ class Login extends React.Component {
           </button>
 
           <SettingsButton />
+          <Link to="/game">
+            <button
+              data-testid="btn-play"
+              type="button"
+              disabled={ disable }
+              onClick={ () => this.getToken() }
+            >
+              Jogar
+            </button>
+          </Link>
         </form>
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  getDataFromApi: (data) => dispatch(fetchToken(data)),
+});
+
+const mapStateToProps = (state) => ({
+  userInfo: state.userReducer.info,
+});
+
+Login.propTypes = {
+  getDataFromApi: PropTypes.func.isRequired,
+  userInfo: PropTypes.objectOf(PropTypes.object).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
