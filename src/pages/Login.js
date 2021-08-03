@@ -7,14 +7,16 @@ class Login extends React.Component {
     this.state = {
       name: '',
       email: '',
-      isDisable: true,
+      isDisable: false,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.validateInput = this.validateInput.bind(this);
   }
 
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({ [name]: value });
+    this.validateInput();
   }
 
   validateInput() {
@@ -23,9 +25,9 @@ class Login extends React.Component {
 
     if (validateEmail.test(email) && name.length !== 0) {
       this.setState({
-        isDisable: false,
+        isDisable: true,
       });
-      return true;
+      return false;
     }
   }
 
@@ -43,7 +45,6 @@ class Login extends React.Component {
               id="name"
               name="name"
               type="text"
-              required
               onChange={ this.handleChange }
             />
           </label>
@@ -55,14 +56,13 @@ class Login extends React.Component {
               id="email"
               name="email"
               type="email"
-              required
               onChange={ this.handleChange }
             />
           </label>
           <Link to="/game">
             <button
-              disable={ isDisable }
-              type="submit"
+              disabled={ !isDisable }
+              type="button"
               data-testid="btn-play"
             >
               Jogar
