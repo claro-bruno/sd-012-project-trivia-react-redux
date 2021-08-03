@@ -41,7 +41,7 @@ const BUTTON_PLAY_AGAIN_SELECTOR = '[data-testid="btn-play-again"]';
 
 // login
 
-describe.only('1 - [TELA DE LOGIN] Crie a tela de login, onde a pessoa que joga deve preencher as informações para iniciar um jogo', () => {
+describe('1 - [TELA DE LOGIN] Crie a tela de login, onde a pessoa que joga deve preencher as informações para iniciar um jogo', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
   });
@@ -111,7 +111,7 @@ describe('3 - [TELA DE LOGIN] Crie um botão na tela inicial que leve para a tel
 
 // game
 
-describe.only('4 - [TELA DE JOGO] Crie um _header_ que deve conter as informações da pessoa jogadora', () => {
+describe('4 - [TELA DE JOGO] Crie um _header_ que deve conter as informações da pessoa jogadora', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     cy.clearLocalStorage();
