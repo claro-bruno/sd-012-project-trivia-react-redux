@@ -1,0 +1,9 @@
+.standard-header {
+  display: flex;
+  background-color: rgb(206, 193, 193);
+  justify-content: space-between;
+}
+
+.standard-header div {
+  margin: 15px 40px;
+}
