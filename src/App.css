@@ -22,9 +22,9 @@
   }
 }
 
-.front-page{
-  align-self: center;
+.front-page {
   align-items: center;
+  align-self: center;
   background-color: #282c34;
   color: white;
   display: flex;
