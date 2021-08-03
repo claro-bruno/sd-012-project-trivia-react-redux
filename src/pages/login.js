@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import { connect } from 'react-redux';
 
 class Login extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class Login extends Component {
 
   btnCondition() {
     const { name, email } = this.state;
-    return (name === '' && email === '');
+    return !(name !== '' && email !== '');
   }
 
   render() {
@@ -65,4 +66,4 @@ class Login extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;
