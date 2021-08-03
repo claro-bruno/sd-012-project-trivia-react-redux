@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import logo from '../trivia.png';
 import Input from '../components/Input';
+import ADD_NEW_PLAYER from '../redux/action';
 
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       name: '',
@@ -12,6 +15,10 @@ class Login extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  onclick(newUser) {
+    newUser(this.state);
   }
 
   handleChange({ target }) {
@@ -28,6 +35,7 @@ class Login extends Component {
   }
 
   render() {
+    const { newUser } = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -40,7 +48,7 @@ class Login extends Component {
               type="text"
               testid="input-player-name"
               onChange={ this.handleChange }
-
+              placeholder="Nome do jogador"
             />
             <Input
               id="email"
@@ -48,11 +56,13 @@ class Login extends Component {
               type="email"
               testid="input-gravatar-email"
               onChange={ this.handleChange }
+              placeholder="Email"
             />
             <button
               type="button"
               data-testid="btn-play"
               disabled={ this.buttonDisable() }
+              onClick={ this.onclick(newUser) }
             >
               Jogar
             </button>
@@ -63,4 +73,12 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  newUser: (value) => dispatch(ADD_NEW_PLAYER(value)),
+});
+
+Login.propTypes = {
+  newUser: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
