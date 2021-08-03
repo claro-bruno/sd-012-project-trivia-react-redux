@@ -3,11 +3,11 @@ const INITIAL_STATE = {
   email: '',
 };
 
-const myReducer = (state = INITIAL_STATE, action) => {
+const user = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   default:
     return state;
   }
 };
 
-export default myReducer;
+export default user;
