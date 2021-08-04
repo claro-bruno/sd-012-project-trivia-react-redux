@@ -6,7 +6,7 @@ class Trivia extends React.Component {
     super(props);
 
     this.changeStyles = this.changeStyles.bind(this);
-  } 
+  }
 
   // Algoritmo de embaralhamento de Fisher–Yates, retirado de https://pt.stackoverflow.com/questions/406037/mostrar-elementos-de-um-array-em-ordem-aleat%C3%B3ria
   shuffle(array) {
@@ -20,14 +20,13 @@ class Trivia extends React.Component {
   changeStyles() {
     const buttons = document.querySelectorAll('button');
 
-    buttons.forEach(({ value, style}) => {
-      if (value === "wrong") {
+    buttons.forEach(({ value, style }) => {
+      if (value === 'wrong') {
         style.border = '3px solid rgb(255, 0, 0)';
-      }
-      else {
+      } else {
         style.border = '3px solid rgb(6, 240, 15)';
       }
-    })
+    });
   }
 
   createButtons(wrongList, answer) {
@@ -36,7 +35,7 @@ class Trivia extends React.Component {
         key={ index }
         data-testid={ `wrong-answer-${index}` }
         type="button"
-        value= "wrong"
+        value="wrong"
         onClick={ this.changeStyles }
       >
         {wrong}
@@ -48,7 +47,7 @@ class Trivia extends React.Component {
         data-testid="correct-answer"
         type="button"
         value="correct"
-        onClick={ this.changeStyles}
+        onClick={ this.changeStyles }
       >
         {answer}
       </button>
