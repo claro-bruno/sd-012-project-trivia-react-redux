@@ -8,7 +8,7 @@ export function getQuestionsSuccess(questions) {
 
 export const fetchQuestions = (token) => async (dispatch) => {
   dispatch(getQuestions());
-  const responseToken = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
-  const { results } = await responseToken.json();
+  const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
+  const { results } = await response.json();
   dispatch(getQuestionsSuccess(results));
 };
