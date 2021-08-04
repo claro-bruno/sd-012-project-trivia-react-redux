@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import GameQuestions from '../components/GameQuestions';
 import HeaderPlayer from '../components/HeaderPlayer';
+import Timer from '../components/Timer';
 
 class GamePage extends Component {
   constructor() {
@@ -46,16 +47,10 @@ class GamePage extends Component {
   render() {
     const { questions, counter, loading, answered } = this.state;
 
-  sendNextQuestion() {
-    this.setState((prevstate) => ({ counter: prevstate.counter + 1 }));
-
-  }
-
-  render() {
-    const { questions, counter, loading, time } = this.state;
     return (
       <main>
         <HeaderPlayer />
+        <Timer />
         {loading
           ? 'Loading'
           : (
@@ -63,8 +58,6 @@ class GamePage extends Component {
               onAnswer={ this.questionAnswered }
               answered={ answered }
               nextQuestion={ this.sendNextQuestion }
-              questionObj={ questions[counter] }
-              nextQuestion={ this.nextQuestion }
               questionObj={ questions[counter] }
             />
           )}
