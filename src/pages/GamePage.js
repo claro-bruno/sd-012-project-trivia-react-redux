@@ -46,6 +46,13 @@ class GamePage extends Component {
   render() {
     const { questions, counter, loading, answered } = this.state;
 
+  sendNextQuestion() {
+    this.setState((prevstate) => ({ counter: prevstate.counter + 1 }));
+
+  }
+
+  render() {
+    const { questions, counter, loading, time } = this.state;
     return (
       <main>
         <HeaderPlayer />
@@ -56,6 +63,8 @@ class GamePage extends Component {
               onAnswer={ this.questionAnswered }
               answered={ answered }
               nextQuestion={ this.sendNextQuestion }
+              questionObj={ questions[counter] }
+              nextQuestion={ this.nextQuestion }
               questionObj={ questions[counter] }
             />
           )}

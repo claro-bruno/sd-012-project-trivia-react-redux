@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 class GameQuestions extends Component {
   constructor() {
     super();
+
+    this.state = {
+      answered: false,
+    };
     this.changeColor = this.changeColor.bind(this);
   }
 
@@ -33,16 +37,21 @@ class GameQuestions extends Component {
     });
     onAnswer();
   }
-  // oi
 
   render() {
     const { questionObj, nextQuestion, answered } = this.props;
+    this.setState({ answered: true });
+  }
+
+  render() {
+    const { questionObj, time } = this.props;
     const
       { category,
         question,
         correct_answer: correctAnswer,
         incorrect_answers: incorrectAnswers,
       } = questionObj;
+    const { answered } = this.state;
     return (
       <div>
         <h2 data-testid="question-category">{category}</h2>
@@ -52,6 +61,7 @@ class GameQuestions extends Component {
             .map(({ answer, id }) => (
               <button
                 type="button"
+                disabled={ time <= 0 }
                 data-testid={ id }
                 key={ id }
                 id={ id }
@@ -71,6 +81,7 @@ class GameQuestions extends Component {
             Próximo
           </button>
         )}
+        { answered && <button type="button" data-testid="btn-next">Próximo</button>}
       </div>
     );
   }
@@ -81,6 +92,7 @@ GameQuestions.propTypes = {
   nextQuestion: PropTypes.func.isRequired,
   onAnswer: PropTypes.func.isRequired,
   answered: PropTypes.bool.isRequired,
+  time: PropTypes.number.isRequired,
 };
 
 export default GameQuestions;
