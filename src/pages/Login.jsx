@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getLogin, getAPI } from '../redux/action/index';
 import logo from '../trivia.png';
+import Timer from '../components/Timer';
 
 const regEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/i;
 const nameSize = 3;
@@ -35,6 +36,7 @@ class Login extends Component {
     const { email, name } = this.state;
     return (
       <div className="App">
+        <Timer />
         <header className="App-header">
           <img src={ logo } className="App-logo" alt="logo" />
           <p>
