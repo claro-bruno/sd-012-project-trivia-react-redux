@@ -1,8 +1,11 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import md5 from 'crypto-js/md5';
 import UserInputs from '../components/UserInputs';
 import GenericBtn from '../components/GenericBtn';
-import logo from '../trivia.png';
+import { playerInfo } from '../redux/actions';
+import { requestToken } from '../services';
 
 class Login extends React.Component {
   constructor() {
@@ -12,13 +15,13 @@ class Login extends React.Component {
       username: '',
       email: '',
       disabled: true,
-      redirect: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.checkLogin = this.checkLogin.bind(this);
     this.validation = this.validation.bind(this);
+    this.gameOn = this.gameOn.bind(this);
   }
 
   handleChange({ target }) {
@@ -28,10 +31,13 @@ class Login extends React.Component {
     }, this.checkLogin);
   }
 
-  handleClick() {
-    this.setState({
-      redirect: true,
-    });
+  handleClick({ target }) {
+    const { history } = this.props;
+    const { name } = target;
+    if (name === 'game') {
+      this.gameOn();
+    }
+    history.push(`/${name}`);
   }
 
   validation() {
@@ -45,8 +51,24 @@ class Login extends React.Component {
     });
   }
 
+  async gameOn() {
+    const { username, email } = this.state;
+    const { play } = this.props;
+    const token = await requestToken();
+    const hash = md5(email).toString();
+    console.log(hash);
+    const avatar = `https://www.gravatar.com/avatar/${hash}`;
+    const user = {
+      name: username,
+      email,
+      avatar,
+    };
+    localStorage.setItem('token', token);
+    play(user);
+  }
+
   render() {
-    const { disabled, redirect } = this.state;
+    const { disabled } = this.state;
 
     const userInputProps = {
       id: 'input-player-name',
@@ -66,8 +88,16 @@ class Login extends React.Component {
 
     const loginBtnProps = {
       id: 'btn-play',
+      name: 'game',
       value: 'Jogar',
       disabled,
+      onClick: this.handleClick,
+    };
+
+    const settingsBtnProps = {
+      id: 'btn-settings',
+      name: 'settings',
+      value: 'Configurações',
       onClick: this.handleClick,
     };
 
@@ -76,16 +106,23 @@ class Login extends React.Component {
         <header className="main-header">
           <h1 className="logo">BRAINTEST</h1>
         </header>
-        <img src={ logo } className="App-logo" alt="logo" />
         <div>
           <UserInputs { ...userInputProps } />
           <UserInputs { ...emailInputProps } />
           <GenericBtn { ...loginBtnProps } />
-          {redirect && <Redirect to="/game" />}
+          <GenericBtn { ...settingsBtnProps } />
         </div>
       </div>
     );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  history: PropTypes.func,
+}.isRequired;
+
+const mapDispatchToProps = (dispatch) => ({
+  play: (user) => dispatch(playerInfo(user)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
