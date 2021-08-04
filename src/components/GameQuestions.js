@@ -2,15 +2,34 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class GameQuestions extends Component {
+  constructor() {
+    super();
+    this.changeColor = this.changeColor.bind(this);
+  }
+
   generateAnswers(correct, incorrect) {
     return [
       {
         answer: correct,
         id: 'correct-answer',
       },
-      ...incorrect.map((item, index) => ({ answer: item, id: `wrong-answer-${index}` })),
+      ...incorrect.map((item, index) => ({
+        answer: item, id: `wrong-answer-${index}`,
+      })),
     ].sort((a, b) => a.answer.localeCompare(b.answer));
     // https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value
+  }
+
+  changeColor() {
+    const btns = document.querySelectorAll('button');
+    console.log(btns);
+    btns.forEach((element) => {
+      if ((element.id) === 'correct-answer') {
+        element.classList.add('correct-btn');
+      } else {
+        element.classList.add('wrong-btn');
+      }
+    });
   }
 
   render() {
@@ -29,7 +48,15 @@ class GameQuestions extends Component {
         {
           this.generateAnswers(correctAnswer, incorrectAnswers)
             .map(({ answer, id }) => (
-              <button type="button" data-testid={ id } key={ id }>{answer}</button>
+              <button
+                type="button"
+                data-testid={ id }
+                key={ id }
+                id={ id }
+                onClick={ this.changeColor }
+              >
+                {answer}
+              </button>
             ))
         }
       </div>
