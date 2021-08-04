@@ -10,17 +10,25 @@ class Question extends Component {
         correct_answer: correctAnswer,
         incorrect_answers: incorrectAnswers,
       },
-    } = this.props
-    const sortedAnswers = [...incorrectAnswers,correctAnswer].sort();
+    } = this.props;
+    const sortedAnswers = [...incorrectAnswers, correctAnswer].sort();
     return (
       <>
         <h2 data-testid="question-category">{category}</h2>
         <p data-testid="question-text">{ question }</p>
-        { sortedAnswers.map((answer) => {
+        { sortedAnswers.map((answer, index) => {
           const dataTestId = answer === correctAnswer
             ? 'correct-answer'
             : `wrong-answer-${incorrectAnswers.indexOf(answer)}`;
-          return (<button data-testid={dataTestId}>{answer}</button>);
+          return (
+            <button
+              type="button"
+              key={ index }
+              data-testid={ dataTestId }
+            >
+              {answer}
+            </button>
+          );
         })}
       </>
     );
@@ -35,7 +43,7 @@ Question.propTypes = {
     question: PropTypes.string,
     correct_answer: PropTypes.string,
     incorrect_answers: PropTypes.arrayOf(PropTypes.string),
-  }),
+  }).isRequired,
 };
 
 export default Question;

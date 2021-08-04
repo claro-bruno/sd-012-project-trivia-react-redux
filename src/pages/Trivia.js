@@ -9,33 +9,30 @@ class Trivia extends Component {
       questions: [],
       questionNumber: 0,
       loading: true,
-    }
+    };
     this.setQuestions = this.setQuestions.bind(this);
+  }
+
+  async componentDidMount() {
+    const data = await fetchTrivia();
+    const questions = data.results;
+    this.setQuestions(questions);
   }
 
   setQuestions(questions) {
     this.setState({ questions, loading: false });
   }
 
-  async componentDidMount() {
-    const data = await fetchTrivia('5918261f2d6fc70c64c978ff9d93cf6d907ad70a6d3121bf01f8147eebe75314');
-    const questions = data.results;
-    this.setQuestions(questions);
-  }
-
   render() {
     const { questions, questionNumber, loading } = this.state;
-    console.log(questions)
+    console.log(questions);
     return (
       <section>
         {
           loading
             ? 'loading...'
-            : <Question
-                question={ questions[questionNumber] }
-              />
+            : <Question question={ questions[questionNumber] } />
         }
-        
       </section>
     );
   }
