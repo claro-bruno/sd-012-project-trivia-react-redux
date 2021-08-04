@@ -75,4 +75,5 @@ export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   getTokenFunction: propTypes.func.isRequired,
+  getUserData: propTypes.func.isRequired,
 };
