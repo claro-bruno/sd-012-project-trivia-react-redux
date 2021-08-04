@@ -14,7 +14,8 @@ class Trivia extends Component {
   }
 
   async componentDidMount() {
-    const data = await fetchTrivia();
+    const token = '5918261f2d6fc70c64c978ff9d93cf6d907ad70a6d3121bf01f8147eebe75314';
+    const data = await fetchTrivia(token);
     const questions = data.results;
     this.setQuestions(questions);
   }

@@ -10,6 +10,7 @@ class Question extends Component {
         correct_answer: correctAnswer,
         incorrect_answers: incorrectAnswers,
       },
+      resolved,
     } = this.props;
     const sortedAnswers = [...incorrectAnswers, correctAnswer].sort();
     return (
@@ -17,11 +18,16 @@ class Question extends Component {
         <h2 data-testid="question-category">{category}</h2>
         <p data-testid="question-text">{ question }</p>
         { sortedAnswers.map((answer, index) => {
-          const dataTestId = answer === correctAnswer
+          const isCorrect = answer === correctAnswer;
+          const dataTestId = isCorrect
             ? 'correct-answer'
             : `wrong-answer-${incorrectAnswers.indexOf(answer)}`;
+          const className = isCorrect 
+            ? 'correct'
+            : 'wrong';
           return (
             <button
+              className={ resolved ? className : '' }
               type="button"
               key={ index }
               data-testid={ dataTestId }
@@ -44,6 +50,7 @@ Question.propTypes = {
     correct_answer: PropTypes.string,
     incorrect_answers: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
+  resolved: PropTypes.bool.isRequired,
 };
 
 export default Question;
