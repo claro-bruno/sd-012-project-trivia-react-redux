@@ -25,7 +25,7 @@ class Question extends Component {
     const quantity = 300;
     getQuiz(token, quantity);
   }
-  
+
   handleClickButton() {
     this.setState({ button: true });
     this.changeBorder();
