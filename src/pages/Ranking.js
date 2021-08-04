@@ -1,12 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import getRanking from '../utils/player';
 
 class Ranking extends React.Component {
   render() {
     const ranking = getRanking();
+    const { history } = this.props;
     return (
       <div>
-        <a href="/" data-testid="btn-go-home">Voltar ao início</a>
+        <button
+          data-testid="btn-go-home"
+          type="button"
+          onClick={ () => history.push('/') }
+        >
+          Voltar ao início
+        </button>
+
         <h1 data-testid="ranking-title">Ranking</h1>
         {ranking.map((player, index) => (
           <div key={ index }>
@@ -19,5 +28,11 @@ class Ranking extends React.Component {
     );
   }
 }
+
+Ranking.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+}.isRequired;
 
 export default Ranking;
