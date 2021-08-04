@@ -3,17 +3,25 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import logo from '../trivia.png';
-import { getTokenThunk } from '../actions';
+import { getTokenThunk, loginAction } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
 
+    this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      email: '',
       name: '',
+      email: '',
     };
+  }
+
+  handleClick() {
+    const { getUserData, getTokenFunction } = this.props;
+    const { name, email } = this.state;
+    getUserData(name, email);
+    getTokenFunction();
   }
 
   handleChange({ target }) {
@@ -23,7 +31,6 @@ class Login extends React.Component {
   }
 
   render() {
-    const { getTokenFunction } = this.props;
     const { email, name } = this.state;
     return (
       <form>
@@ -49,7 +56,7 @@ class Login extends React.Component {
             disabled={ !(email && name) }
             type="button"
             data-testid="btn-play"
-            onClick={ getTokenFunction }
+            onClick={ () => this.handleClick() }
           >
             Jogar
           </button>
@@ -61,6 +68,7 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   getTokenFunction: () => dispatch(getTokenThunk()),
+  getUserData: (name, email) => dispatch(loginAction(name, email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
