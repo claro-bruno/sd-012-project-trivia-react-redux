@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addUserName, addEmail } from '../redux/actions';
+import { addUserName, addEmail, addToken } from '../redux/actions';
 
 class LoginForm extends Component {
   constructor() {
@@ -27,10 +27,14 @@ class LoginForm extends Component {
     this.setState({ [name]: value });
   }
 
-  handleTokenThing() {
-    fetch('https://opentdb.com/api_token.php?command=request')
-      .then((response) => response.json())
-      .then((data) => localStorage.setItem('token', data.token));
+  async handleTokenThing() {
+    const { setToken } = this.props;
+
+    const url = 'https://opentdb.com/api_token.php?command=request';
+    const res = await fetch(url);
+    const data = await res.json();
+    setToken(data.token);
+    localStorage.setItem('token', data.token);
   }
 
   addInfoToStore() {
@@ -87,11 +91,13 @@ class LoginForm extends Component {
 LoginForm.propTypes = {
   setEmailStore: PropTypes.func.isRequired,
   setNameStore: PropTypes.func.isRequired,
+  setToken: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   setEmailStore: (email) => dispatch(addEmail(email)),
   setNameStore: (name) => dispatch(addUserName(name)),
+  setToken: (token) => dispatch(addToken(token)),
 });
 
 export default connect(null, mapDispatchToProps)(LoginForm);

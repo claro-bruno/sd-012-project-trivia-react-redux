@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import GameQuestions from '../components/GameQuestions';
 import HeaderPlayer from '../components/HeaderPlayer';
 
@@ -20,7 +21,7 @@ class GamePage extends Component {
   }
 
   async fetchQuestions() {
-    const token = localStorage.getItem('token');
+    const { userInfo: { token } } = this.props;
     const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
     const res = await fetch(url);
     const data = await res.json();
@@ -44,4 +45,12 @@ class GamePage extends Component {
   }
 }
 
-export default GamePage;
+GamePage.propTypes = {
+  userInfo: PropTypes.objectOf(Object).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  userInfo: state.userInfo,
+});
+
+export default connect(mapStateToProps)(GamePage);
