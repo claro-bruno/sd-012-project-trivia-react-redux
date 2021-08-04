@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { saveLogin, fetchTrivia } from '../redux/actions';
+import { saveLogin, fetchTrivia } from '../redux/actions/login';
 
 class Login extends React.Component {
   constructor(props) {

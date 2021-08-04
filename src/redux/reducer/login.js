@@ -1,4 +1,4 @@
-import { SAVE_LOGIN, LOADING, GET_TOKEN, GET_TOKEN_ERROR } from '../actions';
+import { SAVE_LOGIN, LOADING, GET_TOKEN, GET_TOKEN_ERROR } from '../actions/login';
 
 const INICIAL_STATE = {
   name: '',
