@@ -1,7 +1,10 @@
 import React from 'react';
 import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import logo from '../trivia.png';
 import * as fetchAPI from '../helpers/fetchAPI';
+import { questAction } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -9,12 +12,24 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.config = this.config.bind(this);
+    this.handleClick = this.handleClick(this);
 
     this.state = {
       name: '',
       email: '',
       redirect: false,
     };
+  }
+
+  handleClick() {
+    const { fetQuestions, getToken } = fetchAPI;
+    getToken();
+    const { quests } = this.props;
+    const token = localStorage.getItem('token');
+    fetQuestions(token).then((data) => {
+      const { results: quest } = data;
+      quests(quest);
+    });
   }
 
   handleChange({ target }) {
@@ -25,7 +40,6 @@ class Login extends React.Component {
   }
 
   config() {
-    fetchAPI.getToken();
     this.setState({
       redirect: true,
     });
@@ -59,14 +73,16 @@ class Login extends React.Component {
               data-testid="input-gravatar-email"
             />
           </div>
-          <button
-            onClick={ this.handleClick }
-            type="button"
-            data-testid="btn-play"
-            disabled={ name.length === 0 || email.length === 0 }
-          >
-            Jogar
-          </button>
+          <Link to="/quest">
+            <button
+              onClick={ () => fetchAPI.getToken() }
+              type="button"
+              data-testid="btn-play"
+              disabled={ name.length === 0 || email.length === 0 }
+            >
+              Jogar
+            </button>
+          </Link>
           <button
             type="button"
             data-testid="btn-settings"
@@ -80,4 +96,8 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  quests: (quest) => dispatch(questAction(quest)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
