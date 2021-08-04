@@ -1,8 +1,9 @@
 export const CREATE_LOGIN = 'CREATE_LOGIN';
 
-export default function createLogin(state) {
+export default function createLogin(state, email) {
   return {
     type: CREATE_LOGIN,
-    email: state,
+    name: state,
+    gravatarEmail: email,
   };
 }

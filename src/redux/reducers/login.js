@@ -1,9 +1,25 @@
+import { CREATE_LOGIN } from '../actions/index';
+
 const INITIAL_STATE = {
-  user: {
-    email: '',
+  player: {
+    name: '',
+    assertions: '',
+    score: 0,
+    gravatarEmail: '',
   },
 };
 
-export default function login(state = INITIAL_STATE) {
-  return state;
+export default function player(state = INITIAL_STATE, action) {
+  switch (action.type) {
+  case CREATE_LOGIN:
+    return {
+      ...state,
+      player: {
+        name: action.name,
+        gravatarEmail: action.gravatarEmail,
+      },
+    };
+  default:
+    return state;
+  }
 }
