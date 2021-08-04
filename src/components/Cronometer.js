@@ -9,44 +9,27 @@ class Cronometer extends Component {
 
     this.state = {
       time: 30,
-      // timeOver: false,
     };
   }
 
   componentDidMount() {
     const oneSecond = 1000;
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.setState((prevState) => ({ time: prevState.time - 1 }));
     }, oneSecond);
-
-    // const thirtySecond = 30000;
-    // this.interval = setInterval(() => {
-    //   this.setState({ timeOver: true });
-    // }, thirtySecond);
   }
 
   componentDidUpdate(_prevProps, prevState) {
     const { setOptionsDisabled } = this.props;
-    console.log('estado:', prevState.time);
     if (prevState.time <= 0) {
       setOptionsDisabled();
+      clearInterval(this.interval);
     }
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
   }
-
-  // componentDidUpdate(prevState) {
-  //   const { time } = this.state;
-  //   if (time <= 0) {
-  //     this.stateUpdate();
-  //   }
-  // }
-
-  // stateUpdate() {
-  //   this.setState({ timeOver: true });
-  // }
 
   render() {
     const { time } = this.state;

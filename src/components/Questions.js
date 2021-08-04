@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Cronometer from './Cronometer';
+import './styles/Questions.css';
 
 class Questions extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class Questions extends React.Component {
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.concatenaAnswers = this.concatenaAnswers.bind(this);
     this.randomize = this.randomize.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -49,13 +51,17 @@ class Questions extends React.Component {
 
   optionsAnswer(answer, index) {
     const { optionsDisabled } = this.props;
+
     if (answer.data === 'correct-answer') {
       return (
         <button
+          id="questionButton"
           type="button"
           key={ index }
           data-testid={ answer.data }
           disabled={ optionsDisabled }
+          value="right"
+          onClick={ this.handleClick }
         >
           { answer.answer }
         </button>
@@ -63,13 +69,28 @@ class Questions extends React.Component {
     }
     return (
       <button
+        id="questionButton"
         type="button"
         key={ index }
         data-testid={ `wrong-answer${index}` }
         disabled={ optionsDisabled }
+        value="wrong"
+        onClick={ this.handleClick }
       >
         { answer.answer }
       </button>);
+  }
+
+  handleClick() {
+    const buttons = document.querySelectorAll('#questionButton');
+
+    buttons.forEach(({ value, style }) => {
+      if (value === 'right') {
+        style.border = '3px solid rgb(6, 240, 15)';
+      } else {
+        style.border = '3px solid rgb(255, 0, 0)';
+      }
+    });
   }
 
   render() {
