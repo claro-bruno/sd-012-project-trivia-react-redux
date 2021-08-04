@@ -29,7 +29,7 @@ class Ranking extends Component {
             data-testid="btn-go-home"
             type="button"
           >
-            Configurações
+            Home
           </button>
         </Link>
       </main>
