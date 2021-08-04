@@ -13,9 +13,11 @@ class Quest extends React.Component {
     this.state = {
       timer: 30,
       timerId: null,
+      click: 'off',
     };
     this.timerRunner = this.timerRunner.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.updateScore = this.updateScore.bind(this);
   }
 
   componentDidMount() {
@@ -23,6 +25,13 @@ class Quest extends React.Component {
     const token = localStorage.getItem('token');
     questsFn(token);
     this.timerRunner();
+  }
+
+  componentDidUpdate() {
+    const { click } = this.state;
+    if (click === 'on') {
+      this.updateScore();
+    }
   }
 
   componentWillUnmount() {
@@ -57,18 +66,49 @@ class Quest extends React.Component {
     correctButton.disabled = true;
   }
 
-  handleClick() {
+  updateScore() {
+    const { score } = JSON.parse(localStorage.getItem('player'));
+    const fixNumber = 10;
+    const { timer } = this.state;
+    const { quests } = this.props;
+    const { difficulty } = quests[0];
+    const difMult = {
+      easy: 1,
+      medium: 2,
+      hard: 3,
+    };
+    const points = fixNumber + (timer * difMult[difficulty]);
+    const olderPoints = parseInt(score, 10);
+    const newPoints = points + olderPoints;
+    const player = {
+      player: {
+        score: newPoints,
+      },
+    };
+    const playerstringfy = JSON.stringify(player);
+    localStorage.setItem('player', playerstringfy);
+    this.setState({ click: 'off' });
+  }
+
+  handleClick(event) {
     const { timerId } = this.state;
+
     const wrongButtons = document.getElementsByName('wrong-answer');
     const correctButton = document.getElementById('correct-answer');
     const nextButton = document.getElementById('btn-next');
     wrongButtons.forEach((button) => {
       button.className = 'wrong-answer-clicked';
+      button.disabled = true;
     });
 
     correctButton.className = 'correct-answer-clicked';
+    correctButton.disabled = true;
     nextButton.className = 'show';
     clearInterval(timerId);
+
+    if (event.target === correctButton) {
+      this.setState({ click: 'on' });
+    }
   }
 
   render() {
