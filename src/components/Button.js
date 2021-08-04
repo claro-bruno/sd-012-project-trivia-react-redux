@@ -7,6 +7,7 @@ export default class Button extends React.Component {
       props: {
         disabled,
         testId,
+        name,
       },
     } = this;
     return (
@@ -15,7 +16,7 @@ export default class Button extends React.Component {
         type="button"
         disabled={ disabled }
       >
-        Próxima
+        { name }
       </button>
     );
   }
@@ -29,6 +30,7 @@ const {
 Button.propTypes = {
   disabled: bool.isRequired,
   testId: string.isRequired,
+  name: string.isRequired,
 };
 
 // export default Button;

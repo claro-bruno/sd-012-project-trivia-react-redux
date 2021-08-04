@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import logo from '../trivia.png';
@@ -58,8 +59,15 @@ class Login extends React.Component {
           />
           <Button
             testId="btn-play"
+            name="Entrar"
             disabled={ !(user.length > MAX_LENGTH && email.includes('@' && '.com')) }
           />
+          <Link to="/config">
+            <Button
+              testId="btn-settings"
+              name="Configurações"
+            />
+          </Link>
         </form>
       </>
     );
