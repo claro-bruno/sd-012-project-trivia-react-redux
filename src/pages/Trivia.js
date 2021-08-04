@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Loading from '../components/Loading';
 
 class Trivia extends Component {
   constructor() {
@@ -11,6 +10,7 @@ class Trivia extends Component {
     };
     this.shuffle = this.shuffle.bind(this);
     this.shuffledAnswers = this.shuffledAnswers.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   shuffle(array) {
@@ -42,7 +42,9 @@ class Trivia extends Component {
             <button
               key={ index }
               data-testid="correct-answer"
+              className="correct-answer"
               type="button"
+              onClick={ this.handleClick }
             >
               { question.correct_answer }
             </button>
@@ -53,7 +55,9 @@ class Trivia extends Component {
           <button
             key={ index }
             data-testid={ `wrong-answer-${controllIncorrects - 1}` }
+            className="wrong-answer"
             type="button"
+            onClick={ this.handleClick }
           >
             { question.incorrect_answers[controllIncorrects - 1] }
           </button>
@@ -62,10 +66,44 @@ class Trivia extends Component {
     );
   }
 
+  handleClick() {
+    const correct = document.querySelector('.correct-answer');
+    const incorrects = document.querySelectorAll('.wrong-answer');
+    correct.style.border = '3px solid rgb(6, 240, 15)';
+    for (let i = 0; i < incorrects.length; i += 1) {
+      incorrects[i].style.border = '3px solid rgb(255, 0, 0)';
+    }
+  }
+
   render() {
     const { currentQuestion } = this.state;
-    const { questions, loading } = this.props;
-    if (loading) return <Loading />;
+    const { questions } = this.props;
+    console.log(questions);
+    const questionTest = {
+      category: 'Animals',
+      correct_answer: 'Cheetah',
+      difficulty: 'easy',
+      incorrect_answers: {
+        0: 'Lion',
+        1: 'Thomson&rsquo;s Gazelle',
+        2: 'Pronghorn Antelope',
+      },
+      question: 'What is the fastest  land animal?',
+      type: 'multiple',
+    };
+    if (questions.length === 0) {
+      return (
+        <div>
+          <span data-testid="question-category">
+            { questionTest.category }
+          </span>
+          <p data-testid="question-text">
+            { questionTest.question }
+          </p>
+          { this.shuffledAnswers(questionTest) }
+        </div>
+      );
+    }
     return (
       <div>
         <span data-testid="question-category">
@@ -83,7 +121,6 @@ class Trivia extends Component {
 function mapStateToProps(state) {
   return {
     questions: state.trivia.questions,
-    loading: state.trivia.loading,
   };
 }
 

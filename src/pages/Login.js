@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Nome from '../components/Nome';
+import PropTypes from 'prop-types';
 import { fetchQuestions } from '../actions';
+import Nome from '../components/Nome';
 import Email from '../components/Email';
 
 class Login extends React.Component {
@@ -18,7 +18,13 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.btnCondition = this.btnCondition.bind(this);
     this.fetchToken = this.fetchToken.bind(this);
-    this.fetchQuestions = this.fetchQuestions.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchToken();
+    const { getQuestions } = this.props;
+    const storage = localStorage.getItem('token');
+    getQuestions(storage);
   }
 
   handleChange({ target }) {
@@ -38,12 +44,6 @@ class Login extends React.Component {
     localStorage.setItem('token', token);
   }
 
-  fetchQuestions() {
-    const { getQuestions } = this.props;
-    const storage = localStorage.getItem('token');
-    getQuestions(storage);
-  }
-
   render() {
     return (
       <div className="inputs">
@@ -58,10 +58,6 @@ class Login extends React.Component {
               disabled={ this.btnCondition() }
             >
               <Link
-                onClick={ () => {
-                  this.fetchToken();
-                  this.fetchQuestions();
-                } }
                 to="/trivia"
               >
                 Jogar
