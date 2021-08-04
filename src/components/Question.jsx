@@ -1,30 +1,63 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Button from './button';
 import fetchQuiz from '../redux/fetchs/fetchQuiz';
 import fetchToken from '../redux/fetchs/fetchToken';
 import randomize from '../functions/randomize';
 
 class Question extends Component {
+  constructor() {
+    super();
+    this.state = {
+      button: false,
+      pergunta: 0,
+    };
+    this.handleClickButton = this.handleClickButton.bind(this);
+    this.handleClickNext = this.handleClickNext.bind(this);
+  }
+
   componentDidMount() {
     const { getQuiz, token } = this.props;
     console.log(token);
-    const quantity = 1;
+    const quantity = 200;
     getQuiz(token, quantity);
   }
 
+  handleClickButton() {
+    this.setState({ button: true });
+  }
+
+  handleClickNext() {
+    this.setState((state) => {
+      const { questions } = this.props;
+      if (state.pergunta >= questions.length - 1) {
+        return ({
+          button: false,
+        });
+      }
+      return ({
+        pergunta: state.pergunta + 1,
+        button: false,
+      });
+    });
+  }
+
   render() {
+    const { button, pergunta } = this.state;
     const { questions, loading } = this.props;
-    const [question] = questions;
     if (loading) { return <p>Loading...</p>; }
     const alternatives = [
-      ...question.incorrect_answers.map((alt, index) => ({ correct: false, alt, index })),
-      { correct: true, alt: question.correct_answer }];
+      ...questions[pergunta].incorrect_answers
+        .map((alt, index) => ({ correct: false, alt, index })),
+      { correct: true, alt: questions[pergunta].correct_answer }];
     const randomIndex = randomize(alternatives.length, alternatives.length - 1);
+    console.log(questions);
+    console.log(alternatives);
     return (
       <div className="question">
-        <h1 data-testid="question-category">{questions[0].category}</h1>
-        <p data-testid="question-text">{questions[0].question}</p>
+        <h1 data-testid="question-category">{questions[pergunta].category}</h1>
+        <p data-testid="question-text">{questions[pergunta].question}</p>
         <div className="alternatives">
           {randomIndex.map((index) => {
             const { correct, alt, index: i } = alternatives[index];
@@ -33,12 +66,15 @@ class Question extends Component {
                 type="button"
                 key={ alt }
                 data-testid={ correct ? 'correct-answer' : `wrong-answer${i}` }
+                onClick={ this.handleClickButton }
               >
                 {alt}
               </button>
             );
           })}
+          { button && <Button onClick={ this.handleClickNext } /> }
         </div>
+
       </div>
     );
   }
