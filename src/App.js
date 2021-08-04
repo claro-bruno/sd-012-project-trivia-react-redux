@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Trivia from './pages/Trivia';
+import Login from './pages/Login';
 import './App.css';
 
 export default class App extends Component {
@@ -8,7 +9,7 @@ export default class App extends Component {
     return (
       <>
         <Switch>
-          <Route exact path="/" />
+          <Route exact path="/" component={ Login } />
           <Route path="/config" />
           <Route path="/" />
         </Switch>
