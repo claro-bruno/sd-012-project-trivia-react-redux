@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { loginAction } from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
@@ -7,11 +10,16 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.inputsValidation = this.inputsValidation.bind(this);
+    this.handleGetEmail = this.handleGetEmail.bind(this);
 
     this.state = {
       name: false,
       email: false,
     };
+  }
+
+  componentWillUnmount() {
+    this.handleGetEmail();
   }
 
   handleChange({ target }) {
@@ -37,6 +45,13 @@ class Login extends React.Component {
       return false;
     }
     return true;
+  }
+
+  // manda pro estado do redux o nome e email do jogador
+  handleGetEmail() {
+    const { email, name } = this.state;
+    const { getEmail } = this.props;
+    getEmail(email, name);
   }
 
   render() {
@@ -82,4 +97,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  getEmail: (emailInput, nameInput) => dispatch(loginAction(emailInput, nameInput)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  getEmail: PropTypes.func,
+}.isRequired;
