@@ -45,10 +45,12 @@ class GamePage extends Component {
         <HeaderPlayer />
         {loading
           ? 'Loading'
-          : <GameQuestions
+          : (
+            <GameQuestions
               nextQuestion={ this.nextQuestion }
               questionObj={ questions[counter] }
-          />}
+            />
+          )}
       </main>
     );
   }
