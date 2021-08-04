@@ -34,7 +34,11 @@ class Trivia extends Component {
   }
 
   handleNext() {
-    this.setState((prevState) => ({ resolved: false, questionNumber: prevState.questionNumber + 1 }))
+    this.setState((prevState) => (
+      {
+        resolved: false,
+        questionNumber: prevState.questionNumber + 1,
+      }));
   }
 
   render() {
@@ -55,12 +59,14 @@ class Trivia extends Component {
         }
         {
           resolved
-            && (<button
-                  data-testid="btn-next"
-                  onClick={ handleNext }
-                >
-                  Pŕoxima
-                </button>)
+            && (
+              <button
+                type="button"
+                data-testid="btn-next"
+                onClick={ handleNext }
+              >
+                Pŕoxima
+              </button>)
         }
       </section>
     );
