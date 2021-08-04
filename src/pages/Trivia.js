@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { BORDER_BLACK } from '../data';
 import StaticTrivia from '../components/StaticTrivia';
+import Header from '../components/Header';
 
 class Trivia extends Component {
   constructor() {
@@ -109,14 +110,18 @@ class Trivia extends Component {
     const { questions } = this.props;
     if (questions.length === 0) {
       return (
-        <StaticTrivia
-          handleClick={ this.handleClick }
-          nextQuestion={ this.nextQuestion }
-        />
+        <div>
+          <Header />
+          <StaticTrivia
+            handleClick={ this.handleClick }
+            nextQuestion={ this.nextQuestion }
+          />
+        </div>
       );
     }
     return (
       <div>
+        <Header />
         <span data-testid="question-category">
           { questions[currentQuestion].category }
         </span>
