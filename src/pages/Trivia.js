@@ -25,7 +25,7 @@ class Trivia extends Component {
 
   render() {
     const { questions, questionNumber, loading } = this.state;
-    console.log(questions);
+
     return (
       <section>
         {
