@@ -1,0 +1,28 @@
+.header-section {
+  align-items: center;
+  background-color: rgb(201, 201, 201);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  padding: 10px;
+}
+
+.profile-section {
+  display: flex;
+  justify-content: space-around;
+  width: 25%;
+}
+
+.profile-section img {
+  border-radius: 10px;
+}
+
+.score-section {
+  display: flex;
+}
+
+.score-section p {
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: 10px;
+}
