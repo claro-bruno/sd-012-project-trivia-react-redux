@@ -13,10 +13,3 @@ export {
   GET_API_TRIVIA_QUESTIONS_ERROR,
   questionsFetchAPI,
 } from './questionsTriviaAction';
-
-export {
-  GET_API_GRAVATAR,
-  GET_API_GRAVATAR_SUCESS,
-  GET_API_GRAVATAR_ERROR,
-  gravatarFetchAPI,
-} from './gravatarAction';
