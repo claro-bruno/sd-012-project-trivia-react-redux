@@ -21,7 +21,6 @@ class Questions extends React.Component {
 
   async fetchQuestions() {
     const token = JSON.parse(localStorage.getItem('token'));
-    console.log(token);
     const END_POINT = `https://opentdb.com/api.php?amount=5&token=${token}`;
     const response = await fetch(END_POINT);
     const json = await response.json();
@@ -68,7 +67,6 @@ class Questions extends React.Component {
     const { questions: { results } } = this.state;
     const { category, question, correct_answer, incorrect_answers } = results[0];
     const answers = this.concatenaAnswers(incorrect_answers, correct_answer);
-    console.log(results);
     return (
       <div>
         <div data-testid="question-category">{ category }</div>
