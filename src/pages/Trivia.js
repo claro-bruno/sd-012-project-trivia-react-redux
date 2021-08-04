@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Question from '../components/Question';
 import { fetchTrivia } from '../services/api';
+import Loading from '../components/Loading';
 
 class Trivia extends Component {
   constructor() {
@@ -13,6 +14,7 @@ class Trivia extends Component {
     };
     this.setQuestions = this.setQuestions.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
+    this.handleNext = this.handleNext.bind(this);
   }
 
   async componentDidMount() {
@@ -31,21 +33,34 @@ class Trivia extends Component {
     this.setState({ resolved: true });
   }
 
+  handleNext() {
+    this.setState((prevState) => ({ resolved: false, questionNumber: prevState.questionNumber + 1 }))
+  }
+
   render() {
     const { questions, questionNumber, loading, resolved } = this.state;
-    const { handleAnswer } = this;
+    const { handleAnswer, handleNext } = this;
     const currentQuestion = questions[questionNumber];
     return (
       <section>
         {
           loading
-            ? 'loading...'
+            ? <Loading />
             : (
               <Question
                 handleAnswer={ handleAnswer }
                 resolved={ resolved }
                 question={ currentQuestion }
               />)
+        }
+        {
+          resolved
+            && (<button
+                  data-testid="btn-next"
+                  onClick={ handleNext }
+                >
+                  Pŕoxima
+                </button>)
         }
       </section>
     );
