@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.ranking-page {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ranking-page h1 {
+  margin: 25px;
+}
+
+.score-board {
+  display: flex;
+  flex-flow: column;
+  width: 75%;
+  border: 1px black solid;
+  margin-top: 5%;
+}
+
+.eachPlayer-list {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px black solid;
+}
+/* 
+.eachPlayer-list li {
+  display: inline-block;
+} */
