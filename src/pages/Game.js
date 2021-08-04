@@ -15,7 +15,6 @@ class Game extends React.Component {
 
     this.getQuestions = this.getQuestions.bind(this);
     this.changeBordersColor = this.changeBordersColor.bind(this);
-    this.renderFalseAnswers = this.renderFalseAnswers.bind(this);
   }
 
   componentDidMount() {
