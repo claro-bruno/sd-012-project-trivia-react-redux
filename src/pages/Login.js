@@ -1,14 +1,18 @@
 import React from 'react';
 import logo from '../trivia.png';
+import requestToken from '../helpers';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
 
     this.state = {
       name: '',
+      nameCheck: false,
       email: '',
+      emailCheck: false,
     };
   }
 
@@ -17,10 +21,40 @@ class Login extends React.Component {
     this.setState({
       [id]: value,
     });
+    // valida email e name
+    const emailFormat = /^[a-z0-9_.-]+@[a-z]+\.[a-z]{2,3}(?:\.[a-z]{2})?$/;
+    if (id === 'email') {
+      if (emailFormat.test(value)) {
+        this.setState({
+          emailCheck: true,
+        });
+      } else {
+        this.setState({
+          emailCheck: false,
+        });
+      }
+    }
+    if (id === 'name') {
+      if (value !== '') {
+        this.setState({
+          nameCheck: true,
+        });
+      } else {
+        this.setState({
+          nameCheck: false,
+        });
+      }
+    }
+  }
+
+  handleClick() {
+    // const { id, value } = this.state;
+    requestToken();
   }
 
   render() {
-    const { name, email } = this.state;
+    const { name, email, emailCheck, nameCheck } = this.state;
+    const btnCheck = !(emailCheck === true && nameCheck === true);
     return (
       <main>
         <header className="App-header">
@@ -47,7 +81,14 @@ class Login extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
-          <button type="button" data-testid="btn-play">Jogar</button>
+          <button
+            type="button"
+            data-testid="btn-play"
+            disabled={ btnCheck }
+            onClick={ this.handleClick }
+          >
+            Jogar
+          </button>
         </form>
       </main>
     );
