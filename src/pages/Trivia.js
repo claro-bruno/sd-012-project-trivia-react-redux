@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Header from '../components/Header';
 
 class Trivia extends Component {
   constructor() {
@@ -106,6 +107,7 @@ class Trivia extends Component {
     }
     return (
       <div>
+        <Header />
         <span data-testid="question-category">
           { questions[currentQuestion].category }
         </span>
