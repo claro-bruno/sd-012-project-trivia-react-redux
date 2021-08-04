@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../trivia.png';
-import requestToken from '../helpers';
+import { requestToken, addItemToStorage } from '../helpers';
 
 class Login extends React.Component {
   constructor(props) {
@@ -49,7 +49,11 @@ class Login extends React.Component {
   }
 
   handleClick() {
-    // const { id, value } = this.state;
+    const { name, email } = this.state;
+    const { history } = this.props;
+    history.push('/game');
+    addItemToStorage('state', 'name', name);
+    addItemToStorage('state', 'email', email);
     requestToken();
   }
 
