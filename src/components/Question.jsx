@@ -56,8 +56,13 @@ class Question extends Component {
     console.log(alternatives);
     return (
       <div className="question">
+
         <h1 data-testid="question-category">{questions[pergunta].category}</h1>
         <p data-testid="question-text">{questions[pergunta].question}</p>
+
+        <h1 data-testid="question-category">{question.category}</h1>
+        <p data-testid="question-text">{question.question}</p>
+
         <div className="alternatives">
           {randomIndex.map((index) => {
             const { correct, alt, index: i } = alternatives[index];
