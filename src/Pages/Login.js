@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import ConfigButton from '../Components/ConfigButton';
+import { fetchLoginAction } from '../redux/actions';
 // import logo from '../trivia.png';
 
 class Login extends React.Component {
@@ -20,7 +23,7 @@ class Login extends React.Component {
 
   render() {
     const { nome, email } = this.state;
-    const { history: { push } } = this.props;
+    const { history: { push }, sendAction } = this.props;
     return (
       <div className="App">
         <header>
@@ -55,8 +58,9 @@ class Login extends React.Component {
           </label>
           <button
             type="button"
-            disabled={ !nome || !email }
             data-testid="btn-play"
+            disabled={ !nome || !email }
+            onClick={ () => sendAction(nome, email) }
           >
             Jogar
           </button>
@@ -69,8 +73,13 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  history: PropTypes.arrayOf(Object).isRequired,
+  history: PropTypes.arrayOf().isRequired,
+  sendAction: PropTypes.func.isRequired,
   push: PropTypes.func.isRequired,
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  sendAction: (nome, email) => dispatch(fetchLoginAction(nome, email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
