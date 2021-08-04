@@ -11,7 +11,6 @@ class Question extends Component {
         incorrect_answers: incorrectAnswers,
       },
     } = this.props
-    console.log(question)
     const sortedAnswers = [...incorrectAnswers,correctAnswer].sort();
     return (
       <>

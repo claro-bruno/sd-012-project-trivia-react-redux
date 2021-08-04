@@ -7,12 +7,14 @@ class Trivia extends Component {
     super();
     this.state = {
       questions: [],
+      questionNumber: 0,
+      loading: true,
     }
     this.setQuestions = this.setQuestions.bind(this);
   }
 
   setQuestions(questions) {
-    this.setState({ questions });
+    this.setState({ questions, loading: false });
   }
 
   async componentDidMount() {
@@ -22,10 +24,18 @@ class Trivia extends Component {
   }
 
   render() {
-    const { questions } = this.state;
+    const { questions, questionNumber, loading } = this.state;
+    console.log(questions)
     return (
       <section>
-        { questions.map((question) => <Question question={ question } />)}
+        {
+          loading
+            ? 'loading...'
+            : <Question
+                question={ questions[questionNumber] }
+              />
+        }
+        
       </section>
     );
   }
