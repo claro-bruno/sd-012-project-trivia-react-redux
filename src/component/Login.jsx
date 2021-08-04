@@ -1,7 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
+// import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import logo from '../trivia.png';
 import * as fetchAPI from '../helpers/fetchAPI';
+import { questAction, saveToken } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -9,11 +13,13 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.config = this.config.bind(this);
+    this.toQuestions = this.toQuestions.bind(this);
 
     this.state = {
       name: '',
       email: '',
       redirect: false,
+      redirectToQuest: false,
     };
   }
 
@@ -30,11 +36,17 @@ class Login extends React.Component {
     });
   }
 
+  async toQuestions() {
+    const { saveToke } = this.props;
+    const token = await fetchAPI.getToken();
+    saveToke(token);
+    this.setState({ redirectToQuest: true });
+  }
+
   render() {
-    const { name, email, redirect } = this.state;
-    if (redirect) {
-      return <Redirect to="/config/" />;
-    }
+    const { name, email, redirect, redirectToQuest } = this.state;
+    if (redirect) return <Redirect to="/config/" />;
+    if (redirectToQuest) return <Redirect to="/quest/" />;
 
     return (
       <div className="App">
@@ -59,9 +71,9 @@ class Login extends React.Component {
             />
           </div>
           <button
-            onClick={ fetchAPI.getToken }
-            type="button"
             data-testid="btn-play"
+            onClick={ () => { this.toQuestions(); } }
+            type="button"
             disabled={ name.length === 0 || email.length === 0 }
           >
             Jogar
@@ -79,4 +91,13 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  saveToke: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  quests: (quest) => dispatch(questAction(quest)),
+  saveToke: (token) => dispatch(saveToken(token)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
