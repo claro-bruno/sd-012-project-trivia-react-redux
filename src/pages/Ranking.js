@@ -10,16 +10,18 @@ class Ranking extends React.Component {
 
     const scoreBoard = (
       <div className="score-board">
-        {localStorageData && localStorageData.map((eachPlayer, index) => (
-          <ul className="eachPlayer-list" key={ index }>
-            <li><img src={ `${eachPlayer.picture}` } alt="" /></li>
-            <li data-testid={ `player-name-${index}` }>{eachPlayer.name}</li>
-            <li data-testid={ `player-score-${index}` }>
-              {eachPlayer.score}
-              pts
-            </li>
-          </ul>
-        ))}
+        {localStorageData && localStorageData
+          .sort((a, b) => b.score - a.score)
+          .map((eachPlayer, index) => (
+            <ul className="eachPlayer-list" key={ index }>
+              <li><img src={ `${eachPlayer.picture}` } alt="" /></li>
+              <li data-testid={ `player-name-${index}` }>{eachPlayer.name}</li>
+              <li data-testid={ `player-score-${index}` }>
+                {eachPlayer.score}
+                pts
+              </li>
+            </ul>
+          ))}
       </div>);
 
     const noStorageData = <span>Sem pontuações no momento.</span>;
