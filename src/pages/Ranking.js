@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/Ranking.css';
 
 class Ranking extends React.Component {
@@ -29,6 +30,11 @@ class Ranking extends React.Component {
       <div className="ranking-page">
         <h1>Ranking</h1>
         {localStorageData ? scoreBoard : noStorageData}
+        <Link className="ranking-button-container" to="/">
+          <button data-testid="btn-go-home" className="ranking-button" type="button">
+            Página de Login
+          </button>
+        </Link>
       </div>);
   }
 }

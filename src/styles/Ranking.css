@@ -30,7 +30,19 @@
   align-items: center;
   border: 1px black solid;
 }
-/* 
-.eachPlayer-list li {
-  display: inline-block;
-} */
+
+.ranking-button-container {
+  border: 1px black solid;
+  width: 120px;
+  height: 65px;
+  margin-top: 3%;
+}
+
+.ranking-button {
+  background-color: green;
+  color: white;
+  font-weight: bold;
+  font-size: larger;
+  width: 100%;
+  height: 100%;
+}
