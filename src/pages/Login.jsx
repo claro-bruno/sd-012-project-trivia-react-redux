@@ -13,6 +13,7 @@ class Login extends Component {
     this.state = {
       name: '',
       email: '',
+      score: 0,
       game: false,
       config: false,
     };
