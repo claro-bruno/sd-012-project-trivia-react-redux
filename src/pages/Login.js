@@ -1,7 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import logo from '../trivia.png';
-import { requestToken, addItemToStorage } from '../helpers';
+import { sendUserInfo } from '../redux/action';
+import {
+  requestToken,
+  addItemToStorage,
+  requestImageGravatar,
+} from '../helpers';
 
 class Login extends React.Component {
   constructor(props) {
@@ -50,10 +57,12 @@ class Login extends React.Component {
 
   handleClick() {
     const { name, email } = this.state;
-    const { history } = this.props;
+    const { history, send } = this.props;
+    const image = requestImageGravatar(email);
     addItemToStorage('state', 'name', name);
-    addItemToStorage('state', 'email', email);
+    addItemToStorage('state', 'gravatarEmail', email);
     requestToken();
+    send(name, email, image);
     history.push('/game');
   }
 
@@ -108,4 +117,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  send: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  send: (...info) => dispatch(sendUserInfo(...info)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);

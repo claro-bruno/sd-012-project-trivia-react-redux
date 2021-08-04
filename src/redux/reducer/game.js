@@ -15,6 +15,7 @@ function game(state = INITIAL_GAME_STATE, action) {
     });
   case GET_TRIVIA:
     return ({
+      ...state,
       response: action.response,
       questions: action.questions,
       loading: false,
