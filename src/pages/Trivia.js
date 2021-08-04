@@ -10,6 +10,9 @@ class Trivia extends Component {
     this.state = {
       criptoEmail: '',
       imgGravatar: '',
+      points: 0,
+      nameLogin: '',
+      asserts: 0,
     };
 
     this.emailCript = this.emailCript.bind(this);
@@ -26,27 +29,34 @@ class Trivia extends Component {
 
   // criptografia do email para a api gravatar
   emailCript() {
-    const { emailUser } = this.props;
+    const { emailUser, nameUser } = this.props;
     const stringEmail = md5(emailUser).toString();
     // console.log(stringEmail);
     this.setState({
       criptoEmail: stringEmail,
+      nameLogin: nameUser,
     });
   }
 
   // função para pegar a imagem na api do gravatar
   async gravatar() {
-    const { criptoEmail } = this.state;
+    const { criptoEmail, points, nameLogin, asserts } = this.state;
     // console.log(criptoEmail);
     const fetchGravatar = await fetch(`https://www.gravatar.com/avatar/${criptoEmail}`);
     // console.log(fetchGravatar);
     this.setState({
       imgGravatar: fetchGravatar.url,
     });
+    localStorage.setItem('player', JSON.stringify({
+      gravatarEmail: criptoEmail,
+      score: points,
+      name: nameLogin,
+      assertions: asserts,
+    }));
   }
 
   render() {
-    const { imgGravatar } = this.state;
+    const { imgGravatar, points } = this.state;
     const { nameUser } = this.props;
     return (
       <div>
@@ -57,7 +67,7 @@ class Trivia extends Component {
             src={ imgGravatar }
           />
           <p data-testid="header-player-name">{ nameUser }</p>
-          <p data-testid="header-score"> Pontuação: 0</p>
+          <p data-testid="header-score">{ points }</p>
         </header>
       </div>);
   }
