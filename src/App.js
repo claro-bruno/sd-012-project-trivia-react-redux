@@ -5,6 +5,7 @@ import Game from './Components/Game';
 import NotFound from './Components/NotFound';
 import Results from './Components/Results';
 import Ranking from './Components/Ranking';
+import Configs from './Components/Configs';
 import './App.css';
 
 class App extends Component {
@@ -27,6 +28,10 @@ class App extends Component {
         <Route
           path="/ranking"
           component={ Ranking }
+        />
+        <Route
+          path="/configs"
+          component={ Configs }
         />
         <Route
           component={ NotFound }
