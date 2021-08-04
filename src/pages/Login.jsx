@@ -13,6 +13,7 @@ class Login extends Component {
     this.state = {
       name: '',
       email: '',
+      score: 0,
       game: false,
       config: false,
     };
@@ -24,7 +25,7 @@ class Login extends Component {
 
   componentDidMount() {
     const { fetcher } = this.props;
-    const result = fetcher();
+    fetcher();
   }
 
   componentWillUnmount() {

@@ -1,6 +1,7 @@
 const initialState = {
   name: '',
   email: '',
+  score: 0,
 };
 
 const player = (state = initialState, action) => {
