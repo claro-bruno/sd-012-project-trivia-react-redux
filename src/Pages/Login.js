@@ -1,4 +1,5 @@
 import React from 'react';
+import {  } from 'react-router-dom'
 // import logo from '../trivia.png';
 
 class Login extends React.Component {
@@ -16,8 +17,10 @@ class Login extends React.Component {
     this.setState({ [name]: value });
   }
 
+
   render() {
     const { nome, email } = this.state;
+    const { history: { push } } = this.props
     return (
       <div className="App">
         <header>
@@ -56,6 +59,15 @@ class Login extends React.Component {
             data-testid="btn-play"
           >
             Jogar
+          </button>
+          <button
+            type="button"
+            data-testid="btn-settings"
+            onClick={ () => {
+              push('/configs')
+            }}
+          >
+            Configurações
           </button>
         </form>
       </div>
