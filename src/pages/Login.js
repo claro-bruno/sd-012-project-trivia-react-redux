@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import logo from '../trivia.png';
 
 class Login extends React.Component {
   constructor(props) {
@@ -36,28 +37,31 @@ class Login extends React.Component {
     } = this;
     const MAX_LENGTH = 5;
     return (
-      <div>
-        <Input
-          name="user"
-          testId="input-player-name"
-          label="Usuário"
-          onChange={ handleChange }
-          value={ user }
-          type="text"
-        />
-        <Input
-          name="email"
-          testId="input-gravatar-email"
-          label="E-mail"
-          onChange={ handleChange }
-          value={ email }
-          type="email"
-        />
-        <Button
-          testId="btn-play"
-          disabled={ !(user.length > MAX_LENGTH && email.includes('@' && '.com')) }
-        />
-      </div>
+      <>
+        <img src={ logo } className="App-logo" alt="logo" />
+        <form>
+          <Input
+            name="user"
+            testId="input-player-name"
+            label="Usuário"
+            onChange={ handleChange }
+            value={ user }
+            type="text"
+          />
+          <Input
+            name="email"
+            testId="input-gravatar-email"
+            label="E-mail"
+            onChange={ handleChange }
+            value={ email }
+            type="email"
+          />
+          <Button
+            testId="btn-play"
+            disabled={ !(user.length > MAX_LENGTH && email.includes('@' && '.com')) }
+          />
+        </form>
+      </>
     );
   }
 }
