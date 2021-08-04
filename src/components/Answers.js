@@ -9,7 +9,7 @@ class Answers extends React.Component {
     this.answers = this.answers.bind(this);
   }
 
-  // consultei o SlackOverFlow para resolver essa parte
+  // consultei o StackOverFlow para resolver essa parte
   // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
   shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i -= 1) {
