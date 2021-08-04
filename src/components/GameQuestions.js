@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 class GameQuestions extends Component {
   constructor() {
     super();
+    this.state = {
+      answered: false,
+    };
     this.changeColor = this.changeColor.bind(this);
   }
 
@@ -30,6 +33,7 @@ class GameQuestions extends Component {
         element.classList.add('wrong-btn');
       }
     });
+    this.setState({ answered: true });
   }
 
   render() {
@@ -40,7 +44,7 @@ class GameQuestions extends Component {
         correct_answer: correctAnswer,
         incorrect_answers: incorrectAnswers,
       } = questionObj;
-
+    const { answered } = this.state;
     return (
       <div>
         <h2 data-testid="question-category">{category}</h2>
@@ -59,6 +63,7 @@ class GameQuestions extends Component {
               </button>
             ))
         }
+        { answered && <button type="button" data-testid="btn-next">Próximo</button>}
       </div>
     );
   }
