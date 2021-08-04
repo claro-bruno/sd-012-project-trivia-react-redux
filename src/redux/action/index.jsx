@@ -10,8 +10,8 @@ export const getTokenSuccess = (payload) => ({
   type: GET_TOKEN_SUCCESS, payload,
 });
 
-export const getTokenError = () => ({
-  type: GET_TOKEN_ERROR,
+export const getTokenError = (error) => ({
+  type: GET_TOKEN_ERROR, error,
 });
 
 export const fetchClick = () => (dispatch) => {
@@ -19,7 +19,8 @@ export const fetchClick = () => (dispatch) => {
   const API = 'https://opentdb.com/api_token.php?command=request';
   fetch(API)
     .then((response) => response.json())
-    .then(({ token }) => dispatch(getTokenSuccess(token)));
+    .then(({ token }) => dispatch(getTokenSuccess(token)))
+    .catch((error) => dispatch(getTokenError(error)));
 };
 
 export const ADD_NEW_PLAYER = (state) => ({

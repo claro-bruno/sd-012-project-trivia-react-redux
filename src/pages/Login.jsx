@@ -24,7 +24,7 @@ class Login extends Component {
 
   componentDidMount() {
     const { fetcher } = this.props;
-    const result = fetcher();
+    fetcher();
   }
 
   componentWillUnmount() {
@@ -63,7 +63,8 @@ class Login extends Component {
 
   render() {
     const { game, config } = this.state;
-    const { newUser } = this.props;
+    const { newUser, loading } = this.props;
+    if (loading) return <h1>Carregando...</h1>;
     if (game) return <Redirect to="/game" />;
     if (config) return <Redirect to="/config" />;
     return (
@@ -117,12 +118,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   token: state.buttonReducer.token,
+  loading: state.buttonReducer.isLoading,
 });
 
 Login.propTypes = {
   newUser: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   fetcher: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
