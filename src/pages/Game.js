@@ -43,11 +43,18 @@ class Game extends React.Component {
     });
   }
 
-  checkAnswer({ target }) {
+  checkAnswer() {
     const { questionNumber, questions } = this.state;
     // Essa linha só ta dando um console se a resposta é certa ou não.
     // É aqui que deve implementar o que fazer caso a resposta esteja certa ou não.
-    console.log(questions[questionNumber].correct_answer === target.value);
+    const answers = document.querySelectorAll('button');
+    answers.forEach((answer) => {
+      if (answer.value === questions[questionNumber].correct_answer) {
+        answer.style.border = '3px solid rgb(6, 240, 15)';
+      } else {
+        answer.style.border = '3px solid rgb(255, 0, 0)';
+      }
+    });
   }
 
   /* https://flaviocopes.com/how-to-shuffle-array-javascript/
@@ -114,8 +121,7 @@ class Game extends React.Component {
         <div>
           <h2 data-testid="question-category">{ actualQuestion.category }</h2>
           <h3 data-testid="question-text">{ pergunta }</h3>
-          { actualQuestion.type === 'multiple' ? this
-            .multiple(actualQuestion) : this.boolean() }
+          { this.multiple(actualQuestion) }
         </div>
       </div>
     );
