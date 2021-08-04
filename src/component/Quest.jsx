@@ -9,8 +9,10 @@ class Quest extends React.Component {
     super(props);
     this.state = {
       timer: 30,
+      timerId: null,
     };
     this.timerRunner = this.timerRunner.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -21,6 +23,11 @@ class Quest extends React.Component {
     this.timerRunner();
   }
 
+  componentWillUnmount() {
+    const { timerId } = this.state;
+    clearInterval(timerId);
+  }
+
   timerRunner() {
     const oneSecond = 1000;
     const time = setInterval(() => {
@@ -29,13 +36,27 @@ class Quest extends React.Component {
         const newTime = timer - 1;
         this.setState({ timer: newTime });
       } else {
-        // endTimerFunction();
+        this.endTimerFunction();
         clearInterval(time);
       }
     }, oneSecond);
+    this.setState({ timerId: time });
+  }
+
+  endTimerFunction() {
+    const wrongButtons = document.getElementsByName('wrong-answer');
+    const correctButton = document.getElementById('correct-answer');
+    wrongButtons.forEach((button) => {
+      button.className = 'wrong-answer-clicked';
+      button.disabled = true;
+    });
+
+    correctButton.className = 'correct-answer-clicked';
+    correctButton.disabled = true;
   }
 
   handleClick() {
+    const { timerId } = this.state;
     const wrongButtons = document.getElementsByName('wrong-answer');
     const correctButton = document.getElementById('correct-answer');
     wrongButtons.forEach((button) => {
@@ -43,6 +64,7 @@ class Quest extends React.Component {
     });
 
     correctButton.className = 'correct-answer-clicked';
+    clearInterval(timerId);
   }
 
   render() {
