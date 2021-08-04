@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { saveLogin } from '../redux/actions/actionsLogin';
+import { fetchAPI } from '../redux/actions';
+import ConfigButton from '../components/ConfigButton';
 
 const md5 = require('md5');
 
@@ -15,6 +18,7 @@ class Login extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.btnDisable = this.btnDisable.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target }) {
@@ -23,6 +27,13 @@ class Login extends Component {
       [name]: value,
     });
     this.btnDisable();
+  }
+
+  handleClick() {
+    const { fetchAPItoken, token, saveData } = this.props;
+    fetchAPItoken();
+    localStorage.setItem('token', token);
+    saveData(this.state);
   }
 
   btnDisable() {
@@ -36,48 +47,54 @@ class Login extends Component {
   }
 
   render() {
-    const { saveData } = this.props;
     const { name, email, btnDisable } = this.state;
     return (
-      <fieldset>
-        <label
-          htmlFor="input-player-name"
-        >
-          Nome:
-          <input
-            value={ name }
-            name="name"
-            onChange={ this.handleChange }
-            type="text"
-            data-testid="input-player-name"
-          />
-        </label>
-        <label
-          htmlFor="input-gravatar-email"
-        >
-          Email:
-          <input
-            value={ email }
-            name="email"
-            onChange={ this.handleChange }
-            type="text"
-            data-testid="input-gravatar-email"
-          />
-        </label>
-        <button
-          disabled={ btnDisable }
-          type="button"
-          data-testid="btn-play"
-          onClick={ () => saveData(this.state) }
-        >
-          Jogar
-        </button>
-      </fieldset>
+      <>
+        <fieldset>
+          <label
+            htmlFor="input-player-name"
+          >
+            Nome:
+            <input
+              value={ name }
+              name="name"
+              onChange={ this.handleChange }
+              type="text"
+              data-testid="input-player-name"
+            />
+          </label>
+          <label
+            htmlFor="input-gravatar-email"
+          >
+            Email:
+            <input
+              value={ email }
+              name="email"
+              onChange={ this.handleChange }
+              type="text"
+              data-testid="input-gravatar-email"
+            />
+          </label>
+          <Link to="/game">
+            <button
+              disabled={ btnDisable }
+              type="button"
+              data-testid="btn-play"
+              onClick={ () => this.handleClick() }
+            >
+              Jogar
+            </button>
+          </Link>
+        </fieldset>
+        <ConfigButton />
+      </>
     );
   }
 }
 
 Login.propTypes = {
+  fetchAPItoken: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
   saveData: PropTypes.func,
 };
 
@@ -85,7 +102,12 @@ Login.defaultProps = {
   saveData: () => {},
 };
 
+const mapStateToProps = (state) => ({
+  token: state.login.token,
+});
+
 const mapDispatchToProps = (dispatch) => ({
+  fetchAPItoken: () => dispatch(fetchAPI()),
   saveData: (state) => {
     const hashEmail = md5(
       state.email.toLowerCase()
@@ -95,4 +117,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
