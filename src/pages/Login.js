@@ -1,10 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+<<<<<<< HEAD
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import addPlayerInfo from '../redux/actions';
 // import addPlayerInfo from '../redux/actions';
+=======
+import { Link, Redirect } from 'react-router-dom';
+import { addPlayerInfo } from '../redux/actions';
+>>>>>>> main-group-3
 // import { getApiToken } from '../services/triviaApi';
 
 class Login extends React.Component {

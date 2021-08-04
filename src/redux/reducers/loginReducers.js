@@ -1,4 +1,4 @@
-import USER_PLAYER from '../actions/actionsTypes';
+import { USER_PLAYER } from '../actions/actionsTypes';
 
 const INITIAL_STATE = {
   playerInfo: {
