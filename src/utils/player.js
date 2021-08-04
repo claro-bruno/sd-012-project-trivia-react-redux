@@ -1,1 +1,2 @@
-export default getRanking = () => JSON.parse(localStorage.getItem('ranking')) || [];
+const getRanking = () => JSON.parse(localStorage.getItem('ranking')) || [];
+export default getRanking;
