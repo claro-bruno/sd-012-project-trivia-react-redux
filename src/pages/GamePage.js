@@ -12,8 +12,10 @@ class GamePage extends Component {
       questions: [],
       counter: 0,
       loading: true,
+      answered: false,
     };
 
+    this.questionAnswered = this.questionAnswered.bind(this);
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.sendNextQuestion = this.sendNextQuestion.bind(this);
   }
@@ -33,12 +35,16 @@ class GamePage extends Component {
     });
   }
 
+  questionAnswered() {
+    this.setState({ answered: true });
+  }
+
   sendNextQuestion() {
-    this.setState((prevstate) => ({ counter: prevstate.counter + 1 }));
+    this.setState((prevstate) => ({ counter: prevstate.counter + 1, answered: false }));
   }
 
   render() {
-    const { questions, counter, loading } = this.state;
+    const { questions, counter, loading, answered } = this.state;
 
     return (
       <main>
@@ -47,7 +53,9 @@ class GamePage extends Component {
           ? 'Loading'
           : (
             <GameQuestions
-              nextQuestion={ this.nextQuestion }
+              onAnswer={ this.questionAnswered }
+              answered={ answered }
+              nextQuestion={ this.sendNextQuestion }
               questionObj={ questions[counter] }
             />
           )}
