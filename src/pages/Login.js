@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import getUserInfo from '../services/api';
 
 class Login extends React.Component {
@@ -14,7 +15,7 @@ class Login extends React.Component {
 
     this.validation = this.validation.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   validation() {
@@ -37,9 +38,11 @@ class Login extends React.Component {
     }, () => this.validation());
   }
 
-  async handleClick() {
+  async handleLogin() {
     const userInfo = await getUserInfo();
     localStorage.setItem('token', userInfo.token);
+    const { history } = this.props;
+    history.push('/game');
   }
 
   render() {
@@ -66,20 +69,24 @@ class Login extends React.Component {
             type="email"
           />
         </label>
-        <Link to="/trivia">
-          <button
-            data-testid="btn-play"
-            type="button"
-            disabled={ buttonDisabled }
-            onClick={ this.handleClick }
-          >
-            Jogar!
-          </button>
-        </Link>
+        <button
+          data-testid="btn-play"
+          type="button"
+          disabled={ buttonDisabled }
+          onClick={ this.handleLogin }
+        >
+          Jogar!
+        </button>
         <Link data-testid="btn-settings" to="/settings">Configurações</Link>
       </div>
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default Login;
