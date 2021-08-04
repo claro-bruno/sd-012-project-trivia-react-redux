@@ -30,7 +30,7 @@ class Header extends React.Component {
 Header.propTypes = {
   image: PropTypes.string.isRequired,
   playerName: PropTypes.string.isRequired,
-  playerScore: PropTypes.string.isRequired,
+  playerScore: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({

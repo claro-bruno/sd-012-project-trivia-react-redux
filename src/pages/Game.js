@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { requestTrivia } from '../redux/action';
+import Question from '../components/Question';
 import Header from '../components/Header';
 
 class Game extends React.Component {
@@ -15,7 +16,7 @@ class Game extends React.Component {
     return (
       <main>
         <Header />
-        { (loading) ? <h1>Loading</h1> : <p>Perguntas</p> }
+        { (loading) ? <h1>Loading</h1> : <Question /> }
       </main>
     );
   }

@@ -55,13 +55,13 @@ class Login extends React.Component {
     }
   }
 
-  handleClick() {
+  async handleClick() {
     const { name, email } = this.state;
     const { history, send } = this.props;
     const image = requestImageGravatar(email);
     addItemToStorage('state', 'name', name);
     addItemToStorage('state', 'gravatarEmail', email);
-    requestToken();
+    await requestToken();
     send(name, email, image);
     history.push('/game');
   }
