@@ -30,6 +30,7 @@ const tokenTriviaReducer = (state = INITIAL_STATE, action) => {
   case GET_API_TRIVIA_TOKEN_ERROR:
     return {
       ...state,
+      isLoading: false,
       error: payload,
     };
 
