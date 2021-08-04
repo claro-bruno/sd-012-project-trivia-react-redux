@@ -17,6 +17,7 @@ class GamePage extends Component {
 
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.timer = this.timer.bind(this);
+    this.sendNextQuestion = this.sendNextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -42,6 +43,10 @@ class GamePage extends Component {
         (prevState) => ({ time: prevState.time > 0 ? prevState.time - 1 : 0 }),
       ), oneSecond,
     );
+
+  sendNextQuestion() {
+    this.setState((prevstate) => ({ counter: prevstate.counter + 1 }));
+
   }
 
   render() {
@@ -53,7 +58,13 @@ class GamePage extends Component {
         <p>{time}</p>
         {loading
           ? 'Loading'
-          : <GameQuestions questionObj={ questions[counter] } time={ time } />}
+          : (
+            <GameQuestions
+              nextQuestion={ this.nextQuestion }
+              questionObj={ questions[counter] }
+              time={ time }
+            />
+          )}
       </main>
     );
   }
