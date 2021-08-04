@@ -37,11 +37,13 @@ class Question extends Component {
       if (state.pergunta >= questions.length - 1) {
         return ({
           button: false,
+          showCorrect: false,
         });
       }
       return ({
         pergunta: state.pergunta + 1,
         button: false,
+        showCorrect: false,
       });
     });
   }
@@ -55,21 +57,19 @@ class Question extends Component {
   render() {
     const { button, pergunta, showCorrect } = this.state;
     const { questions, loading } = this.props;
-    const [question] = questions;
     if (loading) { return <p>Loading...</p>; }
     const alternatives = [
-      ...question.incorrect_answers
+      ...questions[pergunta].incorrect_answers
         .map((alt, index) => ({ correct: false, alt, index, isCorrect: 'wrong-answer' })),
-      { correct: true, alt: question.correct_answer, isCorrect: 'correct-border' }];
+      { correct: true,
+        alt: questions[pergunta].correct_answer,
+        isCorrect: 'correct-border' }];
     const randomIndex = randomize(alternatives.length, alternatives.length - 1);
     return (
       <div className="question">
 
         <h1 data-testid="question-category">{questions[pergunta].category}</h1>
         <p data-testid="question-text">{questions[pergunta].question}</p>
-
-        <h1 data-testid="question-category">{question.category}</h1>
-        <p data-testid="question-text">{question.question}</p>
 
         <div className="alternatives">
           {randomIndex.map((index) => {
