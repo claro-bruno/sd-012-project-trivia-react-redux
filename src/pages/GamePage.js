@@ -12,14 +12,17 @@ class GamePage extends Component {
       questions: [],
       counter: 0,
       loading: true,
+      time: 30,
     };
 
     this.fetchQuestions = this.fetchQuestions.bind(this);
+    this.timer = this.timer.bind(this);
     this.sendNextQuestion = this.sendNextQuestion.bind(this);
   }
 
   componentDidMount() {
     this.fetchQuestions();
+    this.timer();
   }
 
   async fetchQuestions() {
@@ -33,22 +36,33 @@ class GamePage extends Component {
     });
   }
 
+  timer() {
+    const oneSecond = 1000;
+    setInterval(
+      () => this.setState(
+        (prevState) => ({ time: prevState.time > 0 ? prevState.time - 1 : 0 }),
+      ), oneSecond,
+    );
+
   sendNextQuestion() {
     this.setState((prevstate) => ({ counter: prevstate.counter + 1 }));
+
   }
 
   render() {
-    const { questions, counter, loading } = this.state;
+    const { questions, counter, loading, time } = this.state;
 
     return (
       <main>
         <HeaderPlayer />
+        <p>{time}</p>
         {loading
           ? 'Loading'
           : (
             <GameQuestions
               nextQuestion={ this.nextQuestion }
               questionObj={ questions[counter] }
+              time={ time }
             />
           )}
       </main>
