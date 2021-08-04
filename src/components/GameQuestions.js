@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 class GameQuestions extends Component {
   constructor() {
     super();
+
     this.state = {
       answered: false,
     };
@@ -24,6 +25,7 @@ class GameQuestions extends Component {
   }
 
   changeColor() {
+    const { onAnswer } = this.props;
     const btns = document.querySelectorAll('button');
     console.log(btns);
     btns.forEach((element) => {
@@ -33,6 +35,11 @@ class GameQuestions extends Component {
         element.classList.add('wrong-btn');
       }
     });
+    onAnswer();
+  }
+
+  render() {
+    const { questionObj, nextQuestion, answered } = this.props;
     this.setState({ answered: true });
   }
 
@@ -64,6 +71,16 @@ class GameQuestions extends Component {
               </button>
             ))
         }
+        { answered
+        && (
+          <button
+            type="button"
+            data-testid="btn-next"
+            onClick={ nextQuestion }
+          >
+            Próximo
+          </button>
+        )}
         { answered && <button type="button" data-testid="btn-next">Próximo</button>}
       </div>
     );
@@ -72,6 +89,9 @@ class GameQuestions extends Component {
 
 GameQuestions.propTypes = {
   questionObj: PropTypes.objectOf(Object).isRequired,
+  nextQuestion: PropTypes.func.isRequired,
+  onAnswer: PropTypes.func.isRequired,
+  answered: PropTypes.bool.isRequired,
   time: PropTypes.number.isRequired,
 };
 
