@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import fetchToken from '../services/fetchToken';
+import { actionEmail, actionName } from '../redux/actions';
 
 class Login extends React.Component {
   constructor() {
@@ -27,7 +29,10 @@ class Login extends React.Component {
   }
 
   submitBtn() {
-    const { history } = this.props;
+    const { email, user } = this.state;
+    const { history, getEmail, getName } = this.props;
+    getEmail(email);
+    getName(user);
     fetchToken();
     history.push('/game');
   }
@@ -72,8 +77,15 @@ class Login extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  getEmail: (email) => dispatch(actionEmail(email)),
+  getName: (user) => dispatch(actionName(user)),
+});
+
 Login.propTypes = {
   history: PropTypes.objectOf('string').isRequired,
+  getEmail: PropTypes.func.isRequired,
+  getName: PropTypes.func.isRequired,
 };
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);
