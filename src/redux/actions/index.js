@@ -19,4 +19,17 @@ export const fetchToken = () => async (dispatch) => {
   } catch (error) {
     dispatch(getTokenError(error));
   }
+
 };
+
+export const fetchToken = () => async (dispatch) => {
+  dispatch(getToken());
+  try {
+    const response = await fetch('https://opentdb.com/api_token.php?command=request');
+    const responseJson = await response.json();
+    const tokenAPI = responseJson.token;
+    localStorage.setItem('token', JSON.stringify(tokenAPI));
+    dispatch(getTokenSuccess(tokenAPI));
+  } catch (error) {
+    dispatch(getTokenError(error));
+  }
