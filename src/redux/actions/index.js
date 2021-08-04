@@ -1,6 +1,7 @@
 export const ADD_EMAIL = 'ADD_EMAIL';
 export const ADD_USERNAME = 'ADD_USERNAME';
 export const ADD_TOKEN = 'ADD_TOKEN';
+export const IS_OVER = 'IS_OVER';
 
 export const addEmail = (userEmail) => ({
   type: ADD_EMAIL,
@@ -15,4 +16,9 @@ export const addUserName = (userName) => ({
 export const addToken = (token) => ({
   type: ADD_TOKEN,
   payload: token,
+});
+
+export const isOver = () => ({
+  type: IS_OVER,
+  payload: true,
 });

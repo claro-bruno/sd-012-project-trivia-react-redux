@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class GameQuestions extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      answered: false,
-    };
-    this.changeColor = this.changeColor.bind(this);
-  }
-
   generateAnswers(correct, incorrect) {
     return [
       {
@@ -24,34 +16,14 @@ class GameQuestions extends Component {
     // https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value
   }
 
-  changeColor() {
-    const { onAnswer } = this.props;
-    const btns = document.querySelectorAll('button');
-    console.log(btns);
-    btns.forEach((element) => {
-      if ((element.id) === 'correct-answer') {
-        element.classList.add('correct-btn');
-      } else {
-        element.classList.add('wrong-btn');
-      }
-    });
-    onAnswer();
-  }
-
   render() {
-    const { questionObj, nextQuestion, answered } = this.props;
-    this.setState({ answered: true });
-  }
-
-  render() {
-    const { questionObj, time } = this.props;
+    const { questionObj, nextQuestion, answered, over, onAnswer } = this.props;
     const
       { category,
         question,
         correct_answer: correctAnswer,
         incorrect_answers: incorrectAnswers,
       } = questionObj;
-    const { answered } = this.state;
     return (
       <div>
         <h2 data-testid="question-category">{category}</h2>
@@ -61,27 +33,31 @@ class GameQuestions extends Component {
             .map(({ answer, id }) => (
               <button
                 type="button"
-                disabled={ time <= 0 }
                 data-testid={ id }
                 key={ id }
-                id={ id }
-                onClick={ this.changeColor }
+                disabled={ over }
+                onClick={ onAnswer }
+                style={ answered || over
+                  ? {
+                    border:
+                    `3px solid ${id === 'correct-answer' ? 'rgb(6, 240, 15)' : 'red'}`,
+                  }
+                  : {} }
               >
                 {answer}
               </button>
             ))
         }
-        { answered
-        && (
-          <button
-            type="button"
-            data-testid="btn-next"
-            onClick={ nextQuestion }
-          >
-            Próximo
-          </button>
-        )}
-        { answered && <button type="button" data-testid="btn-next">Próximo</button>}
+        { answered || over
+          ? (
+            <button
+              type="button"
+              data-testid="btn-next"
+              onClick={ nextQuestion }
+            >
+              Próximo
+            </button>
+          ) : '' }
       </div>
     );
   }
@@ -92,7 +68,11 @@ GameQuestions.propTypes = {
   nextQuestion: PropTypes.func.isRequired,
   onAnswer: PropTypes.func.isRequired,
   answered: PropTypes.bool.isRequired,
-  time: PropTypes.number.isRequired,
+  over: PropTypes.bool.isRequired,
 };
 
-export default GameQuestions;
+const mapStateToProps = (state) => ({
+  over: state.userInfo.over,
+});
+
+export default connect(mapStateToProps)(GameQuestions);

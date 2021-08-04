@@ -1,9 +1,10 @@
-import { ADD_EMAIL, ADD_TOKEN, ADD_USERNAME } from '../actions';
+import { ADD_EMAIL, ADD_TOKEN, ADD_USERNAME, IS_OVER } from '../actions';
 
 const INITIAL_STATE = ({
   email: '',
   name: '',
   token: '',
+  over: false,
 });
 
 const userInfo = (state = INITIAL_STATE, action) => {
@@ -22,6 +23,11 @@ const userInfo = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       token: action.payload,
+    };
+  case IS_OVER:
+    return {
+      ...state,
+      over: action.payload,
     };
   default: return state;
   }
