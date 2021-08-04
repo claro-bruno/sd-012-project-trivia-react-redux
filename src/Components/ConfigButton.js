@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class ConfigButton extends Component {
   render() {
@@ -16,5 +17,9 @@ class ConfigButton extends Component {
     );
   }
 }
+
+ConfigButton.propTypes = {
+  push: PropTypes.func.isRequired,
+};
 
 export default ConfigButton;
