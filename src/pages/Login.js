@@ -5,6 +5,7 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import fetchToken from '../services/fetchToken';
 import { actionEmail, actionName } from '../redux/actions';
+import ButtonConfig from '../components/ButtonConfig';
 
 class Login extends React.Component {
   constructor() {
@@ -16,6 +17,7 @@ class Login extends React.Component {
     };
     this.handleInputs = this.handleInputs.bind(this);
     this.submitBtn = this.submitBtn.bind(this);
+    this.configBtn = this.configBtn.bind(this);
   }
 
   validade() {
@@ -35,6 +37,11 @@ class Login extends React.Component {
     getName(user);
     fetchToken();
     history.push('/game');
+  }
+
+  configBtn() {
+    const { history } = this.props;
+    history.push('/config');
   }
 
   handleInputs({ target }) {
@@ -71,6 +78,11 @@ class Login extends React.Component {
           disabled={ disabled }
           testId="btn-play"
           onClick={ this.submitBtn }
+        />
+        <ButtonConfig
+          itemName="Configurações"
+          testId="btn-settings"
+          onClick={ this.configBtn }
         />
       </form>
     );
