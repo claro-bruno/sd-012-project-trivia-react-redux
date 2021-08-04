@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import { fetchApiToken, playerUserInfo } from '../actions';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor(props) {
@@ -92,6 +93,7 @@ class Login extends React.Component {
         <Link to="/settings">
           <button type="button" data-testid="btn-settings">Configurações</button>
         </Link>
+      </div>
       </div>
     );
   }
