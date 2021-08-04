@@ -10,9 +10,11 @@ class Game extends React.Component {
 
     this.state = {
       questions: [],
+      indexQuestion: 0,
     };
 
     this.fetchQuestions = this.fetchQuestions.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -30,13 +32,27 @@ class Game extends React.Component {
       }));
   }
 
+  nextQuestion() {
+    this.setState((prevState) => ({
+      indexQuestion: prevState.indexQuestion + 1,
+    }));
+  }
+
   render() {
-    const { questions } = this.state;
+    const { questions, indexQuestion } = this.state;
     console.log(questions);
+    if (questions.length < 1) return <div>Carregando...</div>;
     return (
       <div>
         <Header />
-        {questions.map((question, index) => <Trivia key={ index } trivia={ question } />)}
+        <Trivia key={ indexQuestion } trivia={ questions[indexQuestion] } />
+        <button
+          data-testid="btn-next"
+          type="button"
+          onClick={ this.nextQuestion }
+        >
+          Próxima
+        </button>
       </div>
     );
   }
