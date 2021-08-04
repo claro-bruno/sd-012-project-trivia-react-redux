@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../trivia.png';
 import md5 from 'crypto-js/md5';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
