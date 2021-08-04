@@ -39,10 +39,9 @@ class Login extends React.Component {
   }
 
   fetchQuestions() {
-    const { questions, getQuestions } = this.props;
+    const { getQuestions } = this.props;
     const storage = localStorage.getItem('token');
     getQuestions(storage);
-    console.log(questions);
   }
 
   render() {
@@ -98,9 +97,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 Login.propTypes = {
-  questions: PropTypes.arrayOf(
-    PropTypes.object.isRequired,
-  ).isRequired,
   getQuestions: PropTypes.func.isRequired,
 };
 
