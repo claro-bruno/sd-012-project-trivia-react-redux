@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Questions from '../components/Questions';
 
-class Quiz extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { };
-  }
-
+class Quiz extends Component {
   render() {
+    const { token } = this.props;
+    localStorage.setItem('token', token);
     return (
-      <p>Quiz - Grupo 23</p>
+      <div>
+        <Questions />
+      </div>
     );
   }
 }
 
-export default Quiz;
+const mapStateToProps = ({ tokenReducer }) => ({
+  token: tokenReducer.token,
+});
+
+Quiz.propTypes = {
+  token: PropTypes.string,
+}.isRequired;
+
+export default connect(mapStateToProps)(Quiz);
