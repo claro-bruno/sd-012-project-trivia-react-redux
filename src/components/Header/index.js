@@ -17,7 +17,7 @@ class Header extends React.Component {
         <h1 className="logo">BRAINTEST</h1>
         <p data-testid="header-player-name">{`Jogador: ${name}`}</p>
         <p data-testid="header-score">{`Pontuação: ${score}`}</p>
-        <image data-testid="header-profile-picture" src={ userimage } />
+        <img data-testid="header-profile-picture" src={ userimage } alt="gravatar" />
       </header>
     );
   }
