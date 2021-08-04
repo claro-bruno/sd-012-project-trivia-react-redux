@@ -59,11 +59,11 @@ class Login extends React.Component {
     const { name, email } = this.state;
     const { history, send } = this.props;
     const image = requestImageGravatar(email);
-    history.push('/game');
     addItemToStorage('state', 'name', name);
     addItemToStorage('state', 'gravatarEmail', email);
     requestToken();
     send(name, email, image);
+    history.push('/game');
   }
 
   render() {

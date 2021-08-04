@@ -10,15 +10,15 @@ class Header extends React.Component {
         <img
           src={ image }
           alt={ playerName }
-          data-testeid="header-profile-picture"
+          data-testid="header-profile-picture"
         />
         <h1
-          data-testeid="header-player-name"
+          data-testid="header-player-name"
         >
           { playerName }
         </h1>
         <h1
-          data-testeid="header-score"
+          data-testid="header-score"
         >
           { playerScore }
         </h1>
