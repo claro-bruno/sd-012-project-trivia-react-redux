@@ -8,10 +8,13 @@ class Game extends React.Component {
     this.state = {
       questionNumber: 0,
       questions: [],
+      corrAnsBorder: {},
+      incorrAnsBorder: {},
       loading: true,
     };
 
     this.getQuestions = this.getQuestions.bind(this);
+    this.changeBordersColor = this.changeBordersColor.bind(this);
   }
 
   componentDidMount() {
@@ -28,9 +31,16 @@ class Game extends React.Component {
       }));
   }
 
+  changeBordersColor() {
+    this.setState({
+      corrAnsBorder: { border: '3px solid rgb(6, 240, 15)' },
+      incorrAnsBorder: { border: '3px solid rgb(255, 0, 0)' },
+    });
+  }
+
   render() {
-    const { questions, questionNumber, loading } = this.state;
-    console.log(questions);
+    const { questions,
+      questionNumber, loading, corrAnsBorder, incorrAnsBorder } = this.state;
     if (!loading) {
       return (
         <main>
@@ -50,6 +60,8 @@ class Game extends React.Component {
                   key={ index }
                   type="button"
                   data-testid={ `wrong-answer-${index}` }
+                  style={ incorrAnsBorder }
+                  onClick={ this.changeBordersColor }
                 >
                   { answer }
                 </button>
@@ -57,6 +69,8 @@ class Game extends React.Component {
             <button
               type="button"
               data-testid="correct-answer"
+              style={ corrAnsBorder }
+              onClick={ this.changeBordersColor }
             >
               { questions[questionNumber].correct_answer }
             </button>
