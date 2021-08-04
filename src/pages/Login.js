@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { fetchToken } from '../redux/actions';
 
 class Login extends PureComponent {
   constructor() {
@@ -12,6 +15,7 @@ class Login extends PureComponent {
 
     this.handleInput = this.handleInput.bind(this);
     this.settingsButton = this.settingsButton.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidUpdate() {
@@ -33,6 +37,12 @@ class Login extends PureComponent {
         </Link>
       </div>
     );
+  }
+
+  handleClick() {
+    const { gettingToken, history } = this.props;
+    gettingToken();
+    history.push('/game');
   }
 
   handleInput({ target }) {
@@ -63,6 +73,7 @@ class Login extends PureComponent {
         <label
           htmlFor="email"
         >
+          Email
           <input
             type="email"
             name="email"
@@ -76,6 +87,7 @@ class Login extends PureComponent {
         <label
           htmlFor="name"
         >
+          Nome
           <input
             type="text"
             name="name"
@@ -90,6 +102,7 @@ class Login extends PureComponent {
           data-testid="btn-play"
           type="button"
           disabled={ disabled }
+          onClick={ this.handleClick }
         >
           Jogar
         </button>
@@ -100,4 +113,19 @@ class Login extends PureComponent {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  gettingToken: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  gettingToken: () => dispatch(fetchToken()),
+});
+
+const mapStateToProps = (state) => ({
+  myUserState: state.user,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
