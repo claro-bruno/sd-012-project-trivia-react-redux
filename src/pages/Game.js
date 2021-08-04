@@ -18,7 +18,7 @@ class Game extends Component {
         <Header />
         { getQuestions.map((question, index) => (
           <Question key={ index } questionAPI={ question } />)) }
-      </div>);
+      </div>
     );
   }
 }
