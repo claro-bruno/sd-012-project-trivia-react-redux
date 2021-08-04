@@ -1,10 +1,12 @@
 import React from 'react';
 import logo from '../trivia.png';
+import requestToken from '../helpers';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
 
     this.state = {
       name: '',
@@ -45,6 +47,11 @@ class Login extends React.Component {
     }
   }
 
+  handleClick() {
+    // const { id, value } = this.state;
+    requestToken();
+  }
+
   render() {
     const { name, email, emailCheck, nameCheck } = this.state;
     const btnCheck = !(emailCheck === true && nameCheck === true);
@@ -78,6 +85,7 @@ class Login extends React.Component {
             type="button"
             data-testid="btn-play"
             disabled={ btnCheck }
+            onClick={ this.handleClick }
           >
             Jogar
           </button>
