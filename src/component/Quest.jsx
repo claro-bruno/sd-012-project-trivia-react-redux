@@ -61,11 +61,13 @@ class Quest extends React.Component {
     const { timerId } = this.state;
     const wrongButtons = document.getElementsByName('wrong-answer');
     const correctButton = document.getElementById('correct-answer');
+    const nextButton = document.getElementById('btn-next');
     wrongButtons.forEach((button) => {
       button.className = 'wrong-answer-clicked';
     });
 
     correctButton.className = 'correct-answer-clicked';
+    nextButton.className = 'show';
     clearInterval(timerId);
   }
 
@@ -106,6 +108,16 @@ class Quest extends React.Component {
           >
             { wrong }
           </button>)) }
+        <div>
+          <button
+            data-testid="btn-next"
+            id="btn-next"
+            type="button"
+            className="hide"
+          >
+            Próxima
+          </button>
+        </div>
       </div>
     );
   }

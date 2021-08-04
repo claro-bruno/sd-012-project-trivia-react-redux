@@ -15,6 +15,14 @@
   border: 1px solid green;
 }
 
+.hide {
+  display: none;
+}
+
+.show {
+  display: flex;
+}
+
 @media ( prefers-reduced-motion : no-preference ) {
 
   .App-logo {
