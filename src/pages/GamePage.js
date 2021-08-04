@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import GameQuestions from '../components/GameQuestions';
 import HeaderPlayer from '../components/HeaderPlayer';
 
