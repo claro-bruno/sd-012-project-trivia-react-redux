@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
 import { fetchQuest } from '../actions';
+import Header from './Header';
+import * as fetchAPI from '../helpers/fetchAPI';
 import './Quest.css';
 
 class Quest extends React.Component {
@@ -17,7 +20,6 @@ class Quest extends React.Component {
 
   componentDidMount() {
     const { questsFn } = this.props;
-    console.log(questsFn);
     const token = localStorage.getItem('token');
     questsFn(token);
     this.timerRunner();
@@ -68,9 +70,10 @@ class Quest extends React.Component {
   }
 
   render() {
-    const { quests, isLoading } = this.props;
+    const { quests, isLoading, name, email } = this.props;
     const { timer } = this.state;
     if (isLoading) return <div>Loading...</div>;
+    const avatar = fetchAPI.fetAvatar(md5(email).toString());
     const {
       question,
       category,
@@ -79,6 +82,7 @@ class Quest extends React.Component {
     } = quests[0];
     return (
       <div>
+        <Header name={ name } avatar={ avatar } />
         <h2>{timer}</h2>
         <p data-testid="question-category">{ category }</p>
         <p data-testid="question-text">{ question }</p>
@@ -111,11 +115,15 @@ Quest.propTypes = {
   quests: PropTypes.arrayOf(PropTypes.object).isRequired,
   questsFn: PropTypes.func.isRequired,
   isLoading: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   quests: state.quest.quests,
   isLoading: state.quest.isLoading,
+  name: state.user.name,
+  email: state.user.email,
 });
 
 const mapDispatchToProps = (dispatch) => ({
