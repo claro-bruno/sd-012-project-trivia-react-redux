@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { shuffleArray, answerCheck } from '../helpers';
 
 class Question extends React.Component {
@@ -36,5 +37,9 @@ class Question extends React.Component {
 const mapStateToProps = (state) => ({
   questions: state.game.questions,
 });
+
+Question.propTypes = {
+  questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default connect(mapStateToProps, null)(Question);
