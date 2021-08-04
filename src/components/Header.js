@@ -7,7 +7,12 @@ class Header extends React.Component {
     const { getUrl, getName } = this.props;
     return (
       <header>
-        <img data-testid="header-profile-picture" src={ getUrl } alt="Profile" />
+        <img
+          style={ { width: '90px' } }
+          data-testid="header-profile-picture"
+          src={ getUrl }
+          alt="Profile"
+        />
         <h4 data-testid="header-player-name">{getName}</h4>
         <h5 data-testid="header-score">0</h5>
       </header>

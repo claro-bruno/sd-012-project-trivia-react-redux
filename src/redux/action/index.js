@@ -1,5 +1,7 @@
-const actionGetGravatarImg = (url, name) => ({
+export const actionGetGravatarImg = (url, name) => ({
   type: 'GET_IMG', url, name,
 });
 
-export default actionGetGravatarImg;
+export const actionGetToken = (token) => ({
+  type: 'GET-TOKEN', token,
+});
