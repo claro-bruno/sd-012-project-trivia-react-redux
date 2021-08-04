@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import logo from '../trivia.png';
 import requestToken from '../helpers';
 
@@ -89,6 +90,14 @@ class Login extends React.Component {
           >
             Jogar
           </button>
+          <Link to="/Settings">
+            <button
+              type="button"
+              data-testid="btn-play"
+            >
+              Settings
+            </button>
+          </Link>
         </form>
       </main>
     );
