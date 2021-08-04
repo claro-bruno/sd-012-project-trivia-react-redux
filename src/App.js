@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import Trivia from './pages/Trivia';
 import Login from './pages/Login';
 import './App.css';
 
@@ -7,15 +8,16 @@ export default class App extends Component {
   render() {
     return (
       <>
-        <BrowserRouter>
+        <Switch>
           <Route exact path="/" component={ Login } />
           <Route path="/config" />
-        </BrowserRouter>
-        <BrowserRouter>
-          <Route path="/game/trivia" />
+          <Route path="/" />
+        </Switch>
+        <Switch>
+          <Route path="/game/trivia" component={ Trivia } />
           <Route path="/game/feedback" />
           <Route path="/game/ranking" />
-        </BrowserRouter>
+        </Switch>
       </>
     );
   }
