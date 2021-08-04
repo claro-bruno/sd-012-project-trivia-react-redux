@@ -60,7 +60,7 @@ Trivia.propTypes = {
     category: PropTypes.string.isRequired,
     question: PropTypes.string.isRequired,
     correct_answer: PropTypes.string.isRequired,
-    incorrect_answers: PropTypes.string.isRequired,
+    incorrect_answers: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
 };
 
