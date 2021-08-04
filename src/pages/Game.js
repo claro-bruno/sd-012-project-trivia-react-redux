@@ -8,9 +8,13 @@ class Game extends React.Component {
     this.state = {
       questionNumber: 0,
       questions: [],
+      corrAnsBorder: {},
+      incorrAnsBorder: {},
     };
 
     this.getQuestions = this.getQuestions.bind(this);
+    this.changeBordersColor = this.changeBordersColor.bind(this);
+    this.renderFalseAnswers = this.renderFalseAnswers.bind(this);
   }
 
   componentDidMount() {
@@ -26,8 +30,43 @@ class Game extends React.Component {
       }));
   }
 
+  changeBordersColor() {
+    this.setState({
+      corrAnsBorder: { border: '3px solid rgb(6, 240, 15)' },
+      incorrAnsBorder: { border: '3px solid rgb(255, 0, 0)' },
+    });
+  }
+
+  renderFalseAnswers() {
+    const { corrAnsBorder, incorrAnsBorder } = this.state;
+
+    return (
+      <div>
+        <Header />
+        <p data-testid="question-category">o</p>
+        <p data-testid="question-text">o</p>
+        <button
+          type="button"
+          data-testid={ `wrong-answer-${0}` }
+          onClick={ this.changeBordersColor }
+          style={ incorrAnsBorder }
+        >
+          a
+        </button>
+        <button
+          type="button"
+          data-testid="correct-answer"
+          onClick={ this.changeBordersColor }
+          style={ corrAnsBorder }
+        >
+          o
+        </button>
+      </div>
+    );
+  }
+
   render() {
-    const { questions, questionNumber } = this.state;
+    const { questions, questionNumber, corrAnsBorder, incorrAnsBorder } = this.state;
     if (questions.length > 0) {
       return (
         <main>
@@ -47,6 +86,8 @@ class Game extends React.Component {
                   key={ index }
                   type="button"
                   data-testid={ `wrong-answer-${index}` }
+                  style={ incorrAnsBorder }
+                  onClick={ this.changeBordersColor }
                 >
                   { answer }
                 </button>
@@ -54,6 +95,8 @@ class Game extends React.Component {
             <button
               type="button"
               data-testid="correct-answer"
+              style={ corrAnsBorder }
+              onClick={ this.changeBordersColor }
             >
               { questions[questionNumber].correct_answer }
             </button>
@@ -63,11 +106,7 @@ class Game extends React.Component {
     }
     return (
       <main>
-        <Header />
-        <p data-testid="question-category">o</p>
-        <p data-testid="question-text">o </p>
-        <button type="button" data-testid={ `wrong-answer-${0}` }>a</button>
-        <button type="button" data-testid="correct-answer">o</button>
+        { this.renderFalseAnswers() }
       </main>
     );
   }
