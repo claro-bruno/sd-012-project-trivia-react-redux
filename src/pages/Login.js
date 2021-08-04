@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import addPlayerInfo from '../redux/actions';
 import { Redirect } from 'react-router-dom';
 import addPlayerInfo from '../redux/actions';
 // import { getApiToken } from '../services/triviaApi';
@@ -90,6 +92,14 @@ class Login extends React.Component {
         >
           Jogar
         </button>
+        <Link to="/Settings">
+          <button
+            data-testid="btn-settings"
+            type="button"
+          >
+            Settings
+          </button>
+        </Link>
         { shouldRedirect && <Redirect to="/game" /> }
       </form>
     );
