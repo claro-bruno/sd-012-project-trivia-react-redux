@@ -36,7 +36,6 @@ class Login extends Component {
     const { email, name } = this.state;
     return (
       <div className="App">
-        <Timer />
         <header className="App-header">
           <img src={ logo } className="App-logo" alt="logo" />
           <p>
