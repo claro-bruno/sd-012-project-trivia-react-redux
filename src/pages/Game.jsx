@@ -32,7 +32,6 @@ class Game extends React.Component {
 
   render() {
     const { questions } = this.state;
-    console.log(questions);
     return (
       <div>
         <Header />
