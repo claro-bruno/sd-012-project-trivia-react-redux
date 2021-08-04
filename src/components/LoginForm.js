@@ -43,6 +43,15 @@ class LoginForm extends Component {
     setEmailStore(email);
     setNameStore(name);
     this.handleTokenThing();
+    const player = {
+      player: {
+        name,
+        gravatarEmail: email,
+        score: 0,
+        assertions: 0,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(player));
   }
 
   render() {
