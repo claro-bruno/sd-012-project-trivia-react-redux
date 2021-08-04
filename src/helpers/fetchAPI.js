@@ -3,7 +3,6 @@ const TOKEN_URL = 'https://opentdb.com/api_token.php?command=request';
 export const getToken = async () => {
   const response = await fetch(TOKEN_URL);
   const data = await response.json();
-  console.log(data.token);
   localStorage.setItem('token', data.token);
 };
 
