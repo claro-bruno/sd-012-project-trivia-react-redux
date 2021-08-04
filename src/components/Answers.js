@@ -21,10 +21,9 @@ class Answers extends React.Component {
 
   answers(question) {
     const answers = [...question.incorrect_answers, question.correct_answer];
-
-    let controllIncorrects = 0;
     const arrayAnswers = this.shuffleArray(answers);
 
+    let controllIncorrects = 0;
     return (
       arrayAnswers.map((answer, index) => {
         if (answer === question.correct_answer) {

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { actionFetchApiGame } from '../redux/actions';
 import Question from '../components/Question';
+import Loading from '../components/Loading';
 
 class Game extends React.Component {
   componentDidMount() {
@@ -13,7 +14,7 @@ class Game extends React.Component {
   render() {
     const { questions, isFetching } = this.props;
     return (
-      isFetching ? <p>Loading</p>
+      isFetching ? <Loading />
         : (
           <section className="App">
             { questions.map((question) => (
@@ -30,7 +31,9 @@ class Game extends React.Component {
 
 Game.propTypes = {
   fetchApiGame: PropTypes.func.isRequired,
-  questions: PropTypes.shape({}).isRequired, // nao sei fazer isso =(
+  questions: PropTypes.arrayOf(
+    PropTypes.shape({}),
+  ).isRequired,
   isFetching: PropTypes.bool.isRequired,
 };
 
