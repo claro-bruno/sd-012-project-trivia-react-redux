@@ -6,14 +6,14 @@ export const getToken = () => ({
   type: GET_API_TRIVIA_TOKEN,
 });
 
-export const getTokenSucess = (payload) => ({
+export const getTokenSucess = (token) => ({
   type: GET_API_TRIVIA_TOKEN_SUCESS,
-  payload,
+  payload: token,
 });
 
 export const getTokenError = (error) => ({
   type: GET_API_TRIVIA_TOKEN_ERROR,
-  error,
+  payload: error,
 });
 
 export const tokenFetchAPI = () => async (dispatch) => {
