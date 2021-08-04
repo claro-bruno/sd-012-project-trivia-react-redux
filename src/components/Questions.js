@@ -65,8 +65,9 @@ class Questions extends React.Component {
     const { loading } = this.state;
     if (loading) return <div>Loading</div>;
     const { questions: { results } } = this.state;
-    const { category, question, correct_answer, incorrect_answers } = results[0];
-    const answers = this.concatenaAnswers(incorrect_answers, correct_answer);
+    const { category, question, correct_answer: correctAnswer,
+      incorrect_answers: incorrectAnswers } = results[0];
+    const answers = this.concatenaAnswers(incorrectAnswers, correctAnswer);
     return (
       <div>
         <div data-testid="question-category">{ category }</div>
