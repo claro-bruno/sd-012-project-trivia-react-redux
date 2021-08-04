@@ -1,6 +1,11 @@
+const URL_TRIVIA_API = 'https://opentdb.com/api.php?amount=5&token=';
+export const SEND_USER_INFO = 'SEND_USER_INFO';
 export const AWAIT_TRIVIA = 'AWAIT_TRIVIA';
 export const GET_TRIVIA = 'GET_TRIVIA';
-const URL_TRIVIA_API = 'https://opentdb.com/api.php?amount=5&token=';
+
+export const sendUserInfo = (name, email, image) => ({
+  type: SEND_USER_INFO, name, email, image,
+});
 
 const awaitTriviaFetch = () => ({
   type: AWAIT_TRIVIA,

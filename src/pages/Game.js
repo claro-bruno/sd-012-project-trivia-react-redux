@@ -1,19 +1,20 @@
 import React from 'react';
-// import Header from '../components/Header';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { requestTrivia } from '../redux/action';
+import Header from '../components/Header';
 
 class Game extends React.Component {
   componentDidMount() {
-    const { requestTrivia } = this.props;
-    requestTrivia();
+    const { request } = this.props;
+    request();
   }
 
   render() {
     const { loading } = this.props;
     return (
       <main>
-        {/* <Header /> */}
+        <Header />
         { (loading) ? <h1>Loading</h1> : <p>Perguntas</p> }
       </main>
     );
@@ -21,12 +22,16 @@ class Game extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  requestTrivia: () => dispatch(requestTrivia()), 
+  request: () => dispatch(requestTrivia()),
 });
 
 const mapStateToProps = (state) => ({
   loading: state.game.loading,
-  questions: state.game.questions,
 });
 
-export default connect(null, mapDispatchToProps)(Game);
+Game.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  request: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
