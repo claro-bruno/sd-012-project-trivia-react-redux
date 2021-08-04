@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import logo from '../trivia.png';
 import { requestToken, addItemToStorage } from '../helpers';
 
@@ -53,7 +54,7 @@ class Login extends React.Component {
     const { history } = this.props;
     history.push('/game');
     addItemToStorage('state', 'name', name);
-    addItemToStorage('state', 'email', email);
+    addItemToStorage('state', 'gravatarEmail', email);
     requestToken();
   }
 
@@ -107,5 +108,11 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default Login;
