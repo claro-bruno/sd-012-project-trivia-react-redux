@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
-
+import { BrowserRouter, Route } from 'react-router-dom';
+import Login from './pages/Login';
 import './App.css';
 
 export default class App extends Component {
   render() {
     return (
-      <Switch>
-        <Switch>
-          <Route exact path="/" />
+      <>
+        <BrowserRouter>
+          <Route exact path="/" component={ Login } />
           <Route path="/config" />
-          <Route path="/" />
-        </Switch>
-        <Route path="/game/trivia" />
-        <Route path="/game/feedback" />
-        <Route path="/game/ranking" />
-      </Switch>
+        </BrowserRouter>
+        <BrowserRouter>
+          <Route path="/game/trivia" />
+          <Route path="/game/feedback" />
+          <Route path="/game/ranking" />
+        </BrowserRouter>
+      </>
     );
   }
 }
