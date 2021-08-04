@@ -1,6 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { scoreUpdate } from '../redux/actions';
 import Header from '../components/Header';
 import getUserInfo from '../services/api';
+import saveLocalStorage from '../helper/saveLocalStorage';
 import './game.css';
 
 class Game extends React.Component {
@@ -51,14 +55,38 @@ class Game extends React.Component {
     }, () => this.timeInterval());
   }
 
+  handleScore({ target }, { difficulty, correct_answer: correctAnswer }, timer) {
+    const { getPoint } = this.props;
+    const hard = 3;
+    const medium = 2;
+    const easy = 1;
+    const point = 10;
+    let difficultyValue;
+    switch (difficulty) {
+    case 'hard':
+      difficultyValue = hard;
+      break;
+    case 'medium':
+      difficultyValue = medium;
+      break;
+    default:
+      difficultyValue = easy;
+      break;
+    }
+    if (target.value === correctAnswer) {
+      getPoint(point + (timer * difficultyValue));
+      saveLocalStorage();
+    }
+  }
+
   checkAnswer(e) {
-    const { questionNumber, questions, idTimer } = this.state;
+    const { questionNumber, questions, idTimer, timer } = this.state;
     clearInterval(idTimer);
-    // Dentro desse if deve ser calculado os pontos
-    if (e) console.log(e.target);
+    if (e) {
+      this.handleScore(e, questions[questionNumber], timer);
+    }
     this.setState({ showButton: true });
-    // Essa linha só ta dando um console se a resposta é certa ou não.
-    // É aqui que deve implementar o que fazer caso a resposta esteja certa ou não.
+
     const answers = document.querySelectorAll('.alternative-btn');
     answers.forEach((answer) => {
       if (answer.value === questions[questionNumber].correct_answer) {
@@ -186,4 +214,12 @@ class Game extends React.Component {
   }
 }
 
-export default Game;
+const mapDispatchToProps = (dispatch) => ({
+  getPoint: (point) => dispatch(scoreUpdate(point)),
+});
+
+Game.propTypes = {
+  getPoint: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Game);

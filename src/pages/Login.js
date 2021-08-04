@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import getUserData from '../redux/actions';
+import { getUserData } from '../redux/actions';
+import saveLocalStorage from '../helper/saveLocalStorage';
 import getUserInfo from '../services/api';
 
 class Login extends React.Component {
@@ -45,6 +46,7 @@ class Login extends React.Component {
     localStorage.setItem('token', userInfo.token);
     const { getUser, history } = this.props;
     getUser(name, email);
+    saveLocalStorage();
     history.push('/game');
   }
 

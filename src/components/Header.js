@@ -39,9 +39,9 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.user.name,
-  score: state.trivia.score,
-  email: state.user.email,
+  name: state.player.name,
+  score: state.player.score,
+  email: state.player.gravatarEmail,
 });
 
 Header.propTypes = {
