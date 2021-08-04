@@ -33,6 +33,7 @@ class GameQuestions extends Component {
     });
     onAnswer();
   }
+  // oi
 
   render() {
     const { questionObj, nextQuestion, answered } = this.props;
