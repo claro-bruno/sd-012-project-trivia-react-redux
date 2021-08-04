@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { BORDER_BLACK } from '../data';
+import StaticTrivia from '../components/StaticTrivia';
 
 class Trivia extends Component {
   constructor() {
@@ -11,6 +13,18 @@ class Trivia extends Component {
     this.shuffle = this.shuffle.bind(this);
     this.shuffledAnswers = this.shuffledAnswers.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
+  }
+
+  componentDidUpdate() {
+    const correct = document.querySelector('.correct-answer');
+    const incorrects = document.querySelectorAll('.wrong-answer');
+    const next = document.querySelector('.btn-next');
+    correct.style.border = BORDER_BLACK;
+    for (let i = 0; i < incorrects.length; i += 1) {
+      incorrects[i].style.border = BORDER_BLACK;
+    }
+    next.style.display = 'none';
   }
 
   shuffle(array) {
@@ -45,6 +59,7 @@ class Trivia extends Component {
               className="correct-answer"
               type="button"
               onClick={ this.handleClick }
+              style={ { border: '1px solid black' } }
             >
               { question.correct_answer }
             </button>
@@ -58,6 +73,7 @@ class Trivia extends Component {
             className="wrong-answer"
             type="button"
             onClick={ this.handleClick }
+            style={ { border: '1px solid black' } }
           >
             { question.incorrect_answers[controllIncorrects - 1] }
           </button>
@@ -73,35 +89,30 @@ class Trivia extends Component {
     for (let i = 0; i < incorrects.length; i += 1) {
       incorrects[i].style.border = '3px solid rgb(255, 0, 0)';
     }
+    const next = document.querySelector('.btn-next');
+    next.style.display = 'block';
+  }
+
+  nextQuestion() {
+    const maxQuestions = 5;
+    this.setState((state) => {
+      if (state.currentQuestion < maxQuestions - 1) {
+        return {
+          currentQuestion: state.currentQuestion + 1,
+        };
+      }
+    });
   }
 
   render() {
     const { currentQuestion } = this.state;
     const { questions } = this.props;
-    console.log(questions);
-    const questionTest = {
-      category: 'Animals',
-      correct_answer: 'Cheetah',
-      difficulty: 'easy',
-      incorrect_answers: {
-        0: 'Lion',
-        1: 'Thomson&rsquo;s Gazelle',
-        2: 'Pronghorn Antelope',
-      },
-      question: 'What is the fastest  land animal?',
-      type: 'multiple',
-    };
     if (questions.length === 0) {
       return (
-        <div>
-          <span data-testid="question-category">
-            { questionTest.category }
-          </span>
-          <p data-testid="question-text">
-            { questionTest.question }
-          </p>
-          { this.shuffledAnswers(questionTest) }
-        </div>
+        <StaticTrivia
+          handleClick={ this.handleClick }
+          nextQuestion={ this.nextQuestion }
+        />
       );
     }
     return (
@@ -113,6 +124,15 @@ class Trivia extends Component {
           { questions[currentQuestion].question }
         </p>
         { this.shuffledAnswers(questions[currentQuestion]) }
+        <button
+          className="btn-next"
+          data-testid="btn-next"
+          type="button"
+          onClick={ this.nextQuestion }
+          style={ { display: 'none' } }
+        >
+          Próxima
+        </button>
       </div>
     );
   }
