@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import logo from '../trivia.png';
 import Input from '../components/Input';
-import ADD_NEW_PLAYER from '../redux/action';
+import { ADD_NEW_PLAYER, fetchClick } from '../redux/action';
 
 class Login extends Component {
   constructor(props) {
@@ -13,15 +13,28 @@ class Login extends Component {
     this.state = {
       name: '',
       email: '',
+      game: false,
       config: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
+  }
+
+  componentDidMount() {
+    const { fetcher } = this.props;
+    const result = fetcher();
+  }
+
+  componentWillUnmount() {
+    const { token } = this.props;
+    localStorage.setItem('token', token);
   }
 
   onclick(newUser) {
     newUser(this.state);
+    this.handlePlay();
   }
 
   handleChange({ target }) {
@@ -29,6 +42,13 @@ class Login extends Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  handlePlay() {
+    this.setState((state) => ({
+      ...state,
+      game: true,
+    }));
   }
 
   handleClick() {
@@ -42,11 +62,10 @@ class Login extends Component {
   }
 
   render() {
+    const { game, config } = this.state;
     const { newUser } = this.props;
-    const { config } = this.state;
-    if (config) {
-      return <Redirect to="/config" />;
-    }
+    if (game) return <Redirect to="/game" />;
+    if (config) return <Redirect to="/config" />;
     return (
       <div className="App">
         <header className="App-header">
@@ -73,7 +92,7 @@ class Login extends Component {
               type="button"
               data-testid="btn-play"
               disabled={ this.buttonDisable() }
-              onClick={ this.onclick(newUser) }
+              onClick={ () => this.onclick(newUser) }
             >
               Jogar
             </button>
@@ -93,10 +112,17 @@ class Login extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   newUser: (value) => dispatch(ADD_NEW_PLAYER(value)),
+  fetcher: () => dispatch(fetchClick()),
+});
+
+const mapStateToProps = (state) => ({
+  token: state.buttonReducer.token,
 });
 
 Login.propTypes = {
   newUser: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  fetcher: PropTypes.func.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
