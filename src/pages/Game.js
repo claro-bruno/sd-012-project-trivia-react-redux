@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from '../components/Header';
 import getUserInfo from '../services/api';
 
 class Game extends React.Component {
@@ -109,6 +110,7 @@ class Game extends React.Component {
     pergunta = this.handleWriteError(pergunta);
     return (
       <div>
+        <Header />
         <div>
           <h2 data-testid="question-category">{ actualQuestion.category }</h2>
           <h3 data-testid="question-text">{ pergunta }</h3>
