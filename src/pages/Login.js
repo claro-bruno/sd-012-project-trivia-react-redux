@@ -8,7 +8,6 @@ import getUserInfo from '../services/api';
 class Login extends React.Component {
   constructor() {
     super();
-
     this.state = {
       name: '',
       email: '',
@@ -17,7 +16,7 @@ class Login extends React.Component {
 
     this.validation = this.validation.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   validation() {
@@ -40,7 +39,7 @@ class Login extends React.Component {
     }, () => this.validation());
   }
 
-  async handleClick() {
+  async handleLogin() {
     const { name, email } = this.state;
     const userInfo = await getUserInfo();
     localStorage.setItem('token', userInfo.token);
@@ -77,7 +76,7 @@ class Login extends React.Component {
           data-testid="btn-play"
           type="button"
           disabled={ buttonDisabled }
-          onClick={ this.handleClick }
+          onClick={ this.handleLogin }
         >
           Jogar!
         </button>
