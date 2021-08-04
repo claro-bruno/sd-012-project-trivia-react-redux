@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ConfigButton from '../Components/ConfigButton'
+import ConfigButton from '../Components/ConfigButton';
 // import logo from '../trivia.png';
 
 class Login extends React.Component {
