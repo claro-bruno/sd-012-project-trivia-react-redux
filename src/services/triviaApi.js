@@ -1,13 +1,15 @@
-export const getApiToken = () => {
-  const endpoint = 'https://opentdb.com/api_token.php?command=request';
-  const token = fetch(endpoint)
-    .then((data) => data.json())
-    .then((response) => response.token)
-    .catch((err) => err);
-  return token;
-};
+// export const getApiToken = () => {
+//   const endpoint = 'https://opentdb.com/api_token.php?command=request';
+//   try {
+//     fetch(endpoint)
+//       .then((response) => response.json())
+//       .then((data) => localStorage.setItem('token', data.token));
+//   } catch (err) {
+//     return 'Api não encontrada';
+//   }
+// };
 
-export const getApiQuestions = (token) => {
+const getApiQuestions = (token) => {
   const endpoint = `https://opentdb.com/api.php?amount=5&token=${token}`;
   const questions = fetch(endpoint)
     .then((data) => data.json())
@@ -15,3 +17,5 @@ export const getApiQuestions = (token) => {
     .catch((err) => err);
   return questions;
 };
+
+export default getApiQuestions;
