@@ -17,6 +17,13 @@ class Login extends Component {
     this.validateEmail = this.validateEmail.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.fetchGravatar = this.fetchGravatar.bind(this);
+    this.requestAPI = this.requestAPI.bind(this);
+  }
+
+  requestAPI() {
+    const tokenApi = 'https://opentdb.com/api_token.php?command=request';
+    fetch(tokenApi).then((data) => data.json())
+      .then((response) => localStorage.setItem('token', response.token));
   }
 
   validateEmail(emailValue) {
@@ -43,6 +50,7 @@ class Login extends Component {
     const result = await fetch(`https://www.gravatar.com/avatar/${toHash}`);
     console.log(result);
     setPlayerInfo(result.url, nameInput);
+    this.requestAPI()
   }
 
   render() {
@@ -76,6 +84,14 @@ class Login extends Component {
             disabled={ disableBtn || nameInput.length < minLengthName }
           >
             Jogar
+          </button>
+        </Link>
+        <Link to="/configs">
+          <button
+            type="button"
+            data-testid="btn-settings"
+          >
+            Configurações
           </button>
         </Link>
       </section>
