@@ -12,7 +12,6 @@ class Header extends React.Component {
 
   hash() {
     const { email } = this.props;
-    console.log(email);
     const hash = md5(email).toString();
     return hash;
   }
@@ -20,15 +19,16 @@ class Header extends React.Component {
   render() {
     const { name } = this.props;
     return (
-      <div>
+      <header className="header">
         <img
+          className="header-things"
           src={ `https://www.gravatar.com/avatar/${this.hash()}` }
           alt="Player"
           data-testid="header-profile-picture"
         />
-        <div data-testid="header-player-name">{ name }</div>
-        <div data-testid="header-score">0</div>
-      </div>
+        <div data-testid="header-player-name" className="header-things">{ name }</div>
+        <div data-testid="header-score" className="header-things">0</div>
+      </header>
     );
   }
 }
