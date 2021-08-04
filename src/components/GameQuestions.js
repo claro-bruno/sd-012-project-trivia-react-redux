@@ -8,6 +8,7 @@ class GameQuestions extends Component {
       answered: false,
     };
     this.changeColor = this.changeColor.bind(this);
+    this.timeIsOver = this.timeIsOver.bind(this);
   }
 
   generateAnswers(correct, incorrect) {
@@ -25,7 +26,6 @@ class GameQuestions extends Component {
 
   changeColor() {
     const btns = document.querySelectorAll('button');
-    console.log(btns);
     btns.forEach((element) => {
       if ((element.id) === 'correct-answer') {
         element.classList.add('correct-btn');
@@ -34,6 +34,11 @@ class GameQuestions extends Component {
       }
     });
     this.setState({ answered: true });
+  }
+
+  timeIsOver() {
+    const { time } = this.props;
+    if (time === 0) return this.changeColor;
   }
 
   render() {
@@ -47,6 +52,7 @@ class GameQuestions extends Component {
     const { answered } = this.state;
     return (
       <div>
+        {this.timeIsOver()}
         <h2 data-testid="question-category">{category}</h2>
         <p data-testid="question-text">{question}</p>
         {
