@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router';
 import Login from './pages/Login';
 import './App.css';
 import Feedback from './pages/Feedback';
-// import Ranking from './pages/Ranking';
+import Ranking from './pages/Ranking';
 
 class App extends React.Component {
   render() {
