@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import ConfigButton from '../components/ConfigButton';
 // import logo from '../trivia.png';
 
 class Login extends React.Component {
@@ -18,6 +20,7 @@ class Login extends React.Component {
 
   render() {
     const { nome, email } = this.state;
+    const { history: { push } } = this.props;
     return (
       <div className="App">
         <header>
@@ -57,10 +60,17 @@ class Login extends React.Component {
           >
             Jogar
           </button>
+
         </form>
+        <ConfigButton push={ push } />
       </div>
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.arrayOf(Object).isRequired,
+  push: PropTypes.func.isRequired,
+};
 
 export default Login;
