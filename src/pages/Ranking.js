@@ -28,7 +28,7 @@ class Ranking extends React.Component {
     const noStorageData = <span>Sem pontuações no momento.</span>;
     return (
       <div className="ranking-page">
-        <h1>Ranking</h1>
+        <h1 data-testid="ranking-title">Ranking</h1>
         {localStorageData ? scoreBoard : noStorageData}
         <Link className="ranking-button-container" to="/">
           <button data-testid="btn-go-home" className="ranking-button" type="button">
