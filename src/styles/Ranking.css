@@ -1,14 +1,14 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 .ranking-page {
+  align-items: center;
   display: flex;
   flex-flow: column;
   justify-content: center;
-  align-items: center;
 }
 
 .ranking-page h1 {
@@ -16,33 +16,33 @@
 }
 
 .score-board {
+  border: 1px black solid;
   display: flex;
   flex-flow: column;
-  width: 75%;
-  border: 1px black solid;
   margin-top: 5%;
+  width: 75%;
 }
 
 .eachPlayer-list {
-  list-style-type: none;
-  display: flex;
-  justify-content: space-around;
   align-items: center;
   border: 1px black solid;
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
 }
 
 .ranking-button-container {
   border: 1px black solid;
-  width: 120px;
   height: 65px;
   margin-top: 3%;
+  width: 120px;
 }
 
 .ranking-button {
   background-color: green;
   color: white;
-  font-weight: bold;
   font-size: larger;
-  width: 100%;
+  font-weight: 600;
   height: 100%;
+  width: 100%;
 }
