@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import getUserInfo from '../services/api';
+import './game.css';
 
 class Game extends React.Component {
   constructor() {
@@ -12,14 +13,15 @@ class Game extends React.Component {
       actualQuestion: [],
       timer: 30,
       idTimer: 0,
+      showButton: false,
     };
 
     this.fetchApi = this.fetchApi.bind(this);
     this.multiple = this.multiple.bind(this);
-    // this.boolean = this.boolean.bind(this);
     this.checkAnswer = this.checkAnswer.bind(this);
     this.handleWriteError = this.handleWriteError.bind(this);
     this.timeInterval = this.timeInterval.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -52,7 +54,9 @@ class Game extends React.Component {
   checkAnswer(e) {
     const { questionNumber, questions, idTimer } = this.state;
     clearInterval(idTimer);
+    // Dentro desse if deve ser calculado os pontos
     if (e) console.log(e.target);
+    this.setState({ showButton: true });
     // Essa linha só ta dando um console se a resposta é certa ou não.
     // É aqui que deve implementar o que fazer caso a resposta esteja certa ou não.
     const answers = document.querySelectorAll('.alternative-btn');
@@ -109,20 +113,29 @@ class Game extends React.Component {
     return allButtons;
   }
 
-  // boolean() {
-  //   return (
-  //     <>
-  //       <button
-  //         onClick={ this.checkAnswer }
-  //         type="button"
-  //         value="True"
-  //       >
-  //         Verdadeiro
-  //       </button>
-  //       <button onClick={ this.checkAnswer } type="button" value="False">Falso</button>
-  //     </>
-  //   );
-  // }
+  nextQuestion() {
+    const { questionNumber, questions } = this.state;
+    this.setState({
+      showButton: false,
+    });
+    if (questionNumber + 1 !== questions.length) {
+      this.setState({
+        questionNumber: questionNumber + 1,
+        actualQuestion: [],
+        timer: 30,
+      }, () => this.timeInterval());
+      const answers = document.querySelectorAll('.alternative-btn');
+      answers.forEach((answer) => {
+        answer.style.border = '1px solid black';
+        answer.disabled = false;
+      });
+    } else {
+      // Aqui deve ser a chamada da proxima pagina caso tenha sido a ultima questão.
+      this.setState({
+        showButton: false,
+      });
+    }
+  }
 
   timeInterval() {
     const { timer } = this.state;
@@ -142,7 +155,16 @@ class Game extends React.Component {
   }
 
   render() {
-    const { questionNumber, questions, timer } = this.state;
+    const { questionNumber, questions, timer, showButton } = this.state;
+    const buttonNext = (
+      <button
+        type="button"
+        data-testid="btn-next"
+        onClick={ this.nextQuestion }
+      >
+        Próxima
+      </button>
+    );
     if (!questions.length) {
       return (<h1>Loading</h1>);
     }
@@ -158,6 +180,7 @@ class Game extends React.Component {
           <h3 data-testid="question-text">{ pergunta }</h3>
           { this.multiple(actualQuestion) }
         </div>
+        { showButton && buttonNext }
       </div>
     );
   }
