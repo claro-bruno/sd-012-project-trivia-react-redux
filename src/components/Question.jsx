@@ -12,9 +12,11 @@ class Question extends Component {
     this.state = {
       button: false,
       pergunta: 0,
+      showCorrect: false,
     };
     this.handleClickButton = this.handleClickButton.bind(this);
     this.handleClickNext = this.handleClickNext.bind(this);
+    this.changeBorder = this.changeBorder.bind(this);
   }
 
   componentDidMount() {
@@ -23,9 +25,10 @@ class Question extends Component {
     const quantity = 300;
     getQuiz(token, quantity);
   }
-
+  
   handleClickButton() {
     this.setState({ button: true });
+    this.changeBorder();
   }
 
   handleClickNext() {
@@ -40,20 +43,24 @@ class Question extends Component {
         pergunta: state.pergunta + 1,
         button: false,
       });
+
+  changeBorder() {
+    this.setState({
+      showCorrect: true,
+
     });
   }
 
   render() {
-    const { button, pergunta } = this.state;
+    const { button, pergunta, showCorrect } = this.state;
     const { questions, loading } = this.props;
+    const [question] = questions;
     if (loading) { return <p>Loading...</p>; }
     const alternatives = [
-      ...questions[pergunta].incorrect_answers
-        .map((alt, index) => ({ correct: false, alt, index })),
-      { correct: true, alt: questions[pergunta].correct_answer }];
+      ...question.incorrect_answers
+        .map((alt, index) => ({ correct: false, alt, index, isCorrect: 'wrong-answer' })),
+      { correct: true, alt: question.correct_answer, isCorrect: 'correct-border' }];
     const randomIndex = randomize(alternatives.length, alternatives.length - 1);
-    console.log(questions);
-    console.log(alternatives);
     return (
       <div className="question">
 
@@ -65,13 +72,14 @@ class Question extends Component {
 
         <div className="alternatives">
           {randomIndex.map((index) => {
-            const { correct, alt, index: i } = alternatives[index];
+            const { correct, alt, index: i, isCorrect } = alternatives[index];
             return (
               <button
                 type="button"
                 key={ alt }
                 data-testid={ correct ? 'correct-answer' : `wrong-answer${i}` }
                 onClick={ this.handleClickButton }
+                className={ showCorrect ? isCorrect : '' }
               >
                 {alt}
               </button>
