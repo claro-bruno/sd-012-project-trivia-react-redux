@@ -1,9 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import propTypes from 'prop-types';
+import logo from '../trivia.png';
+import { getTokenThunk } from '../actions';
 
-class Game extends React.Component {
-  constructor() {
-    super();
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       email: '',
@@ -18,9 +23,11 @@ class Game extends React.Component {
   }
 
   render() {
+    const { getTokenFunction } = this.props;
     const { email, name } = this.state;
     return (
       <form>
+        <img src={ logo } className="App-logo" alt="logo" />
         <input
           value={ name }
           onChange={ (e) => this.handleChange(e) }
@@ -37,16 +44,27 @@ class Game extends React.Component {
           data-testid="input-gravatar-email"
           placeholder="Email"
         />
-        <button
-          disabled={ !(email && name) }
-          type="button"
-          data-testid="btn-play"
-        >
-          Jogar
-        </button>
+        <Link to="/game">
+          <button
+            disabled={ !(email && name) }
+            type="button"
+            data-testid="btn-play"
+            onClick={ getTokenFunction }
+          >
+            Jogar
+          </button>
+        </Link>
       </form>
     );
   }
 }
 
-export default Game;
+const mapDispatchToProps = (dispatch) => ({
+  getTokenFunction: () => dispatch(getTokenThunk()),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  getTokenFunction: propTypes.func.isRequired,
+};
