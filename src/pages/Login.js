@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { saveLogin, fetchTrivia } from '../redux/actions';
 
 class Login extends React.Component {
@@ -10,12 +11,15 @@ class Login extends React.Component {
       playerName: '',
       email: '',
       disabled: true,
+      shouldRedirectConfig: false,
+      shouldRedirectPlay: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.verifyButton = this.verifyButton.bind(this);
     this.submit = this.submit.bind(this);
     this.saveToken = this.saveToken.bind(this);
+    this.redirect = this.redirect.bind(this);
   }
 
   async handleChange({ target }) {
@@ -42,7 +46,8 @@ class Login extends React.Component {
     const { setLogin, setToken } = this.props;
     setLogin(playerName, email);
     await setToken();
-    this.saveToken();
+    await this.saveToken();
+    this.setState({ shouldRedirectPlay: true });
   }
 
   saveToken() {
@@ -50,8 +55,15 @@ class Login extends React.Component {
     localStorage.setItem('token', JSON.stringify(token));
   }
 
+  redirect() {
+    this.setState({ shouldRedirectConfig: true });
+  }
+
   render() {
-    const { disabled, playerName, email } = this.state;
+    const { disabled, playerName, email,
+      shouldRedirectConfig, shouldRedirectPlay } = this.state;
+    if (shouldRedirectConfig) { return <Redirect to="/config" />; }
+    if (shouldRedirectPlay) { return <Redirect to="/play" />; }
     return (
       <div className="login-screen">
         <div className="login-box">
@@ -83,6 +95,13 @@ class Login extends React.Component {
               data-testid="btn-play"
             >
               Jogar
+            </button>
+            <button
+              type="button"
+              data-testid="btn-settings"
+              onClick={ this.redirect }
+            >
+              Configurações
             </button>
           </form>
         </div>

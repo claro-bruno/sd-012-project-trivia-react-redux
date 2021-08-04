@@ -12,6 +12,7 @@ class Header extends React.Component {
 
   hash() {
     const { email } = this.props;
+    console.log(email);
     const hash = md5(email).toString();
     return hash;
   }
@@ -33,8 +34,8 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  email: state.email,
-  name: state.name,
+  email: state.login.email,
+  name: state.login.name,
 });
 
 export default connect(mapStateToProps, null)(Header);
