@@ -50,7 +50,7 @@ class Login extends Component {
     const result = await fetch(`https://www.gravatar.com/avatar/${toHash}`);
     console.log(result);
     setPlayerInfo(result.url, nameInput);
-    this.requestAPI()
+    this.requestAPI();
   }
 
   render() {
