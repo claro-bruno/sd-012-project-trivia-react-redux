@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchQuestions } from '../redux/actions';
 import Question from './components/Question';
+import Header from '../components/Header';
 
 class Game extends Component {
   componentDidMount() {
@@ -14,9 +15,11 @@ class Game extends Component {
     const { getQuestions } = this.props;
     return (
       <div>
+        <Header />
         { getQuestions.map((question, index) => (
           <Question key={ index } questionAPI={ question } />)) }
       </div>);
+    );
   }
 }
 
