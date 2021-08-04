@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  url: '',
+  url: 'https://www.seekpng.com/png/full/245-2454602_tanni-chand-default-user-image-png.png',
 };
 
 const gravatar = (state = INITIAL_STATE, action) => {

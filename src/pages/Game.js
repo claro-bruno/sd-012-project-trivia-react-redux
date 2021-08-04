@@ -8,6 +8,7 @@ class Game extends React.Component {
     this.state = {
       questionNumber: 0,
       questions: [],
+      loading: true,
     };
 
     this.getQuestions = this.getQuestions.bind(this);
@@ -18,17 +19,19 @@ class Game extends React.Component {
   }
 
   getQuestions() {
-    const token = localStorage.getItem('token');
+    const token = JSON.parse(localStorage.getItem('token'));
+    console.log(token);
     fetch(`https://opentdb.com/api.php?amount=5&token=${token}`)
       .then((r) => r.json())
       .then((json) => this.setState({
-        questions: json.results,
+        questions: [...json.results], loading: false,
       }));
   }
 
   render() {
-    const { questions, questionNumber } = this.state;
-    if (questions.length > 0) {
+    const { questions, questionNumber, loading } = this.state;
+    console.log(questions);
+    if (!loading) {
       return (
         <main>
           <Header />
@@ -62,13 +65,7 @@ class Game extends React.Component {
       );
     }
     return (
-      <main>
-        <Header />
-        <p data-testid="question-category">o</p>
-        <p data-testid="question-text">o </p>
-        <button type="button" data-testid={ `wrong-answer-${0}` }>a</button>
-        <button type="button" data-testid="correct-answer">o</button>
-      </main>
+      <p>Loading...</p>
     );
   }
 }
