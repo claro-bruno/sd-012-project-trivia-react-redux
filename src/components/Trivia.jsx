@@ -47,7 +47,7 @@ class Trivia extends React.Component {
     const { category, question } = trivia;
     return (
       <div>
-        <h4 data-testid="question-category">{`nivel: ${category}`}</h4>
+        <h4 data-testid="question-category">{category}</h4>
         <h3 data-testid="question-text">{`Pergunta: ${question}`}</h3>
         { this.renderButtons() }
       </div>
