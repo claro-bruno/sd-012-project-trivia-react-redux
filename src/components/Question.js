@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import './question.css';
 
 class Question extends Component {
   render() {
@@ -11,6 +12,7 @@ class Question extends Component {
         incorrect_answers: incorrectAnswers,
       },
       resolved,
+      handleAnswer,
     } = this.props;
     const sortedAnswers = [...incorrectAnswers, correctAnswer].sort();
     return (
@@ -31,6 +33,8 @@ class Question extends Component {
               type="button"
               key={ index }
               data-testid={ dataTestId }
+              onClick={ handleAnswer }
+              disabled={ resolved }
             >
               {answer}
             </button>

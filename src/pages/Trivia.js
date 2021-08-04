@@ -9,8 +9,10 @@ class Trivia extends Component {
       questions: [],
       questionNumber: 0,
       loading: true,
+      resolved: false,
     };
     this.setQuestions = this.setQuestions.bind(this);
+    this.handleAnswer = this.handleAnswer.bind(this);
   }
 
   async componentDidMount() {
@@ -20,19 +22,24 @@ class Trivia extends Component {
     this.setQuestions(questions);
   }
 
+  handleAnswer() {
+    this.setState({ resolved: true });
+  }
+
   setQuestions(questions) {
     this.setState({ questions, loading: false });
   }
 
   render() {
-    const { questions, questionNumber, loading } = this.state;
+    const { questions, questionNumber, loading, resolved } = this.state;
+    const { handleAnswer } = this;
 
     return (
       <section>
         {
           loading
             ? 'loading...'
-            : <Question question={ questions[questionNumber] } />
+            : <Question handleAnswer={ handleAnswer } resolved={ resolved } question={ questions[questionNumber] } />
         }
       </section>
     );
