@@ -11,3 +11,8 @@ export const fetQuestions = async (token) => {
   const data = await response.json();
   return data;
 };
+
+export const fetAvatar = (hash) => {
+  const URL = `https://www.gravatar.com/avatar/${hash}`;
+  return URL;
+};

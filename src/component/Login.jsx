@@ -5,7 +5,7 @@ import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import logo from '../trivia.png';
 import * as fetchAPI from '../helpers/fetchAPI';
-import { questAction, saveToken } from '../actions';
+import { questAction, saveToken, saveEmail, saveName } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -37,8 +37,11 @@ class Login extends React.Component {
   }
 
   async toQuestions() {
-    const { saveToke } = this.props;
+    const { name, email } = this.state;
+    const { saveToke, saveEmailD, saveNameD } = this.props;
     const token = await fetchAPI.getToken();
+    saveEmailD(email);
+    saveNameD(name);
     saveToke(token);
     this.setState({ redirectToQuest: true });
   }
@@ -93,11 +96,15 @@ class Login extends React.Component {
 
 Login.propTypes = {
   saveToke: PropTypes.func.isRequired,
+  saveEmailD: PropTypes.func.isRequired,
+  saveNameD: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   quests: (quest) => dispatch(questAction(quest)),
   saveToke: (token) => dispatch(saveToken(token)),
+  saveEmailD: (email) => dispatch(saveEmail(email)),
+  saveNameD: (name) => dispatch(saveName(name)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
