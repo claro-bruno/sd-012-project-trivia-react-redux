@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ConfigButton from '../Components/ConfigButton'
 // import logo from '../trivia.png';
 
 class Login extends React.Component {
@@ -59,16 +60,9 @@ class Login extends React.Component {
           >
             Jogar
           </button>
-          <button
-            type="button"
-            data-testid="btn-settings"
-            onClick={ () => {
-              push('/configs');
-            } }
-          >
-            Configurações
-          </button>
+
         </form>
+        <ConfigButton push={ push } />
       </div>
     );
   }
