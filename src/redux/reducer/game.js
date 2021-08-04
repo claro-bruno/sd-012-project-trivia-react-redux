@@ -3,7 +3,7 @@ import { GET_TRIVIA, AWAIT_TRIVIA } from '../action';
 const INITIAL_GAME_STATE = {
   response: 3,
   questions: [],
-  loading: false,
+  loading: true,
 };
 
 function game(state = INITIAL_GAME_STATE, action) {

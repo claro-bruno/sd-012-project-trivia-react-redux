@@ -2,6 +2,7 @@ import React from 'react';
 // import Header from '../components/Header';
 import { connect } from 'react-redux';
 import { requestTrivia } from '../redux/action';
+import Question from '../components/Question';
 
 class Game extends React.Component {
   componentDidMount() {
@@ -14,7 +15,7 @@ class Game extends React.Component {
     return (
       <main>
         {/* <Header /> */}
-        { (loading) ? <h1>Loading</h1> : <p>Perguntas</p> }
+        { (loading) ? <h1>Loading</h1> : <Question /> }
       </main>
     );
   }
@@ -26,7 +27,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   loading: state.game.loading,
-  questions: state.game.questions,
 });
 
-export default connect(null, mapDispatchToProps)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
