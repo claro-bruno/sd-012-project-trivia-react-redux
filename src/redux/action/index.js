@@ -2,6 +2,7 @@ const URL_TRIVIA_API = 'https://opentdb.com/api.php?amount=5&token=';
 export const SEND_USER_INFO = 'SEND_USER_INFO';
 export const AWAIT_TRIVIA = 'AWAIT_TRIVIA';
 export const GET_TRIVIA = 'GET_TRIVIA';
+export const ERR_TRIVIA = 'ERR_TRIVIA';
 
 export const sendUserInfo = (name, email, image) => ({
   type: SEND_USER_INFO, name, email, image,
@@ -17,12 +18,18 @@ const getTrivia = (payload) => ({
   questions: payload.results,
 });
 
+const errTrivia = (err) => ({
+  type: ERR_TRIVIA,
+  err,
+})
+
 export function requestTrivia() {
   const token = localStorage.getItem('token');
   return (dispatch) => {
     dispatch(awaitTriviaFetch());
     return fetch(URL_TRIVIA_API + token)
       .then((r) => r.json())
-      .then((json) => dispatch(getTrivia(json)));
+      .then((json) => dispatch(getTrivia(json)))
+      .catch((err) => dispatch(errTrivia(err)));
   };
 }

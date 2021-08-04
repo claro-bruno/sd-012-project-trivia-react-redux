@@ -18,17 +18,24 @@ export const addItemToStorage = (key, valueKey, value) => {
   );
 };
 
-export const shuffleArray = array => {
-  for (let i = array.length - 1; i > 0; i--) {
+export const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i - 1) {
     const j = Math.floor(Math.random() * (i + 1));
     const temp = array[i];
     array[i] = array[j];
     array[j] = temp;
-  };
-}
+  }
+};
 
 export const requestImageGravatar = (email) => {
   const hash = md5(email).toString();
   const imageURL = `${URL_GRAVATAR}${hash}`;
   return imageURL;
+};
+
+export const answerCheck = (correctAnswer, answer, index) => {
+  if (answer === correctAnswer) {
+    return 'correct-answer';
+  }
+  return `wrong-answer-${index}`;
 };

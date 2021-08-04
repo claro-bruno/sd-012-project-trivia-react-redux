@@ -1,9 +1,10 @@
-import { GET_TRIVIA, AWAIT_TRIVIA } from '../action';
+import { GET_TRIVIA, AWAIT_TRIVIA, ERR_TRIVIA } from '../action';
 
 const INITIAL_GAME_STATE = {
   response: 3,
   questions: [],
   loading: true,
+  err: '',
 };
 
 function game(state = INITIAL_GAME_STATE, action) {
@@ -19,6 +20,11 @@ function game(state = INITIAL_GAME_STATE, action) {
       response: action.response,
       questions: action.questions,
       loading: false,
+    });
+  case ERR_TRIVIA:
+    return ({
+      ...state,
+      err: action.err,
     });
   default:
     return state;
