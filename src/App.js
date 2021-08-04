@@ -3,6 +3,7 @@ import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
+import Configs from './pages/Configs';
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
         {/* <img src={ logo } className="App-logo" alt="logo" /> */}
         <Switch>
           <Route exact path="/" component={ Login } />
+          <Route exact path="/configs" component={ Configs } />
         </Switch>
       </header>
     </div>
