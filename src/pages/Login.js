@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import md5 from 'crypto-js/md5';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import actionGetGravatarImg from '../redux/action';
+import { actionGetGravatarImg } from '../redux/action';
 
 class Login extends Component {
   constructor() {
@@ -13,6 +13,7 @@ class Login extends Component {
       disableBtn: true,
       nameInput: '',
       email: '',
+      redirect: false,
     };
     this.validateEmail = this.validateEmail.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -20,10 +21,14 @@ class Login extends Component {
     this.requestAPI = this.requestAPI.bind(this);
   }
 
-  requestAPI() {
-    const tokenApi = 'https://opentdb.com/api_token.php?command=request';
-    fetch(tokenApi).then((data) => data.json())
-      .then((response) => localStorage.setItem('token', response.token));
+  async requestAPI() {
+    const endPoint = 'https://opentdb.com/api_token.php?command=request';
+    let result = await fetch(endPoint);
+    result = await result.json();
+    localStorage.setItem('token', JSON.stringify(result.token));
+    this.setState({
+      redirect: true,
+    });
   }
 
   validateEmail(emailValue) {
@@ -48,14 +53,16 @@ class Login extends Component {
     const { setPlayerInfo } = this.props;
     const toHash = md5(email).toString();
     const result = await fetch(`https://www.gravatar.com/avatar/${toHash}`);
-    console.log(result);
     setPlayerInfo(result.url, nameInput);
     this.requestAPI();
   }
 
   render() {
     const minLengthName = 3;
-    const { disableBtn, nameInput } = this.state;
+    const { disableBtn, nameInput, redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/jogo" />;
+    }
     return (
       <section>
         <TextField
@@ -76,16 +83,14 @@ class Login extends Component {
           onChange={ ({ target }) => this.handleChange(target) }
           inputProps={ { 'data-testid': 'input-gravatar-email' } }
         />
-        <Link to="/jogo">
-          <button
-            type="button"
-            data-testid="btn-play"
-            onClick={ () => this.fetchGravatar() }
-            disabled={ disableBtn || nameInput.length < minLengthName }
-          >
-            Jogar
-          </button>
-        </Link>
+        <button
+          type="button"
+          data-testid="btn-play"
+          onClick={ () => this.fetchGravatar() }
+          disabled={ disableBtn || nameInput.length < minLengthName }
+        >
+          Jogar
+        </button>
         <Link to="/configs">
           <button
             type="button"
@@ -104,11 +109,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Login.propTypes = {
-  setPlayerInfo: PropTypes.string,
-};
-
-Login.defaultProps = {
-  setPlayerInfo: '',
+  setPlayerInfo: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

@@ -10,6 +10,7 @@ class Game extends React.Component {
       questions: [],
       corrAnsBorder: {},
       incorrAnsBorder: {},
+      loading: true,
     };
 
     this.getQuestions = this.getQuestions.bind(this);
@@ -22,11 +23,12 @@ class Game extends React.Component {
   }
 
   getQuestions() {
-    const token = localStorage.getItem('token');
+    const token = JSON.parse(localStorage.getItem('token'));
+    console.log(token);
     fetch(`https://opentdb.com/api.php?amount=5&token=${token}`)
       .then((r) => r.json())
       .then((json) => this.setState({
-        questions: json.results,
+        questions: [...json.results], loading: false,
       }));
   }
 
@@ -37,37 +39,9 @@ class Game extends React.Component {
     });
   }
 
-  renderFalseAnswers() {
-    const { corrAnsBorder, incorrAnsBorder } = this.state;
-
-    return (
-      <div>
-        <Header />
-        <p data-testid="question-category">o</p>
-        <p data-testid="question-text">o</p>
-        <button
-          type="button"
-          data-testid={ `wrong-answer-${0}` }
-          onClick={ this.changeBordersColor }
-          style={ incorrAnsBorder }
-        >
-          a
-        </button>
-        <button
-          type="button"
-          data-testid="correct-answer"
-          onClick={ this.changeBordersColor }
-          style={ corrAnsBorder }
-        >
-          o
-        </button>
-      </div>
-    );
-  }
-
   render() {
-    const { questions, questionNumber, corrAnsBorder, incorrAnsBorder } = this.state;
-    if (questions.length > 0) {
+    const { questionNumber, loading, corrAnsBorder, incorrAnsBorder } = this.state;
+    if (!loading) {
       return (
         <main>
           <Header />
@@ -105,9 +79,7 @@ class Game extends React.Component {
       );
     }
     return (
-      <main>
-        { this.renderFalseAnswers() }
-      </main>
+      <p>Loading...</p>
     );
   }
 }
