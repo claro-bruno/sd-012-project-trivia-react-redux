@@ -14,10 +14,7 @@ class GameQuestions extends Component {
   }
 
   render() {
-    const { questionObj, loading } = this.props;
-
-    if (loading) return 'Loading';
-
+    const { questionObj } = this.props;
     const
       { category,
         question,
@@ -42,7 +39,6 @@ class GameQuestions extends Component {
 
 GameQuestions.propTypes = {
   questionObj: PropTypes.objectOf(Object).isRequired,
-  loading: PropTypes.bool.isRequired,
 };
 
 export default GameQuestions;

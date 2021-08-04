@@ -36,7 +36,9 @@ class GamePage extends Component {
     return (
       <main>
         <HeaderPlayer />
-        <GameQuestions questionObj={ questions[counter] } loading={ loading } />
+        {loading
+          ? 'Loading'
+          : <GameQuestions questionObj={ questions[counter] } />}
       </main>
     );
   }
