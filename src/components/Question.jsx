@@ -43,11 +43,12 @@ class Question extends Component {
         pergunta: state.pergunta + 1,
         button: false,
       });
+    });
+  }
 
   changeBorder() {
     this.setState({
       showCorrect: true,
-
     });
   }
 
