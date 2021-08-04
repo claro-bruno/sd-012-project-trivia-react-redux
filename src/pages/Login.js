@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      btnDisable: true,
       email: '',
-      userName: '',
-      disabled: true,
+      name: '',
     };
-
     this.handleChange = this.handleChange.bind(this);
+    this.btnDisable = this.btnDisable.bind(this);
   }
 
   handleChange({ target }) {
@@ -17,48 +17,55 @@ class Login extends Component {
     this.setState({
       [name]: value,
     });
+    this.btnDisable();
   }
 
-  /* https://stackoverflow.com/questions/201323
-  /how-can-i-validate-an-email-address-using-a-regular-expression */
+  btnDisable() {
+    const { name, email } = this.state;
+    const validator = name.length > 0 && email.length > 0;
+    if (validator) {
+      this.setState({
+        btnDisable: false,
+      });
+    }
+  }
+
   render() {
-    const { email, userName, disabled } = this.state;
-    const validation = /^\S+@\S+\.\S+$/;
-    const minLength = 6;
-    const validateEmail = validation.test(email);
+    const { name, email, btnDisable } = this.state;
     return (
-      <div className="container">
-        <h2 className="login-text">Login</h2>
-        <form className="login-form">
+      <fieldset>
+        <label
+          htmlFor="input-player-name"
+        >
+          Nome:
           <input
-            name="userName"
-            minLength="6"
-            placeholder="nome de usuario"
+            value={ name }
+            name="name"
+            onChange={ this.handleChange }
+            type="text"
             data-testid="input-player-name"
-            type="userName"
-            value={ userName }
-            onChange={ this.handleChange }
           />
+        </label>
+        <label
+          htmlFor="input-gravatar-email"
+        >
+          Email:
           <input
-            name="email"
-            placeholder="E-mail"
-            data-testid="input-gravatar-email"
-            type="email"
             value={ email }
+            name="email"
             onChange={ this.handleChange }
+            type="text"
+            data-testid="input-gravatar-email"
           />
-          {validateEmail && userName.length >= minLength && disabled
-            ? (
-              <button data-testid="btn-play" type="submit">
-                Jogar
-              </button>
-            ) : (
-              <button data-testid="btn-play" disabled type="submit">
-                Jogar
-              </button>
-            )}
-        </form>
-      </div>
+        </label>
+        <button
+          disabled={ btnDisable }
+          type="button"
+          data-testid="btn-play"
+        >
+          Jogar
+        </button>
+      </fieldset>
     );
   }
 }
