@@ -1,8 +1,9 @@
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { createStore } from 'redux';
-import { rootReducers } from './combinedReducer';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import rootReducers from '../reducers';
 
-const store = createStore(rootReducers, composeWithDevTools());
+const store = createStore(rootReducers, composeWithDevTools(applyMiddleware(thunk)));
 
 if (window.Cypress) {
   window.store = store;
