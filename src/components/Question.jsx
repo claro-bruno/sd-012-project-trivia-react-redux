@@ -20,7 +20,7 @@ class Question extends Component {
   componentDidMount() {
     const { getQuiz, token } = this.props;
     console.log(token);
-    const quantity = 200;
+    const quantity = 300;
     getQuiz(token, quantity);
   }
 
