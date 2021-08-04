@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { saveLogin } from '../redux/actions/actionsLogin';
-import { fetchAPI } from '../redux/actions';
+import { fetchAPI, getTokenLoading } from '../redux/actions';
 import ConfigButton from '../components/ConfigButton';
 
 const md5 = require('md5');
@@ -30,10 +30,11 @@ class Login extends Component {
   }
 
   handleClick() {
-    const { fetchAPItoken, token, saveData } = this.props;
+    const { fetchAPItoken, token, saveData, Loading } = this.props;
     fetchAPItoken();
     localStorage.setItem('token', token);
     saveData(this.state);
+    Loading();
   }
 
   btnDisable() {
@@ -96,10 +97,12 @@ Login.propTypes = {
   fetchAPItoken: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   saveData: PropTypes.func,
+  Loading: PropTypes.func,
 };
 
 Login.defaultProps = {
   saveData: () => {},
+  Loading: () => {},
 };
 
 const mapStateToProps = (state) => ({
@@ -115,6 +118,7 @@ const mapDispatchToProps = (dispatch) => ({
     );
     return dispatch(saveLogin(state, hashEmail));
   },
+  Loading: () => dispatch(getTokenLoading()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

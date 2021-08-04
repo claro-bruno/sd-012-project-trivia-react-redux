@@ -3,6 +3,7 @@ import {
   GET_TOKEN,
   GET_TOKEN_SUCCESS,
   GET_TOKEN_ERROR,
+  GET_TOKEN_LOADING,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -10,6 +11,7 @@ const INITIAL_STATE = {
   name: '',
   token: '',
   hashEmail: '',
+  isLoading: false,
 };
 
 const login = (state = INITIAL_STATE, action) => {
@@ -30,6 +32,7 @@ const login = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       token: action.payload,
+      isLoading: action.isLoading,
     };
 
   case GET_TOKEN_ERROR:
@@ -37,6 +40,10 @@ const login = (state = INITIAL_STATE, action) => {
       ...state, error: action.error,
     };
 
+  case GET_TOKEN_LOADING:
+    return {
+      ...state, isLoading: true,
+    };
   default:
     return { ...state };
   }
