@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Cronometer from './Cronometer';
 
 class Questions extends React.Component {
   constructor(props) {
@@ -47,18 +48,28 @@ class Questions extends React.Component {
   }
 
   optionsAnswer(answer, index) {
+    const { optionsDisabled } = this.props;
     if (answer.data === 'correct-answer') {
       return (
-        <div
+        <button
+          type="button"
           key={ index }
           data-testid={ answer.data }
+          disabled={ optionsDisabled }
         >
           { answer.answer }
-        </div>
+        </button>
       );
     }
     return (
-      <div key={ index } data-testid={ `wrong-answer${index}` }>{ answer.answer }</div>);
+      <button
+        type="button"
+        key={ index }
+        data-testid={ `wrong-answer${index}` }
+        disabled={ optionsDisabled }
+      >
+        { answer.answer }
+      </button>);
   }
 
   render() {
@@ -71,6 +82,7 @@ class Questions extends React.Component {
     const answers = this.concatenaAnswers(incorrectAnswer, correctAnswer);
     return (
       <div>
+        <Cronometer />
         <div data-testid="question-category">{ category }</div>
         <div data-testid="question-text">{ question }</div>
 
@@ -82,6 +94,7 @@ class Questions extends React.Component {
 
 const mapStateToProps = (state) => ({
   token: state.login.token,
+  optionsDisabled: state.questions.optionsDisabled,
 });
 
 export default connect(mapStateToProps, null)(Questions);
