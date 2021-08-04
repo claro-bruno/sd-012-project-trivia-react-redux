@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { saveLogin } from '../redux/actions/actionsLogin';
+
+const md5 = require('md5');
 
 class Login extends Component {
   constructor(props) {
@@ -31,6 +36,7 @@ class Login extends Component {
   }
 
   render() {
+    const { saveData } = this.props;
     const { name, email, btnDisable } = this.state;
     return (
       <fieldset>
@@ -62,6 +68,7 @@ class Login extends Component {
           disabled={ btnDisable }
           type="button"
           data-testid="btn-play"
+          onClick={ () => saveData(this.state) }
         >
           Jogar
         </button>
@@ -70,4 +77,22 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  saveData: PropTypes.func,
+};
+
+Login.defaultProps = {
+  saveData: () => {},
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  saveData: (state) => {
+    const hashEmail = md5(
+      state.email.toLowerCase()
+        .replace(/^\s\s*/, '').replace(/\s\s*$/, ''),
+    );
+    return dispatch(saveLogin(state, hashEmail));
+  },
+});
+
+export default connect(null, mapDispatchToProps)(Login);
