@@ -6,12 +6,19 @@ const getGravatar = (payload) => ({
 });
 
 const fetchGravatar = (hash) => {
-  const fechamento = md5(strtolower(trim(hash)));
-  return async (dispatch) => {
-    const retorno = await fetch(`https://www.gravatar.com/avatar/${fechamento}`);
-    const resolve = await retorno.json();
-    dispatch(getGravatar(resolve));
+  const fechamento = md5(hash.toLowerCase().trim()).toString();
+  return (dispatch) => {
+    fetch(`https://www.gravatar.com/avatar/${fechamento}`)
+      .then((response) => response.json())
+      .then((response2) => console.log(response2))
+      .then((resolve) => dispatch(getGravatar(resolve)))
+      .catch((err) => console.log(err));
   };
 };
 
 export default fetchGravatar;
+export const GET_TOKEN_SUCESS = 'GET_TOKEN_SUCESS';
+export const GET_TOKEN_ERROR = 'GET_TOKEN_ERROR';
+
+export const actionGetTokenSucess = (state) => ({ type: GET_TOKEN_SUCESS, state });
+export const actionGetTokenError = { type: GET_TOKEN_ERROR };
