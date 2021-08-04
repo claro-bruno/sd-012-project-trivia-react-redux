@@ -1,19 +1,23 @@
-// eslint-disable-next-line import/no-named-as-default
-import TOKEN from '../actions';
+import { CREATE_LOGIN } from '../actions/index';
 
 const INITIAL_STATE = {
-  user: {
-    email: '',
-    token: '',
+  player: {
+    name: '',
+    assertions: '',
+    score: 0,
+    gravatarEmail: '',
   },
 };
 
-export default function login(state = INITIAL_STATE, action) {
+export default function player(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case TOKEN:
+  case CREATE_LOGIN:
     return {
       ...state,
-      token: action.payload.token,
+      player: {
+        name: action.name,
+        gravatarEmail: action.gravatarEmail,
+      },
     };
   default:
     return state;

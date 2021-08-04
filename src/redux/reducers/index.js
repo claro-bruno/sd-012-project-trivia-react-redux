@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import login from './login';
+import player from './login';
 import API from './questions';
 
 export default combineReducers({
-  login,
+  player,
   API,
 });

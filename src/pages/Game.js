@@ -1,79 +1,39 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { requisitionAPI } from '../redux/actions';
-import { API_TRIVIA } from '../services/api';
+import { MD5 } from 'crypto-js';
 
 class Game extends Component {
-  constructor(props) {
-    super(props);
-
-    this.fetchTrivia = this.fetchTrivia.bind(this);
-  }
-
-  async componentDidMount() {
-    await this.fetchTrivia();
-  }
-
-  async fetchTrivia() {
-    const { QuestionsTrivia, token } = this.props;
-
-    const questions = await API_TRIVIA(token);
-    QuestionsTrivia(questions);
-  }
-
-  Answers(question) {
-    console.log('Estou na function');
-    const answersCreate = question.incorrect_answers
-      .concat(question.correct_answer);
-
-    return answersCreate.map((answer, index) => (
-      <button
-        type="button"
-        key={ index }
-        value={ answer }
-        data-testid={ question.correct_answer === answer
-          ? 'correct-answer' : `wrong-answer-${index}` }
-      >
-        { answer }
-      </button>
-    ));
-  }
-
   render() {
-    const { questionsGame } = this.props;
-    console.log(questionsGame);
+    const { name, gravatarEmail } = this.props;
+    const hash = MD5(gravatarEmail).toString();
+    const getImg = `https://www.gravatar.com/avatar/${hash}`;
 
-    if (questionsGame === null) {
-      return <div>Loading...</div>;
-    }
     return (
-      <>
-        { questionsGame.map((question, index) => (
-          <div key={ index }>
-            <span data-testid="question-category">{ question.category }</span>
-            <h2 data-testid="question-text">{ question.question }</h2>
-            <div>
-              { this.createAnswers(question) }
-            </div>
-          </div>
-        )) }
-      </>
+      <div>
+        <header>
+          <img data-testid="header-profile-picture" src={ getImg } alt="user avatar" />
+          <p data-testid="header-player-name">{name}</p>
+          <p data-testid="header-score">0</p>
+        </header>
+      </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  questionsGame: state.requisitionAPI.questions.results,
-  token: state.user.token,
+  name: state.login.player.name,
+  gravatarEmail: state.login.player.gravatarEmail,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  QuestionsTrivia: (payload) => dispatch(requisitionAPI(payload)),
-});
+export default connect(mapStateToProps)(Game);
 
 Game.propTypes = {
-  requisitionAPI: PropTypes.object,
-}.isRequired;
+  name: PropTypes.string,
+  gravatarEmail: PropTypes.string,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+Game.defaultProps = {
+  name: '',
+  gravatarEmail: '',
+};

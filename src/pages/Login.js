@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import getInfo from '../services/api';
+import createLogin from '../redux/actions';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor() {
     super();
 
     this.state = {
-      email: '',
-      userName: '',
+      name: '',
+      gravatarEmail: '',
       disabled: true,
     };
 
@@ -17,7 +20,11 @@ export default class Login extends Component {
   }
 
   async getLogin() {
+    const { dispatchPlayer } = this.props;
+    const { name, gravatarEmail } = this.state;
     const login = await getInfo();
+
+    dispatchPlayer(name, gravatarEmail);
     return login;
   }
 
@@ -31,33 +38,33 @@ export default class Login extends Component {
   /* https://stackoverflow.com/questions/201323
   /how-can-i-validate-an-email-address-using-a-regular-expression */
   render() {
-    const { email, userName, disabled } = this.state;
+    const { gravatarEmail, name, disabled } = this.state;
     const validation = /^\S+@\S+\.\S+$/;
     const minLength = 6;
-    const validateEmail = validation.test(email);
+    const validateEmail = validation.test(gravatarEmail);
     return (
       <div className="container">
         <h2 className="login-text">Login</h2>
         <form className="login-form">
           <input
-            name="userName"
+            name="name"
             minLength="6"
             placeholder="nome de usuario"
             data-testid="input-player-name"
-            type="userName"
-            value={ userName }
+            type="name"
+            value={ name }
             onChange={ this.handleChange }
           />
           <input
-            name="email"
+            name="gravatarEmail"
             placeholder="E-mail"
             data-testid="input-gravatar-email"
             type="email"
-            value={ email }
+            value={ gravatarEmail }
             onChange={ this.handleChange }
           />
           <Link to="/game">
-            {validateEmail && userName.length >= minLength && disabled
+            {validateEmail && name.length >= minLength && disabled
               ? (
                 <button
                   data-testid="btn-play"
@@ -73,7 +80,20 @@ export default class Login extends Component {
               )}
           </Link>
         </form>
+        <Link to="/settings">
+          <button data-testid="btn-settings" type="button">Configurações</button>
+        </Link>
       </div>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchPlayer: (value, email) => dispatch(createLogin(value, email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  dispatchPlayer: PropTypes.func.isRequired,
+};
