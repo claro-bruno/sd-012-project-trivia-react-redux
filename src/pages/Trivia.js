@@ -22,24 +22,29 @@ class Trivia extends Component {
     this.setQuestions(questions);
   }
 
-  handleAnswer() {
-    this.setState({ resolved: true });
-  }
-
   setQuestions(questions) {
     this.setState({ questions, loading: false });
+  }
+
+  handleAnswer() {
+    this.setState({ resolved: true });
   }
 
   render() {
     const { questions, questionNumber, loading, resolved } = this.state;
     const { handleAnswer } = this;
-
+    const currentQuestion = questions[questionNumber];
     return (
       <section>
         {
           loading
             ? 'loading...'
-            : <Question handleAnswer={ handleAnswer } resolved={ resolved } question={ questions[questionNumber] } />
+            : (
+              <Question
+                handleAnswer={ handleAnswer }
+                resolved={ resolved }
+                question={ currentQuestion }
+              />)
         }
       </section>
     );

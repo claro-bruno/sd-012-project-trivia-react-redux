@@ -24,7 +24,7 @@ class Question extends Component {
           const dataTestId = isCorrect
             ? 'correct-answer'
             : `wrong-answer-${incorrectAnswers.indexOf(answer)}`;
-          const className = isCorrect 
+          const className = isCorrect
             ? 'correct'
             : 'wrong';
           return (
@@ -55,6 +55,7 @@ Question.propTypes = {
     incorrect_answers: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   resolved: PropTypes.bool.isRequired,
+  handleAnswer: PropTypes.func.isRequired,
 };
 
 export default Question;
