@@ -76,10 +76,9 @@ class Questions extends React.Component {
     const { loading } = this.state;
     if (loading) return <div>Loading</div>;
     const { questions: { results } } = this.state;
-    const { category, question } = results[0];
-    const { correct_answer: correctAnswer } = results[0];
-    const { incorrect_answers: incorrectAnswer } = results[0];
-    const answers = this.concatenaAnswers(incorrectAnswer, correctAnswer);
+    const { category, question, correct_answer: correctAnswer,
+      incorrect_answers: incorrectAnswers } = results[0];
+    const answers = this.concatenaAnswers(incorrectAnswers, correctAnswer);
     return (
       <div>
         <Cronometer />
