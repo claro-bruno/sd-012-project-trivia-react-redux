@@ -1,35 +1,43 @@
 import React from 'react';
-import { getApiQuestions } from '../services/triviaApi';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class GameQuestions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      questions: [],
       questionNumber: 0,
-      isLoading: true,
+      question: {
+        category: 'Entertainment: Video Games',
+        type: 'multiple',
+        difficulty: 'easy',
+        question: 'What is the first weapon you acquire in Half-Life?',
+        correct_answer: 'A crowbar',
+        incorrect_answers: ['A pistol', 'The H.E.V suit', 'Your fists'],
+      },
     };
 
-    this.getQuestions = this.getQuestions.bind(this);
+    this.getQuestion = this.getQuestion.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.renderQuestions = this.renderQuestions.bind(this);
+    this.setAnswers = this.setAnswers.bind(this);
   }
 
   componentDidMount() {
-    this.getQuestions();
+    this.getQuestion();
   }
 
-  async getQuestions() {
-    const questions = await getApiQuestions(
-      '53ff0223bf164dccf048d124e43ee2a57fce744ca0c6cb8f1afcfefe4cd5d807',
-    );
+  getQuestion() {
+    const { questionNumber } = this.state;
+    const { questions } = this.props;
+    const question = questions[questionNumber];
     this.setState({
-      questions,
-      isLoading: false,
+      question,
     });
   }
 
-  setAnswers(question) {
+  setAnswers() {
+    const { question } = this.state;
     const incorrectAnswers = question.incorrect_answers.map((answer) => ({
       answer,
       isCorrect: false,
@@ -47,40 +55,24 @@ class GameQuestions extends React.Component {
   }
 
   handleClick() {
-    this.setState((state) => ({
-      questionNumber: state.questionNumber + 1,
-    }));
+    // this.setState((state) => ({
+    //   questionNumber: state.questionNumber + 1,
+    // }));
   }
 
   renderQuestions() {
-    const { isLoading } = this.state;
-    if (!isLoading) {
-      const { questions, questionNumber } = this.state;
-      const question = questions[questionNumber];
-      const answers = this.setAnswers(question);
-      return (
-        <div>
-          <span data-testid="question-category">{question.category}</span>
-          <span data-testid="question-text">{question.question}</span>
-          {answers.map((answer, index) => {
-            if (answer.isCorrect) {
-              return (
-                <button
-                  key={ index }
-                  data-testid="correct-answer"
-                  type="button"
-                  onClick={ () => {
-                    this.handleClick();
-                  } }
-                >
-                  { answer.answer }
-                </button>
-              );
-            }
+    const { question } = this.state;
+    const answers = this.setAnswers();
+    return (
+      <div>
+        <span data-testid="question-category">{question.category}</span>
+        <span data-testid="question-text">{question.question}</span>
+        {answers.map((answer, index) => {
+          if (answer.isCorrect) {
             return (
               <button
                 key={ index }
-                data-testid={ `wrong-answer-${index}` }
+                data-testid="correct-answer"
                 type="button"
                 onClick={ () => {
                   this.handleClick();
@@ -89,20 +81,35 @@ class GameQuestions extends React.Component {
                 { answer.answer }
               </button>
             );
-          })}
-        </div>
-      );
-    }
+          }
+          return (
+            <button
+              key={ index }
+              data-testid={ `wrong-answer-${index}` }
+              type="button"
+              onClick={ () => {
+                this.handleClick();
+              } }
+            >
+              { answer.answer }
+            </button>
+          );
+        })}
+      </div>
+    );
   }
 
   render() {
-    const { isLoading } = this.state;
-    if (isLoading) {
-      return <span>Carregando</span>;
-    }
-
     return <div>{this.renderQuestions()}</div>;
   }
 }
 
-export default GameQuestions;
+const mapStateToProps = (state) => ({
+  questions: state.game.questions,
+});
+
+GameQuestions.propTypes = {
+  questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default connect(mapStateToProps)(GameQuestions);
