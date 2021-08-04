@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from '../components/Header';
 
 class Game extends React.Component {
   constructor(props) {
@@ -16,12 +17,8 @@ class Game extends React.Component {
     this.getQuestions();
   }
 
-  getToken() {
-    return localStorage.getItem('token');
-  }
-
   getQuestions() {
-    const token = this.getToken();
+    const token = localStorage.getItem('token');
     fetch(`https://opentdb.com/api.php?amount=5&token=${token}`)
       .then((r) => r.json())
       .then((json) => this.setState({
@@ -31,40 +28,46 @@ class Game extends React.Component {
 
   render() {
     const { questions, questionNumber } = this.state;
-
+    if (questions.length > 0) {
+      return (
+        <main>
+          <Header />
+          <div>
+            <p data-testid="question-category">
+              { questions[questionNumber].category }
+            </p>
+            <p data-testid="question-text">
+              { questions[questionNumber].question }
+            </p>
+          </div>
+          <div>
+            { questions[questionNumber]
+              .incorrect_answers.map((answer, index) => (
+                <button
+                  key={ index }
+                  type="button"
+                  data-testid={ `wrong-answer-${index}` }
+                >
+                  { answer }
+                </button>
+              )) }
+            <button
+              type="button"
+              data-testid="correct-answer"
+            >
+              { questions[questionNumber].correct_answer }
+            </button>
+          </div>
+        </main>
+      );
+    }
     return (
       <main>
-        { (questions.length > 0)
-          ? (
-            <div>
-              <div>
-                <p data-testid="question-category">
-                  { questions[questionNumber].category }
-                </p>
-                <p data-testid="question-text">
-                  { questions[questionNumber].question }
-                </p>
-              </div>
-              <div>
-                { questions[questionNumber]
-                  .incorrect_answers.map((answer, index) => (
-                    <button
-                      key={ index }
-                      type="button"
-                      data-testid={ `wrong-answer-${index}` }
-                    >
-                      { answer }
-                    </button>
-                  )) }
-                <button
-                  type="button"
-                  data-testid="correct-answer"
-                >
-                  { questions[questionNumber].correct_answer }
-                </button>
-              </div>
-            </div>
-          ) : null }
+        <Header />
+        <p data-testid="question-category">o</p>
+        <p data-testid="question-text">o </p>
+        <button type="button" data-testid={ `wrong-answer-${0}` }>a</button>
+        <button type="button" data-testid="correct-answer">o</button>
       </main>
     );
   }

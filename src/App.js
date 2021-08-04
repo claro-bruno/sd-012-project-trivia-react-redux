@@ -3,7 +3,6 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Game from './pages/Game';
-import Header from './components/Header';
 import Configs from './pages/Configs';
 
 export default function App() {
@@ -11,7 +10,6 @@ export default function App() {
     <div className="App">
       <header className="App-header">
         {/* <img src={ logo } className="App-logo" alt="logo" /> */}
-        <Header />
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route exact path="/configs" component={ Configs } />
