@@ -4,10 +4,17 @@ import { shuffleArray, answerCheck } from '../helpers';
 
 class Question extends React.Component {
   render() {
-    const { questions, turn } = this.props;
-    const { category, type, question, correct_answer, incorrect_answers } = questions[0];
-    let answers = [...incorrect_answers, correct_answer];
+    const { questions } = this.props;
+    const {
+      category,
+      type,
+      question,
+      correct_answer: correctAnswer,
+      incorrect_answers: incorrectAnswers,
+    } = questions[0];
+    const answers = [...incorrectAnswers, correctAnswer];
     shuffleArray(answers);
+    console.log(correctAnswer);
     return (
       <section>
         <h4 data-testid="question-category">{ category }</h4>
@@ -17,7 +24,7 @@ class Question extends React.Component {
             <button
               type="button"
               key={ i }
-              data-testid={ answerCheck(correct_answer, e, i) }
+              data-testid={ answerCheck(correctAnswer, e, i) }
             >
               { e }
             </button>)) : <p>V/F</p> }

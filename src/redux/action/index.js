@@ -21,7 +21,7 @@ const getTrivia = (payload) => ({
 const errTrivia = (err) => ({
   type: ERR_TRIVIA,
   err,
-})
+});
 
 export function requestTrivia() {
   const token = localStorage.getItem('token');
