@@ -1,8 +1,7 @@
 export const CREATE_LOGIN = 'CREATE_LOGIN';
-export const API = 'API';
-export const TOKEN = 'TOKEN';
+export const GET_QUESTIONS = 'GET_QUESTIONS';
 
-export default function createLogin(state, email) {
+export function createLogin(state, email) {
   return {
     type: CREATE_LOGIN,
     name: state,
@@ -10,12 +9,9 @@ export default function createLogin(state, email) {
   };
 }
 
-export const requisitionAPI = (payload) => ({
-  type: 'API',
-  payload,
-});
-
-export const Token = (payload) => ({
-  type: 'TOKEN',
-  payload,
-});
+export function getQuestions(state) {
+  return {
+    type: GET_QUESTIONS,
+    questions: state,
+  };
+}
