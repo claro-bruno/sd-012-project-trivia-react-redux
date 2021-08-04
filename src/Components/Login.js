@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchToken, updateProfile } from '../redux/actions';
 
 class Login extends Component {
   constructor(props) {
@@ -17,26 +20,19 @@ class Login extends Component {
     });
   }
 
-  handleSubmit() {
-    return null;
+  handleSubmit(e) {
+    e.preventDefault();
+    const { dispatchFetchToken, dispatchUpdateProfile, history } = this.props;
+    const { name, email } = this.state;
+    dispatchFetchToken();
+    dispatchUpdateProfile(name, email);
+    history.push('/game');
   }
 
   render() {
     const { email, name } = this.state;
     return (
       <form onSubmit={ this.handleSubmit }>
-        <label
-          htmlFor="email"
-        >
-          email:
-          <input
-            id="email"
-            type="email"
-            value={ email }
-            onChange={ this.handleChange }
-            data-testid="input-gravatar-email"
-          />
-        </label>
         <label
           htmlFor="name"
         >
@@ -49,6 +45,20 @@ class Login extends Component {
             data-testid="input-player-name"
           />
         </label>
+
+        <label
+          htmlFor="email"
+        >
+          Email:
+          <input
+            id="email"
+            type="email"
+            value={ email }
+            onChange={ this.handleChange }
+            data-testid="input-gravatar-email"
+          />
+        </label>
+
         <button
           type="submit"
           data-testid="btn-play"
@@ -61,4 +71,17 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchFetchToken: () => dispatch(fetchToken()),
+  dispatchUpdateProfile: (name, email) => dispatch(updateProfile(name, email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  dispatchFetchToken: PropTypes.func.isRequired,
+  dispatchUpdateProfile: PropTypes.func.isRequired,
+};
