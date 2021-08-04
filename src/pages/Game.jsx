@@ -1,18 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Trivia from '../components/Trivia';
+
+const MOCK_QUESTION = [{
+  category: 'Entertainment: Video Games',
+  type: 'multiple',
+  difficulty: 'easy',
+  question: 'What is the first weapon you acquire in Half-Life?',
+  correct_answer: 'A crowbet',
+  incorrect_answers: [
+    'A pistol',
+    'The H.E.V suit',
+    'Your fists',
+  ],
+},
+];
 
 class Game extends React.Component {
   render() {
     const { picture, nick } = this.props;
     return (
-      <header>
-        <img data-testid="header-profile-picture" src={ picture } alt="Foto do jogador" />
-        <h2 data-testid="header-player-name">
-          { nick }
-        </h2>
-        <h2 data-testeid="header-score">{ }</h2>
-      </header>
+      <div>
+        <Trivia trivia={ MOCK_QUESTION[0] } />
+      </div>
     );
   }
 }
