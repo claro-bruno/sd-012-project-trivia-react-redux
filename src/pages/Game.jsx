@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Loading from '../components/Loading';
 import Header from '../components/Header';
+import './Game.css';
 
 class Game extends Component {
   constructor() {
@@ -29,6 +30,13 @@ class Game extends Component {
     }
   }
 
+  changeColorButton() {
+    const incorrectList = document.getElementsByName('incorrect');
+    const correctList = document.getElementById('correct');
+    incorrectList.forEach((item) => { item.className = 'incorrect'; });
+    correctList.className = 'correct';
+  }
+
   page() {
     const { data } = this.state;
     return (
@@ -52,6 +60,8 @@ class Game extends Component {
                   <button
                     data-testid={ `wrong-answer-${index}` }
                     type="button"
+                    onClick={ this.changeColorButton }
+                    name="incorrect"
                   >
                     { answer }
                   </button>
@@ -61,6 +71,8 @@ class Game extends Component {
               <button
                 type="button"
                 data-testid="correct-answer"
+                id="correct"
+                onClick={ this.changeColorButton }
               >
                 {data.results[0].correct_answer}
               </button>
