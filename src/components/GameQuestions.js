@@ -14,7 +14,7 @@ class GameQuestions extends Component {
   }
 
   render() {
-    const { questionObj } = this.props;
+    const { questionObj, time } = this.props;
     const
       { category,
         question,
@@ -29,7 +29,14 @@ class GameQuestions extends Component {
         {
           this.generateAnswers(correctAnswer, incorrectAnswers)
             .map(({ answer, id }) => (
-              <button type="button" data-testid={ id } key={ id }>{answer}</button>
+              <button
+                type="button"
+                disabled={ time <= 0 }
+                data-testid={ id }
+                key={ id }
+              >
+                {answer}
+              </button>
             ))
         }
       </div>
@@ -39,6 +46,7 @@ class GameQuestions extends Component {
 
 GameQuestions.propTypes = {
   questionObj: PropTypes.objectOf(Object).isRequired,
+  time: PropTypes.number.isRequired,
 };
 
 export default GameQuestions;
