@@ -1,10 +1,29 @@
 import React from 'react';
+import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      profilePicture: 'https://www.gravatar.com/avatar/',
+    };
+  }
+
+  componentDidMount() {
+    this.getProfilePicture();
+  }
+
+  getProfilePicture() {
+    const { email } = this.props;
+    const hash = md5(email).toString();
+    this.setState({ profilePicture: `https://www.gravatar.com/avatar/${hash}` });
+  }
+
   render() {
-    const { profilePicture, name, score } = this.props;
+    const { name, score } = this.props;
+    const { profilePicture } = this.state;
     return (
       <header>
         <img
@@ -20,17 +39,15 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  profilePicture: state.user.profilePicture,
   name: state.user.name,
   score: state.trivia.score,
-  // email: state.user.email,
+  email: state.user.email,
 });
 
 Header.propTypes = {
-  profilePicture: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
-  // email: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);

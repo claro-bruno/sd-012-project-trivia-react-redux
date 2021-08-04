@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import getUserData from '../redux/actions';
 import getUserInfo from '../services/api';
 
 class Login extends React.Component {
@@ -38,8 +41,12 @@ class Login extends React.Component {
   }
 
   async handleClick() {
+    const { name, email } = this.state;
     const userInfo = await getUserInfo();
     localStorage.setItem('token', userInfo.token);
+    const { getUser, history } = this.props;
+    getUser(name, email);
+    history.push('/game');
   }
 
   render() {
@@ -66,20 +73,29 @@ class Login extends React.Component {
             type="email"
           />
         </label>
-        <Link to="/trivia">
-          <button
-            data-testid="btn-play"
-            type="button"
-            disabled={ buttonDisabled }
-            onClick={ this.handleClick }
-          >
-            Jogar!
-          </button>
-        </Link>
+        <button
+          data-testid="btn-play"
+          type="button"
+          disabled={ buttonDisabled }
+          onClick={ this.handleClick }
+        >
+          Jogar!
+        </button>
         <Link data-testid="btn-settings" to="/settings">Configurações</Link>
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  getUser: (name, email) => dispatch(getUserData(name, email)),
+});
+
+Login.propTypes = {
+  getUser: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
