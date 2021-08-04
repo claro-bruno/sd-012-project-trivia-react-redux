@@ -10,7 +10,7 @@ const INITIAL_STATE = {
 const userInfosReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case USERINFOS:
-    return { ...state, user: action.user };
+    return { ...state, name: action.name, emial: action.email };
   default: return state;
   }
 };

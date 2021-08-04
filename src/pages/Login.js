@@ -20,9 +20,11 @@ class Login extends React.Component {
   }
 
   getToken() {
-    const { getDataFromApi, userInfo } = this.props;
+    const { getDataFromApi, userInfo, userNameEmail } = this.props;
+    const { name, email } = this.state;
     getDataFromApi();
-    window.localStorage.setItem('token', userInfo.token);
+    userNameEmail(name, email);
+    localStorage.setItem('token', userInfo.token);
   }
 
   handleChange({ target: { name, value } }) {
@@ -39,7 +41,6 @@ class Login extends React.Component {
 
   render() {
     const { email, name, disable } = this.state;
-    const { userNameEmail } = this.props;
     return (
       <div>
         <form>
@@ -66,7 +67,7 @@ class Login extends React.Component {
             />
           </label>
           <SettingsButton />
-          <Link to="/game" onClick={ () => userNameEmail({ name, email }) }>
+          <Link to="/game">
             <button
               data-testid="btn-play"
               type="button"
