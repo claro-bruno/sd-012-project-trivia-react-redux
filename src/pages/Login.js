@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import addPlayerInfo from '../redux/actions';
 // import { Redirect } from 'react-router-dom';
+import Header from '../components/Header';
 
 class Login extends React.Component {
   constructor() {
@@ -56,6 +57,7 @@ class Login extends React.Component {
 
     return (
       <form onSubmit={ this.handleSubmit }>
+        <Header />
         <input
           data-testid="input-player-name"
           type="text"
