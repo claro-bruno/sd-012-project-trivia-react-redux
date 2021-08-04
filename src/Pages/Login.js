@@ -1,5 +1,5 @@
 import React from 'react';
-import {  } from 'react-router-dom'
+import PropTypes from 'prop-types';
 // import logo from '../trivia.png';
 
 class Login extends React.Component {
@@ -17,10 +17,9 @@ class Login extends React.Component {
     this.setState({ [name]: value });
   }
 
-
   render() {
     const { nome, email } = this.state;
-    const { history: { push } } = this.props
+    const { history: { push } } = this.props;
     return (
       <div className="App">
         <header>
@@ -64,8 +63,8 @@ class Login extends React.Component {
             type="button"
             data-testid="btn-settings"
             onClick={ () => {
-              push('/configs')
-            }}
+              push('/configs');
+            } }
           >
             Configurações
           </button>
@@ -74,5 +73,10 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.arrayOf(Object).isRequired,
+  push: PropTypes.func.isRequired,
+};
 
 export default Login;
