@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { actionUserInfo } from '../redux/actions';
+import { actionUserInfo, getTokenThunk } from '../redux/actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -9,13 +10,23 @@ class Login extends React.Component {
 
     this.handleOnChange = this.handleOnChange.bind(this);
     this.validatingEmailandName = this.validatingEmailandName.bind(this);
-    this.handleOnClick = this.handleOnClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.fetchToken = this.fetchToken.bind(this);
 
     this.state = {
       notValid: true,
       email: '',
       name: '',
     };
+  }
+
+  componentDidMount() {
+    this.fetchToken();
+  }
+
+  fetchToken() {
+    const { getToken } = this.props;
+    getToken();
   }
 
   handleOnChange({ target }) {
@@ -29,7 +40,9 @@ class Login extends React.Component {
     else this.setState({ notValid: true });
   }
 
-  handleOnClick() {
+  handleSubmit() {
+    const { token } = this.props;
+    localStorage.setItem('token', token);
     const { name, email } = this.state;
     const { changingInfo } = this.props;
     changingInfo(name, email);
@@ -62,14 +75,16 @@ class Login extends React.Component {
           />
         </label>
         <div className="button-container">
-          <button
-            disabled={ notValid }
-            type="button"
-            data-testid="btn-play"
-            onClick={ this.handleOnClick }
-          >
-            Jogar!
-          </button>
+          <Link to="quiz">
+            <button
+              disabled={ notValid }
+              type="button"
+              data-testid="btn-play"
+              onClick={ this.handleSubmit }
+            >
+              Jogar!
+            </button>
+          </Link>
         </div>
       </div>
     );
@@ -78,10 +93,17 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   changingInfo: (name, value) => dispatch(actionUserInfo(name, value)),
+  getToken: () => dispatch(getTokenThunk()),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapStateToProps = (state) => ({
+  token: state.tokenReducer.token,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   changingInfo: PropTypes.func.isRequired,
+  getToken: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
 };
