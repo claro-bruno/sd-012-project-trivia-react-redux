@@ -1,13 +1,5 @@
 import { combineReducers } from 'redux';
-
-const INITIAL_STATE = {};
-
-function game(state = INITIAL_STATE, action) {
-  switch (action.type) {
-  default:
-    return state;
-  }
-}
+import game from './game';
 
 const rootReducer = combineReducers({ game });
 

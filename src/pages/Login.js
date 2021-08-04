@@ -51,10 +51,10 @@ class Login extends React.Component {
   handleClick() {
     const { name, email } = this.state;
     const { history } = this.props;
-    history.push('/game');
     addItemToStorage('state', 'name', name);
     addItemToStorage('state', 'email', email);
     requestToken();
+    history.push('/game');
   }
 
   render() {
