@@ -6,18 +6,17 @@ class Questions extends Component {
     this.state = {
       questions: [],
     };
-    this.getQuestions = this.getUnities.bind(this);
+    this.getUnities = this.getUnities.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.getUnities();
   }
 
   async getUnities() {
     const token = localStorage.getItem('token');
-    const api = `https://opentdb.com/api.php?amount=5&token${token}`;
-    const questions = await fetch(api)
-      .then((result) => result.json());
+    const API_URL = await fetch(`https://opentdb.com/api.php?amount=5&token${token}`);
+    const questions = await API_URL.json();
 
     this.setState(() => ({
       questions: questions.results,

@@ -2,7 +2,7 @@ const INITIAL_STATE = {
   questions: {},
 };
 
-const quizReducer = (state = INITIAL_STATE, action) => {
+const gameReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case 'REQUEST_QUESTIONS_SUCCESS':
     return {
@@ -14,4 +14,4 @@ const quizReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default quizReducer;
+export default gameReducer;
