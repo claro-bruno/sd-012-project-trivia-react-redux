@@ -47,14 +47,11 @@ class Game extends React.Component {
     return (
       <div>
         <Header />
-        <Trivia key={ indexQuestion } trivia={ questions[indexQuestion] } />
-        <button
-          data-testid="btn-next"
-          type="button"
+        <Trivia
+          key={ indexQuestion }
+          trivia={ questions[indexQuestion] }
           onClick={ this.nextQuestion }
-        >
-          Próxima
-        </button>
+        />
       </div>
     );
   }
