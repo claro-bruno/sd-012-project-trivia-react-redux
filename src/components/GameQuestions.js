@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import './GameQuestions.css'
 
 class GameQuestions extends React.Component {
   constructor(props) {
@@ -64,15 +65,33 @@ class GameQuestions extends React.Component {
     const { question } = this.state;
     const answers = this.setAnswers();
     return (
-      <div>
-        <span data-testid="question-category">{question.category}</span>
-        <span data-testid="question-text">{question.question}</span>
-        {answers.map((answer, index) => {
-          if (answer.isCorrect) {
+      <div className="questions-card">
+        <div className="questions-text">
+          <span className="question-category" data-testid="question-category">{question.category}</span>
+          <span data-testid="question-text">{question.question}</span>
+        </div>
+        <div className="questions-answers">
+          {answers.map((answer, index) => {
+            if (answer.isCorrect) {
+              return (
+                <button
+                  className="btn answer-btn"
+                  key={ index }
+                  data-testid="correct-answer"
+                  type="button"
+                  onClick={ () => {
+                    this.handleClick();
+                  } }
+                >
+                  { answer.answer }
+                </button>
+              );
+            }
             return (
               <button
+                className="btn answer-btn"
                 key={ index }
-                data-testid="correct-answer"
+                data-testid={ `wrong-answer-${index}` }
                 type="button"
                 onClick={ () => {
                   this.handleClick();
@@ -81,26 +100,14 @@ class GameQuestions extends React.Component {
                 { answer.answer }
               </button>
             );
-          }
-          return (
-            <button
-              key={ index }
-              data-testid={ `wrong-answer-${index}` }
-              type="button"
-              onClick={ () => {
-                this.handleClick();
-              } }
-            >
-              { answer.answer }
-            </button>
-          );
-        })}
+          })}
+        </div>
       </div>
     );
   }
 
   render() {
-    return <div>{this.renderQuestions()}</div>;
+    return <div className="questions-container">{this.renderQuestions()}</div>;
   }
 }
 

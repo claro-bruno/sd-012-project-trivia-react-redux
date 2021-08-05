@@ -1,0 +1,109 @@
+.questions-container {
+  display: flex;
+  justify-content: center;
+  
+}
+
+.questions-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius:6px;
+	border:1px solid #dcdcdc;
+  padding:12px 24px;
+  
+}
+
+.questions-text {
+  display: flex;
+  flex-direction: column;
+  font-size:22px;
+}
+
+.question-category {
+  align-self: center;
+  text-transform:uppercase;
+  font-weight:bold;
+  margin-bottom: 10px;
+  border-bottom:2px solid #dcdcdc;
+}
+
+.questions-answers {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+.answer-btn {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	background-color:#ffffff;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:18px;
+	font-weight:bold;
+	padding:8px 24px;
+  text-transform:uppercase;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+  margin: 10px;
+}
+.answer-btn:hover {
+	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	background-color:#f6f6f6;
+}
+.answer-btn:active {
+	position:relative;
+	top:1px;
+}
+
+.answer-btn-correct {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	background-color:#ffffff;
+	border-radius:6px;
+	border:3px solid rgb(6, 240, 15);
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:18px;
+	font-weight:bold;
+	padding:8px 24px;
+  text-transform:uppercase;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+  margin: 10px;
+}
+
+.answer-btn-incorrect {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	background-color:#ffffff;
+	border-radius:6px;
+	border:3px solid rgb(255, 0, 0);
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:18px;
+	font-weight:bold;
+	padding:8px 24px;
+  text-transform:uppercase;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+  margin: 10px;
+}
