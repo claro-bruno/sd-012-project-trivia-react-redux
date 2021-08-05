@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ButtonNext from './ButtonNext';
+import { changeClass } from '../redux/actions';
+import './GameQuestions.css';
 
 class GameQuestions extends React.Component {
   constructor(props) {
@@ -14,16 +17,33 @@ class GameQuestions extends React.Component {
         correct_answer: 'A crowbar',
         incorrect_answers: ['A pistol', 'The H.E.V suit', 'Your fists'],
       },
+      sortedAnswers: [],
+      timer: 30,
+      timerIntervalID: 0,
+      canDisable: true,
+      disableAnswers: false,
+      nextButton: false,
     };
 
     this.getQuestion = this.getQuestion.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.renderQuestions = this.renderQuestions.bind(this);
     this.setAnswers = this.setAnswers.bind(this);
+    this.setTimer = this.setTimer.bind(this);
+    this.disableAnswers = this.disableAnswers.bind(this);
   }
 
   componentDidMount() {
     this.getQuestion();
+    this.setTimer();
+  }
+
+  componentDidUpdate() {
+    const { timer, timerIntervalID } = this.state;
+    if (timer <= 0) {
+      clearInterval(timerIntervalID);
+      this.disableAnswers();
+    }
   }
 
   getQuestion() {
@@ -31,7 +51,7 @@ class GameQuestions extends React.Component {
     const question = questions[questionNumber];
     this.setState({
       question,
-    });
+    }, () => this.setAnswers());
   }
 
   setAnswers() {
@@ -49,67 +69,129 @@ class GameQuestions extends React.Component {
       },
       ...incorrectAnswers,
     ];
-    return answers.sort((a, b) => a.id - b.id);
+
+    const sortedAnswers = answers.sort((a, b) => a.id - b.id);
+    this.setState({ sortedAnswers });
   }
 
-  handleClick() {
-    // this.setState((state) => ({
-    //   questionNumber: state.questionNumber + 1,
-    // }));
+  setTimer() {
+    this.setState({ timer: 30, disableAnswers: false, canDisable: true });
+    const timerStep = 1000;
+
+    const timerIntervalID = setInterval(() => {
+      this.setState((previousState) => ({ timer: previousState.timer - 1 }));
+    }, timerStep);
+
+    this.setState({ timerIntervalID });
+  }
+
+  disableAnswers() {
+    const { canDisable } = this.state;
+    if (canDisable) {
+      this.setState({ disableAnswers: true, canDisable: false, nextButton: true });
+    }
+  }
+
+  handleClick(answerStatus) {
+    // No momento que essa função for chamada significa que a pessoa respondeu e o botão de proximo pode aparacer
+    const { showAnswer } = this.props;
+    showAnswer('answer-btn-correct', 'answer-btn-wrong');
+    this.setState({
+      nextButton: true,
+    });
+
+    if (answerStatus === 'correct') {
+      // implementar comportamento quando acertar a pergunta
+    }
+    if (answerStatus === 'wrong') {
+      // implementar comportamento quando errar a pergunta.
+    }
   }
 
   renderQuestions() {
-    const { question } = this.state;
-    const answers = this.setAnswers();
+    const { question, disableAnswers, sortedAnswers } = this.state;
+    const { cBtnClass, wBtnClass } = this.props;
+    const answers = sortedAnswers;
     return (
-      <div>
-        <span data-testid="question-category">{question.category}</span>
-        <span data-testid="question-text">{question.question}</span>
-        {answers.map((answer, index) => {
-          if (answer.isCorrect) {
+      <div className="questions-card">
+        <div className="questions-text">
+          <span className="cat" data-testid="question-category">{question.category}</span>
+          <span data-testid="question-text">{question.question}</span>
+        </div>
+        <div className="questions-answers">
+          {answers.map((answer, index) => {
+            if (answer.isCorrect) {
+              return (
+                <button
+                  className={ cBtnClass }
+                  key={ index }
+                  data-testid="correct-answer"
+                  type="button"
+                  disabled={ disableAnswers }
+                  onClick={ () => {
+                    this.handleClick('correct');
+                  } }
+                >
+                  { answer.answer }
+                </button>
+              );
+            }
             return (
               <button
+                className={ wBtnClass }
                 key={ index }
-                data-testid="correct-answer"
+                data-testid={ `wrong-answer-${index}` }
                 type="button"
+                disabled={ disableAnswers }
                 onClick={ () => {
-                  this.handleClick();
+                  this.handleClick('wrong');
                 } }
               >
                 { answer.answer }
               </button>
             );
-          }
-          return (
-            <button
-              key={ index }
-              data-testid={ `wrong-answer-${index}` }
-              type="button"
-              onClick={ () => {
-                this.handleClick();
-              } }
-            >
-              { answer.answer }
-            </button>
-          );
-        })}
+          })}
+        </div>
       </div>
     );
   }
 
   render() {
-    return <div>{this.renderQuestions()}</div>;
+    const { timer, nextButton, timerIntervalID } = this.state;
+
+    return (
+      <div className="questions-container">
+        { this.renderQuestions()}
+        <div>
+          <p>{ `Tempo: ${timer}` }</p>
+          {nextButton && <ButtonNext
+            getQuestion={ this.getQuestion }
+            setTimer={ this.setTimer }
+            timerIntervalID={ timerIntervalID }
+          />}
+        </div>
+      </div>
+    );
   }
 }
 
 const mapStateToProps = (state) => ({
   questions: state.game.questions,
   questionNumber: state.game.questionNumber,
+  cBtnClass: state.game.cBtnClass,
+  wBtnClass: state.game.wBtnClass,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  showAnswer: (correct, wrong) => dispatch(changeClass(correct, wrong)),
 });
 
 GameQuestions.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   questionNumber: PropTypes.number.isRequired,
+  showAnswer: PropTypes.func.isRequired,
+  cBtnClass: PropTypes.string.isRequired,
+  wBtnClass: PropTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps)(GameQuestions);
+export default connect(mapStateToProps, mapDispatchToProps)(GameQuestions);

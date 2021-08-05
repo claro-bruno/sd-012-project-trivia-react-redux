@@ -3,6 +3,8 @@ import {
   GET_QUESTIONS,
   GET_QUESTIONS_SUCCESS,
   GET_QUESTIONS_ERROR,
+  NEXT_QUESTIONS,
+  CHANGE_CLASS,
 } from './actionsTypes';
 
 export const addPlayerInfo = (loginInfo) => ({
@@ -20,6 +22,16 @@ export const getQuestionsSuccess = (payload) => ({
 export const getQuestionsError = (error) => ({
   type: GET_QUESTIONS_ERROR,
   error,
+});
+
+export const nextQuestion = () => ({
+  type: NEXT_QUESTIONS,
+});
+
+export const changeClass = (correct, wrong) => ({
+  type: CHANGE_CLASS,
+  correct,
+  wrong,
 });
 
 export const fetchAPI = () => (dispatch) => {

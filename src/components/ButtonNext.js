@@ -1,25 +1,35 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { nextQuestion } from '../redux/actions';
 
 class ButtonNext extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isToggleOn: true,
-    };
     this.handleClick = this.handleClick.bind(this);
     this.renderButton = this.renderButton.bind(this);
   }
 
   handleClick() {
-    this.setState((prevState) => ({
-      isToggleOn: !prevState.isToggleOn,
-    }));
+    const { getQuestion,
+      setTimer,
+      timerIntervalID,
+      nextQuestions,
+      questions,
+      questionNumber,
+    } = this.props;
+    clearInterval(timerIntervalID);
+    if (questionNumber < questions.length - 1) {
+      nextQuestions();
+      getQuestion();
+      setTimer();
+    }
   }
 
   renderButton() {
     return (
       <button
-        onChange={ this.handleClick }
+        onClick={ this.handleClick }
         data-testid="btn-next"
         type="button"
       >
@@ -29,13 +39,30 @@ class ButtonNext extends React.Component {
   }
 
   render() {
-    const { isToggleOn } = this.state;
-
     return (
       <div>
-        { isToggleOn && this.renderButton() }
+        { this.renderButton() }
       </div>
     );
   }
 }
-export default ButtonNext;
+
+ButtonNext.propTypes = {
+  getQuestion: PropTypes.func.isRequired,
+  setTimer: PropTypes.func.isRequired,
+  timerIntervalID: PropTypes.number.isRequired,
+  nextQuestions: PropTypes.func.isRequired,
+  questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  questionNumber: PropTypes.number.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  questions: state.game.questions,
+  questionNumber: state.game.questionNumber,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  nextQuestions: () => dispatch(nextQuestion()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ButtonNext);
