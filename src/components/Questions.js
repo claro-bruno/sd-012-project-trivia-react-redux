@@ -37,6 +37,7 @@ class Questions extends Component {
   handleClick({ target }) {
     this.setState({ disabled: true, next: true });
     target.classList.add('selected');
+    clearInterval(this.interval);
   }
 
   answersRender() {
@@ -92,13 +93,13 @@ class Questions extends Component {
     const ONE_SECOND = 1000;
     const THIRTY_SECONDS = 30000;
 
-    const interval = setInterval(() => {
+    this.interval = setInterval(() => {
       this.setState((prevState) => ({
         time: prevState.time - 1,
       }));
     }, ONE_SECOND);
     setTimeout(() => {
-      clearInterval(interval);
+      clearInterval(this.interval);
       this.setState({
         next: true,
         disabled: true,
