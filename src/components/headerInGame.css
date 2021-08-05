@@ -1,0 +1,13 @@
+.userInfos {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 20px;
+}
+
+.left-side-infos {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+}
