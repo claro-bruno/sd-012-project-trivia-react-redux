@@ -1,23 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Ranking extends React.Component {
-
   getLocalStorage() {
+    const pic = 'https://www.gravatar.com/avatar/';
     const ranking = [
       {
         name: 'jogador 1',
         score: 10,
-        picture: 'https://www.gravatar.com/avatar/',
+        picture: pic,
       },
       {
         name: 'jogador 2',
         score: 5,
-        picture: 'https://www.gravatar.com/avatar/',
+        picture: pic,
       },
       {
         name: 'jogador 3',
         score: 15,
-        picture: 'https://www.gravatar.com/avatar/',
+        picture: pic,
       },
     ];
     localStorage.setItem('ranking', JSON.stringify(ranking));
@@ -31,22 +32,34 @@ class Ranking extends React.Component {
     return (
       <div>
         <ul>
-          {sortedRanking.map((player, index) => 
-          <li key={index}>
-            <img src={player.picture} alt="player"></img>
-            <span data-testid={`player-name-${index}`}>{player.name}</span>
-            <span data-testid={`player-score-${index}`}>{player.score}</span>
-          </li>)}
+          {sortedRanking.map((player, index) => (
+            <li key={ index }>
+              <img src={ player.picture } alt="player" />
+              <span data-testid={ `player-name-${index}` }>{ player.name }</span>
+              <span data-testid={ `player-score-${index}` }>{ player.score }</span>
+            </li>
+          ))}
         </ul>
       </div>
-    )
+    );
+  }
+
+  renderHomeBtn() {
+    return (
+      <Link to="/">
+        <button type="button" data-testid="btn-go-home">
+          Inicio
+        </button>
+      </Link>
+    );
   }
 
   render() {
     return (
-    <div>
-      {this.renderRanking()}
-    </div>
+      <div>
+        {this.renderRanking()}
+        {this.renderHomeBtn()}
+      </div>
     );
   }
 }
