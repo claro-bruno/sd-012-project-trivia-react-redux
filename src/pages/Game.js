@@ -42,7 +42,7 @@ class Game extends React.Component {
 
   render() {
     const { questions,
-      questionNumber, loading, corrAnsBorder, incorrAnsBorder } = this.state;
+      questionNumber, loading, incorrAnsBorder, corrAnsBorder } = this.state;
     if (!loading) {
       return (
         <main>
