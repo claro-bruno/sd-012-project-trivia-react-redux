@@ -159,9 +159,8 @@ class Game extends React.Component {
       });
     } else {
       // Aqui deve ser a chamada da proxima pagina caso tenha sido a ultima questão.
-      this.setState({
-        showButton: false,
-      });
+      const { history } = this.props;
+      history.push('/feedback');
     }
   }
 
@@ -220,6 +219,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 Game.propTypes = {
   getPoint: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Game);
