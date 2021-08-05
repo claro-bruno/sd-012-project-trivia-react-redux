@@ -36,9 +36,19 @@ class Header extends Component {
           alt={ userName }
           data-testid="header-profile-picture"
         />
-          <input type="text" aria-readonly data-testid="header-player-name"  value={` ${userName} `} />
+        <input
+          type="text"
+          aria-readonly
+          data-testid="header-player-name"
+          value={ ` ${userName} ` }
+        />
 
-        <input type="text" aria-readonly data-testid="header-score" value={0} />
+        <input
+          type="text"
+          aria-readonly
+          data-testid="header-score"
+          value={ 0 }
+        />
       </header>
     );
   }

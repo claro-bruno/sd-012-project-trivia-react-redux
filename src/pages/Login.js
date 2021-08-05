@@ -29,47 +29,46 @@ class Login extends React.Component {
     const { getQuestions } = this.props;
     const storage = localStorage.getItem('token');
     getQuestions(storage);
-    
   }
-  
+
   handleChange({ target }) {
     this.setState({
       [target.name]: target.value,
     });
   }
-  
+
   btnCondition() {
     const lenNumber = 5;
     const { name, email, btnLock } = this.state;
-    
+
     const emailVLD = RegExp(/[\w]+@[\w]+\.[\w]+/g).test(email);
     const nameVLD = name.length >= lenNumber;
-    
+
     if (btnLock) {
       return (emailVLD && nameVLD) ? this.setState({ btnLock: false }) : btnLock;
     }
     if (btnLock === false) {
       return (!(emailVLD && nameVLD)) ? this.setState({ btnLock: true }) : btnLock;
     }
-    
+
     return btnLock;
   }
-  
+
   async fetchToken() {
     const response = await fetch('https://opentdb.com/api_token.php?command=request');
     const { token } = await response.json();
     localStorage.setItem('token', token);
   }
-  
+
   handleSubmit(e) {
     e.preventDefault();
     const { name } = this.state;
-    const {userName} = this.props;
+    const { userName } = this.props;
     this.setState({ redirect: 'trivia' });
     userName(this.state);
     localStorage.setItem('userName', name);
   }
-  
+
   handleClick() {
     this.setState({ redirect: 'settings' });
   }
