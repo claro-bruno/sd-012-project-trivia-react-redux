@@ -10,6 +10,15 @@ class Question extends Component {
     this.state = {
       index: 0,
     };
+
+    this.changeColorsAnswer = this.changeColorsAnswer.bind(this);
+  }
+
+  changeColorsAnswer() {
+    const correct = document.getElementById('questionCorrect');
+    const incorrect = document.getElementsByName('questionWrong');
+    incorrect.forEach((question) => { question.className = 'questionWrong'; });
+    correct.className = 'questionCorrect';
   }
 
   render() {
@@ -34,6 +43,8 @@ class Question extends Component {
                 className="correct-answer"
                 type="button"
                 data-testid="correct-answer"
+                id="questionCorrect"
+                onClick={ this.changeColorsAnswer }
               >
                 {questions[index].correct_answer}
 
@@ -44,6 +55,8 @@ class Question extends Component {
                   type="button"
                   key={ index }
                   data-testid={ `wrong-answer-${i}` }
+                  name="questionWrong"
+                  onClick={ this.changeColorsAnswer }
                 >
                   {incorrect}
 

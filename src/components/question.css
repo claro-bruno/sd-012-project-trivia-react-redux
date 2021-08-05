@@ -62,3 +62,11 @@
 .incorrect-answer:active {
   transform: scale(0.98);
 }
+
+.questionCorrect {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.questionWrong {
+  border: 3px solid red;
+}
