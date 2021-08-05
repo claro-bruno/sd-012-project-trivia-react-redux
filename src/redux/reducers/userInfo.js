@@ -1,10 +1,19 @@
-import { ADD_EMAIL, ADD_TOKEN, ADD_USERNAME, IS_OVER } from '../actions';
+import {
+  ADD_EMAIL,
+  ADD_TOKEN,
+  ADD_USERNAME,
+  IS_OVER,
+  PASS_TIME,
+  TIME_RESET,
+} from '../actions';
 
 const INITIAL_STATE = ({
   email: '',
   name: '',
   token: '',
   over: false,
+  score: 0,
+  time: 30,
 });
 
 const userInfo = (state = INITIAL_STATE, action) => {
@@ -28,6 +37,17 @@ const userInfo = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       over: action.payload,
+    };
+  case PASS_TIME:
+    return {
+      ...state,
+      time: state.time > 0 ? state.time - 1 : 0,
+    };
+  case TIME_RESET:
+    return {
+      ...state,
+      time: 30,
+      over: false,
     };
   default: return state;
   }

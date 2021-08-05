@@ -1,38 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { isOver } from '../redux/actions';
+import { isOver, timePass } from '../redux/actions';
 
 class Timer extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      time: 30,
-    };
-
-    this.timer = this.timer.bind(this);
-  }
-
   componentDidMount() {
     this.timer();
   }
 
   componentDidUpdate() {
-    this.over();
+    const { over } = this.props;
+    if (!over) return this.over();
   }
 
   timer() {
-    const oneSecond = 1000;
+    const oneSecond = 100;
+    const { passTime } = this.props;
     setInterval(
-      () => this.setState(
-        (prevState) => ({ time: prevState.time > 0 ? prevState.time - 1 : 0 }),
-      ), oneSecond,
+      () => passTime(), oneSecond,
     );
   }
 
   over() {
-    const { time } = this.state;
+    const { time } = this.props;
     const { timeIsOver } = this.props;
     if (time === 0) {
       return timeIsOver();
@@ -40,7 +30,7 @@ class Timer extends Component {
   }
 
   render() {
-    const { time } = this.state;
+    const { time } = this.props;
     return (
       <p>
         {time}
@@ -51,10 +41,19 @@ class Timer extends Component {
 
 Timer.propTypes = {
   timeIsOver: PropTypes.func.isRequired,
+  over: PropTypes.bool.isRequired,
+  time: PropTypes.number.isRequired,
+  passTime: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   timeIsOver: () => dispatch(isOver()),
+  passTime: () => dispatch(timePass()),
 });
 
-export default connect(null, mapDispatchToProps)(Timer);
+const mapStateToProps = (state) => ({
+  over: state.userInfo.over,
+  time: state.userInfo.time,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Timer);

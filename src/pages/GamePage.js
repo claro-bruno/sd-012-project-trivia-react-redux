@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import GameQuestions from '../components/GameQuestions';
 import HeaderPlayer from '../components/HeaderPlayer';
 import Timer from '../components/Timer';
+import { timeReset } from '../redux/actions';
 
 class GamePage extends Component {
   constructor() {
@@ -41,12 +42,13 @@ class GamePage extends Component {
   }
 
   sendNextQuestion() {
+    const { resetTimer } = this.props;
     this.setState((prevstate) => ({ counter: prevstate.counter + 1, answered: false }));
+    resetTimer();
   }
 
   render() {
     const { questions, counter, loading, answered } = this.state;
-
     return (
       <main>
         <HeaderPlayer />
@@ -56,6 +58,7 @@ class GamePage extends Component {
           : (
             <GameQuestions
               onAnswer={ this.questionAnswered }
+              counter={ counter }
               answered={ answered }
               nextQuestion={ this.sendNextQuestion }
               questionObj={ questions[counter] }
@@ -68,10 +71,15 @@ class GamePage extends Component {
 
 GamePage.propTypes = {
   userInfo: PropTypes.objectOf(Object).isRequired,
+  resetTimer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   userInfo: state.userInfo,
 });
 
-export default connect(mapStateToProps)(GamePage);
+const mapDispatchToProps = (dispatch) => ({
+  resetTimer: () => dispatch(timeReset()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GamePage);

@@ -4,15 +4,9 @@ import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
 
 class HeaderPlayer extends Component {
-  constructor() {
-    super();
-    this.state = {
-      score: 0,
-    };
-  }
-
   render() {
-    const { score } = this.state;
+    const state = JSON.parse(localStorage.getItem('state'));
+    const { score } = state;
     const { userInfo } = this.props;
     const hash = md5(userInfo.email).toString();
     return (
