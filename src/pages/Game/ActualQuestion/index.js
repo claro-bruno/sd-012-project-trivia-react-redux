@@ -12,6 +12,7 @@ class ActualQuestion extends Component {
     this.counter = this.counter.bind(this);
     this.submitCorrectAnswer = this.submitCorrectAnswer.bind(this);
     this.handleChangeStyle = this.handleChangeStyle.bind(this);
+    this.handleReset = this.handleReset.bind(this);
 
     this.state = {
       answered: false,
@@ -42,7 +43,7 @@ class ActualQuestion extends Component {
     })), oneSecond);
 
     // Após 30 segundos mudará o estado representando que foi respondido;
-    setTimeout(() => this.setState({ answered: true }), interval);
+    this.timeOut = setTimeout(() => this.setState({ answered: true }), interval);
   }
 
   handleChangeStyle() {
@@ -64,6 +65,17 @@ class ActualQuestion extends Component {
     // Soma de pontos de acordo com o README.md
     const points = defaultValue + (timer * difficultyLoad);
     pointsToScore(points);
+  }
+
+  // Método que "reseta" o componente;
+  handleReset() {
+    this.setState({
+      answered: false,
+      timer: 30,
+    });
+    clearTimeout(this.timeOut); // Remove o "setTimeout()";
+    clearInterval(this.interval); // Remove o "setInterval()";
+    this.counter(); // Inicia novamente o timer;
   }
 
   booleanQuestions(answers, correctAnswer, answered) {
@@ -136,12 +148,12 @@ class ActualQuestion extends Component {
       type,
       correct_answer: correctAnswer,
       incorrect_answers: incorrectAnswers,
-    } } = this.props;
-
+    }, nextQuestion, questionIndex } = this.props;
     const { answered, timer } = this.state;
 
     const answers = [...incorrectAnswers, correctAnswer];
     answers.sort();
+    const maxLength = 4;
 
     return (
       <section>
@@ -151,7 +163,16 @@ class ActualQuestion extends Component {
         <div>
           { type === 'boolean'
             ? this.booleanQuestions(answers, correctAnswer, answered)
-            : this.multipleQuestions(answers, correctAnswer, answered) }
+            : this.multipleQuestions(answers, correctAnswer, answered)}
+          { answered && (questionIndex < maxLength) && (
+            <button
+              type="button"
+              onClick={ () => { nextQuestion(); this.handleReset(); } }
+              data-testid="btn-next"
+            >
+              Próxima Questão
+            </button>
+          )}
         </div>
       </section>
     );
@@ -168,6 +189,8 @@ ActualQuestion.propTypes = {
     incorrect_answers: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
   pointsToScore: PropTypes.func.isRequired,
+  nextQuestion: PropTypes.func.isRequired,
+  questionIndex: PropTypes.number.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

@@ -9,6 +9,7 @@ class Game extends Component {
   constructor() {
     super();
     this.getQuestions = this.getQuestions.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
     this.state = {
       questions: [],
       questionIndex: 0,
@@ -26,6 +27,16 @@ class Game extends Component {
     fetch(endpoind)
       .then((response) => response.json())
       .then(({ results }) => this.setState({ questions: results, loaded: true }));
+  }
+
+  nextQuestion() {
+    const { questionIndex: actualIndex } = this.state;
+    const maxLength = 4;
+    if (actualIndex < maxLength) {
+      this.setState(({ questionIndex }) => ({
+        questionIndex: questionIndex + 1,
+      }));
+    }
   }
 
   render() {
@@ -52,6 +63,8 @@ class Game extends Component {
           && (
             <ActualQuestion
               question={ questions[questionIndex] }
+              questionIndex={ questionIndex }
+              nextQuestion={ this.nextQuestion }
             />
           ) }
         </main>
