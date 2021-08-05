@@ -15,8 +15,8 @@ class GameQuestions extends React.Component {
         correct_answer: 'A crowbar',
         incorrect_answers: ['A pistol', 'The H.E.V suit', 'Your fists'],
       },
+      sortedAnswers: [],
       timer: 30,
-      timeIsRunning: false,
       timerIntervalID: 0,
       canDisable: true,
       disableAnswers: false,
@@ -49,11 +49,11 @@ class GameQuestions extends React.Component {
     const question = questions[questionNumber];
     this.setState({
       question,
-    });
+    }, () => this.setAnswers());
   }
 
   setAnswers() {
-    const { question, timeIsRunning } = this.state;
+    const { question } = this.state;
     const incorrectAnswers = question.incorrect_answers.map((answer) => ({
       answer,
       isCorrect: false,
@@ -67,17 +67,14 @@ class GameQuestions extends React.Component {
       },
       ...incorrectAnswers,
     ];
-    return timeIsRunning ? answers : answers.sort((a, b) => a.id - b.id);
+
+    const sortedAnswers = answers.sort((a, b) => a.id - b.id);
+    this.setState({ sortedAnswers });
   }
 
   setTimer() {
-    this.setState({ timer: 30 });
+    this.setState({ timer: 30, disableAnswers: false, canDisable: true });
     const timerStep = 1000;
-    const timeFirstRender = 150;
-
-    setTimeout(() => {
-      this.setState({ timeIsRunning: true });
-    }, timeFirstRender);
 
     const timerIntervalID = setInterval(() => {
       this.setState((previousState) => ({ timer: previousState.timer - 1 }));
@@ -105,8 +102,8 @@ class GameQuestions extends React.Component {
   }
 
   renderQuestions() {
-    const { question, disableAnswers } = this.state;
-    const answers = this.setAnswers();
+    const { question, disableAnswers, sortedAnswers } = this.state;
+    const answers = sortedAnswers;
     return (
       <div>
         <span data-testid="question-category">{question.category}</span>
