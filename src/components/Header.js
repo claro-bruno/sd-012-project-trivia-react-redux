@@ -1,10 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
+import PropTypes from 'prop-types';
 import '../styles/Header.css';
 
 class Header extends React.Component {
   render() {
-    const userMailHashCode = md5('email-que-virá-do-state@trybe.com').toString();
+    const { userMail, userName } = this.props;
+    const playerData = JSON.parse(localStorage.getItem('state'));
+    const userMailHashCode = md5(userMail).toString();
     return (
       <header className="standard-header">
         <div className="player-info">
@@ -16,15 +20,16 @@ class Header extends React.Component {
           />
           <span className="jogador-span">
             Jogador:
-            <span className="player-name" data-testid="header-player-name" />
-            Nuwanda
+            <span className="player-name" data-testid="header-player-name">
+              {userName}
+            </span>
           </span>
         </div>
         <div className="player-score">
           <span>
             Pontuação:
             <span className="player-score-number" data-testid="header-score">
-              20
+              {playerData ? playerData.score : 0}
             </span>
           </span>
         </div>
@@ -33,4 +38,15 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+Header.propTypes = {
+  userMail: PropTypes.string,
+  userName: PropTypes.string,
+  userPoints: PropTypes.number,
+}.isRequired;
+
+const mapStateToProps = (state) => ({
+  userName: state.loginReducer.name,
+  userMail: state.loginReducer.email,
+});
+
+export default connect(mapStateToProps)(Header);
