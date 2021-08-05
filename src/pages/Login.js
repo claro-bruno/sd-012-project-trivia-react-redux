@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import LinkWithButton from '../components/LinkWithButton';
 import { actionCreateLogin } from '../redux/actions';
+import { Link } from 'react-router-dom';
 
 class Login extends Component {
   constructor(props) {
@@ -75,6 +76,11 @@ class Login extends Component {
           handlePlayBtn={ () => this.handlePlayBtn(this.state) }
           btnText="Jogar"
         />
+        <div>
+          <Link to="/config" data-testid="btn-settings">
+            <button type="button">Configurações</button>
+          </Link>
+        </div>
       </fieldset>
     );
   }
