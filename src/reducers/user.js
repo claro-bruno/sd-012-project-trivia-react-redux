@@ -1,10 +1,12 @@
 import {
   GET_TOKEN,
   GET_TOKEN_SUCCESS,
-  GET_TOKEN_ERROR } from '../actions';
+  GET_TOKEN_ERROR,
+  GET_PLAYER_USER_INFO } from '../actions';
 
 const INITIAL_STATE = {
   token: '',
+  userInfo: {},
   isLoading: false,
 };
 
@@ -25,6 +27,11 @@ function gameToken(state = INITIAL_STATE, action) {
     return {
       ...state,
       Error,
+    };
+  case GET_PLAYER_USER_INFO:
+    return {
+      ...state,
+      userInfo: { ...action.payload },
     };
   default:
     return state;
