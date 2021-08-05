@@ -17,7 +17,7 @@ class Question extends Component {
     const sortedAnswers = [...incorrectAnswers, correctAnswer].sort();
     return (
       <>
-        <h2 data-testid="question-category">{category}</h2>
+        <h2 data-testid="question-category">{ category }</h2>
         <p data-testid="question-text">{ question }</p>
         { sortedAnswers.map((answer, index) => {
           const isCorrect = answer === correctAnswer;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import Question from '../components/Question';
 import { fetchTrivia } from '../services/api';
 import Loading from '../components/Loading';
@@ -15,11 +16,13 @@ class Trivia extends Component {
     this.setQuestions = this.setQuestions.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
     this.handleNext = this.handleNext.bind(this);
+    this.renderQuestionOrRedirect = this.renderQuestionOrRedirect.bind(this);
   }
 
   async componentDidMount() {
     // Token de teste, para funcionar de verdade o token verdadeiro tem de ser retirado do localStorage e colocado aqui
-    const token = '5918261f2d6fc70c64c978ff9d93cf6d907ad70a6d3121bf01f8147eebe75314';
+    const token = JSON.parse(localStorage.getItem('token'));
+    console.log(token);
     const data = await fetchTrivia(token);
     const questions = data.results;
     this.setQuestions(questions);
@@ -41,21 +44,31 @@ class Trivia extends Component {
       }));
   }
 
-  render() {
-    const { questions, questionNumber, loading, resolved } = this.state;
-    const { handleAnswer, handleNext } = this;
+  renderQuestionOrRedirect() {
+    const { handleAnswer } = this;
+    const { questionNumber, resolved, questions } = this.state;
+
+    const maxQuestionsNumber = 4;
     const currentQuestion = questions[questionNumber];
+    return (questionNumber > maxQuestionsNumber
+      ? <Redirect to="/game/feedback" />
+      : (
+        <Question
+          handleAnswer={ handleAnswer }
+          resolved={ resolved }
+          question={ currentQuestion }
+        />));
+  }
+
+  render() {
+    const { loading, resolved } = this.state;
+    const { handleNext, renderQuestionOrRedirect } = this;
     return (
       <section>
         {
           loading
             ? <Loading />
-            : (
-              <Question
-                handleAnswer={ handleAnswer }
-                resolved={ resolved }
-                question={ currentQuestion }
-              />)
+            : renderQuestionOrRedirect()
         }
         {
           resolved
