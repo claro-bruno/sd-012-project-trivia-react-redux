@@ -93,10 +93,15 @@ class GameQuestions extends React.Component {
     }
   }
 
-  handleClick() {
-    // this.setState((state) => ({
-    //   questionNumber: state.questionNumber + 1,
-    // }));
+  handleClick(answerStatus) {
+    // No momento que essa função for chamada significa que a pessoa respondeu e o botão de proximo pode aparacer
+
+    if (answerStatus === 'correct') {
+      // implementar comportamento quando acertar a pergunta
+    }
+    if (answerStatus === 'wrong') {
+      // implementar comportamento quando errar a pergunta.
+    }
   }
 
   renderQuestions() {
@@ -115,7 +120,7 @@ class GameQuestions extends React.Component {
                 type="button"
                 disabled={ disableAnswers }
                 onClick={ () => {
-                  this.handleClick();
+                  this.handleClick('correct');
                 } }
               >
                 { answer.answer }
@@ -129,7 +134,7 @@ class GameQuestions extends React.Component {
               type="button"
               disabled={ disableAnswers }
               onClick={ () => {
-                this.handleClick();
+                this.handleClick('wrong');
               } }
             >
               { answer.answer }
@@ -147,8 +152,7 @@ class GameQuestions extends React.Component {
       <div>
         { this.renderQuestions()}
         <div>
-          <p>Tempo: </p>
-          <p>{ timer }</p>
+          <p>{ `Tempo: ${timer}` }</p>
         </div>
       </div>
     );
