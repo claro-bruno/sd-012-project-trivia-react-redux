@@ -112,6 +112,15 @@ class Trivia extends React.Component {
     });
   }
 
+  verficaString(str) {
+    let verication = str.replaceAll('&quot;', '"');
+    verication = verication.replaceAll('&#34;', '"');
+    verication = verication.replaceAll('&Aring;', 'Å');
+    verication = verication.replaceAll('&#039;', '\'');
+    verication = verication.replaceAll('&pi;', '3,14');
+    return (`Pergunta: ${verication}`);
+  }
+
   renderButtons() {
     const { trivia } = this.props;
     const { correct_answer: answer, incorrect_answers: wrong } = trivia;
@@ -128,7 +137,7 @@ class Trivia extends React.Component {
       <div>
         <div>{time}</div>
         <h4 data-testid="question-category">{category}</h4>
-        <h3 data-testid="question-text">{`Pergunta: ${question}`}</h3>
+        <h3 data-testid="question-text">{this.verficaString(question)}</h3>
         { buttons }
         { this.button() }
         { (time === 0) ? this.changeStyles() : null }
