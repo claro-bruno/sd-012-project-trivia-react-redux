@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import HeaderPlayer from '../components/HeaderPlayer';
 
 class FeedbackPage extends Component {
   render() {
     return (
-      <p data-testid="feedback-text">feedback</p>
+      <>
+        <HeaderPlayer />
+        <h2 data-testid="feedback-text">Feedback</h2>
+      </>
     );
   }
 }
