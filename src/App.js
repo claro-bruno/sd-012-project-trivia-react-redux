@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Ranking from './pages/Ranking';
 import Settings from './pages/Settings';
 import Trivia from './pages/Trivia';
+import './App.css';
 
 class App extends Component {
   render() {

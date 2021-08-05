@@ -74,7 +74,7 @@ class Login extends React.Component {
           onChange={ this.handleChange }
         />
 
-        <Link to="/Trivia">
+        <Link to="/trivia">
           <button
             disabled={ this.inputsValidation() }
             data-testid="btn-play"

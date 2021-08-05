@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
+import { Link } from 'react-router-dom';
 import Loading from '../components/Loading';
 
 class Trivia extends Component {
@@ -11,6 +12,8 @@ class Trivia extends Component {
     this.state = {
       trivias: '',
       loading: true,
+      indexQuestion: 0,
+      activeButton: true,
     };
   }
 
@@ -23,29 +26,74 @@ class Trivia extends Component {
     this.gravatar();
   }
 
-  // Funcao que é ativada após a att do componente, ela que faz o card da Trivia.
+  // Funcao que ativa o botao de Proxima pergunta, o botao eh ativado independente da resposta ser errada ou certa
+  activeButtonNext() {
+    const { activeButton } = this.state;
+
+    if (activeButton) {
+      return true;
+    }
+    return false;
+  }
+
+  redirectToFeedback() {
+    return (
+      <Link to="/feedback">
+        Próxima
+      </Link>
+    );
+  }
+
+  // Funcao que altera o estado indexQuestion, fazendo assim com que as perguntas mudem. Essa funcao eh chamada apos o clique em qualquer um dos botoes de resposta.
+  nextQuestion() {
+    const { indexQuestion } = this.state;
+
+    this.setState({
+      indexQuestion: indexQuestion + 1,
+      activeButton: true,
+    });
+  }
+
+  // Funcao que é ativada após a att do componente, ela que faz o card da Trivia. Ela eh chamada apos o clique no botao Proxima
   makeTrivias() {
-    const { trivias } = this.state;
+    const { trivias, indexQuestion, activeButton } = this.state;
+    const questionsLimit = 4;
     return (
       <>
         <h1 data-testid="question-category">
-          { trivias[0].category }
+          { trivias[indexQuestion].category }
         </h1>
         <h2 data-testid="question-text">
-          { trivias[0].question }
+          { trivias[indexQuestion].question }
         </h2>
-        <button data-testid="correct-answer" type="button">
-          { trivias[0].correct_answer }
+        <button
+          data-testid="correct-answer"
+          type="button"
+          onClick={ () => (this.setState({ activeButton: false },
+            () => this.activeButtonNext())) }
+        >
+          { trivias[indexQuestion].correct_answer }
         </button>
-        { trivias[0].incorrect_answers.map((wrongAnswer, index) => (
+        { trivias[indexQuestion].incorrect_answers.map((wrongAnswer, index) => (
           <button
             data-testid={ `wrong-answer-${index}` }
             key={ wrongAnswer }
+            onClick={ () => (this.setState({ activeButton: false },
+              () => this.activeButtonNext())) }
             type="button"
           >
             { wrongAnswer }
           </button>
         )) }
+        <button
+          className={ activeButton ? 'nextButton' : '' }
+          disabled={ this.activeButtonNext() }
+          type="button"
+          data-testid="btn-next"
+          onClick={ () => this.nextQuestion() }
+        >
+          { indexQuestion === questionsLimit ? this.redirectToFeedback() : 'Próxima' }
+        </button>
       </>
     );
   }
@@ -88,7 +136,6 @@ class Trivia extends Component {
   emailCript() {
     const { emailUser } = this.props;
     const stringEmail = md5(emailUser).toString();
-    // console.log(stringEmail);
     this.setState({
       criptoEmail: stringEmail,
     });
@@ -97,9 +144,7 @@ class Trivia extends Component {
   // função para pegar a imagem na api do gravatar
   async gravatar() {
     const { criptoEmail } = this.state;
-    // console.log(criptoEmail);
     const fetchGravatar = await fetch(`https://www.gravatar.com/avatar/${criptoEmail}`);
-    // console.log(fetchGravatar);
     this.setState({
       imgGravatar: fetchGravatar.url,
     });
