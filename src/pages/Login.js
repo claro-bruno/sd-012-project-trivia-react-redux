@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { fetchToken, actionUserInfo } from '../redux/actions';
 import SettingsButton from '../components/SettingsButton';
+import './login.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -42,7 +43,8 @@ class Login extends React.Component {
   render() {
     const { email, name, disable } = this.state;
     return (
-      <div>
+      <div className="login-container">
+        <h2>Trívia</h2>
         <form>
           <label htmlFor="input-player-name">
             Nome:
@@ -56,7 +58,7 @@ class Login extends React.Component {
             />
           </label>
           <label htmlFor="input-gravatar-email">
-            Email:
+            E-mail:
             <input
               data-testid="input-gravatar-email"
               id="input-gravatar-email"
@@ -66,7 +68,6 @@ class Login extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
-          <SettingsButton />
           <Link to="/game">
             <button
               data-testid="btn-play"
@@ -77,6 +78,7 @@ class Login extends React.Component {
               Jogar
             </button>
           </Link>
+          <SettingsButton />
         </form>
       </div>
     );

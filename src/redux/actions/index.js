@@ -52,16 +52,5 @@ export const fetchToken = () => async (dispatch) => {
   }
 };
 
-export const fetchAnswers = (token, qty) => (dispatch) => {
-  dispatch(requestQuestions());
-  return fetch(`https://opentdb.com/api.php?amount=${qty}&token=${token}`)
-    .then((response) => response.json())
-    .then((result) => {
-      dispatch(requestQuestionsSuccess(result.results));
-      console.log('Result', result);
-    })
-    .catch((error) => dispatch(requestQuestionsError(error)));
-};
-
 export const USERINFOS = 'USERINFOS';
 export const actionUserInfo = (name, email) => ({ type: USERINFOS, name, email });
