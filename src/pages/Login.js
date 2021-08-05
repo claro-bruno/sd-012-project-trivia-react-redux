@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import logo from '../trivia.png';
 import { sendUserInfo } from '../redux/action';
+import Button from '../components/Button';
 import {
   requestToken,
   addItemToStorage,
@@ -15,6 +15,7 @@ class Login extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.playGame = this.playGame.bind(this);
 
     this.state = {
       name: '',
@@ -55,15 +56,19 @@ class Login extends React.Component {
     }
   }
 
-  async handleClick() {
+  async playGame() {
     const { name, email } = this.state;
-    const { history, send } = this.props;
+    const { send } = this.props;
     const image = requestImageGravatar(email);
     addItemToStorage('state', 'name', name);
     addItemToStorage('state', 'gravatarEmail', email);
     await requestToken();
     send(name, email, image);
-    history.push('/game');
+  }
+
+  handleClick(route) {
+    const { history } = this.props;
+    history.push(route);
   }
 
   render() {
@@ -95,22 +100,20 @@ class Login extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
-          <button
-            type="button"
-            data-testid="btn-play"
+          <Button
+            buttonText="Jogar"
+            testId="btn-play"
+            onClick={ async () => {
+              await this.playGame();
+              this.handleClick('/game');
+            } }
             disabled={ btnCheck }
-            onClick={ this.handleClick }
-          >
-            Jogar
-          </button>
-          <Link to="/settings">
-            <button
-              type="button"
-              data-testid="btn-settings"
-            >
-              Settings
-            </button>
-          </Link>
+          />
+          <Button
+            buttonText="Settings"
+            testId="btn-settings"
+            onClick={ () => this.handleClick('/settings') }
+          />
         </form>
       </main>
     );

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import FeedbackMessage from '../components/FeedbackMessage';
+import ResultsInfo from '../components/ResultsInfo';
 import Button from '../components/Button';
 
 class Feedback extends React.Component {
@@ -15,6 +16,7 @@ class Feedback extends React.Component {
       <section>
         <Header />
         <FeedbackMessage />
+        <ResultsInfo />
         <Button
           buttonText="Jogar novamente"
           testId="btn-play-again"
