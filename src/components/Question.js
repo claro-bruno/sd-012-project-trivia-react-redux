@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import UniqueButton from './UniqueButton';
-import Button from './Button';
-import './question.css';
 import Timer from './Timer';
 
 class Question extends Component {

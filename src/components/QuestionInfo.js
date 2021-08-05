@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import UniqueButton from './UniqueButton';
+import Button from './Button';
+import './questioninfo.css';
+
 
 class QuestionInfo extends Component {
   constructor() {
