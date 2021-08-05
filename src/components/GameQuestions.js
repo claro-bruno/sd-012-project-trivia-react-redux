@@ -6,7 +6,6 @@ class GameQuestions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      questionNumber: 0,
       question: {
         category: 'Entertainment: Video Games',
         type: 'multiple',
@@ -28,8 +27,7 @@ class GameQuestions extends React.Component {
   }
 
   getQuestion() {
-    const { questionNumber } = this.state;
-    const { questions } = this.props;
+    const { questions, questionNumber } = this.props;
     const question = questions[questionNumber];
     this.setState({
       question,
@@ -106,10 +104,12 @@ class GameQuestions extends React.Component {
 
 const mapStateToProps = (state) => ({
   questions: state.game.questions,
+  questionNumber: state.game.questionNumber,
 });
 
 GameQuestions.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  questionNumber: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(GameQuestions);

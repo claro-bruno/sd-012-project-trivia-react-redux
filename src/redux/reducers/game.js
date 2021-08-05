@@ -7,6 +7,7 @@ import {
 const INITIAL_STATE = {
   questions: [],
   isLoading: true,
+  questionNumber: 0,
 };
 
 const game = (state = INITIAL_STATE, action) => {
@@ -19,6 +20,7 @@ const game = (state = INITIAL_STATE, action) => {
       error: null,
       questions: action.payload,
       isLoading: false,
+      questionNumber: 0,
     };
 
   case GET_QUESTIONS_ERROR:
