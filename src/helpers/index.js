@@ -39,3 +39,13 @@ export const answerCheck = (correctAnswer, answer, index) => {
   }
   return `wrong-answer-${index}`;
 };
+
+export const classChanger = (correctAnswer, answer, click) => {
+  if (click) {
+    if (answer === correctAnswer) {
+      return 'correctAnswer';
+    }
+    return 'wrongAnswer';
+  }
+  return 'aBtn';
+};
