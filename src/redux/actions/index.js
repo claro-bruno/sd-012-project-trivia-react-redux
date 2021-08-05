@@ -4,6 +4,8 @@ export const UPDATE_EMAIL = 'UPDATE_EMAIL';
 export const UPDATE_TOKEN = 'UPDATE_TOKEN';
 export const INCREASE_ASSERTIONS = 'INCREASE_ASSERTIONS';
 export const INCREASE_SCORE = 'INCREASE_SCORE';
+export const GET_TIME = 'GET_TIME';
+export const SAVE_STORAGE = 'SAVE_STORAGE';
 
 const TRIVIA_API = 'https://opentdb.com/api_token.php?command=request';
 
@@ -29,6 +31,15 @@ export const increaseAssertions = () => ({
 export const increaseScore = (payload) => ({
   type: INCREASE_SCORE,
   payload,
+});
+
+export const getTime = (payload) => ({
+  type: GET_TIME,
+  payload,
+});
+
+export const saveStorage = () => ({
+  type: SAVE_STORAGE,
 });
 
 export const fetchToken = () => (dispatch) => (
