@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import UniqueButton from './UniqueButton';
 import Button from './Button';
 import './question.css';
+import Timer from './Timer';
 
 class Question extends Component {
   constructor() {
@@ -11,9 +12,33 @@ class Question extends Component {
 
     this.state = {
       index: 0,
+      seconds: 30,
+      disabled: false,
     };
 
     this.changeColorsAnswer = this.changeColorsAnswer.bind(this);
+    this.count = this.count.bind(this);
+  }
+
+  componentDidMount() {
+    this.count();
+  }
+
+  count() {
+    const sec = 1000;
+    const interval = setInterval(() => {
+      const { seconds } = this.state;
+      this.setState({
+        seconds: seconds - 1,
+      });
+      if (seconds === 1) {
+        clearInterval(interval);
+        this.setState({
+          seconds: 'Time\'s Up',
+          disabled: true,
+        });
+      }
+    }, sec);
   }
 
   changeColorsAnswer() {
@@ -26,7 +51,7 @@ class Question extends Component {
   }
 
   render() {
-    const { index } = this.state;
+    const { index, disabled } = this.state;
     const { questions } = this.props;
     return (
       <div>
@@ -46,6 +71,7 @@ class Question extends Component {
               pois ele não compartilha características
               com os botões de resposta errada */}
               <UniqueButton
+                disabled={ disabled }
                 className="correct-answer"
                 onClick={ this.changeColorsAnswer }
                 innerText={ questions[index].correct_answer }
@@ -68,6 +94,7 @@ class Question extends Component {
               </button>
             </div>
           )}
+        <Timer />
       </div>
     );
   }
