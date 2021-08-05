@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchLoginAction } from '../redux/actions';
-import ConfigButton from '../components/ConfigButton';
+import ConfigButton from '../Components/ConfigButton';
 import logo from '../trivia.png';
 
 class Login extends React.Component {
