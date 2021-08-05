@@ -4,6 +4,7 @@ import Trivia from './pages/Trivia';
 import Login from './pages/Login';
 import './App.css';
 import HeaderInGame from './components/HeaderInGame';
+import Config from './pages/Config';
 
 export default class App extends Component {
   render() {
@@ -11,7 +12,7 @@ export default class App extends Component {
       <>
         <Switch>
           <Route exact path="/" component={ Login } />
-          <Route path="/config" />
+          <Route path="/config" component={ Config } />
           <Route path="/" component={ HeaderInGame } />
         </Switch>
         <Switch>
