@@ -1,4 +1,4 @@
-export const GET_API_TRIVIA_TOKEN = 'GET_API_TRIVIA_TOKEN';
+/* export const GET_API_TRIVIA_TOKEN = 'GET_API_TRIVIA_TOKEN';
 export const GET_API_TRIVIA_TOKEN_SUCESS = 'GET_API_TRIVIA_TOKEN_SUCESS';
 export const GET_API_TRIVIA_TOKEN_ERROR = 'GET_API_TRIVIA_TOKEN_ERROR';
 
@@ -24,3 +24,4 @@ export const tokenFetchAPI = () => async (dispatch) => {
     .then((results) => dispatch(getTokenSucess(results)))
     .catch((error) => dispatch(getTokenError(error)));
 };
+ */

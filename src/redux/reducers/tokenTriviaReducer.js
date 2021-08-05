@@ -1,4 +1,4 @@
-import {
+/* import {
   GET_API_TRIVIA_TOKEN,
   GET_API_TRIVIA_TOKEN_SUCESS,
   GET_API_TRIVIA_TOKEN_ERROR,
@@ -40,3 +40,4 @@ const tokenTriviaReducer = (state = INITIAL_STATE, action) => {
 };
 
 export default tokenTriviaReducer;
+ */

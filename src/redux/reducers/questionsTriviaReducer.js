@@ -1,7 +1,7 @@
 import {
-  GET_API_TRIVIA_QUESTIONS,
   GET_API_TRIVIA_QUESTIONS_SUCESS,
-  GET_API_TRIVIA_QUESTIONS_ERROR,
+  GET_API_TRIVIA_ERRORS,
+  GET_API_TRIVIA_QUESTIONS,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -24,10 +24,11 @@ const questionsTriviaReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       isLoading: false,
-      questions: payload.results,
+      questions: payload.questions,
+      token: payload.token,
     };
 
-  case GET_API_TRIVIA_QUESTIONS_ERROR:
+  case GET_API_TRIVIA_ERRORS:
     return {
       ...state,
       isLoading: false,

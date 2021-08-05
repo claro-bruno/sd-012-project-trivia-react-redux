@@ -8,6 +8,7 @@ export default class Button extends React.Component {
         disabled,
         testId,
         name,
+        btnAction,
       },
     } = this;
     return (
@@ -15,6 +16,7 @@ export default class Button extends React.Component {
         data-testid={ testId }
         type="button"
         disabled={ disabled }
+        onClick={ btnAction }
       >
         { name }
       </button>
@@ -25,12 +27,14 @@ export default class Button extends React.Component {
 const {
   bool,
   string,
+  func,
 } = PropTypes;
 
 Button.propTypes = {
   disabled: bool.isRequired,
   testId: string.isRequired,
   name: string.isRequired,
+  btnAction: func.isRequired,
 };
 
 // export default Button;
