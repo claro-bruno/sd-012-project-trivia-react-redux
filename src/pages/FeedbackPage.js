@@ -3,7 +3,7 @@ import HeaderPlayer from '../components/HeaderPlayer';
 
 class FeedbackPage extends Component {
   render() {
-    const { player: { assertions } } = JSON.parse(localStorage.getItem('state'));
+    const { player: { assertions, score } } = JSON.parse(localStorage.getItem('state'));
     const MIN_ASSERTIONS = 3;
 
     return (
@@ -15,6 +15,8 @@ class FeedbackPage extends Component {
             ? 'Podia ser melhor...'
             : 'Mandou bem!'}
         </p>
+        <p data-testid="feedback-total-question">{assertions}</p>
+        <p data-testid="feedback-total-score">{score}</p>
       </>
     );
   }
