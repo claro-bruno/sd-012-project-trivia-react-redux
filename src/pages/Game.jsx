@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getTriviaAPI } from '../redux/action/index';
+import HeaderGame from '../components/HeaderGame';
 
 class Game extends Component {
   constructor(props) {
@@ -38,26 +39,21 @@ class Game extends Component {
     });
   }
 
-  // random(questions) {
-  //   const { correct_answer: correctAnswer, incorrect_answers: incorrectAnswers } = questions[0];
-  //   const randomIndex = Math.round(Math.random() * (incorrectAnswers.length - 0));
-  //   incorrectAnswers.slice(randomIndex, 1, correctAnswer);
-  //   this.setState({
-  //     alternatives: incorrectAnswers,
-  //     randomIndex: '',
-  //   });
-  // }
-
   createQuestion() {
     const { questions } = this.props;
     const enun = questions.map((elm, ind) => {
       const { category, question } = elm;
       return (
+        <>
+      <header>
+        <HeaderGame />
+      </header>
         <div key={ ind }>
           <h3 data-testid="question-category">{ category }</h3>
           <h2 data-testid="question-text">{ question }</h2>
           {this.createOptions()}
         </div>
+        </>
       );
     });
     return enun;
