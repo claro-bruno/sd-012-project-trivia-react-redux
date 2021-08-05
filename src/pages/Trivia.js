@@ -97,27 +97,26 @@ class Trivia extends Component {
     return (
       <>
         <span id="timer">{ time }</span>
-        <h1 data-testid="question-category">
-          { trivias[indexQuestion].category }
-        </h1>
+        <h1 data-testid="question-category">{ trivias[indexQuestion].category }</h1>
         <h2 data-testid="question-text">
           { trivias[indexQuestion].question }
         </h2>
         <button
           data-testid="correct-answer"
           type="button"
+          className="button-correct"
           onClick={
             () => (this.setState({ activeButton: false },
               () => this.changeColorAnswer()))
           }
           disabled={ disabled }
-          type="button"
         >
           { trivias[indexQuestion].correct_answer }
         </button>
         { trivias[indexQuestion].incorrect_answers.map((wrongAnswer, index) => (
           <button
             data-testid={ `wrong-answer-${index}` }
+            type="button"
             className="button-incorrect"
             key={ wrongAnswer }
             onClick={
@@ -125,7 +124,6 @@ class Trivia extends Component {
                 () => this.changeColorAnswer()))
             }
             disabled={ disabled }
-            key={ wrongAnswer }
           >
             { wrongAnswer }
           </button>
