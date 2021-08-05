@@ -56,11 +56,13 @@ class Feedback extends Component {
           </p>
           <div>
             <Link to="/">
-              <button
-                type="button"
-                data-testid="btn-play-again"
-              >
+              <button type="button" data-testid="btn-play-again">
                 Jogar novamente
+              </button>
+            </Link>
+            <Link to="/ranking">
+              <button type="button" data-testid="btn-ranking">
+                Ver Ranking
               </button>
             </Link>
           </div>
