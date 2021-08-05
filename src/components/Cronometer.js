@@ -2,34 +2,28 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import optionsDisabled from '../redux/actions/optionsDisabled';
+import { sendCronometer } from '../redux/actions/questions';
 
 class Cronometer extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      time: 30,
-      // timeOver: false,
-    };
-  }
-
   componentDidMount() {
+    const { sCronometer } = this.props;
     const oneSecond = 1000;
-    setInterval(() => {
-      this.setState((prevState) => ({ time: prevState.time - 1 }));
+    this.interval = setInterval(() => {
+      // this.setState((prevState) => ({ time: prevState.time - 1 }));
+      sCronometer();
     }, oneSecond);
-
     // const thirtySecond = 30000;
     // this.interval = setInterval(() => {
     //   this.setState({ timeOver: true });
     // }, thirtySecond);
   }
 
-  componentDidUpdate(_prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { setOptionsDisabled } = this.props;
-    console.log('estado:', prevState.time);
-    if (prevState.time <= 0) {
+    if (prevProps.stopTime) clearInterval(this.interval);
+    if (prevProps.time <= 0) {
       setOptionsDisabled();
+      clearInterval(this.interval);
     }
   }
 
@@ -49,9 +43,7 @@ class Cronometer extends Component {
   // }
 
   render() {
-    const { time } = this.state;
-    const { cronometerStatus } = this.props;
-
+    const { cronometerStatus, time } = this.props;
     if (cronometerStatus) {
       return (<div>0</div>);
     }
@@ -64,10 +56,13 @@ class Cronometer extends Component {
 
 const mapStateToProps = (state) => ({
   cronometerStatus: state.questions.optionsDisabled,
+  stopTime: state.questions.stopTime,
+  time: state.questions.time,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setOptionsDisabled: () => dispatch(optionsDisabled()),
+  sCronometer: (time) => dispatch(sendCronometer(time)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cronometer);
