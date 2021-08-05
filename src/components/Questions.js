@@ -15,8 +15,9 @@ class Questions extends Component {
 
   async getUnities() {
     const token = localStorage.getItem('token');
-    const API_URL = await fetch(`https://opentdb.com/api.php?amount=5&token${token}`);
-    const questions = await API_URL.json();
+    const API_URL = `https://opentdb.com/api.php?amount=5&token${token}`
+    const response = await fetch(API_URL);
+    const questions = await response.json();
 
     this.setState(() => ({
       questions: questions.results,
