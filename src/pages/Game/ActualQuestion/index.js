@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import AnswerButtonS from './styles';
 
 // Action para adicionar pontos ao score;
@@ -13,10 +14,12 @@ class ActualQuestion extends Component {
     this.submitCorrectAnswer = this.submitCorrectAnswer.bind(this);
     this.handleChangeStyle = this.handleChangeStyle.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.handleRedirect = this.handleRedirect.bind(this);
 
     this.state = {
       answered: false,
       timer: 30,
+      redirect: false,
     };
   }
 
@@ -78,38 +81,16 @@ class ActualQuestion extends Component {
     this.counter(); // Inicia novamente o timer;
   }
 
-  booleanQuestions(answers, correctAnswer, answered) {
-    return answers.map((answer) => (
-      (answer === correctAnswer)
-        ? (
-          <AnswerButtonS
-            key={ answer }
-            type="button"
-            data-testid="correct-answer"
-            styles={ { correct: true, answered } }
-            onClick={ () => { this.handleChangeStyle(); this.submitCorrectAnswer(); } }
-            disabled={ answered }
-          >
-            { answer }
-          </AnswerButtonS>
-        ) : (
-          <AnswerButtonS
-            key={ answer }
-            type="button"
-            data-testid="wrong-answer-0"
-            styles={ { correct: false, answered } }
-            onClick={ this.handleChangeStyle }
-            disabled={ answered }
-          >
-            { answer }
-          </AnswerButtonS>
-        )
-    ));
+  /* Quando está na quinta questão e clica no botão "Próxima"
+  muda o estado e será redirecionado para a tela de feedbacks; */
+  handleRedirect() {
+    this.setState({ redirect: true });
   }
 
-  multipleQuestions(answers, correctAnswer, answered) {
-    let index = 0;
-    return answers.map((answer) => {
+  // Renderiza as respostas;
+  renderAnswers(answers, correctAnswer, answered) {
+    let count = 0;
+    return answers.map((answer, index) => {
       if (answer === correctAnswer) {
         return (
           <AnswerButtonS
@@ -125,12 +106,12 @@ class ActualQuestion extends Component {
         );
       }
 
-      index += index !== 0 ? 1 : 0;
+      count += index === 0 ? 0 : 1;
       return (
         <AnswerButtonS
           key={ answer }
           type="button"
-          data-testid={ `wrong-answer-${index}` }
+          data-testid={ `wrong-answer-${count}` }
           styles={ { correct: false, answered } }
           onClick={ this.handleChangeStyle }
           disabled={ answered }
@@ -145,11 +126,10 @@ class ActualQuestion extends Component {
     const { question: {
       category,
       question,
-      type,
       correct_answer: correctAnswer,
       incorrect_answers: incorrectAnswers,
     }, nextQuestion, questionIndex } = this.props;
-    const { answered, timer } = this.state;
+    const { answered, timer, redirect } = this.state;
 
     const answers = [...incorrectAnswers, correctAnswer];
     answers.sort();
@@ -161,18 +141,25 @@ class ActualQuestion extends Component {
         <h2 data-testid="question-category">{ category }</h2>
         <p data-testid="question-text">{ question }</p>
         <div>
-          { type === 'boolean'
-            ? this.booleanQuestions(answers, correctAnswer, answered)
-            : this.multipleQuestions(answers, correctAnswer, answered)}
-          { answered && (questionIndex < maxLength) && (
+          { this.renderAnswers(answers, correctAnswer, answered) }
+          { answered && (questionIndex < maxLength ? (
             <button
               type="button"
               onClick={ () => { nextQuestion(); this.handleReset(); } }
               data-testid="btn-next"
             >
-              Próxima Questão
+              Próxima
             </button>
-          )}
+          ) : (
+            <button
+              type="button"
+              onClick={ this.handleRedirect }
+              data-testid="btn-next"
+            >
+              Próxima
+            </button>
+          )) }
+          { redirect && <Redirect to="/feedback" /> }
         </div>
       </section>
     );
