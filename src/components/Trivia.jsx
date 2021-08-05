@@ -6,12 +6,20 @@ class Trivia extends React.Component {
     super(props);
 
     this.state = {
+      buttons: [],
       selected: false,
+      time: 5,
     };
 
     this.changeStyles = this.changeStyles.bind(this);
     this.nextButton = this.nextButton.bind(this);
     this.button = this.button.bind(this);
+    this.timer = this.timer.bind(this);
+  }
+
+  componentDidMount() {
+    this.mountButtons();
+    this.timer();
   }
 
   // Algoritmo de embaralhamento de Fisher–Yates, retirado de https://pt.stackoverflow.com/questions/406037/mostrar-elementos-de-um-array-em-ordem-aleat%C3%B3ria
@@ -37,6 +45,7 @@ class Trivia extends React.Component {
   }
 
   createButtons(wrongList, answer) {
+    const { selected } = this.state;
     const buttonList = wrongList.map((wrong, index) => (
       <button
         key={ index }
@@ -44,6 +53,7 @@ class Trivia extends React.Component {
         type="button"
         value="wrong"
         onClick={ this.changeStyles }
+        disabled={ selected }
       >
         {wrong}
       </button>));
@@ -55,6 +65,7 @@ class Trivia extends React.Component {
         type="button"
         value="correct"
         onClick={ this.changeStyles }
+        disabled={ selected }
       >
         {answer}
       </button>
@@ -82,6 +93,30 @@ class Trivia extends React.Component {
     );
   }
 
+  timer() {
+    const { selected, time } = this.state;
+    const timeout = 1000;
+    if (!selected) {
+      setTimeout(() => {
+        if (time === 0) {
+          this.setState({
+            selected: true,
+          });
+        } else {
+          this.setState((prevState) => ({
+            time: prevState.time - 1,
+          }));
+        }
+      }, timeout);
+    }
+  }
+
+  mountButtons() {
+    this.setState({
+      buttons: this.renderButtons(),
+    });
+  }
+
   renderButtons() {
     const { trivia } = this.props;
     const { correct_answer: answer, incorrect_answers: wrong } = trivia;
@@ -93,12 +128,13 @@ class Trivia extends React.Component {
   render() {
     const { trivia } = this.props;
     const { category, question } = trivia;
-    const { selected } = this.state;
+    const { selected, buttons, time } = this.state;
     return (
       <div>
+        <div>{time}</div>
         <h4 data-testid="question-category">{category}</h4>
         <h3 data-testid="question-text">{`Pergunta: ${question}`}</h3>
-        { this.renderButtons() }
+        { buttons }
         { (selected) ? this.button() : null }
       </div>
     );
