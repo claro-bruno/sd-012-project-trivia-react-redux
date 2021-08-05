@@ -99,14 +99,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Game.propTypes = {
   getAPI: PropTypes.func.isRequired,
-  questions: PropTypes.shape({
-    results: PropTypes.shape({
-      category: PropTypes.string,
-      question: PropTypes.string,
-      correctAnswer: PropTypes.string,
-      incorrectAnswers: PropTypes.string,
-    }),
-  }).isRequired,
+  questions: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
