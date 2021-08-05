@@ -7,6 +7,7 @@ class Questions extends Component {
       questions: [],
     };
     this.getUnities = this.getUnities.bind(this);
+    this.answersRender = this.answersRender.bind(this);
   }
 
   componentDidMount() {
@@ -15,7 +16,7 @@ class Questions extends Component {
 
   async getUnities() {
     const token = localStorage.getItem('token');
-    const API_URL = `https://opentdb.com/api.php?amount=5&token${token}`
+    const API_URL = `https://opentdb.com/api.php?amount=5&token${token}`;
     const response = await fetch(API_URL);
     const questions = await response.json();
 
@@ -24,36 +25,54 @@ class Questions extends Component {
     }));
   }
 
-  incorrectAnswers() {
+  answersRender() {
     const { questions } = this.state;
-    const getQuestion = questions[0];
-    const selectedQuestion = getQuestion && getQuestion.incorrect_answers;
-    return selectedQuestion && selectedQuestion.map((question, index) => (
-      <button
-        type="button"
-        key={ question }
-        data-testid={ `wrong-answer-${index}` }
-      >
-        {question}
-      </button>));
+    console.log(questions);
+    const question = questions[0];
+    const answers = [...question.incorrect_answers, question.correct_answer];
+    answers.sort();
+    let index = -1;
+    return (
+      <div>
+        <h1 data-testid="question-category">
+          {question.category}
+        </h1>
+        <p data-testid="question-text">
+          {question.question}
+        </p>
+        {answers.map((answer) => {
+          if(answer === question.correct_answer) {
+            return (
+              <button
+                data-testid="correct-answer"
+                type="button"
+                onClick={ () => {} }
+              >
+                { answer }
+              </button>
+            );
+          }
+          index += 1;
+          return (
+            <button
+                data-testid={ `wrong-answer${index}` }
+                type="button"
+                onClick={ () => {} }
+              >
+                { answer }
+              </button>
+          );
+        })}
+      </div>
+    );
   }
 
   render() {
     const { questions } = this.state;
-    const selectedQuestion = questions[0];
     return (
-      <div>
-        <h1 data-testid="question-category">
-          {selectedQuestion && selectedQuestion.category}
-        </h1>
-        <p data-testid="question-text">
-          {selectedQuestion && selectedQuestion.question}
-        </p>
-        <button data-testid="correct-answer" type="button">
-          {selectedQuestion && selectedQuestion.correct_answer}
-        </button>
-        {this.incorrectAnswers()}
-      </div>
+      <>
+        { questions[0] &&  this.answersRender() }
+      </>
     );
   }
 }
