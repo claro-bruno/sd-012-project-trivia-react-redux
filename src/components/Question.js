@@ -17,8 +17,10 @@ class Question extends Component {
   changeColorsAnswer() {
     const correct = document.getElementById('questionCorrect');
     const incorrect = document.getElementsByName('questionWrong');
+    const buttonNextQuestion = document.getElementsByClassName('btn-next')[0];
     incorrect.forEach((question) => { question.className = 'questionWrong'; });
     correct.className = 'questionCorrect';
+    buttonNextQuestion.classList.add('visible');
   }
 
   render() {
@@ -47,7 +49,6 @@ class Question extends Component {
                 onClick={ this.changeColorsAnswer }
               >
                 {questions[index].correct_answer}
-
               </button>
               {questions[index].incorrect_answers.map((incorrect, i) => (
                 <button
@@ -59,9 +60,15 @@ class Question extends Component {
                   onClick={ this.changeColorsAnswer }
                 >
                   {incorrect}
-
                 </button>
               ))}
+              <button
+                data-testid="btn-next"
+                type="button"
+                className="btn-next"
+              >
+                PRÓXIMA
+              </button>
             </div>
           )}
       </div>
