@@ -38,7 +38,7 @@ class Question extends Component {
   }
 
   render() {
-    const { disabled } = this.state;
+    const { disabled, seconds } = this.state;
     const { questions } = this.props;
     return (
       <div>
@@ -48,6 +48,7 @@ class Question extends Component {
             <QuestionInfo
               questions={ questions }
               disabled={ disabled }
+              timer={ seconds }
             />
           )}
         <Timer />

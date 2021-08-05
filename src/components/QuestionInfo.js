@@ -28,6 +28,29 @@ class QuestionInfo extends Component {
     correct.className = 'questionCorrect';
   }
 
+  sumUserPoints() {
+    const basePoints = 10;
+    const { timer, questions } = this.props;
+    const { index } = this.state;
+    const difficultyMultiplier = () => {
+      if (questions[index].difficulty === 'easy') {
+        return 1;
+      }
+      if (questions[index].difficulty === 'medium') {
+        return 2;
+      }
+      if (questions[index].difficulty === 'hard') {
+        const hardMultiplier = 3;
+        return hardMultiplier;
+      }
+    };
+    const points = basePoints + (timer * difficultyMultiplier());
+    const locals = JSON.parse(localStorage.getItem('state'));
+    localStorage.setItem('state', JSON.stringify({
+      player: { ...locals.player, score: points },
+    }));
+  }
+
   render() {
     const { index } = this.state;
     const { questions, disabled } = this.props;
@@ -51,6 +74,7 @@ class QuestionInfo extends Component {
           onClick={ () => {
             this.changeButtonVisibility();
             this.changeColorsAnswer();
+            this.sumUserPoints();
           } }
           innerText={ questions[index].correct_answer }
         />
@@ -81,6 +105,7 @@ class QuestionInfo extends Component {
 QuestionInfo.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   disabled: PropTypes.bool,
+  timer: PropTypes.number.isRequired,
 };
 
 QuestionInfo.defaultProps = {
