@@ -37,22 +37,16 @@ class Game extends React.Component {
       indexQuestion: prevState.indexQuestion + 1,
     }));
   }
+  
 
   render() {
-    const { questions, indexQuestion } = this.state;
+    const { questions, indexQuestion, } = this.state;
     console.log(questions);
     if (questions.length < 1) return <div>Carregando...</div>;
     return (
       <div>
         <Header />
-        <Trivia key={ indexQuestion } trivia={ questions[indexQuestion] } />
-        <button
-          data-testid="btn-next"
-          type="button"
-          onClick={ this.nextQuestion }
-        >
-          Próxima
-        </button>
+        <Trivia key={ indexQuestion } trivia={ questions[indexQuestion] } onClick={ this.nextQuestion } />
       </div>
     );
   }
