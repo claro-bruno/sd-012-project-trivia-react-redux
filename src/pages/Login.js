@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import logo from '../trivia.png';
-import { getTokenThunk, loginAction } from '../actions';
+import { getQuestionsThunk, getTokenThunk, loginAction } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -18,10 +18,11 @@ class Login extends React.Component {
   }
 
   handleClick() {
-    const { getUserData, getTokenFunction } = this.props;
+    const { getUserData, getTokenFunction, getQuestionsStore } = this.props;
     const { name, email } = this.state;
     getUserData(name, email);
     getTokenFunction();
+    getQuestionsStore();
   }
 
   handleChange({ target }) {
@@ -69,6 +70,7 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   getTokenFunction: () => dispatch(getTokenThunk()),
   getUserData: (name, email) => dispatch(loginAction(name, email)),
+  getQuestionsStore: () => dispatch(getQuestionsThunk()),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
@@ -76,4 +78,5 @@ export default connect(null, mapDispatchToProps)(Login);
 Login.propTypes = {
   getTokenFunction: propTypes.func.isRequired,
   getUserData: propTypes.func.isRequired,
+  getQuestionsStore: propTypes.func.isRequired,
 };
