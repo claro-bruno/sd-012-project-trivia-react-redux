@@ -75,7 +75,7 @@ class Login extends React.Component {
           />
         </label>
         <div className="button-container">
-          <Link to="quiz">
+          <Link to="/quiz">
             <button
               disabled={ notValid }
               type="button"
@@ -83,6 +83,14 @@ class Login extends React.Component {
               onClick={ this.handleSubmit }
             >
               Jogar!
+            </button>
+          </Link>
+          <Link to="/settings">
+            <button
+              type="button"
+              data-testid="btn-settings"
+            >
+              Configurações
             </button>
           </Link>
         </div>

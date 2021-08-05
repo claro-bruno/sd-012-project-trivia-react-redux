@@ -1,0 +1,48 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.ranking-page {
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.ranking-page h1 {
+  margin: 25px;
+}
+
+.score-board {
+  border: 1px black solid;
+  display: flex;
+  flex-flow: column;
+  margin-top: 5%;
+  width: 75%;
+}
+
+.eachPlayer-list {
+  align-items: center;
+  border: 1px black solid;
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+}
+
+.ranking-button-container {
+  border: 1px black solid;
+  height: 65px;
+  margin-top: 3%;
+  width: 120px;
+}
+
+.ranking-button {
+  background-color: green;
+  color: white;
+  font-size: larger;
+  font-weight: 600;
+  height: 100%;
+  width: 100%;
+}

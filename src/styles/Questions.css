@@ -1,0 +1,15 @@
+.correct-answer {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.correct-answer.selected {
+  background-color: rgb(6, 240, 15);
+}
+
+.wrong-answer {
+  border: 3px solid red;
+}
+
+.wrong-answer.selected {
+  background-color: red;
+}
