@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import LinkWithButton from '../components/LinkWithButton';
+import { actionCreateLogin } from '../redux/actions';
 
 class Login extends Component {
   constructor(props) {
@@ -10,6 +14,7 @@ class Login extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.btnDisable = this.btnDisable.bind(this);
+    this.handlePlayBtn = this.handlePlayBtn.bind(this);
   }
 
   handleChange({ target }) {
@@ -18,6 +23,12 @@ class Login extends Component {
       [name]: value,
     });
     this.btnDisable();
+  }
+
+  handlePlayBtn(state) {
+    // utilizacao do LocalStorage talvez?
+    const { createLogin } = this.props;
+    createLogin(state);
   }
 
   btnDisable() {
@@ -58,16 +69,23 @@ class Login extends Component {
             data-testid="input-gravatar-email"
           />
         </label>
-        <button
+        <LinkWithButton
+          pathTo="/game/trivia"
           disabled={ btnDisable }
-          type="button"
-          data-testid="btn-play"
-        >
-          Jogar
-        </button>
+          handlePlayBtn={ () => this.handlePlayBtn(this.state) }
+          btnText="Jogar"
+        />
       </fieldset>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  createLogin: (state) => dispatch(actionCreateLogin(state)),
+});
+
+Login.propTypes = {
+  createLogin: PropTypes.func,
+}.isRequired;
+
+export default connect(null, mapDispatchToProps)(Login);
