@@ -15,16 +15,28 @@ class GameQuestions extends React.Component {
         correct_answer: 'A crowbar',
         incorrect_answers: ['A pistol', 'The H.E.V suit', 'Your fists'],
       },
+      timer: 30,
+      timeIsRunning: false,
+      timerIntervalID: 0,
     };
 
     this.getQuestion = this.getQuestion.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.renderQuestions = this.renderQuestions.bind(this);
     this.setAnswers = this.setAnswers.bind(this);
+    this.setTimer = this.setTimer.bind(this);
   }
 
   componentDidMount() {
     this.getQuestion();
+    this.setTimer();
+  }
+
+  componentDidUpdate() {
+    const { timer, timerIntervalID } = this.state;
+    if (timer <= 0) {
+      clearInterval(timerIntervalID);
+    }
   }
 
   getQuestion() {
@@ -37,7 +49,7 @@ class GameQuestions extends React.Component {
   }
 
   setAnswers() {
-    const { question } = this.state;
+    const { question, timeIsRunning } = this.state;
     const incorrectAnswers = question.incorrect_answers.map((answer) => ({
       answer,
       isCorrect: false,
@@ -51,7 +63,23 @@ class GameQuestions extends React.Component {
       },
       ...incorrectAnswers,
     ];
-    return answers.sort((a, b) => a.id - b.id);
+    return timeIsRunning ? answers : answers.sort((a, b) => a.id - b.id);
+  }
+
+  setTimer() {
+    this.setState({ timer: 30 });
+    const timerStep = 1000;
+    const timeFirstRender = 150;
+
+    setTimeout(() => {
+      this.setState({ timeIsRunning: true });
+    }, timeFirstRender);
+
+    const timerIntervalID = setInterval(() => {
+      this.setState((previousState) => ({ timer: previousState.timer - 1 }));
+    }, timerStep);
+
+    this.setState({ timerIntervalID });
   }
 
   handleClick() {
@@ -100,7 +128,17 @@ class GameQuestions extends React.Component {
   }
 
   render() {
-    return <div>{this.renderQuestions()}</div>;
+    const { timer } = this.state;
+
+    return (
+      <div>
+        { this.renderQuestions()}
+        <div>
+          <p>Tempo: </p>
+          <p>{ timer }</p>
+        </div>
+      </div>
+    );
   }
 }
 
