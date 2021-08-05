@@ -24,6 +24,8 @@ class Questions extends Component {
     // this.createQuestions();
   }
 
+  // Lógica feita com auxílio do meu colega Matheus Figueiredo,
+  // onde nos ajudou nos fornecendo a lógica do sort
   createQuestions() {
     const { questions } = this.props;
     const { index } = this.state;
