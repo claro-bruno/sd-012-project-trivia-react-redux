@@ -3,7 +3,8 @@ import {
   ADD_TOKEN,
   ADD_USERNAME,
   IS_OVER,
-  UPDATE_TIME,
+  PASS_TIME,
+  TIME_RESET,
 } from '../actions';
 
 const INITIAL_STATE = ({
@@ -37,10 +38,16 @@ const userInfo = (state = INITIAL_STATE, action) => {
       ...state,
       over: action.payload,
     };
-  case UPDATE_TIME:
+  case PASS_TIME:
     return {
       ...state,
-      time: action.payload,
+      time: state.time > 0 ? state.time - 1 : 0,
+    };
+  case TIME_RESET:
+    return {
+      ...state,
+      time: 30,
+      over: false,
     };
   default: return state;
   }

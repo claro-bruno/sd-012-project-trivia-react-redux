@@ -3,6 +3,8 @@ export const ADD_USERNAME = 'ADD_USERNAME';
 export const ADD_TOKEN = 'ADD_TOKEN';
 export const IS_OVER = 'IS_OVER';
 export const UPDATE_TIME = 'UPDATE_TIME';
+export const PASS_TIME = 'PASS_TIME';
+export const TIME_RESET = 'TIME_RESET';
 
 export const addEmail = (userEmail) => ({
   type: ADD_EMAIL,
@@ -24,7 +26,10 @@ export const isOver = () => ({
   payload: true,
 });
 
-export const updateTime = (time) => ({
-  type: UPDATE_TIME,
-  payload: time,
+export const timePass = () => ({
+  type: PASS_TIME,
+});
+
+export const timeReset = () => ({
+  type: TIME_RESET,
 });
