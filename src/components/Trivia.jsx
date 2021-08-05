@@ -7,19 +7,26 @@ class Trivia extends React.Component {
 
     this.state = {
       buttons: [],
-      selected: false,
-      time: 5,
+      time: 30,
     };
 
     this.changeStyles = this.changeStyles.bind(this);
-    this.nextButton = this.nextButton.bind(this);
     this.button = this.button.bind(this);
     this.timer = this.timer.bind(this);
   }
 
   componentDidMount() {
+    const proxButton = document.getElementById('proxButton');
+    proxButton.style.visibility = 'hidden';
     this.mountButtons();
     this.timer();
+  }
+
+  componentDidUpdate() {
+    const { time } = this.state;
+    if (time === 0) {
+      clearInterval(this.myInterval);
+    }
   }
 
   // Algoritmo de embaralhamento de Fisher–Yates, retirado de https://pt.stackoverflow.com/questions/406037/mostrar-elementos-de-um-array-em-ordem-aleat%C3%B3ria
@@ -34,18 +41,22 @@ class Trivia extends React.Component {
   changeStyles() {
     const buttons = document.querySelectorAll('button');
 
-    buttons.forEach(({ value, style }) => {
-      if (value === 'wrong') {
-        style.border = '3px solid rgb(255, 0, 0)';
-      } else {
-        style.border = '3px solid rgb(6, 240, 15)';
+    buttons.forEach((button) => {
+      if (button.value === 'wrong') {
+        button.style.border = '3px solid rgb(255, 0, 0)';
+        button.disabled = true;
+      } if (button.value === 'correct') {
+        button.style.border = '3px solid rgb(6, 240, 15)';
+        button.disabled = true;
       }
     });
-    this.nextButton();
+    const proxButton = document.getElementById('proxButton');
+    proxButton.style.visibility = 'visible';
+
+    clearInterval(this.myInterval);
   }
 
   createButtons(wrongList, answer) {
-    const { selected } = this.state;
     const buttonList = wrongList.map((wrong, index) => (
       <button
         key={ index }
@@ -53,7 +64,6 @@ class Trivia extends React.Component {
         type="button"
         value="wrong"
         onClick={ this.changeStyles }
-        disabled={ selected }
       >
         {wrong}
       </button>));
@@ -65,7 +75,6 @@ class Trivia extends React.Component {
         type="button"
         value="correct"
         onClick={ this.changeStyles }
-        disabled={ selected }
       >
         {answer}
       </button>
@@ -74,18 +83,13 @@ class Trivia extends React.Component {
     return buttonList;
   }
 
-  nextButton() {
-    this.setState({
-      selected: true,
-    });
-  }
-
   button() {
     const { onClick } = this.props;
     return (
       <button
         data-testid="btn-next"
         type="button"
+        id="proxButton"
         onClick={ onClick }
       >
         Próxima
@@ -94,21 +98,12 @@ class Trivia extends React.Component {
   }
 
   timer() {
-    const { selected, time } = this.state;
     const timeout = 1000;
-    if (!selected) {
-      setTimeout(() => {
-        if (time === 0) {
-          this.setState({
-            selected: true,
-          });
-        } else {
-          this.setState((prevState) => ({
-            time: prevState.time - 1,
-          }));
-        }
-      }, timeout);
-    }
+    this.myInterval = setInterval(() => {
+      this.setState((prevState) => ({
+        time: prevState.time - 1,
+      }));
+    }, timeout);
   }
 
   mountButtons() {
@@ -128,14 +123,15 @@ class Trivia extends React.Component {
   render() {
     const { trivia } = this.props;
     const { category, question } = trivia;
-    const { selected, buttons, time } = this.state;
+    const { buttons, time } = this.state;
     return (
       <div>
         <div>{time}</div>
         <h4 data-testid="question-category">{category}</h4>
         <h3 data-testid="question-text">{`Pergunta: ${question}`}</h3>
         { buttons }
-        { (selected) ? this.button() : null }
+        { this.button() }
+        { (time === 0) ? this.changeStyles() : null }
       </div>
     );
   }
