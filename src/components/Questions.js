@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
+import '../styles/Questions.css';
 
 class Questions extends Component {
   constructor() {
     super();
     this.state = {
       questions: [],
+      borders: false,
+      disabled: false,
     };
     this.getUnities = this.getUnities.bind(this);
     this.answersRender = this.answersRender.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -25,8 +29,12 @@ class Questions extends Component {
     }));
   }
 
+  handleClick() {
+    this.setState({ borders: true, disabled: true });
+  }
+
   answersRender() {
-    const { questions } = this.state;
+    const { questions, disabled, borders } = this.state;
     console.log(questions);
     const question = questions[0];
     const answers = [...question.incorrect_answers, question.correct_answer];
@@ -45,8 +53,12 @@ class Questions extends Component {
             return (
               <button
                 data-testid="correct-answer"
+                id="correct-answer"
                 type="button"
-                onClick={ () => {} }
+                key={ answer }
+                onClick={ this.handleClick }
+                disabled={ disabled }
+                className={ borders ? 'correct-answer' : '' }
               >
                 { answer }
               </button>
@@ -56,8 +68,12 @@ class Questions extends Component {
           return (
             <button
                 data-testid={ `wrong-answer${index}` }
+                id={ `wrong-answer${index}` }
+                key={ answer }
                 type="button"
-                onClick={ () => {} }
+                onClick={ this.handleClick }
+                disabled={ disabled }
+                className={ borders ? 'wrong-answer' : '' }
               >
                 { answer }
               </button>
