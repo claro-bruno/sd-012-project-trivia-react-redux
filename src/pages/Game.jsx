@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/Game.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
@@ -45,7 +46,7 @@ class Game extends React.Component {
     if (questions.length < 1) return <div>Carregando...</div>;
     if (questions.length === indexQuestion) return <Redirect to="/feedback" />;
     return (
-      <div>
+      <div className="Game">
         <Header />
         <Trivia
           key={ indexQuestion }

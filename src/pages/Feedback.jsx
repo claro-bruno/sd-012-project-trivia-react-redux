@@ -35,14 +35,17 @@ class Feedback extends React.Component {
     if (questionsRight < SCORE_NUMBER) {
       return <p data-testid="feedback-text">Podia ser melhor...</p>;
     }
-    if (questionsRight >= SCORE_NUMBER) return <p data-testid="feedback-text">Mandou bem!</p>;
+    if (questionsRight >= SCORE_NUMBER) {
+      return (
+        <p data-testid="feedback-text">
+          Mandou bem!
+        </p>);
+    }
     // if (pageLogin) return <Redirect to="/login" />;
     return (
       <>
-        <div>
-          <h1>Desempenho</h1>
-        </div>
         <Header />
+        <h1>Desempenho</h1>
         <div>
           <h3 data-testid="feedback-total-score">
             Pontuação final: $

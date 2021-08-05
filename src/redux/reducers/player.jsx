@@ -1,6 +1,7 @@
 const initialState = {
   name: '',
   email: '',
+  assertions: 0,
   score: 0,
 };
 
