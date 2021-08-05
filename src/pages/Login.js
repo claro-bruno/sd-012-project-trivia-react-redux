@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import logo from '../trivia.png';
-import { getQuestionsThunk, getTokenThunk, loginAction } from '../actions';
+import { getTokenAndQuestionsThunk, loginAction } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,18 +11,26 @@ class Login extends React.Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.setLocalStorage = this.setLocalStorage.bind(this);
+
     this.state = {
       name: '',
       email: '',
     };
   }
 
+  setLocalStorage() {
+    const { name, email } = this.state;
+    const objeto = JSON.stringify({ player: { name, gravatarEmail: email } });
+    localStorage.setItem('state', objeto);
+  }
+
   handleClick() {
-    const { getUserData, getTokenFunction, getQuestionsStore } = this.props;
+    const { getUserData, getTokenQuestionsFunction } = this.props;
     const { name, email } = this.state;
     getUserData(name, email);
-    getTokenFunction();
-    getQuestionsStore();
+    this.setLocalStorage();
+    getTokenQuestionsFunction();
   }
 
   handleChange({ target }) {
@@ -68,15 +76,13 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getTokenFunction: () => dispatch(getTokenThunk()),
+  getTokenQuestionsFunction: () => dispatch(getTokenAndQuestionsThunk()),
   getUserData: (name, email) => dispatch(loginAction(name, email)),
-  getQuestionsStore: () => dispatch(getQuestionsThunk()),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
-  getTokenFunction: propTypes.func.isRequired,
+  getTokenQuestionsFunction: propTypes.func.isRequired,
   getUserData: propTypes.func.isRequired,
-  getQuestionsStore: propTypes.func.isRequired,
 };
