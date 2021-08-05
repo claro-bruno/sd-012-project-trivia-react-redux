@@ -1,28 +1,16 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import UserProfile from '../components/UserProfile';
 
 class GamePage extends Component {
   render() {
-    const { myUserState } = this.props;
     return (
       <div>
-        <span>
-          GamePage, player token:
-          {' '}
-          { myUserState }
-        </span>
+        <section>
+          <UserProfile />
+        </section>
       </div>
     );
   }
 }
 
-GamePage.propTypes = {
-  myUserState: PropTypes.shape().isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  myUserState: state.user.token,
-});
-
-export default connect(mapStateToProps)(GamePage);
+export default GamePage;
