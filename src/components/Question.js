@@ -42,21 +42,10 @@ class Question extends Component {
     }, sec);
   }
 
-  changeButtonVisibility() {
-    const buttonNextQuestion = document.getElementsByClassName('btn-next')[0];
-    buttonNextQuestion.classList.add('visible');
-  }
 
-  changeColorsAnswer() {
-    const correct = document.getElementById('correct-answer');
-    const incorrect = document.getElementsByName('incorrect-answer');
-    incorrect.forEach((question) => { question.className = 'questionWrong'; });
-    correct.className = 'questionCorrect';
-  }
 
   render() {
-    const { index, disabled } = this.state;
-    const { questions } = this.props;
+    const { disabled } = this.state;
     return (
       <div>
         { !questions.length
