@@ -1,5 +1,7 @@
 import React from 'react';
+import Paper from '@material-ui/core/Paper';
 import Header from '../components/Header';
+import Loading from '../components/Loading';
 
 class Game extends React.Component {
   constructor(props) {
@@ -45,41 +47,41 @@ class Game extends React.Component {
       return (
         <main>
           <Header />
-          <div>
+          <Paper elevation={ 3 }>
             <p data-testid="question-category">
               { questions[questionNumber].category }
             </p>
             <p data-testid="question-text">
               { questions[questionNumber].question }
             </p>
-          </div>
-          <div>
-            { questions[questionNumber]
-              .incorrect_answers.map((answer, index) => (
-                <button
-                  key={ index }
-                  type="button"
-                  data-testid={ `wrong-answer-${index}` }
-                  style={ incorrAnsBorder }
-                  onClick={ this.changeBordersColor }
-                >
-                  { answer }
-                </button>
-              )) }
-            <button
-              type="button"
-              data-testid="correct-answer"
-              style={ corrAnsBorder }
-              onClick={ this.changeBordersColor }
-            >
-              { questions[questionNumber].correct_answer }
-            </button>
-          </div>
+            <div>
+              { questions[questionNumber]
+                .incorrect_answers.map((answer, index) => (
+                  <button
+                    key={ index }
+                    type="button"
+                    data-testid={ `wrong-answer-${index}` }
+                    style={ incorrAnsBorder }
+                    onClick={ this.changeBordersColor }
+                  >
+                    { answer }
+                  </button>
+                )) }
+              <button
+                type="button"
+                data-testid="correct-answer"
+                style={ corrAnsBorder }
+                onClick={ this.changeBordersColor }
+              >
+                { questions[questionNumber].correct_answer }
+              </button>
+            </div>
+          </Paper>
         </main>
       );
     }
     return (
-      <p>Loading...</p>
+      <Loading />
     );
   }
 }
