@@ -21,7 +21,7 @@ class Feedback extends Component {
   }
 
   render() {
-    const { gravatarEmail, name, score } = this.props;
+    const { gravatarEmail, name, score, assertions } = this.props;
     const encodeEmail = md5(gravatarEmail).toString();
     return (
       <div>
@@ -36,6 +36,24 @@ class Feedback extends Component {
         </header>
         <div data-testid="feedback-text">FeedBack</div>
         <div>{ this.performPlayer() }</div>
+        <div>
+          <p>
+            Pontuação:
+            {' '}
+            <span data-testid="feedback-total-score">
+              {score}
+            </span>
+          </p>
+          <p>
+            Acertou
+            {' '}
+            <span data-testid="feedback-total-question">
+              {assertions}
+            </span>
+            {' '}
+            perguntas
+          </p>
+        </div>
       </div>
     );
   }
