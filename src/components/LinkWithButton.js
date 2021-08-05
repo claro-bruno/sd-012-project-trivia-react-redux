@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-export class LinkWithButton extends Component {
+class LinkWithButton extends Component {
   render() {
     const { pathTo, disabled, handlePlayBtn, btnText } = this.props;
     return (
