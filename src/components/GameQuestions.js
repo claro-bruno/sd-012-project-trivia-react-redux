@@ -18,6 +18,8 @@ class GameQuestions extends React.Component {
       timer: 30,
       timeIsRunning: false,
       timerIntervalID: 0,
+      canDisable: true,
+      disableAnswers: false,
     };
 
     this.getQuestion = this.getQuestion.bind(this);
@@ -25,6 +27,7 @@ class GameQuestions extends React.Component {
     this.renderQuestions = this.renderQuestions.bind(this);
     this.setAnswers = this.setAnswers.bind(this);
     this.setTimer = this.setTimer.bind(this);
+    this.disableAnswers = this.disableAnswers.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +39,7 @@ class GameQuestions extends React.Component {
     const { timer, timerIntervalID } = this.state;
     if (timer <= 0) {
       clearInterval(timerIntervalID);
+      this.disableAnswers();
     }
   }
 
@@ -82,6 +86,13 @@ class GameQuestions extends React.Component {
     this.setState({ timerIntervalID });
   }
 
+  disableAnswers() {
+    const { canDisable } = this.state;
+    if (canDisable) {
+      this.setState({ disableAnswers: true, canDisable: false });
+    }
+  }
+
   handleClick() {
     // this.setState((state) => ({
     //   questionNumber: state.questionNumber + 1,
@@ -89,7 +100,7 @@ class GameQuestions extends React.Component {
   }
 
   renderQuestions() {
-    const { question } = this.state;
+    const { question, disableAnswers } = this.state;
     const answers = this.setAnswers();
     return (
       <div>
@@ -102,6 +113,7 @@ class GameQuestions extends React.Component {
                 key={ index }
                 data-testid="correct-answer"
                 type="button"
+                disabled={ disableAnswers }
                 onClick={ () => {
                   this.handleClick();
                 } }
@@ -115,6 +127,7 @@ class GameQuestions extends React.Component {
               key={ index }
               data-testid={ `wrong-answer-${index}` }
               type="button"
+              disabled={ disableAnswers }
               onClick={ () => {
                 this.handleClick();
               } }
