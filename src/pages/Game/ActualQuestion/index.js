@@ -6,10 +6,37 @@ class ActualQuestion extends Component {
   constructor() {
     super();
     this.handleChangeStyle = this.handleChangeStyle.bind(this);
+    this.counter = this.counter.bind(this);
 
     this.state = {
       answered: false,
+      timer: 30,
     };
+  }
+
+  // No momento que o componente é montado inicia o timer;
+  componentDidMount() {
+    this.counter();
+  }
+
+  // Conforme a atualização do componente, caso o timer chegue a zero é removido;
+  componentDidUpdate() {
+    const { timer } = this.state;
+    if (timer === 0) {
+      clearInterval(this.interval);
+    }
+  }
+
+  counter() {
+    const oneSecond = 1000; // Tempo de um segundo em milisegundos;
+    const interval = 30000; // 30 segundos em milisegundos;
+
+    // Após 30 segundos mudará o estado representando que foi respondido;
+    setTimeout(() => this.setState({ answered: true }), interval);
+    // this.interval é o ID do intervalo retornado pelo "setInterval()";
+    this.interval = setInterval(() => this.setState(({ timer }) => ({
+      timer: timer - 1,
+    })), oneSecond);
   }
 
   handleChangeStyle() {
@@ -26,6 +53,7 @@ class ActualQuestion extends Component {
             data-testid="correct-answer"
             styles={ { correct: true, answered } }
             onClick={ this.handleChangeStyle }
+            disabled={ answered }
           >
             { answer }
           </AnswerButtonS>
@@ -36,6 +64,7 @@ class ActualQuestion extends Component {
             data-testid="wrong-answer-0"
             styles={ { correct: false, answered } }
             onClick={ this.handleChangeStyle }
+            disabled={ answered }
           >
             { answer }
           </AnswerButtonS>
@@ -54,6 +83,7 @@ class ActualQuestion extends Component {
             data-testid="correct-answer"
             styles={ { correct: true, answered } }
             onClick={ this.handleChangeStyle }
+            disabled={ answered }
           >
             { answer }
           </AnswerButtonS>
@@ -68,6 +98,7 @@ class ActualQuestion extends Component {
           data-testid={ `wrong-answer-${index}` }
           styles={ { correct: false, answered } }
           onClick={ this.handleChangeStyle }
+          disabled={ answered }
         >
           { answer }
         </AnswerButtonS>
@@ -84,13 +115,14 @@ class ActualQuestion extends Component {
       incorrect_answers: incorrectAnswers,
     } } = this.props;
 
-    const { answered } = this.state;
+    const { answered, timer } = this.state;
 
     const answers = [...incorrectAnswers, correctAnswer];
     answers.sort();
 
     return (
       <section>
+        <p>{ timer }</p>
         <h2 data-testid="question-category">{ category }</h2>
         <p data-testid="question-text">{ question }</p>
         <div>
