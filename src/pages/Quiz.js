@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Questions from '../components/Questions';
+import Header from '../components/Header';
 
 class Quiz extends Component {
   render() {
@@ -9,6 +10,7 @@ class Quiz extends Component {
     localStorage.setItem('token', token);
     return (
       <div>
+        <Header />
         <Questions />
       </div>
     );
