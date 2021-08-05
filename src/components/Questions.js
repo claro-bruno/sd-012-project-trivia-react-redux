@@ -10,7 +10,7 @@ class Questions extends Component {
       questions: [],
       disabled: false,
       next: false,
-      time: 5,
+      time: 30,
     };
     this.getUnities = this.getUnities.bind(this);
     this.answersRender = this.answersRender.bind(this);
@@ -89,20 +89,21 @@ class Questions extends Component {
   }
 
   countdown() {
-    const { time } = this.state;
     const ONE_SECOND = 1000;
+    const THIRTY_SECONDS = 30000;
+
     const interval = setInterval(() => {
       this.setState((prevState) => ({
         time: prevState.time - 1,
-      }), () => {
-        if (time === 0) {
-          clearInterval(interval);
-          this.setState({
-            next: true,
-          });
-        }
-      });
+      }));
     }, ONE_SECOND);
+    setTimeout(() => {
+      clearInterval(interval);
+      this.setState({
+        next: true,
+        disabled: true,
+      });
+    }, THIRTY_SECONDS);
   }
 
   render() {
