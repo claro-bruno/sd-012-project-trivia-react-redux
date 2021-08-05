@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import AnswerButtonS from './styles';
+
+// Action para adicionar pontos ao score;
+import sumScore from '../../../Redux/reducers/player/actions/sumScore';
 
 class ActualQuestion extends Component {
   constructor() {
     super();
-    this.handleChangeStyle = this.handleChangeStyle.bind(this);
     this.counter = this.counter.bind(this);
+    this.submitCorrectAnswer = this.submitCorrectAnswer.bind(this);
+    this.handleChangeStyle = this.handleChangeStyle.bind(this);
 
     this.state = {
       answered: false,
@@ -19,28 +24,46 @@ class ActualQuestion extends Component {
     this.counter();
   }
 
-  // Conforme a atualização do componente, caso o timer chegue a zero é removido;
   componentDidUpdate() {
-    const { timer } = this.state;
-    if (timer === 0) {
+    const { timer, answered } = this.state;
+    // Caso o usuário responda ou o timer chegue em zero o "setInterval()" será cancelado;
+    if (timer === 0 || answered) {
       clearInterval(this.interval);
     }
   }
 
   counter() {
-    const oneSecond = 1000; // Tempo de um segundo em milisegundos;
+    const oneSecond = 1000; // Um segundo em milisegundos;
     const interval = 30000; // 30 segundos em milisegundos;
 
-    // Após 30 segundos mudará o estado representando que foi respondido;
-    setTimeout(() => this.setState({ answered: true }), interval);
     // this.interval é o ID do intervalo retornado pelo "setInterval()";
     this.interval = setInterval(() => this.setState(({ timer }) => ({
       timer: timer - 1,
     })), oneSecond);
+
+    // Após 30 segundos mudará o estado representando que foi respondido;
+    setTimeout(() => this.setState({ answered: true }), interval);
   }
 
   handleChangeStyle() {
     this.setState({ answered: true });
+  }
+
+  // Método executado quando o usuário acerta a questão;
+  submitCorrectAnswer() {
+    const { timer } = this.state;
+    const { question: { difficulty }, pointsToScore } = this.props;
+
+    const mediumLoad = 2; // Peso de uma questão de dificuldade "média";
+    const hardLoad = 3; // Peso de uma questão de dificuldade "difícil";
+    let difficultyLoad = 1; // Peso de uma questão de dificuldade "fácil";
+    if (difficulty === 'medium') difficultyLoad = mediumLoad;
+    if (difficulty === 'hard') difficultyLoad = hardLoad;
+
+    const defaultValue = 10;
+    // Soma de pontos de acordo com o README.md
+    const points = defaultValue + (timer * difficultyLoad);
+    pointsToScore(points);
   }
 
   booleanQuestions(answers, correctAnswer, answered) {
@@ -52,7 +75,7 @@ class ActualQuestion extends Component {
             type="button"
             data-testid="correct-answer"
             styles={ { correct: true, answered } }
-            onClick={ this.handleChangeStyle }
+            onClick={ () => { this.handleChangeStyle(); this.submitCorrectAnswer(); } }
             disabled={ answered }
           >
             { answer }
@@ -82,7 +105,7 @@ class ActualQuestion extends Component {
             type="button"
             data-testid="correct-answer"
             styles={ { correct: true, answered } }
-            onClick={ this.handleChangeStyle }
+            onClick={ () => { this.handleChangeStyle(); this.submitCorrectAnswer(); } }
             disabled={ answered }
           >
             { answer }
@@ -144,6 +167,11 @@ ActualQuestion.propTypes = {
     correct_answer: PropTypes.string.isRequired,
     incorrect_answers: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
+  pointsToScore: PropTypes.func.isRequired,
 };
 
-export default ActualQuestion;
+const mapDispatchToProps = (dispatch) => ({
+  pointsToScore: (points) => dispatch(sumScore(points)),
+});
+
+export default connect(null, mapDispatchToProps)(ActualQuestion);

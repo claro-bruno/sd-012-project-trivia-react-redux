@@ -30,7 +30,7 @@ class Game extends Component {
 
   render() {
     const { questions, questionIndex, loaded } = this.state;
-    const { gravatarEmail, name } = this.props;
+    const { gravatarEmail, name, score } = this.props;
 
     // Passando email para formato md5 de criptografia;
     const encodeEmail = md5(gravatarEmail).toString();
@@ -45,7 +45,7 @@ class Game extends Component {
             data-testid="header-profile-picture"
           />
           <span data-testid="header-player-name">{ name }</span>
-          <span data-testid="header-score">0</span>
+          <span data-testid="header-score">{ score }</span>
         </header>
         <main>
           { loaded
@@ -63,12 +63,14 @@ class Game extends Component {
 Game.propTypes = {
   gravatarEmail: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 // Enviando propriedades do estado do reducer "player" para props do meu componente;
 const mapStateToProps = ({ player }) => ({
   name: player.name,
   gravatarEmail: player.gravatarEmail,
+  score: player.score,
 });
 
 export default connect(mapStateToProps)(Game);
