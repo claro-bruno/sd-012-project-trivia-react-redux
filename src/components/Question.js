@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './question.css';
+import Timer from './Timer';
 
 class Question extends Component {
   constructor() {
@@ -9,9 +10,33 @@ class Question extends Component {
 
     this.state = {
       index: 0,
+      seconds: 30,
+      disabled: false,
     };
 
     this.changeColorsAnswer = this.changeColorsAnswer.bind(this);
+    this.count = this.count.bind(this);
+  }
+
+  componentDidMount() {
+    this.count();
+  }
+
+  count() {
+    const sec = 1000;
+    const interval = setInterval(() => {
+      const { seconds } = this.state;
+      this.setState({
+        seconds: seconds - 1,
+      });
+      if (seconds === 1) {
+        clearInterval(interval);
+        this.setState({
+          seconds: 'Time\'s Up',
+          disabled: true,
+        });
+      }
+    }, sec);
   }
 
   changeColorsAnswer() {
@@ -22,7 +47,7 @@ class Question extends Component {
   }
 
   render() {
-    const { index } = this.state;
+    const { index, disabled } = this.state;
     const { questions } = this.props;
 
     return (
@@ -40,6 +65,7 @@ class Question extends Component {
                 {`${questions[index].question}`}
               </p>
               <button
+                disabled={ disabled }
                 className="correct-answer"
                 type="button"
                 data-testid="correct-answer"
@@ -64,6 +90,7 @@ class Question extends Component {
               ))}
             </div>
           )}
+        <Timer />
       </div>
     );
   }
