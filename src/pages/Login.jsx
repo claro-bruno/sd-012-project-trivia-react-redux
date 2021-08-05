@@ -73,7 +73,6 @@ class Login extends Component {
         <header className="App-header">
           <img src={ logo } className="App-logo" alt="logo" />
           <p>
-            SUA VEZ!
             <Input
               id="name"
               name="name"

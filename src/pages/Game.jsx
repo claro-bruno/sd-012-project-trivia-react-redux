@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import Trivia from '../components/Trivia';
 
@@ -10,9 +11,11 @@ class Game extends React.Component {
 
     this.state = {
       questions: [],
+      indexQuestion: 0,
     };
 
     this.fetchQuestions = this.fetchQuestions.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -30,12 +33,28 @@ class Game extends React.Component {
       }));
   }
 
+  nextQuestion() {
+    this.setState((prevState) => ({
+      indexQuestion: prevState.indexQuestion + 1,
+    }));
+  }
+
   render() {
-    const { questions } = this.state;
+    const { questions, indexQuestion } = this.state;
+    console.log(questions);
+    if (questions.length < 1) return <div>Carregando...</div>;
+    if (questions.length === indexQuestion) return <Redirect to="/feedback" />;
     return (
       <div>
         <Header />
-        {questions.map((question, index) => <Trivia key={ index } trivia={ question } />)}
+        <Trivia key={ indexQuestion } trivia={ questions[indexQuestion] } />
+        <button
+          data-testid="btn-next"
+          type="button"
+          onClick={ this.nextQuestion }
+        >
+          Próxima
+        </button>
       </div>
     );
   }
