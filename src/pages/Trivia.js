@@ -12,15 +12,26 @@ class Trivia extends Component {
       loading: true,
       indexQuestion: 0,
       activeButton: true,
+      disabled: false,
+      time: 30,
     };
+
 
     this.makeTrivias = this.makeTrivias.bind(this);
     this.tokenRequire = this.tokenRequire.bind(this);
     this.fetchQuestionsAndAnswers = this.fetchQuestionsAndAnswers.bind(this);
+    this.questionTimer = this.questionTimer.bind(this);
+
   }
 
   componentDidMount() {
     this.fetchQuestionsAndAnswers();
+    this.emailCript();
+    this.questionTimer();
+  }
+
+  componentDidUpdate() {
+    this.gravatar();
   }
 
   // Funcao que ativa o botao de Proxima pergunta, o botao eh ativado independente da resposta ser errada ou certa
@@ -44,19 +55,51 @@ class Trivia extends Component {
   // Funcao que altera o estado indexQuestion, fazendo assim com que as perguntas mudem. Essa funcao eh chamada apos o clique em qualquer um dos botoes de resposta.
   nextQuestion() {
     const { indexQuestion } = this.state;
-
     this.setState({
       indexQuestion: indexQuestion + 1,
       activeButton: true,
+      disabled: false,
+      time: 30,
     });
+    const correctAnswer = document.querySelector('.button-correct');
+    correctAnswer.classList.remove('green-button');
+  }
+
+  // REQUISITO 7 - FUNÇÃO PARA ALTERAR A COR DAS ALTERNATIVAS
+  changeColorAnswer() {
+    const correctAnswer = document.querySelector('.button-correct');
+    const incorrectAnswers = document.querySelectorAll('.button-incorrect');
+    correctAnswer.classList.add('green-button');
+    incorrectAnswers.forEach((question) => question.classList.add('red-button'));
+    this.activeButtonNext();
+  }
+
+  // Funcao que conta 30 segundos para responder a pergunta
+  questionTimer() {
+    const plus = 1000;
+    const questionTimer = setInterval(() => {
+      const { time } = this.state;
+      this.setState({
+        time: time - 1,
+      });
+      if (time <= 0) {
+        clearInterval(questionTimer);
+        this.setState({
+          disabled: true,
+          time: 'Tempo Esgostado',
+          activeButton: false,
+        });
+      }
+    }, plus);
   }
 
   // Funcao que é ativada após a att do componente, ela que faz o card da Trivia. Ela eh chamada apos o clique no botao Proxima
   makeTrivias() {
-    const { trivias, indexQuestion, activeButton } = this.state;
+    const { trivias, indexQuestion, activeButton, disabled, time } = this.state;
     const questionsLimit = 4;
     return (
       <>
+        <span id="timer">{ time }</span>
         <h1 data-testid="question-category">
           { trivias[indexQuestion].category }
         </h1>
@@ -66,18 +109,26 @@ class Trivia extends Component {
         <button
           data-testid="correct-answer"
           type="button"
-          onClick={ () => (this.setState({ activeButton: false },
-            () => this.activeButtonNext())) }
+          onClick={
+            () => (this.setState({ activeButton: false },
+              () => this.changeColorAnswer()))
+          }
+          disabled={ disabled }
+          type="button"
         >
           { trivias[indexQuestion].correct_answer }
         </button>
         { trivias[indexQuestion].incorrect_answers.map((wrongAnswer, index) => (
           <button
             data-testid={ `wrong-answer-${index}` }
+            className="button-incorrect"
             key={ wrongAnswer }
-            onClick={ () => (this.setState({ activeButton: false },
-              () => this.activeButtonNext())) }
-            type="button"
+            onClick={
+              () => (this.setState({ activeButton: false },
+                () => this.changeColorAnswer()))
+            }
+            disabled={ disabled }
+            key={ wrongAnswer }
           >
             { wrongAnswer }
           </button>
