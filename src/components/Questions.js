@@ -8,7 +8,6 @@ class Questions extends Component {
     super();
     this.state = {
       questions: [],
-      borders: false,
       disabled: false,
       next: false,
     };
@@ -33,14 +32,17 @@ class Questions extends Component {
   }
 
   handleClick({ target }) {
-    this.setState({ borders: true, disabled: true, next: true });
-    if (target.id === 'correct-answer') target.style.backgroundColor = 'rgb(6, 240, 15)';
-    else target.style.backgroundColor = 'rgb(255, 0, 0)';
+    this.setState({ disabled: true, next: true });
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach((button) => {
+      if (button.id === 'correct-answer') button.classList.add('correct-answer');
+      else button.classList.add('wrong-answer');
+    });
+    target.classList.add('selected');
   }
 
   answersRender() {
-    const { questions, disabled, borders } = this.state;
-    console.log(questions);
+    const { questions, disabled } = this.state;
     const question = questions[0];
     const answers = [...question.incorrect_answers, question.correct_answer];
     answers.sort();
@@ -63,7 +65,6 @@ class Questions extends Component {
                 key={ answer }
                 onClick={ this.handleClick }
                 disabled={ disabled }
-                className={ borders ? 'correct-answer' : '' }
               >
                 { answer }
               </button>
@@ -78,7 +79,6 @@ class Questions extends Component {
               type="button"
               onClick={ this.handleClick }
               disabled={ disabled }
-              className={ borders ? 'wrong-answer' : '' }
             >
               { answer }
             </button>
