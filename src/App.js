@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Trivia from './pages/Trivia';
 import Login from './pages/Login';
 import './App.css';
+import HeaderInGame from './components/HeaderInGame';
 import Config from './pages/Config';
 
 export default class App extends Component {
@@ -12,7 +13,7 @@ export default class App extends Component {
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route path="/config" component={ Config } />
-          <Route path="/" />
+          <Route path="/" component={ HeaderInGame } />
         </Switch>
         <Switch>
           <Route path="/game/trivia" component={ Trivia } />

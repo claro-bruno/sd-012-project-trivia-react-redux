@@ -1,9 +1,9 @@
 export const CREATE_LOGIN = 'CREATE_LOGIN';
 
-export default function createLogin(state) {
+export function actionCreateLogin({ email, name }) {
   return {
     type: CREATE_LOGIN,
-    email: state,
+    payload: { email, name },
   };
 }
 
