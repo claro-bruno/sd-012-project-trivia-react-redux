@@ -17,6 +17,7 @@ class Question extends Component {
     };
 
     this.changeColorsAnswer = this.changeColorsAnswer.bind(this);
+    this.changeButtonVisibility = this.changeButtonVisibility.bind(this);
     this.count = this.count.bind(this);
   }
 
@@ -41,13 +42,16 @@ class Question extends Component {
     }, sec);
   }
 
+  changeButtonVisibility() {
+    const buttonNextQuestion = document.getElementsByClassName('btn-next')[0];
+    buttonNextQuestion.classList.add('visible');
+  }
+
   changeColorsAnswer() {
     const correct = document.getElementById('correct-answer');
     const incorrect = document.getElementsByName('incorrect-answer');
-    const buttonNextQuestion = document.getElementsByClassName('btn-next')[0];
     incorrect.forEach((question) => { question.className = 'questionWrong'; });
     correct.className = 'questionCorrect';
-    buttonNextQuestion.classList.add('visible');
   }
 
   render() {
@@ -73,7 +77,10 @@ class Question extends Component {
               <UniqueButton
                 disabled={ disabled }
                 className="correct-answer"
-                onClick={ this.changeColorsAnswer }
+                onClick={ () => {
+                  this.changeButtonVisibility();
+                  this.changeColorsAnswer();
+                } }
                 innerText={ questions[index].correct_answer }
               />
               {questions[index].incorrect_answers.map((incorrect, i) => (
@@ -81,7 +88,10 @@ class Question extends Component {
                   className="incorrect-answer"
                   key={ index }
                   dataTestId={ `wrong-answer-${i}` }
-                  onClick={ this.changeColorsAnswer }
+                  onClick={ () => {
+                    this.changeButtonVisibility();
+                    this.changeColorsAnswer();
+                  } }
                   innerText={ incorrect }
                 />
               ))}
