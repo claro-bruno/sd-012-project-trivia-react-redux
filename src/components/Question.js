@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import UniqueButton from './UniqueButton';
+import Button from './Button';
 import './question.css';
 
 class Question extends Component {
@@ -15,8 +17,8 @@ class Question extends Component {
   }
 
   changeColorsAnswer() {
-    const correct = document.getElementById('questionCorrect');
-    const incorrect = document.getElementsByName('questionWrong');
+    const correct = document.getElementById('correct-answer');
+    const incorrect = document.getElementsByName('incorrect-answer');
     const buttonNextQuestion = document.getElementsByClassName('btn-next')[0];
     incorrect.forEach((question) => { question.className = 'questionWrong'; });
     correct.className = 'questionCorrect';
@@ -26,7 +28,6 @@ class Question extends Component {
   render() {
     const { index } = this.state;
     const { questions } = this.props;
-
     return (
       <div>
         { !questions.length
@@ -41,26 +42,22 @@ class Question extends Component {
                 <span className="question">Question:</span>
                 {`${questions[index].question}`}
               </p>
-              <button
+              {/* Aqui eu resolvi chamar de UniqueButton
+              pois ele não compartilha características
+              com os botões de resposta errada */}
+              <UniqueButton
                 className="correct-answer"
-                type="button"
-                data-testid="correct-answer"
-                id="questionCorrect"
                 onClick={ this.changeColorsAnswer }
-              >
-                {questions[index].correct_answer}
-              </button>
+                innerText={ questions[index].correct_answer }
+              />
               {questions[index].incorrect_answers.map((incorrect, i) => (
-                <button
+                <Button
                   className="incorrect-answer"
-                  type="button"
                   key={ index }
-                  data-testid={ `wrong-answer-${i}` }
-                  name="questionWrong"
+                  dataTestId={ `wrong-answer-${i}` }
                   onClick={ this.changeColorsAnswer }
-                >
-                  {incorrect}
-                </button>
+                  innerText={ incorrect }
+                />
               ))}
               <button
                 data-testid="btn-next"
