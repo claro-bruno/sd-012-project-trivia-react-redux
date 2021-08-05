@@ -19,3 +19,9 @@ export const fetchGravatarImage = async (email) => {
   const userImageURL = DATA.url;
   return userImageURL;
 };
+
+export const fetchToken = () => {
+  const BASE_URL = 'https://opentdb.com/api_token.php?command=request';
+  const TOKEN = fetchApi(BASE_URL);
+  console.log(TOKEN);
+};

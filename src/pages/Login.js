@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import LinkWithButton from '../components/LinkWithButton';
 import { actionCreateLogin } from '../redux/actions';
+import { fetchApi } from '../services/api';
 
 class Login extends Component {
   constructor(props) {
@@ -26,8 +27,12 @@ class Login extends Component {
     this.btnDisable();
   }
 
-  handlePlayBtn(state) {
+  async handlePlayBtn(state) {
     // utilizacao do LocalStorage talvez?
+    const url = 'https://opentdb.com/api_token.php?command=request';
+    const DATA = await fetchApi(url);
+    const TOKEN = DATA.token;
+    localStorage.setItem('token', JSON.stringify(TOKEN));
     const { createLogin } = this.props;
     createLogin(state);
   }
