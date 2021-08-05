@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Header extends React.Component {
   render() {
-    const { getUrl, getName } = this.props;
+    const { getUrl, getName, score } = this.props;
     return (
       <header>
         <img
@@ -14,20 +13,16 @@ class Header extends React.Component {
           alt="Profile"
         />
         <h4 data-testid="header-player-name">{getName}</h4>
-        <h5 data-testid="header-score">0</h5>
+        <h5 data-testid="header-score">{score}</h5>
       </header>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  getUrl: state.gravatar.url,
-  getName: state.gravatar.name,
-});
-
 Header.propTypes = {
   getUrl: PropTypes.string.isRequired,
   getName: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
-export default connect(mapStateToProps, null)(Header);
+export default Header;
