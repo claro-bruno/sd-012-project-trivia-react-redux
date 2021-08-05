@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import LinkWithButton from '../components/LinkWithButton';
 import { actionCreateLogin } from '../redux/actions';
 
@@ -75,6 +76,11 @@ class Login extends Component {
           handlePlayBtn={ () => this.handlePlayBtn(this.state) }
           btnText="Jogar"
         />
+        <div>
+          <Link to="/config" data-testid="btn-settings">
+            <button type="button">Configurações</button>
+          </Link>
+        </div>
       </fieldset>
     );
   }
