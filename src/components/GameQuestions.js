@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import './GameQuestions.css';
 
 class GameQuestions extends React.Component {
   constructor(props) {
@@ -20,6 +21,8 @@ class GameQuestions extends React.Component {
       timerIntervalID: 0,
       canDisable: true,
       disableAnswers: false,
+      cBtnClass: 'btn answer-btn',
+      wBtnClass: 'btn answer-btn',
     };
 
     this.getQuestion = this.getQuestion.bind(this);
@@ -92,6 +95,10 @@ class GameQuestions extends React.Component {
 
   handleClick(answerStatus) {
     // No momento que essa função for chamada significa que a pessoa respondeu e o botão de proximo pode aparacer
+    this.setState({
+      cBtnClass: 'btn answer-btn-correct',
+      wBtnClass: 'btn answer-btn-wrong',
+    });
 
     if (answerStatus === 'correct') {
       // implementar comportamento quando acertar a pergunta
@@ -102,42 +109,48 @@ class GameQuestions extends React.Component {
   }
 
   renderQuestions() {
-    const { question, disableAnswers, sortedAnswers } = this.state;
+    const { question, disableAnswers, sortedAnswers, cBtnClass, wBtnClass } = this.state;
     const answers = sortedAnswers;
     return (
-      <div>
-        <span data-testid="question-category">{question.category}</span>
-        <span data-testid="question-text">{question.question}</span>
-        {answers.map((answer, index) => {
-          if (answer.isCorrect) {
+      <div className="questions-card">
+        <div className="questions-text">
+          <span className="cat" data-testid="question-category">{question.category}</span>
+          <span data-testid="question-text">{question.question}</span>
+        </div>
+        <div className="questions-answers">
+          {answers.map((answer, index) => {
+            if (answer.isCorrect) {
+              return (
+                <button
+                  className={ cBtnClass }
+                  key={ index }
+                  data-testid="correct-answer"
+                  type="button"
+                  disabled={ disableAnswers }
+                  onClick={ () => {
+                    this.handleClick('correct');
+                  } }
+                >
+                  { answer.answer }
+                </button>
+              );
+            }
             return (
               <button
+                className={ wBtnClass }
                 key={ index }
-                data-testid="correct-answer"
+                data-testid={ `wrong-answer-${index}` }
                 type="button"
                 disabled={ disableAnswers }
                 onClick={ () => {
-                  this.handleClick('correct');
+                  this.handleClick('wrong');
                 } }
               >
                 { answer.answer }
               </button>
             );
-          }
-          return (
-            <button
-              key={ index }
-              data-testid={ `wrong-answer-${index}` }
-              type="button"
-              disabled={ disableAnswers }
-              onClick={ () => {
-                this.handleClick('wrong');
-              } }
-            >
-              { answer.answer }
-            </button>
-          );
-        })}
+          })}
+        </div>
       </div>
     );
   }
@@ -146,7 +159,7 @@ class GameQuestions extends React.Component {
     const { timer } = this.state;
 
     return (
-      <div>
+      <div className="questions-container">
         { this.renderQuestions()}
         <div>
           <p>{ `Tempo: ${timer}` }</p>
