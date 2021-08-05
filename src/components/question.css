@@ -1,5 +1,5 @@
 .question-container {
-  border: 1px solid #555555;
+  border: 1px solid #555;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -9,8 +9,8 @@
 }
 
 .question-category {
-  text-align: center;
   margin: 0;
+  text-align: center;
 }
 
 .category {
@@ -38,12 +38,12 @@
 }
 
 .correct-answer:hover {
-  background-color: #b3b2b2 ;
-} 
+  background-color: #b3b2b2;
+}
 
 .correct-answer:active {
   transform: scale(0.98);
-} 
+}
 
 .incorrect-answer {
   background-color: #c9c8c8;
@@ -53,11 +53,11 @@
   margin: 8px 0;
   padding: 6px;
   transition: background-color 0.2s;
-} 
+}
 
 .incorrect-answer:hover {
-  background-color: #b3b2b2 ;
-} 
+  background-color: #b3b2b2;
+}
 
 .incorrect-answer:active {
   transform: scale(0.98);
