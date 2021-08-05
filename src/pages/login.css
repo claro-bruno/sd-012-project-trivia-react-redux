@@ -14,13 +14,13 @@
 }
 
 .login-container h2 {
-	color: #1660a5;
-	margin-bottom: -10px;
-	text-align: center;
+  color: #1660a5;
+  margin-bottom: -10px;
+  text-align: center;
 }
 
 .login-container label {
-	width: 260px;
+  width: 260px;
 }
 
 .login-container input {
@@ -29,7 +29,7 @@
   font-size: 14px;
   margin: 8px;
   outline: none;
-	padding: 4px 8px;
+  padding: 4px 8px;
 }
 
 .login-container button {
