@@ -33,9 +33,10 @@ class UserProfile extends Component {
           src={ myUserState.hash }
           alt={ `${myUserState.name}` }
         />
-        <span data-testid="header-player-name">{ myUserState.name }</span>
-        {' '}
-        <span data-testid="header-score">Placar: 0</span>
+        <div className="player-score">
+          <span data-testid="header-player-name">{ myUserState.name }</span>
+          <span data-testid="header-score">Placar: 0</span>
+        </div>
       </section>
     );
   }

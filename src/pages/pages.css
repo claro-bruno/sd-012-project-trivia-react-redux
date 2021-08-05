@@ -20,3 +20,15 @@
 .player-img {
   border-radius: 25%;
 }
+
+.player-game-section {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.player-score {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+}
