@@ -58,6 +58,17 @@ class Trivia extends Component {
       disabled: false,
       time: 30,
     });
+    const correctAnswer = document.querySelector('.button-correct');
+    correctAnswer.classList.remove('green-button');
+  }
+
+  // REQUISITO 7 - FUNÇÃO PARA ALTERAR A COR DAS ALTERNATIVAS
+  changeColorAnswer() {
+    const correctAnswer = document.querySelector('.button-correct');
+    const incorrectAnswers = document.querySelectorAll('.button-incorrect');
+    correctAnswer.classList.add('green-button');
+    incorrectAnswers.forEach((question) => question.classList.add('red-button'));
+    this.activeButtonNext();
   }
 
   // Funcao que conta 30 segundos para responder a pergunta
@@ -94,21 +105,27 @@ class Trivia extends Component {
         </h2>
         <button
           data-testid="correct-answer"
+          type="button"
+          onClick={
+            () => (this.setState({ activeButton: false },
+              () => this.changeColorAnswer()))
+          }
           disabled={ disabled }
           type="button"
-          onClick={ () => (this.setState({ activeButton: false, disabled: true },
-            () => this.activeButtonNext())) }
         >
           { trivias[indexQuestion].correct_answer }
         </button>
         { trivias[indexQuestion].incorrect_answers.map((wrongAnswer, index) => (
           <button
             data-testid={ `wrong-answer-${index}` }
+            className="button-incorrect"
+            key={ wrongAnswer }
+            onClick={
+              () => (this.setState({ activeButton: false },
+                () => this.changeColorAnswer()))
+            }
             disabled={ disabled }
             key={ wrongAnswer }
-            onClick={ () => (this.setState({ activeButton: false, disabled: true },
-              () => this.activeButtonNext())) }
-            type="button"
           >
             { wrongAnswer }
           </button>
