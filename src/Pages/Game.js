@@ -55,9 +55,10 @@ class Game extends React.Component {
               { index < numberQuestions ? (
                 <button
                   type="button"
+                  data-testid="btn-next"
                   onClick={ () => this.showNextQuestion(questions) }
                 >
-                  Próxima Pergunta
+                  Próxima
                 </button>
               ) : (
                 <button
