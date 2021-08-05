@@ -12,7 +12,8 @@ class Questions extends Component {
       index: 0,
     };
 
-    this.createQuestions = this.createQuestions.bind(this);
+    // this.createQuestions = this.createQuestions.bind(this);
+    this.createQuestionsV2 = this.createQuestions.bind(this);
   }
 
   validateToken() {
@@ -24,53 +25,51 @@ class Questions extends Component {
   }
 
   createQuestions() {
-    const { index } = this.state;
     const { questions } = this.props;
-    // if (!questions.length) {
-    //   return console.log('oi');
-    // }
-    console.log('------------');
-    console.log(questions);
-    const ans = questions && questions.length && [...questions[index].incorrect_answers];
-    console.log(ans);
-    return (
-      <div>
-        <p data-testid="question-category">{questions[index].category}</p>
-        <p data-testid="question-text">{questions[index].question}</p>
-        <div>
-          <button
-            data-testid="correct-answer"
-            key={ index }
-            type="button"
-          >
-            { questions[index].correct_answer }
-          </button>
-          { ans.map((question) => (
-            <button
-              data-testid={ `wrong-answer-${index}` }
-              type="button"
-              key={ index }
-            >
-              { question }
-            </button>
-          ))}
-        </div>
-      </div>
-    );
+    const { index } = this.state;
+    const CORRECT_ANSWER = 'correct-answer';
+    const {
+      correct_answer: correctAnswer,
+      incorrect_answers: incorrectAnswers,
+    } = questions[index];
+    return [
+      {
+        answer: correctAnswer,
+        id: CORRECT_ANSWER,
+      },
+      ...incorrectAnswers.map((item, i) => ({
+        answer: item,
+        id: `wrong-answer-${i}`,
+      })),
+    ].sort((a, b) => a.answer.localeCompare(b.answer));
   }
 
   render() {
-    // const { responseCode } = this.props;
-    // console.log(responseCode);
-    // if (responseCode !== 0) {
-    //   return this.validateToken();
-    // }
+    const { index } = this.state;
+    const { questions } = this.props;
+    const CORRECT_ANSWER = 'correct-answer';
     return (
-      <div>
-        {
-          this.createQuestions()
-        }
-      </div>
+      <>
+        <div>
+          <p data-testid="question-category">{questions[index].category}</p>
+          <p data-testid="question-text">{questions[index].question}</p>
+        </div>
+        <div>
+          {
+            this.createQuestions().map((question) => (
+              <button
+                data-testid={ question.id === CORRECT_ANSWER
+                  ? CORRECT_ANSWER
+                  : question.id }
+                type="button"
+                key={ `${question.id}` }
+              >
+                {question.answer}
+              </button>
+            ))
+          }
+        </div>
+      </>
     );
   }
 }
@@ -92,39 +91,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(Questions);
-
-// Pergunta de verdadeiro ou falso
-// {
-//   "response_code":0,
-//   "results":[
-//      {
-//         "category":"Entertainment: Video Games",
-//         "type":"boolean",
-//         "difficulty":"hard",
-//         "question":"TF2: Sentry rocket damage falloff is calculated based on the distance between the sentry and the enemy, not the engineer and the enemy",
-//         "correct_answer":"False",
-//         "incorrect_answers":[
-//            "True"
-//         ]
-//      }
-//   ]
-// }
-
-// Pergunta de múltipla escolha
-// {
-//   "response_code":0,
-//   "results":[
-//      {
-//         "category":"Entertainment: Video Games",
-//         "type":"multiple",
-//         "difficulty":"easy",
-//         "question":"What is the first weapon you acquire in Half-Life?",
-//         "correct_answer":"A crowbar",
-//         "incorrect_answers":[
-//            "A pistol",
-//            "The H.E.V suit",
-//            "Your fists"
-//         ]
-//      }
-//   ]
-// }
