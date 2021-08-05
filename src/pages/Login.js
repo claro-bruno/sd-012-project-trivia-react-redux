@@ -1,8 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import logo from '../trivia.png';
+import { tokenFetchAPI } from '../redux/actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,10 +14,34 @@ class Login extends React.Component {
     this.state = {
       user: '',
       email: '',
-      login: '',
+      redirectGame: false,
+      redirectConfig: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClickGame = this.handleClickGame.bind(this);
+    this.handleClickConfig = this.handleClickConfig.bind(this);
+  }
+
+  componentDidMount() {
+    const { props: { setToken } } = this;
+    setToken();
+  }
+
+  handleClickConfig() {
+    this.setState((state) => ({
+      ...state,
+      redirectConfig: true,
+    }));
+  }
+
+  async handleClickGame() {
+    const { props: { getToken } } = this;
+    await localStorage.setItem('token', JSON.stringify(getToken));
+    this.setState((state) => ({
+      ...state,
+      redirectGame: true,
+    }));
   }
 
   handleChange({ target: { name, type, value, checked } }) {
@@ -29,16 +56,13 @@ class Login extends React.Component {
   }
 
   render() {
-    const {
-      handleChange,
-      state: {
-        user,
-        email,
-      },
-    } = this;
+    const { handleChange, handleClickGame, handleClickConfig,
+      state: { user, email, redirectGame, redirectConfig } } = this;
     const MAX_LENGTH = 5;
     return (
       <>
+        { redirectGame && <Redirect to="/game" /> }
+        { redirectConfig && <Redirect to="/config" /> }
         <img src={ logo } className="App-logo" alt="logo" />
         <form>
           <Input
@@ -61,17 +85,31 @@ class Login extends React.Component {
             testId="btn-play"
             name="Entrar"
             disabled={ !(user.length > MAX_LENGTH && email.includes('@' && '.com')) }
+            handleClick={ handleClickGame }
           />
-          <Link to="/config">
-            <Button
-              testId="btn-settings"
-              name="Configurações"
-            />
-          </Link>
+          <Button
+            testId="btn-settings"
+            name="Configurações"
+            handleClick={ handleClickConfig }
+          />
         </form>
       </>
     );
   }
 }
 
-export default Login;
+const { func, string } = PropTypes;
+Login.propTypes = {
+  setToken: func.isRequired,
+  getToken: string.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  setToken: () => dispatch(tokenFetchAPI()),
+});
+
+const mapStateToProps = (state) => ({
+  getToken: state.tokenTriviaReducer.token,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
