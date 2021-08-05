@@ -5,7 +5,13 @@ class Trivia extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      selected: false,
+    }
+
     this.changeStyles = this.changeStyles.bind(this);
+    this.nextButton = this.nextButton.bind(this);
+    this.button = this.button.bind(this);
   }
 
   // Algoritmo de embaralhamento de Fisher–Yates, retirado de https://pt.stackoverflow.com/questions/406037/mostrar-elementos-de-um-array-em-ordem-aleat%C3%B3ria
@@ -27,6 +33,7 @@ class Trivia extends React.Component {
         style.border = '3px solid rgb(6, 240, 15)';
       }
     });
+    this.nextButton()
   }
 
   createButtons(wrongList, answer) {
@@ -64,14 +71,35 @@ class Trivia extends React.Component {
     return randomQuestions;
   }
 
+  nextButton() {
+    this.setState({
+      selected: true,
+    });
+  }
+
+  button() {
+    const { onClick } = this.props
+    return (
+      <button
+      data-testid="btn-next"
+      type="button"
+      onClick={ onClick }
+    >
+      Próxima
+    </button>
+    )
+  }
+
   render() {
     const { trivia } = this.props;
     const { category, question } = trivia;
+    const { selected } = this.state
     return (
       <div>
         <h4 data-testid="question-category">{category}</h4>
         <h3 data-testid="question-text">{`Pergunta: ${question}`}</h3>
         { this.renderButtons() }
+        { (selected) ? this.button() : null }
       </div>
     );
   }
