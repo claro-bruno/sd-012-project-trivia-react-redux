@@ -1,39 +1,76 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import AnswerButtonS from './styles';
 
 class ActualQuestion extends Component {
-  booleanQuestions(answers, correctAnswer) {
-    return answers.map((answer) => {
-      if (answer === correctAnswer) {
-        return (
-          <button key={ answer } type="button" data-testid="correct-answer">
-            { answer }
-          </button>
-        );
-      }
-      return (
-        <button key={ answer } type="button" data-testid="wrong-answer-0">
-          { answer }
-        </button>
-      );
-    });
+  constructor() {
+    super();
+    this.handleChangeStyle = this.handleChangeStyle.bind(this);
+
+    this.state = {
+      answered: false,
+    };
   }
 
-  multipleQuestions(answers, correctAnswer) {
+  handleChangeStyle() {
+    this.setState({ answered: true });
+  }
+
+  booleanQuestions(answers, correctAnswer, answered) {
+    return answers.map((answer) => (
+      (answer === correctAnswer)
+        ? (
+          <AnswerButtonS
+            key={ answer }
+            type="button"
+            data-testid="correct-answer"
+            styles={ { correct: true, answered } }
+            onClick={ this.handleChangeStyle }
+          >
+            { answer }
+          </AnswerButtonS>
+        ) : (
+          <AnswerButtonS
+            key={ answer }
+            type="button"
+            data-testid="wrong-answer-0"
+            styles={ { correct: false, answered } }
+            onClick={ this.handleChangeStyle }
+          >
+            { answer }
+          </AnswerButtonS>
+        )
+    ));
+  }
+
+  multipleQuestions(answers, correctAnswer, answered) {
     let index = 0;
     return answers.map((answer) => {
       if (answer === correctAnswer) {
         return (
-          <button key={ answer } type="button" data-testid="correct-answer">
+          <AnswerButtonS
+            key={ answer }
+            type="button"
+            data-testid="correct-answer"
+            styles={ { correct: true, answered } }
+            onClick={ this.handleChangeStyle }
+          >
             { answer }
-          </button>
+          </AnswerButtonS>
         );
       }
+
       index += index !== 0 ? 1 : 0;
       return (
-        <button key={ answer } type="button" data-testid={ `wrong-answer-${index}` }>
+        <AnswerButtonS
+          key={ answer }
+          type="button"
+          data-testid={ `wrong-answer-${index}` }
+          styles={ { correct: false, answered } }
+          onClick={ this.handleChangeStyle }
+        >
           { answer }
-        </button>
+        </AnswerButtonS>
       );
     });
   }
@@ -47,6 +84,8 @@ class ActualQuestion extends Component {
       incorrect_answers: incorrectAnswers,
     } } = this.props;
 
+    const { answered } = this.state;
+
     const answers = [...incorrectAnswers, correctAnswer];
     answers.sort();
 
@@ -54,16 +93,11 @@ class ActualQuestion extends Component {
       <section>
         <h2 data-testid="question-category">{ category }</h2>
         <p data-testid="question-text">{ question }</p>
-        { type === 'boolean'
-          ? (
-            <div>
-              { this.booleanQuestions(answers, correctAnswer) }
-            </div>
-          ) : (
-            <div>
-              { this.multipleQuestions(answers, correctAnswer) }
-            </div>
-          ) }
+        <div>
+          { type === 'boolean'
+            ? this.booleanQuestions(answers, correctAnswer, answered)
+            : this.multipleQuestions(answers, correctAnswer, answered) }
+        </div>
       </section>
     );
   }
