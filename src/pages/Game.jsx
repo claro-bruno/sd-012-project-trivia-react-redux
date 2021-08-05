@@ -8,9 +8,18 @@ import './Game.css';
 class Game extends Component {
   constructor() {
     super();
-    this.state = { data: '', loading: true };
+
+    this.state = {
+      data: '',
+      currentQuestion: 0,
+      loading: true,
+      shouldShowBtn: false,
+    };
+
     this.fetchApi = this.fetchApi.bind(this);
     this.page = this.page.bind(this);
+    this.handleClickAnswer = this.handleClickAnswer.bind(this);
+    this.showBtnNextQuestion = this.showBtnNextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -30,15 +39,32 @@ class Game extends Component {
     }
   }
 
-  changeColorButton() {
+  handleClickAnswer() {
     const incorrectList = document.getElementsByName('incorrect');
     const correctList = document.getElementById('correct');
     incorrectList.forEach((item) => { item.className = 'incorrect'; });
     correctList.className = 'correct';
+    this.setState({
+      shouldShowBtn: true,
+    });
+  }
+
+  showBtnNextQuestion() {
+    return (
+      <button
+        type="button"
+        data-testid="btn-next"
+      >
+        Next Question
+      </button>
+    );
   }
 
   page() {
-    const { data } = this.state;
+    const { data,
+      shouldShowBtn,
+      currentQuestion,
+    } = this.state;
     return (
       <>
         <Header />
@@ -46,21 +72,21 @@ class Game extends Component {
           <h1
             data-testid="question-category"
           >
-            {data.results[0].category}
+            {data.results[currentQuestion].category}
           </h1>
           <h2
             data-testid="question-text"
           >
-            {data.results[0].question}
+            {data.results[currentQuestion].question}
           </h2>
           <ol>
-            { data.results[0].incorrect_answers
+            { data.results[currentQuestion].incorrect_answers
               .map(((answer, index) => (
                 <li key={ index }>
                   <button
                     data-testid={ `wrong-answer-${index}` }
                     type="button"
-                    onClick={ this.changeColorButton }
+                    onClick={ this.handleClickAnswer }
                     name="incorrect"
                   >
                     { answer }
@@ -72,12 +98,14 @@ class Game extends Component {
                 type="button"
                 data-testid="correct-answer"
                 id="correct"
-                onClick={ this.changeColorButton }
+                onClick={ this.handleClickAnswer }
               >
-                {data.results[0].correct_answer}
+                {data.results[currentQuestion].correct_answer}
               </button>
             </li>
           </ol>
+          {/* Chama o botão "Próxima"  */}
+          { shouldShowBtn && this.showBtnNextQuestion() }
         </fieldset>
       </>
     );
