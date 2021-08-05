@@ -10,6 +10,7 @@ class Questions extends Component {
       questions: [],
       borders: false,
       disabled: false,
+      next: false,
     };
     this.getUnities = this.getUnities.bind(this);
     this.answersRender = this.answersRender.bind(this);
@@ -32,7 +33,7 @@ class Questions extends Component {
   }
 
   handleClick({ target }) {
-    this.setState({ borders: true, disabled: true });
+    this.setState({ borders: true, disabled: true, next: true });
     if (target.id === 'correct-answer') target.style.backgroundColor = 'rgb(6, 240, 15)';
     else target.style.backgroundColor = 'rgb(255, 0, 0)';
   }
@@ -88,11 +89,12 @@ class Questions extends Component {
   }
 
   render() {
-    const { questions } = this.state;
+    const { questions, next } = this.state;
     return (
-      <div>
+      <main>
         {questions[0] && this.answersRender()}
-      </div>
+        {next && <button data-testid="btn-next" type="button">Proxima Pergunta</button>}
+      </main>
     );
   }
 }
