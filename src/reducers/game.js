@@ -1,19 +1,36 @@
-import { GET_PLAYER_USER_INFO } from '../actions';
+import {
+  FETCH_API_GAME,
+  FETCH_API_GAME_SUCCESS,
+  FETCH_API_GAME_ERROR,
+} from '../actions';
 
 const INITIAL_STATE = {
-  player: {},
+  gameDataApi: {},
+  isFetching: false,
 };
 
-function playerGame(state = INITIAL_STATE, action) {
+function requestGameApi(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case GET_PLAYER_USER_INFO:
+  case FETCH_API_GAME:
     return {
       ...state,
-      player: { ...action.payload },
+      isFetching: true,
+    };
+  case FETCH_API_GAME_SUCCESS:
+    return {
+      ...state,
+      isFetching: false,
+      gameDataApi: action.payload,
+    };
+  case FETCH_API_GAME_ERROR:
+    return {
+      ...state,
+      isFetching: false,
+      gameDataApi: Error,
     };
   default:
     return state;
   }
 }
 
-export default playerGame;
+export default requestGameApi;
