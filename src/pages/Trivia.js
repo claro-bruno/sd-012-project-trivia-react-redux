@@ -14,12 +14,17 @@ class Trivia extends Component {
       loading: true,
       indexQuestion: 0,
       activeButton: true,
+      disabled: false,
+      time: 30,
     };
+
+    this.questionTimer = this.questionTimer.bind(this);
   }
 
   componentDidMount() {
     this.fetchQuestionsAndAnswers();
     this.emailCript();
+    this.questionTimer();
   }
 
   componentDidUpdate() {
@@ -47,19 +52,40 @@ class Trivia extends Component {
   // Funcao que altera o estado indexQuestion, fazendo assim com que as perguntas mudem. Essa funcao eh chamada apos o clique em qualquer um dos botoes de resposta.
   nextQuestion() {
     const { indexQuestion } = this.state;
-
     this.setState({
       indexQuestion: indexQuestion + 1,
       activeButton: true,
+      disabled: false,
+      time: 30,
     });
+  }
+
+  // Funcao que conta 30 segundos para responder a pergunta
+  questionTimer() {
+    const plus = 1000;
+    const questionTimer = setInterval(() => {
+      const { time } = this.state;
+      this.setState({
+        time: time - 1,
+      });
+      if (time <= 0) {
+        clearInterval(questionTimer);
+        this.setState({
+          disabled: true,
+          time: 'Tempo Esgostado',
+          activeButton: false,
+        });
+      }
+    }, plus);
   }
 
   // Funcao que é ativada após a att do componente, ela que faz o card da Trivia. Ela eh chamada apos o clique no botao Proxima
   makeTrivias() {
-    const { trivias, indexQuestion, activeButton } = this.state;
+    const { trivias, indexQuestion, activeButton, disabled, time } = this.state;
     const questionsLimit = 4;
     return (
       <>
+        <span id="timer">{ time }</span>
         <h1 data-testid="question-category">
           { trivias[indexQuestion].category }
         </h1>
@@ -68,8 +94,9 @@ class Trivia extends Component {
         </h2>
         <button
           data-testid="correct-answer"
+          disabled={ disabled }
           type="button"
-          onClick={ () => (this.setState({ activeButton: false },
+          onClick={ () => (this.setState({ activeButton: false, disabled: true },
             () => this.activeButtonNext())) }
         >
           { trivias[indexQuestion].correct_answer }
@@ -77,8 +104,9 @@ class Trivia extends Component {
         { trivias[indexQuestion].incorrect_answers.map((wrongAnswer, index) => (
           <button
             data-testid={ `wrong-answer-${index}` }
+            disabled={ disabled }
             key={ wrongAnswer }
-            onClick={ () => (this.setState({ activeButton: false },
+            onClick={ () => (this.setState({ activeButton: false, disabled: true },
               () => this.activeButtonNext())) }
             type="button"
           >
