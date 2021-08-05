@@ -2,7 +2,6 @@ export const ADD_EMAIL = 'ADD_EMAIL';
 export const ADD_USERNAME = 'ADD_USERNAME';
 export const ADD_TOKEN = 'ADD_TOKEN';
 export const IS_OVER = 'IS_OVER';
-export const UPDATE_TIME = 'UPDATE_TIME';
 export const PASS_TIME = 'PASS_TIME';
 export const TIME_RESET = 'TIME_RESET';
 

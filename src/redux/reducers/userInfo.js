@@ -12,7 +12,6 @@ const INITIAL_STATE = ({
   name: '',
   token: '',
   over: false,
-  score: 0,
   time: 30,
 });
 
