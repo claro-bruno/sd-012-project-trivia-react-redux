@@ -2,60 +2,66 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Cronometer from './Cronometer';
+import { scoreUpdate, stopTime } from '../redux/actions/questions';
+import { nextQuestion } from '../redux/actions/nextQuestion';
 
 class Questions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      questions: [],
-      loading: true,
+      answers: ['initial state'],
     };
 
-    this.fetchQuestions = this.fetchQuestions.bind(this);
-    this.concatenaAnswers = this.concatenaAnswers.bind(this);
+    // this.concatenaAnswers = this.concatenaAnswers.bind(this);
     this.randomize = this.randomize.bind(this);
+    this.optionsAnswer = this.optionsAnswer.bind(this);
+    this.saveStoragePlayer = this.saveStoragePlayer.bind(this);
+    this.changeBorders = this.changeBorders.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
-    this.fetchQuestions();
-  }
+    const { dataQuestion } = this.props;
+    const { correct_answer: correctAnswer,
+      incorrect_answers: incorrectAnswers } = dataQuestion;
 
-  async fetchQuestions() {
-    const token = JSON.parse(localStorage.getItem('token'));
-    const END_POINT = `https://opentdb.com/api.php?amount=5&token=${token}`;
-    const response = await fetch(END_POINT);
-    const json = await response.json();
-    this.setState({ questions: json, loading: false });
-  }
-
-  concatenaAnswers(incorrects, correct) {
-    const incorrectObject = incorrects.map((incorrect, index) => ({
+    const incorrectObject = incorrectAnswers.map((incorrect, index) => ({
       data: 'wrong-answer', answer: incorrect, id: index,
     }));
-    const correctObject = { data: 'correct-answer', answer: correct };
+
+    this.saveStoragePlayer();
+
+    const correctObject = { data: 'correct-answer', answer: correctAnswer };
     const answer = [...incorrectObject, correctObject];
-    return this.randomize(answer);
+    this.randomize(answer);
   }
 
   randomize(answer) {
     const numbers = [];
-    for (let j = 0; j < 100; j += 1) {
+    for (let index = 0; index < 100; index += 1) {
       const number = Math.floor(Math.random() * answer.length);
       if (!numbers.includes(number)) numbers.push(number);
       if (numbers.length === answer.length) break;
     }
-    return numbers.map((number) => answer[number]);
+    const ordenedAnwsers = numbers.map((number) => answer[number]);
+    this.setState({
+      answers: ordenedAnwsers,
+    });
   }
 
   optionsAnswer(answer, index) {
     const { optionsDisabled } = this.props;
+
     if (answer.data === 'correct-answer') {
       return (
         <button
+          id="answerButton"
           type="button"
           key={ index }
           data-testid={ answer.data }
           disabled={ optionsDisabled }
+          value="right"
+          onClick={ this.handleClick }
         >
           { answer.answer }
         </button>
@@ -63,22 +69,75 @@ class Questions extends React.Component {
     }
     return (
       <button
+        id="answerButton"
         type="button"
         key={ index }
         data-testid={ `wrong-answer${index}` }
         disabled={ optionsDisabled }
+        value="wrong"
+        onClick={ this.handleClick }
       >
         { answer.answer }
       </button>);
   }
 
+  saveStoragePlayer() {
+    const { name, assertions, score, email } = this.props;
+
+    // const players = JSON.parse(localStorage.getItem('state'));
+    const player = {
+      name,
+      assertions,
+      score,
+      gravatarEmail: email,
+    };
+    localStorage.setItem('state', JSON.stringify({ player }));
+  }
+
+  changeBorders() {
+    const answerButtons = document.querySelectorAll('#answerButton');
+
+    answerButtons.forEach(({ value, style }) => {
+      if (value === 'right') {
+        style.border = '3px solid rgb(6, 240, 15)';
+      } else {
+        style.border = '3px solid rgb(255, 0, 0)';
+      }
+    });
+
+    // const { setNextQuestion } = this.props;
+    // setNextQuestion(true);
+  }
+
+  async handleClick({ target }) {
+    this.changeBorders();
+
+    let pontosAnswer = 0;
+    let pontosDiffuculty;
+    const n = { dez: 10, tres: 3, dois: 2, um: 1 };
+
+    if (target.value === 'right') pontosAnswer = n.dez;
+
+    const { dataQuestion: { difficulty } } = this.props;
+    if (difficulty === 'hard') {
+      pontosDiffuculty = n.tres;
+    } else if (difficulty === 'medium') {
+      pontosDiffuculty = n.dois;
+    } else {
+      pontosDiffuculty = n.um;
+    }
+
+    const { setScore, setStopTime } = this.props;
+    await setStopTime();
+    if (pontosAnswer === n.dez) {
+      await setScore(pontosAnswer, pontosDiffuculty);
+    }
+    this.saveStoragePlayer();
+  }
+
   render() {
-    const { loading } = this.state;
-    if (loading) return <div>Loading</div>;
-    const { questions: { results } } = this.state;
-    const { category, question, correct_answer: correctAnswer,
-      incorrect_answers: incorrectAnswers } = results[0];
-    const answers = this.concatenaAnswers(incorrectAnswers, correctAnswer);
+    const { dataQuestion: { category, question } } = this.props;
+    const { answers } = this.state;
     return (
       <div>
         <Cronometer />
@@ -92,12 +151,29 @@ class Questions extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  token: state.login.token,
   optionsDisabled: state.questions.optionsDisabled,
+  name: state.login.name,
+  assertions: state.questions.assertions,
+  score: state.questions.score,
+  email: state.login.email,
 });
 
-export default connect(mapStateToProps, null)(Questions);
+const mapDispatchToProps = (dispatch) => ({
+  setScore:
+    (answerValue, diffucultyValue) => dispatch(scoreUpdate(answerValue, diffucultyValue)),
+  setStopTime: () => dispatch(stopTime()),
+  setNextQuestion: (status) => dispatch(nextQuestion(status)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);
 
 Questions.propTypes = {
-  token: PropTypes.string,
+  optionsDisabled: PropTypes.bool,
+  name: PropTypes.string,
+  assertions: PropTypes.number,
+  score: PropTypes.number,
+  email: PropTypes.string,
+  setScore: PropTypes.func,
+  setStopTime: PropTypes.func,
+  setNextQuestion: PropTypes.func,
 }.isRequired;

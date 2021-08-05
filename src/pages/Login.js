@@ -13,6 +13,7 @@ class Login extends React.Component {
       disabled: true,
       shouldRedirectConfig: false,
       shouldRedirectPlay: false,
+      getTokenError: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -43,11 +44,15 @@ class Login extends React.Component {
 
   async submit() {
     const { playerName, email } = this.state;
-    const { setLogin, setToken } = this.props;
+    const { setLogin, setToken, token } = this.props;
     setLogin(playerName, email);
     await setToken();
-    await this.saveToken();
-    this.setState({ shouldRedirectPlay: true });
+    if (token === 'erro') {
+      this.setState({ getTokenError: true });
+    } else {
+      await this.saveToken();
+      this.setState({ shouldRedirectPlay: true });
+    }
   }
 
   saveToken() {
@@ -61,9 +66,10 @@ class Login extends React.Component {
 
   render() {
     const { disabled, playerName, email,
-      shouldRedirectConfig, shouldRedirectPlay } = this.state;
+      shouldRedirectConfig, shouldRedirectPlay, getTokenError } = this.state;
     if (shouldRedirectConfig) { return <Redirect to="/config" />; }
     if (shouldRedirectPlay) { return <Redirect to="/play" />; }
+    if (getTokenError) { return <div>Erro! Tente novamente mais tarde.</div>; }
     return (
       <div className="login-screen">
         <div className="login-box">
