@@ -5,4 +5,3 @@ import login from './login';
 const rootReducer = combineReducers({ player, login });
 
 export default rootReducer;
-
