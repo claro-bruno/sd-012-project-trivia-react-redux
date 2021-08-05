@@ -21,8 +21,8 @@ class GameQuestions extends React.Component {
       timerIntervalID: 0,
       canDisable: true,
       disableAnswers: false,
-      correctBtnClass: 'btn answer-btn',
-      wrongBtnClass: 'btn answer-btn',
+      cBtnClass: 'btn answer-btn',
+      wBtnClass: 'btn answer-btn',
     };
 
     this.getQuestion = this.getQuestion.bind(this);
@@ -96,8 +96,8 @@ class GameQuestions extends React.Component {
   handleClick(answerStatus) {
     // No momento que essa função for chamada significa que a pessoa respondeu e o botão de proximo pode aparacer
     this.setState({
-      correctBtnClass: 'btn answer-btn-correct',
-      wrongBtnClass: 'btn answer-btn-wrong',
+      cBtnClass: 'btn answer-btn-correct',
+      wBtnClass: 'btn answer-btn-wrong',
     });
 
     if (answerStatus === 'correct') {
@@ -109,12 +109,12 @@ class GameQuestions extends React.Component {
   }
 
   renderQuestions() {
-    const {question, disableAnswers, sortedAnswers, correctBtnClass, wrongBtnClass } = this.state;
+    const { question, disableAnswers, sortedAnswers, cBtnClass, wBtnClass } = this.state;
     const answers = sortedAnswers;
     return (
       <div className="questions-card">
         <div className="questions-text">
-          <span className="question-category" data-testid="question-category">{question.category}</span>
+          <span className="cat" data-testid="question-category">{question.category}</span>
           <span data-testid="question-text">{question.question}</span>
         </div>
         <div className="questions-answers">
@@ -122,7 +122,7 @@ class GameQuestions extends React.Component {
             if (answer.isCorrect) {
               return (
                 <button
-                  className={ correctBtnClass }
+                  className={ cBtnClass }
                   key={ index }
                   data-testid="correct-answer"
                   type="button"
@@ -137,7 +137,7 @@ class GameQuestions extends React.Component {
             }
             return (
               <button
-                className={ wrongBtnClass }
+                className={ wBtnClass }
                 key={ index }
                 data-testid={ `wrong-answer-${index}` }
                 type="button"
@@ -148,10 +148,9 @@ class GameQuestions extends React.Component {
               >
                 { answer.answer }
               </button>
-              
             );
           })}
-          </div>
+        </div>
       </div>
     );
   }
