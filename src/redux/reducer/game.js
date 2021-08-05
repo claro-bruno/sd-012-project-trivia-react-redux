@@ -5,6 +5,8 @@ const INITIAL_GAME_STATE = {
   questions: [],
   loading: true,
   err: '',
+  score: 0,
+  rightQuestions: 0,
 };
 
 function game(state = INITIAL_GAME_STATE, action) {

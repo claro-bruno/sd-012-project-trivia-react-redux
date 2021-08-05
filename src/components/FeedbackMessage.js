@@ -21,7 +21,7 @@ class FeedbackMessage extends React.Component {
 }
 
 FeedbackMessage.propTypes = {
-  playerScore: PropTypes.string.isRequired,
+  playerScore: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({

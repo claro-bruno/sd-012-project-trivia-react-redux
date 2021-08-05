@@ -103,7 +103,7 @@ class Login extends React.Component {
           >
             Jogar
           </button>
-          <Link to="/Settings">
+          <Link to="/settings">
             <button
               type="button"
               data-testid="btn-settings"
