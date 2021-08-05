@@ -27,7 +27,6 @@ class Trivia extends React.Component {
     if (time === 0) {
       clearInterval(this.myInterval);
     }
-  }
 
   // Algoritmo de embaralhamento de Fisher–Yates, retirado de https://pt.stackoverflow.com/questions/406037/mostrar-elementos-de-um-array-em-ordem-aleat%C3%B3ria
   shuffle(array) {
