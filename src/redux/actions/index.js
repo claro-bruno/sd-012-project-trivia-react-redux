@@ -1,6 +1,17 @@
-import { GET_TOKEN_SUCCESS, GET_TOKEN, GET_TOKEN_ERROR } from './actionTypes';
+import {
+  GET_TOKEN_SUCCESS,
+  GET_TOKEN,
+  GET_TOKEN_ERROR,
+  USER_ACTION,
+  USER_ACTION_NAME,
+  USER_ACTION_HASH,
+} from './actionTypes';
 
-export const userAction = (payload) => ({ type: 'USER_ACTION', payload });
+export const userAction = (payload) => ({ type: USER_ACTION, payload });
+
+export const userActionName = (payload) => ({ type: USER_ACTION_NAME, payload });
+
+export const userHashEmail = (payload) => ({ type: USER_ACTION_HASH, payload });
 
 export const getToken = () => ({ type: GET_TOKEN });
 

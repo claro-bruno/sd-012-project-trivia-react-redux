@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchToken } from '../redux/actions';
+import { fetchToken, userAction, userActionName } from '../redux/actions';
+import './pages.css';
 
 class Login extends PureComponent {
   constructor() {
@@ -40,7 +41,17 @@ class Login extends PureComponent {
   }
 
   handleClick() {
-    const { gettingToken, history } = this.props;
+    const {
+      gettingToken,
+      history,
+      sendUserEmail,
+      sendUserName,
+    } = this.props;
+
+    const { name, email } = this.state;
+    const formatEmail = email.trim().toLowerCase();
+    sendUserEmail(formatEmail);
+    sendUserName(name);
     gettingToken();
     history.push('/game');
   }
@@ -69,12 +80,12 @@ class Login extends PureComponent {
   render() {
     const { email, name, disabled } = this.state;
     return (
-      <div>
+      <form className="form">
         <label
           htmlFor="email"
         >
-          Email
           <input
+            placeholder="Email"
             type="email"
             name="email"
             className=""
@@ -87,8 +98,8 @@ class Login extends PureComponent {
         <label
           htmlFor="name"
         >
-          Nome
           <input
+            placeholder="Nome"
             type="text"
             name="name"
             className=""
@@ -97,18 +108,19 @@ class Login extends PureComponent {
             onChange={ this.handleInput }
           />
         </label>
+        <div className="buttons">
+          <button
+            data-testid="btn-play"
+            type="button"
+            disabled={ disabled }
+            onClick={ this.handleClick }
+          >
+            Jogar
+          </button>
 
-        <button
-          data-testid="btn-play"
-          type="button"
-          disabled={ disabled }
-          onClick={ this.handleClick }
-        >
-          Jogar
-        </button>
-
-        { this.settingsButton() }
-      </div>
+          { this.settingsButton() }
+        </div>
+      </form>
     );
   }
 }
@@ -118,10 +130,14 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  sendUserEmail: PropTypes.func.isRequired,
+  sendUserName: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   gettingToken: () => dispatch(fetchToken()),
+  sendUserEmail: (payload) => dispatch(userAction(payload)),
+  sendUserName: (payload) => dispatch(userActionName(payload)),
 });
 
 const mapStateToProps = (state) => ({

@@ -1,12 +1,6 @@
-export const verifyEmail = (email) => {
-  const re = /\S+@\S+\.\S+/;
-  return re.test(email);
+const fetchGravatarImg = async (userEmail) => {
+  const response = await fetch(`https://www.gravatar.com/avatar/${userEmail}`);
+  const responseGravatar = response.url;
+  return responseGravatar;
 };
-
-export const verifyName = (name) => {
-  const minLengthName = 6;
-  if (name.length >= minLengthName) {
-    return true;
-  }
-  return false;
-};
+export default fetchGravatarImg;
