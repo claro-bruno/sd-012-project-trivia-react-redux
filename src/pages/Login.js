@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import logo from '../trivia.png';
-import { tokenFetchAPI } from '../redux/actions';
+import { tokenFetchAPI, addLoginAction } from '../redux/actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -35,13 +35,19 @@ class Login extends React.Component {
     }));
   }
 
-  async handleClickGame() {
-    const { props: { getToken } } = this;
-    await localStorage.setItem('token', JSON.stringify(getToken));
+  handleClickGame() {
+    const {
+      props: { getToken, setLogin },
+      state: login,
+    } = this;
+
+    localStorage.setItem('token', JSON.stringify(getToken));
     this.setState((state) => ({
       ...state,
       redirectGame: true,
     }));
+
+    setLogin(login);
   }
 
   handleChange({ target: { name, type, value, checked } }) {
@@ -101,11 +107,13 @@ class Login extends React.Component {
 const { func, string } = PropTypes;
 Login.propTypes = {
   setToken: func.isRequired,
+  setLogin: func.isRequired,
   getToken: string.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   setToken: () => dispatch(tokenFetchAPI()),
+  setLogin: (state) => dispatch(addLoginAction(state)),
 });
 
 const mapStateToProps = (state) => ({

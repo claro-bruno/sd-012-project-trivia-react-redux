@@ -31,10 +31,14 @@ const {
 } = PropTypes;
 
 Button.propTypes = {
-  disabled: bool.isRequired,
+  disabled: bool,
   testId: string.isRequired,
   name: string.isRequired,
   handleClick: func.isRequired,
+};
+
+Button.defaultProps = {
+  disabled: false,
 };
 
 // export default Button;

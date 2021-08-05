@@ -1,13 +1,18 @@
 import { ADD_LOGIN } from '../actions';
 
-const INITIAL_STATE = {};
+const INITIAL_STATE = {
+  user: '',
+  email: '',
+};
 
 function addLoginReducer(state = INITIAL_STATE, action) {
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
   case ADD_LOGIN:
     return {
       ...state,
-      login: action.payload,
+      user: payload.user,
+      email: payload.email,
     };
   default:
     return state;
