@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addUserName, addEmail, addToken } from '../redux/actions';
+import { addUserName, addEmail, addToken, timeReset } from '../redux/actions';
 
 class LoginForm extends Component {
   constructor() {
@@ -43,10 +43,20 @@ class LoginForm extends Component {
     setEmailStore(email);
     setNameStore(name);
     this.handleTokenThing();
+    const player = {
+      player: {
+        name,
+        gravatarEmail: email,
+        score: 0,
+        assertions: 0,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(player));
   }
 
   render() {
     const { email, name } = this.state;
+    const { resetTimer } = this.props;
     return (
       <form>
         <input
@@ -79,6 +89,7 @@ class LoginForm extends Component {
           <button
             type="button"
             data-testid="btn-settings"
+            onClick={ () => resetTimer() }
           >
             Settings
           </button>
@@ -92,12 +103,14 @@ LoginForm.propTypes = {
   setEmailStore: PropTypes.func.isRequired,
   setNameStore: PropTypes.func.isRequired,
   setToken: PropTypes.func.isRequired,
+  resetTimer: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   setEmailStore: (email) => dispatch(addEmail(email)),
   setNameStore: (name) => dispatch(addUserName(name)),
   setToken: (token) => dispatch(addToken(token)),
+  resetTimer: () => dispatch(timeReset()),
 });
 
 export default connect(null, mapDispatchToProps)(LoginForm);
