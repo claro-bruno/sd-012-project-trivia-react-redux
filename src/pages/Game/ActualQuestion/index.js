@@ -6,13 +6,21 @@ class ActualQuestion extends Component {
     return answers.map((answer) => {
       if (answer === correctAnswer) {
         return (
-          <button key={ answer } type="button" data-testid="correct-answer">
+          <button
+            key={ answer }
+            type="button"
+            data-testid="correct-answer"
+          >
             { answer }
           </button>
         );
       }
       return (
-        <button key={ answer } type="button" data-testid="wrong-answer-0">
+        <button
+          key={ answer }
+          type="button"
+          data-testid="wrong-answer-0"
+        >
           { answer }
         </button>
       );
@@ -24,14 +32,22 @@ class ActualQuestion extends Component {
     return answers.map((answer) => {
       if (answer === correctAnswer) {
         return (
-          <button key={ answer } type="button" data-testid="correct-answer">
+          <button
+            key={ answer }
+            type="button"
+            data-testid="correct-answer"
+          >
             { answer }
           </button>
         );
       }
       index += index !== 0 ? 1 : 0;
       return (
-        <button key={ answer } type="button" data-testid={ `wrong-answer-${index}` }>
+        <button
+          key={ answer }
+          type="button"
+          data-testid={ `wrong-answer-${index}` }
+        >
           { answer }
         </button>
       );
@@ -54,16 +70,11 @@ class ActualQuestion extends Component {
       <section>
         <h2 data-testid="question-category">{ category }</h2>
         <p data-testid="question-text">{ question }</p>
-        { type === 'boolean'
-          ? (
-            <div>
-              { this.booleanQuestions(answers, correctAnswer) }
-            </div>
-          ) : (
-            <div>
-              { this.multipleQuestions(answers, correctAnswer) }
-            </div>
-          ) }
+        <div>
+          { type === 'boolean'
+            ? this.booleanQuestions(answers, correctAnswer)
+            : this.multipleQuestions(answers, correctAnswer) }
+        </div>
       </section>
     );
   }
