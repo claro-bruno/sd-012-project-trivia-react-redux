@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { nameSet, emailSet } from '../redux/actions/index';
+import { nameSet, emailSet, getToken } from '../redux/actions/index';
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
 
@@ -19,10 +19,11 @@ class Login extends Component {
   }
 
   onSubmitForm() {
-    const { dispatchSetName, dispatchSetEmail } = this.props;
+    const { dispatchSetName, dispatchSetEmail, dispatchToken } = this.props;
     const { name, email } = this.state;
     dispatchSetName(name);
     dispatchSetEmail(email);
+    dispatchToken();
   }
 
   handleChange({ target }) {
@@ -76,11 +77,13 @@ class Login extends Component {
 const mapDispatchToProps = (dispatch) => ({
   dispatchSetName: (name) => dispatch(nameSet(name)),
   dispatchSetEmail: (email) => dispatch(emailSet(email)),
+  dispatchToken: () => dispatch(getToken()),
 });
 
 Login.propTypes = {
   dispatchSetName: PropTypes.func.isRequired,
   dispatchSetEmail: PropTypes.func.isRequired,
+  dispatchToken: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
