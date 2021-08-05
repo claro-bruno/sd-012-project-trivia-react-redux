@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class Header extends React.Component {
   render() {
-    const { score } = JSON.parse(localStorage.getItem('player')).player;
+    const { score } = JSON.parse(localStorage.getItem('state')).player;
     const { name, avatar } = this.props;
     return (
       <header>

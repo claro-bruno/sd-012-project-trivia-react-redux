@@ -47,7 +47,7 @@ class Login extends React.Component {
     saveNameD(name);
     saveToke(token);
     const playerstringfy = JSON.stringify(player);
-    localStorage.setItem('player', playerstringfy);
+    localStorage.setItem('state', playerstringfy);
     this.setState({ redirectToQuest: true });
   }
 
