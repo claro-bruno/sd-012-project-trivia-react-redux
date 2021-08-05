@@ -63,12 +63,12 @@ class Trivia extends Component {
   }
 
   // REQUISITO 7 - FUNÇÃO PARA ALTERAR A COR DAS ALTERNATIVAS
-  changeColorAnswer() {
+  async changeColorAnswer() {
     const correctAnswer = document.querySelector('.button-correct');
     const incorrectAnswers = document.querySelectorAll('.button-incorrect');
     correctAnswer.classList.add('green-button');
     incorrectAnswers.forEach((question) => question.classList.add('red-button'));
-    this.activeButtonNext();
+    await this.activeButtonNext();
   }
 
   // Funcao que conta 30 segundos para responder a pergunta
