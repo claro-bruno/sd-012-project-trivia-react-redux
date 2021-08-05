@@ -6,18 +6,17 @@ class MultChoice extends React.Component {
       <div>
         <button
           type="button"
-          onClick={  }
           name="button1"
-          >
+        >
           Opção 1
-        </button>        <button
+        </button>
+        <button
           type="button"
-          onClick={  }
           name="button2"
-          >
+        >
           Opção 2
         </button>
-     </div>
+      </div>
     );
   }
 }
