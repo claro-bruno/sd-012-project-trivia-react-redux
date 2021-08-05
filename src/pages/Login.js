@@ -1,16 +1,28 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { nameSet, emailSet } from '../redux/actions/index';
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
-      nome: '',
+      name: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.onSubmitForm = this.onSubmitForm.bind(this);
+    this.emailIsValid = this.emailIsValid.bind(this);
+  }
+
+  onSubmitForm() {
+    const { dispatchSetName, dispatchSetEmail } = this.props;
+    const { name, email } = this.state;
+    dispatchSetName(name);
+    dispatchSetEmail(email);
   }
 
   handleChange({ target }) {
@@ -20,8 +32,12 @@ export default class Login extends Component {
     });
   }
 
+  emailIsValid(email) {
+    return /\S+@\S+.\S+/.test(email);
+  }
+
   render() {
-    const { email, nome } = this.state;
+    const { email, name } = this.state;
 
     const inputEmailProps = {
       type: 'text',
@@ -33,15 +49,15 @@ export default class Login extends Component {
     };
     const inputNameProps = {
       type: 'text',
-      name: 'nome',
+      name: 'name',
       id: 'nameInput',
-      value: nome,
+      value: name,
       onChange: this.handleChange,
       labelTxt: 'Nome',
     };
     const buttonProps = {
-      onClick: '',
-      disabled: !(nome.length > 0 && email.length > 0),
+      onClick: this.onSubmitForm,
+      disabled: !(name.length > 0 && this.emailIsValid(email)),
       buttonTxt: 'Jogar',
     };
 
@@ -56,3 +72,15 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSetName: (name) => dispatch(nameSet(name)),
+  dispatchSetEmail: (email) => dispatch(emailSet(email)),
+});
+
+Login.propTypes = {
+  dispatchSetName: PropTypes.func.isRequired,
+  dispatchSetEmail: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
