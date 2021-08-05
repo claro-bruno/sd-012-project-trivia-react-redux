@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 class ActualQuestion extends Component {
   booleanQuestions(answers, correctAnswer) {
-    return answers.map((answer) => {
-      if (answer === correctAnswer) {
-        return (
+    return answers.map((answer) => (
+      (answer === correctAnswer)
+        ? (
           <button
             key={ answer }
             type="button"
@@ -13,18 +13,16 @@ class ActualQuestion extends Component {
           >
             { answer }
           </button>
-        );
-      }
-      return (
-        <button
-          key={ answer }
-          type="button"
-          data-testid="wrong-answer-0"
-        >
-          { answer }
-        </button>
-      );
-    });
+        ) : (
+          <button
+            key={ answer }
+            type="button"
+            data-testid="wrong-answer-0"
+          >
+            { answer }
+          </button>
+        )
+    ));
   }
 
   multipleQuestions(answers, correctAnswer) {
@@ -41,6 +39,7 @@ class ActualQuestion extends Component {
           </button>
         );
       }
+
       index += index !== 0 ? 1 : 0;
       return (
         <button
