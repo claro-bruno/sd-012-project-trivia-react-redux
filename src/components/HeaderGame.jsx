@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
+import PropTypes from 'prop-types';
+import './HeaderGame.css';
 
 class HeaderGame extends Component {
   constructor(props) {
@@ -14,10 +16,7 @@ class HeaderGame extends Component {
   }
 
   componentDidMount() {
-    // const { getEndPoint } = this.props;
     this.handleData();
-    // const endPonit = `https://www.gravatar.com/avatar/${hash}`;
-    // getEndPoint(endPonit);
   }
 
   handleData() {
@@ -35,16 +34,37 @@ class HeaderGame extends Component {
     return (
       <>
         <img
+          className="profile-image"
           data-testid="header-profile-picture"
           src={ `https://www.gravatar.com/avatar/${hash}` }
           alt="imgem-do-avatar"
         />
-        <p data-testid="header-player-name">{name}</p>
-        <p data-testid="header-score">{score}</p>
+
+        <h3
+          className="Player-name"
+          data-testid="header-player-name"
+        >
+          {name}
+        </h3>
+
+        <h2
+          className="score"
+          data-testid="header-score"
+        >
+          {score}
+        </h2>
       </>
     );
   }
 }
+
+HeaderGame.propTypes = {
+  user: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
 const mapStateToProps = (state) => ({
   user: state.user,
 });

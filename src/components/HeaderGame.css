@@ -1,0 +1,23 @@
+header{
+  background-color: rgba(7, 195, 219, 0.924);
+  /* display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border-radius:40px 0px 0px 40px;
+  */
+}
+
+.profile-image {
+ border-radius:50%;
+}
+
+.player-name {
+ color: rgb(18, 110, 72);
+}
+
+.score {
+ color :rgb(255, 255, 255);
+ /* font-weight: bold;
+ font-size: 30px;
+ */
+}
