@@ -70,3 +70,11 @@
 .questionWrong {
   border: 3px solid red;
 }
+
+.btn-next {
+  visibility: hidden;
+}
+
+.btn-next.visible {
+  visibility: visible;
+}
