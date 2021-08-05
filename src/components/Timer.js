@@ -14,7 +14,7 @@ class Timer extends Component {
   }
 
   timer() {
-    const oneSecond = 100;
+    const oneSecond = 1000;
     const { passTime } = this.props;
     setInterval(
       () => passTime(), oneSecond,

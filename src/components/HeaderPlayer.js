@@ -6,7 +6,7 @@ import md5 from 'crypto-js/md5';
 class HeaderPlayer extends Component {
   render() {
     const state = JSON.parse(localStorage.getItem('state'));
-    const { score } = state;
+    const { score } = state.player;
     const { userInfo } = this.props;
     const hash = md5(userInfo.email).toString();
     return (
