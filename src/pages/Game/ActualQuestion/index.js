@@ -26,6 +26,7 @@ class ActualQuestion extends Component {
             data-testid="correct-answer"
             styles={ { correct: true, answered } }
             onClick={ this.handleChangeStyle }
+            disabled={ answered }
           >
             { answer }
           </AnswerButtonS>
@@ -36,6 +37,7 @@ class ActualQuestion extends Component {
             data-testid="wrong-answer-0"
             styles={ { correct: false, answered } }
             onClick={ this.handleChangeStyle }
+            disabled={ answered }
           >
             { answer }
           </AnswerButtonS>
@@ -54,6 +56,7 @@ class ActualQuestion extends Component {
             data-testid="correct-answer"
             styles={ { correct: true, answered } }
             onClick={ this.handleChangeStyle }
+            disabled={ answered }
           >
             { answer }
           </AnswerButtonS>
@@ -68,6 +71,7 @@ class ActualQuestion extends Component {
           data-testid={ `wrong-answer-${index}` }
           styles={ { correct: false, answered } }
           onClick={ this.handleChangeStyle }
+          disabled={ answered }
         >
           { answer }
         </AnswerButtonS>
