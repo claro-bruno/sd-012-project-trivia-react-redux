@@ -6,8 +6,7 @@ import {
 
 const INITIAL_STATE = {
   questions: [],
-  isFetching: true, // era false, troquei pra true pra testar
-  error: '',
+  isFetching: true,
 };
 
 const gameReducer = (state = INITIAL_STATE, action) => {
@@ -23,6 +22,7 @@ const gameReducer = (state = INITIAL_STATE, action) => {
       questions: action.payload,
       isFetching: action.isFetching,
     };
+
   case REQUEST_API_GAME_ERROR:
     return {
       ...state,
