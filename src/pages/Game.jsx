@@ -10,81 +10,91 @@ class Game extends Component {
       alternatives: [],
       randomIndex: '',
     };
-    this.random = this.random.bind(this);
+    this.rad = this.rad.bind(this);
     // this.result = this.result.bind(this);
-    this.functotal = this.functotal.bind(this);
+    this.createQuestion = this.createQuestion.bind(this);
+    this.createOptions = this.createOptions.bind(this);
   }
 
   componentDidMount() {
     const { getAPI } = this.props;
     const token = JSON.parse(localStorage.getItem('token'));
     getAPI(token);
+    const timer = 1000;
+    setTimeout(() => {
+      const { questions } = this.props;
+      this.rad(questions);
+    }, timer);
   }
 
-  random() {
-    const { questions } = this.props;
-    const { results: { correctAnswer, incorrectAnswers } } = questions;
+  rad(quest) {
+    const { correct_answer: correctAnswer,
+      incorrect_answers: incorrectAnswers } = quest[0];
     const randomIndex = Math.round(Math.random() * (incorrectAnswers.length - 0));
-    incorrectAnswers.slice(randomIndex, 1, correctAnswer);
+    incorrectAnswers.splice(randomIndex, 0, correctAnswer);
     this.setState({
       alternatives: incorrectAnswers,
       randomIndex,
     });
   }
 
-  // if (index === randomIndex) {
-  //   return (
-  //     <button
-  //       type="button"
-  //       onClick={ this.result }
-  //       key={ index }
-  //       data-testid="correct-answer"
-  //     >
-  //       {alternativa}
-  //     </button>);
+  // random(questions) {
+  //   const { correct_answer: correctAnswer, incorrect_answers: incorrectAnswers } = questions[0];
+  //   const randomIndex = Math.round(Math.random() * (incorrectAnswers.length - 0));
+  //   incorrectAnswers.slice(randomIndex, 1, correctAnswer);
+  //   this.setState({
+  //     alternatives: incorrectAnswers,
+  //     randomIndex: '',
+  //   });
   // }
-  // } else {
-  // return (
-  //   <button
-  //     type="button"
-  //     onClick={ this.result }
-  //     key={ index }
-  //     data-testid={ `wrong-answer-${index}` }
-  //   >
-  //     {alternativa}
-  //   </button>
-  // )};
 
-  // questions.map((alternativa, index) => {
-  //   const { category, question } = alternativa;
-  //   const { alternatives, randomIndex } = this.state;
-  //   return (
-  //     <div key={ index }>
-  //       <h3 data-testid="question-category">{ category }</h3>
-  //       <h2 data-testid="question-text">{ question }</h2>
-  //       {
-  //         index
-  //           ? <button type="button" onClick={ this.result } key={ index } data-testid="correct-answer">{alternativa}</button>
-  //           : 'asd'
-  //       }
-
-  functotal() {
+  createQuestion() {
     const { questions } = this.props;
-    const { alternatives, randomIndex } = this.state;
-    return questions.map((elm, ind) => {
+    const enun = questions.map((elm, ind) => {
       const { category, question } = elm;
       return (
         <div key={ ind }>
           <h3 data-testid="question-category">{ category }</h3>
           <h2 data-testid="question-text">{ question }</h2>
+          {this.createOptions()}
         </div>
       );
     });
+    return enun;
+  }
+
+  createOptions() {
+    const { alternatives, randomIndex } = this.state;
+    const buttons = alternatives.map((elm, ind) => (
+      ind === randomIndex
+        ? (
+          <button
+            type="button"
+            onClick={ this.result }
+            key={ ind }
+            data-testid="correct-answer"
+          >
+            {elm}
+          </button>
+        )
+        : (
+          <button
+            type="button"
+            onClick={ this.result }
+            key={ ind }
+            data-testid={ `wrong-answer-${ind}` }
+          >
+            {elm}
+          </button>
+        )
+    ));
+    return buttons;
   }
 
   render() {
     const { questions } = this.props;
-    return ((questions[0].type !== '') ? this.functotal() : 'LOADING'
+    return (
+      (questions[0].type !== '') ? this.createQuestion() : 'LOADING'
     );
   }
 }
