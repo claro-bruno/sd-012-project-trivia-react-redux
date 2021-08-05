@@ -9,7 +9,8 @@ class App extends React.Component {
   render() {
     return (
       <Switch>
-        <Route path="/game" component={ Game } />
+        {/* <Route path="/game" component={ Game } /> */}
+        <Route path="/game" render={ (props) => <Game { ...props } /> } />
         <Route path="/configs" render={ (props) => <Config { ...props } /> } />
         <Route exact path="/" render={ (props) => <Login { ...props } /> } />
       </Switch>

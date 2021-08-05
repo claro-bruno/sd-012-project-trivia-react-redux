@@ -49,10 +49,10 @@ export const actionRequestApiGameError = (error) => ({
   error,
 });
 
-export const actionFetchApiGame = () => async (dispatch) => {
+export const actionFetchApiGame = (token) => async (dispatch) => {
   dispatch(actionRequestApiLoading());
   try {
-    const fetchApi = await fetchApiGame();
+    const fetchApi = await fetchApiGame(token);
     // const fetchApi = await mockfetchApiGame;
     await dispatch(actionRequestApiGameSuccess(fetchApi));
   } catch (error) {
@@ -63,14 +63,19 @@ export const actionFetchApiGame = () => async (dispatch) => {
 
 export const ACTION_LOGIN = 'ACTION_LOGIN';
 
-export const actionLogin = (nome, email) => ({ type: ACTION_LOGIN, nome, email });
+export const actionLogin = (nome, email, token) => ({
+  type: ACTION_LOGIN,
+  nome,
+  email,
+  token,
+});
 
 export function fetchLoginAction(nome, email) {
   return (dispatch) => fetch('https://opentdb.com/api_token.php?command=request')
     .then((response) => response.json())
     .then(({ token }) => {
       localStorage.token = token;
-      return dispatch(actionLogin(nome, email));
+      return dispatch(actionLogin(nome, email, token));
     })
     .catch(console.error);
 }

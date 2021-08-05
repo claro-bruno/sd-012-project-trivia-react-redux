@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchLoginAction } from '../redux/actions';
 import ConfigButton from '../components/ConfigButton';
 import logo from '../trivia.png';
@@ -13,7 +14,6 @@ class Login extends React.Component {
       email: '',
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target }) {
@@ -21,15 +21,9 @@ class Login extends React.Component {
     this.setState({ [name]: value });
   }
 
-  handleClick(nome, email) {
-    const { history: { push }, sendAction } = this.props;
-    sendAction(nome, email);
-    push('/game');
-  }
-
   render() {
     const { nome, email } = this.state;
-    const { history: { push } } = this.props;
+    const { history: { push }, sendAction } = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -58,15 +52,16 @@ class Login extends React.Component {
               data-testid="input-gravatar-email"
             />
           </label>
-          <button
-            type="button"
-            data-testid="btn-play"
-            disabled={ !nome || !email }
-            onClick={ () => this.handleClick(nome, email) }
-          >
-            Jogar
-          </button>
-
+          <Link to="/game">
+            <button
+              type="button"
+              data-testid="btn-play"
+              disabled={ !nome || !email }
+              onClick={ () => sendAction(nome, email) }
+            >
+              Jogar
+            </button>
+          </Link>
         </form>
         <ConfigButton push={ push } />
       </div>

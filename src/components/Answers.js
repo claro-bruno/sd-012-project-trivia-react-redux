@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Answers extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.shuffleArray = this.shuffleArray.bind(this);
     this.answers = this.answers.bind(this);

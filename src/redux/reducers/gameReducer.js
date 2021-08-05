@@ -6,7 +6,7 @@ import {
 
 const INITIAL_STATE = {
   questions: [],
-  isFetching: true,
+  isFetching: false,
 };
 
 const gameReducer = (state = INITIAL_STATE, action) => {
