@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ButtonNext from './ButtonNext';
+import { changeClass } from '../redux/actions';
 import './GameQuestions.css';
 
 class GameQuestions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      questionNumber: 0,
       question: {
         category: 'Entertainment: Video Games',
         type: 'multiple',
@@ -21,8 +22,7 @@ class GameQuestions extends React.Component {
       timerIntervalID: 0,
       canDisable: true,
       disableAnswers: false,
-      cBtnClass: 'btn answer-btn',
-      wBtnClass: 'btn answer-btn',
+      nextButton: false,
     };
 
     this.getQuestion = this.getQuestion.bind(this);
@@ -47,8 +47,7 @@ class GameQuestions extends React.Component {
   }
 
   getQuestion() {
-    const { questionNumber } = this.state;
-    const { questions } = this.props;
+    const { questions, questionNumber } = this.props;
     const question = questions[questionNumber];
     this.setState({
       question,
@@ -89,15 +88,16 @@ class GameQuestions extends React.Component {
   disableAnswers() {
     const { canDisable } = this.state;
     if (canDisable) {
-      this.setState({ disableAnswers: true, canDisable: false });
+      this.setState({ disableAnswers: true, canDisable: false, nextButton: true });
     }
   }
 
   handleClick(answerStatus) {
     // No momento que essa função for chamada significa que a pessoa respondeu e o botão de proximo pode aparacer
+    const { showAnswer } = this.props;
+    showAnswer('answer-btn-correct', 'answer-btn-wrong');
     this.setState({
-      cBtnClass: 'btn answer-btn-correct',
-      wBtnClass: 'btn answer-btn-wrong',
+      nextButton: true,
     });
 
     if (answerStatus === 'correct') {
@@ -109,7 +109,8 @@ class GameQuestions extends React.Component {
   }
 
   renderQuestions() {
-    const { question, disableAnswers, sortedAnswers, cBtnClass, wBtnClass } = this.state;
+    const { question, disableAnswers, sortedAnswers } = this.state;
+    const { cBtnClass, wBtnClass } = this.props;
     const answers = sortedAnswers;
     return (
       <div className="questions-card">
@@ -156,13 +157,18 @@ class GameQuestions extends React.Component {
   }
 
   render() {
-    const { timer } = this.state;
+    const { timer, nextButton, timerIntervalID } = this.state;
 
     return (
       <div className="questions-container">
         { this.renderQuestions()}
         <div>
           <p>{ `Tempo: ${timer}` }</p>
+          {nextButton && <ButtonNext
+            getQuestion={ this.getQuestion }
+            setTimer={ this.setTimer }
+            timerIntervalID={ timerIntervalID }
+          />}
         </div>
       </div>
     );
@@ -171,10 +177,21 @@ class GameQuestions extends React.Component {
 
 const mapStateToProps = (state) => ({
   questions: state.game.questions,
+  questionNumber: state.game.questionNumber,
+  cBtnClass: state.game.cBtnClass,
+  wBtnClass: state.game.wBtnClass,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  showAnswer: (correct, wrong) => dispatch(changeClass(correct, wrong)),
 });
 
 GameQuestions.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  questionNumber: PropTypes.number.isRequired,
+  showAnswer: PropTypes.func.isRequired,
+  cBtnClass: PropTypes.string.isRequired,
+  wBtnClass: PropTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps)(GameQuestions);
+export default connect(mapStateToProps, mapDispatchToProps)(GameQuestions);
