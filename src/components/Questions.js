@@ -10,14 +10,17 @@ class Questions extends Component {
       questions: [],
       disabled: false,
       next: false,
+      time: 5,
     };
     this.getUnities = this.getUnities.bind(this);
     this.answersRender = this.answersRender.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.countdown = this.countdown.bind(this);
   }
 
   componentDidMount() {
     this.getUnities();
+    this.countdown();
   }
 
   async getUnities() {
@@ -85,10 +88,30 @@ class Questions extends Component {
     );
   }
 
+  countdown() {
+    const { time } = this.state;
+    const ONE_SECOND = 1000;
+    const interval = setInterval(() => {
+      this.setState((prevState) => ({
+        time: prevState.time - 1,
+      }), () => {
+        if (time === 0) {
+          clearInterval(interval);
+          this.setState({
+            next: true,
+          });
+        }
+      });
+    }, ONE_SECOND);
+  }
+
   render() {
-    const { questions, next } = this.state;
+    const { questions, next, time } = this.state;
     return (
       <main>
+        <div className="timer">
+          {time}
+        </div>
         {questions[0] && this.answersRender()}
         {next && <button data-testid="btn-next" type="button">Proxima Pergunta</button>}
       </main>
