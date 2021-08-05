@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import '../styles/Questions.css';
 
+const MINUS_ONE = -1;
+
 class Questions extends Component {
   constructor() {
     super();
@@ -41,9 +43,9 @@ class Questions extends Component {
     const question = questions[0];
     const answers = [...question.incorrect_answers, question.correct_answer];
     answers.sort();
-    let index = -1;
+    let index = MINUS_ONE;
     return (
-      <div>
+      <>
         <h1 data-testid="question-category">
           {question.category}
         </h1>
@@ -51,7 +53,7 @@ class Questions extends Component {
           {question.question}
         </p>
         {answers.map((answer) => {
-          if(answer === question.correct_answer) {
+          if (answer === question.correct_answer) {
             return (
               <button
                 data-testid="correct-answer"
@@ -69,28 +71,28 @@ class Questions extends Component {
           index += 1;
           return (
             <button
-                data-testid={ `wrong-answer${index}` }
-                id={ `wrong-answer${index}` }
-                key={ answer }
-                type="button"
-                onClick={ this.handleClick }
-                disabled={ disabled }
-                className={ borders ? 'wrong-answer' : '' }
-              >
-                { answer }
-              </button>
+              data-testid={ `wrong-answer${index}` }
+              id={ `wrong-answer${index}` }
+              key={ answer }
+              type="button"
+              onClick={ this.handleClick }
+              disabled={ disabled }
+              className={ borders ? 'wrong-answer' : '' }
+            >
+              { answer }
+            </button>
           );
         })}
-      </div>
+      </>
     );
   }
 
   render() {
     const { questions } = this.state;
     return (
-      <>
-        { questions[0] &&  this.answersRender() }
-      </>
+      <div>
+        {questions[0] && this.answersRender()}
+      </div>
     );
   }
 }
