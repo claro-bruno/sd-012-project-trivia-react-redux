@@ -7,7 +7,6 @@ class Feedback extends Component {
   render() {
     const { gravatarEmail, name, score } = this.props;
     const encodeEmail = md5(gravatarEmail).toString();
-
     return (
       <div>
         <header>
