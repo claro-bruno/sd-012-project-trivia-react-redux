@@ -28,6 +28,12 @@ class Login extends React.Component {
     localStorage.setItem('token', userInfo.token);
   }
 
+  setPlayerData() {
+    const { name, email } = this.state;
+    localStorage.setItem('state',
+      JSON.stringify({ player: { name, gravatarEmail: email, score: 0 } }));
+  }
+
   handleChange({ target: { name, value } }) {
     this.setState({ [name]: value }, () => this.validateLogin());
   }
@@ -73,7 +79,10 @@ class Login extends React.Component {
               data-testid="btn-play"
               type="button"
               disabled={ disable }
-              onClick={ () => this.getToken() }
+              onClick={ () => {
+                this.getToken();
+                this.setPlayerData();
+              } }
             >
               Jogar
             </button>
