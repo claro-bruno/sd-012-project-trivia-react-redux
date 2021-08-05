@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import LinkWithButton from '../components/LinkWithButton';
 import { actionCreateLogin } from '../redux/actions';
-import { Link } from 'react-router-dom';
 
 class Login extends Component {
   constructor(props) {
