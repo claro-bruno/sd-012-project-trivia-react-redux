@@ -29,8 +29,10 @@ class Questions extends Component {
     }));
   }
 
-  handleClick() {
+  handleClick({ target }) {
     this.setState({ borders: true, disabled: true });
+    if (target.id === 'correct-answer') target.style.backgroundColor = 'rgb(6, 240, 15)';
+    else target.style.backgroundColor = 'rgb(255, 0, 0)';
   }
 
   answersRender() {
