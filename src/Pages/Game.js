@@ -17,12 +17,16 @@ class Game extends React.Component {
       isFetching ? <Loading />
         : (
           <section className="App">
-            { questions.map((question) => (
+            {/* { questions.map((question) => (
               <Question
                 key={ question.question }
-                question={ question }
+                question={ questions[1] }
               />
-            ))}
+            ))} */}
+            <Question
+              // key={ question.question }
+              question={ questions[1] }
+            />
           </section>
         )
     );

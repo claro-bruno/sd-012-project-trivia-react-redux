@@ -6,7 +6,7 @@ import {
 
 const INITIAL_STATE = {
   questions: [],
-  isFetching: false,
+  isFetching: true, // era false, troquei pra true pra testar
   error: '',
 };
 

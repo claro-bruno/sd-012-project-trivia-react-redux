@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Answers from './Answers';
 
 class Question extends React.Component {
@@ -14,6 +15,7 @@ class Question extends React.Component {
           { question.question }
         </h3>
         <Answers question={ question } />
+        <Link to="/game">Proximo</Link>
       </div>
     );
   }

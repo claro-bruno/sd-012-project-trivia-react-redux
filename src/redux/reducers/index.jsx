@@ -1,8 +1,7 @@
-// reducers/index.jsx
-
 import { combineReducers } from 'redux';
-import reducer from './reducer';
 import gameReducer from './gameReducer';
+import player from './player';
 
-const rootReducers = combineReducers({ reducer, gameReducer });
+const rootReducers = combineReducers({ player, gameReducer });
+
 export default rootReducers;
