@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { MD5 } from 'crypto-js';
 import { getQuestions } from '../services/api';
+import ButtonNextQuestion from '../components/ButtonNextQuestion';
 
 class Game extends Component {
   constructor() {
@@ -10,10 +11,13 @@ class Game extends Component {
 
     this.state = {
       questions: [],
+      index: 0,
+      disableButton: true,
     };
 
     this.getQuestions1 = this.getQuestions1.bind(this);
     this.renderQuestions = this.renderQuestions.bind(this);
+    this.handleInplementButton = this.handleInplementButton.bind(this);
   }
 
   componentDidMount() {
@@ -25,6 +29,21 @@ class Game extends Component {
 
     this.setState({ questions: results });
     return results;
+  }
+
+  buttonEnable(bool) {
+    this.setState({
+      disableButton: bool,
+    });
+  }
+
+  handleInplementButton() {
+    this.setState((previusState) => ({
+      index: previusState.index + 1,
+    }));
+    this.buttonEnable(true);
+    // implementar no borda o buttonEnable como false
+    // após o requisito 6 e 7 - implementar o reset da borda aqui;
   }
 
   renderQuestions() {
@@ -63,6 +82,9 @@ class Game extends Component {
     const { name, gravatarEmail } = this.props;
     const hash = MD5(gravatarEmail).toString();
     const getImg = `https://www.gravatar.com/avatar/${hash}`;
+    const { /* index */ disableButton } = this.state;
+    // o index acima, implementar após a lógica das respostas corretas
+    // para mudar de acordo com o numero da questão;
 
     // https://github.com/tryber/sd-010-a-project-trivia-react-redux/pull/600/
     // commits/6c6c13f6c3fdfb09f19cf9f33f6e8cd814b7bd04
@@ -75,6 +97,13 @@ class Game extends Component {
           <p data-testid="header-score">0</p>
         </header>
         {this.renderQuestions()}
+        <ButtonNextQuestion
+          onClick={ this.handleInplementButton }
+          disableButton={ disableButton }
+          /*  buttonEnable={ this.buttonEnable } */
+          // colocar o buttonEnable após o return da modificação das bordas tanto para resetar
+          // a borda, quanto para habilitar o botao para pergunta seguinte.
+        />
       </div>
     );
   }
