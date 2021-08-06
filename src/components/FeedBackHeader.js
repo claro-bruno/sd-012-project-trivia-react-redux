@@ -28,6 +28,18 @@ class FeedBackHeader extends Component {
     return hash;
   }
 
+  checkFinal() {
+    const three = 3;
+    const { assertions } = this.props;
+    console.log(assertions);
+    if (assertions < three) {
+      return <h3 data-testId="feedback-text">Podia ser melhor...</h3>;
+    }
+    if (assertions >= three) {
+      return <h3 data-testId="feedback-text">Mandou bem!</h3>;
+    }
+  }
+
   render() {
     const { user, score } = this.props;
     return (
@@ -43,6 +55,7 @@ class FeedBackHeader extends Component {
           testId="header-player-name"
         />
         <span data-testid="header-score">{ score }</span>
+        { this.checkFinal() }
       </header>
     );
   }
@@ -52,6 +65,7 @@ const mapStateToProps = (state) => ({
   email: state.emailReducer.email,
   user: state.nameReducer.user,
   score: state.scoreReducer.score,
+  assertions: state.assertionsReducer.assertions,
 });
 
 Span.propTypes = {
@@ -62,6 +76,7 @@ FeedBackHeader.propTypes = {
   email: string.isRequired,
   score: string.isRequired,
   user: string.isRequired,
+  assertions: string.isRequired,
 };
 
 export default connect(mapStateToProps)(FeedBackHeader);

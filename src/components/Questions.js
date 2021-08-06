@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { actionDisabled, actionScore, actionTimer } from '../redux/actions';
+import {
+  actionAssertions, actionDisabled, actionScore, actionTimer } from '../redux/actions';
 import ButtonNext from './ButtonNext';
 import '../App.css';
 import Span from './Span';
@@ -75,7 +76,9 @@ class Questions extends Component {
   }
 
   updatePlayer(scoreValue, assertionsValue) {
+    const { setAssertions } = this.props;
     const state = JSON.parse(localStorage.getItem('state'));
+    setAssertions(assertionsValue);
     const newState = {
       player: {
         ...state.player,
@@ -190,6 +193,7 @@ Questions.propTypes = {
   setScore: PropTypes.func.isRequired,
   setDisabled: PropTypes.func.isRequired,
   setTimer: PropTypes.func.isRequired,
+  setAssertions: PropTypes.func.isRequired,
   questions: PropTypes.shape({
     category: PropTypes.string,
     question: PropTypes.string,
@@ -210,6 +214,7 @@ const mapDispatchToProps = (dispatch) => ({
   setDisabled: (isDisabled) => dispatch(actionDisabled(isDisabled)),
   setScore: (score) => dispatch(actionScore(score)),
   setTimer: (timer) => dispatch(actionTimer(timer)),
+  setAssertions: (assertions) => dispatch(actionAssertions(assertions)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
