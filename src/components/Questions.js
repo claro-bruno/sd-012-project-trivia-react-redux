@@ -48,16 +48,18 @@ class Questions extends Component {
       indexQuestion: indexQuestion + 1,
       activeButton: true,
     });
-    const correctAnswer = document.querySelector('.button-correct');
-    correctAnswer.classList.remove('green-border');
+    const correctAnswer = document.querySelector('.green-border');
+    correctAnswer.className = ('button-correct');
   }
 
   // REQUISITO 7 - FUNÇÃO PARA ALTERAR A COR DAS ALTERNATIVAS
   changeColorAnswer() {
     const correctAnswer = document.querySelector('.button-correct');
     const incorrectAnswers = document.querySelectorAll('.button-incorrect');
-    correctAnswer.classList.add('green-border');
-    incorrectAnswers.forEach((question) => question.classList.add('red-border'));
+    correctAnswer.className = ('green-border');
+    incorrectAnswers.forEach((question) => {
+      question.className = ('red-border');
+    });
     this.activeButtonNext();
   }
 
