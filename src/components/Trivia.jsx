@@ -117,7 +117,7 @@ class Trivia extends React.Component {
         value="wrong"
         onClick={ this.changeStyles }
       >
-        {wrong}
+        {this.verficaString(wrong)}
       </button>));
 
     const asnwerButton = (
@@ -128,7 +128,7 @@ class Trivia extends React.Component {
         value="correct"
         onClick={ this.correctQuestion }
       >
-        {answer}
+        {this.verficaString(answer)}
       </button>
     );
     buttonList.push(asnwerButton);
@@ -165,12 +165,14 @@ class Trivia extends React.Component {
   }
 
   verficaString(str) {
-    let verication = str.replaceAll('&quot;', '"');
-    verication = verication.replaceAll('&#34;', '"');
-    verication = verication.replaceAll('&Aring;', 'Å');
-    verication = verication.replaceAll('&#039;', '\'');
-    verication = verication.replaceAll('&pi;', '3,14');
-    return (`Pergunta: ${verication}`);
+    // Solução do Thiago Prado no Slack
+    // link: https://trybecourse.slack.com/archives/C01T2C18DSM/p1628208310464000?thread_ts=1628191723.454400&cid=C01T2C18DSM
+    const htmldecode = (str2) => {
+      const txt = document.createElement('textarea');
+      txt.innerHTML = str2;
+      return txt.value;
+    };
+    return (htmldecode(str));
   }
 
   renderButtons() {
@@ -189,7 +191,7 @@ class Trivia extends React.Component {
       <div>
         <div>{time}</div>
         <h4 data-testid="question-category">{category}</h4>
-        <h3 data-testid="question-text">{this.verficaString(question)}</h3>
+        <h3 data-testid="question-text">{`Pergunta:${this.verficaString(question)}`}</h3>
         { buttons }
         { this.button() }
         { (time === 0) ? this.changeStyles() : null }
