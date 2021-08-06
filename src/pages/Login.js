@@ -61,6 +61,9 @@ class Login extends Component {
       disabled: !(name.length > 0 && this.emailIsValid(email)),
       buttonTxt: 'Jogar',
     };
+    const settingsButtonProps = {
+      buttonTxt: 'Configurações',
+    };
 
     return (
       <form>
@@ -68,6 +71,9 @@ class Login extends Component {
         <Input { ...inputEmailProps } testId="input-gravatar-email" />
         <Link to="/game">
           <SubmitButton { ...buttonProps } testId="btn-play" />
+        </Link>
+        <Link to="/settings">
+          <SubmitButton { ...settingsButtonProps } testId="btn-settings" />
         </Link>
       </form>
     );
