@@ -16,7 +16,7 @@ class QuestionInfo extends Component {
     this.changeColorsAnswer = this.changeColorsAnswer.bind(this);
     this.changeButtonVisibility = this.changeButtonVisibility.bind(this);
     this.changeQuestions = this.changeQuestions.bind(this);
-    this.resetColors = this.resetColors.bind(this);
+    this.resetQuestions = this.resetQuestions.bind(this);
   }
 
   changeButtonVisibility() {
@@ -35,11 +35,13 @@ class QuestionInfo extends Component {
     this.setState((p) => ({ index: p.index + 1 }));
   }
 
-  resetColors() {
+  resetQuestions() {
     const correct = document.getElementById('correct-answer');
     const incorrect = document.getElementsByName('incorrect-answer');
     incorrect.forEach((question) => question.classList.remove('questionWrong'));
     correct.classList.remove('questionCorrect');
+    const buttonNextQuestion = document.getElementsByClassName('btn-next')[0];
+    buttonNextQuestion.classList.remove('visible');
   }
 
   sumUserPoints() {
@@ -93,7 +95,7 @@ class QuestionInfo extends Component {
         {questions[index].incorrect_answers.map((incorrect, i) => (
           <Button
             className="incorrect-answer"
-            key={ index }
+            key={ i }
             dataTestId={ `wrong-answer-${i}` }
             onClick={ () => {
               this.changeButtonVisibility();
@@ -102,17 +104,14 @@ class QuestionInfo extends Component {
             innerText={ incorrect }
           />
         ))}
-        <button
-          data-testid="btn-next"
-          type="button"
+        <Button
           className="btn-next"
+          innerText="PRÓXIMA"
           onClick={ () => {
             this.changeQuestions();
-            this.resetColors();
+            this.resetQuestions();
           } }
-        >
-          PRÓXIMA
-        </button>
+        />
       </div>
     );
   }
