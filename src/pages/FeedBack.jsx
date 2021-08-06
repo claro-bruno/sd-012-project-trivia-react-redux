@@ -9,8 +9,19 @@ class FeedBack extends Component {
       <div>
         <Header />
         <p data-testid="feedback-text">
-          {assertions < three ? 'Podia ser melhor...' : 'Mandou bem!' }
+          {assertions < three ? 'Podia ser melhor...' : 'Mandou bem!'}
         </p>
+        <p data-testid="feedback-total-question">
+          {assertions ? `Acertou ${assertions} perguntas` : 'Não acertou nenhuma pergunta'}
+        </p>
+        <Link to="/login">
+          <button
+            data-testid="btn-play-again"
+            type="button"
+          >
+            Jogar novamente
+          </button>
+        </Link>
       </div>);
   }
 }
