@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import { questionsFetchAPI } from '../redux/actions';
 import questions from '../questions';
 import Button from '../components/Button';
+import '../App.css';
 
 class Game extends React.Component {
   constructor() {
@@ -16,7 +17,8 @@ class Game extends React.Component {
     this.state = {
       correctAnswers: 0,
       questionPosition: 3,
-      questionsDesable: false,
+      questionsDisable: false,
+      color: false,
     };
   }
 
@@ -33,20 +35,22 @@ class Game extends React.Component {
     this.setState((state) => ({
       ...state,
       correctAnswers: correctAnswers + 1,
-      questionsDesable: true,
+      questionsDisable: true,
+      color: true,
     }));
   }
 
   wrongClick() {
     this.setState((state) => ({
       ...state,
-      questionsDesable: true,
+      questionsDisable: true,
+      color: true,
     }));
   }
 
   render() {
     const {
-      state: { questionPosition, questionsDesable },
+      state: { questionPosition, questionsDisable, color },
       correctClick,
       wrongClick,
     } = this;
@@ -64,23 +68,25 @@ class Game extends React.Component {
         <section>
           <h2 data-testid="question-category">{ category }</h2>
           <h3 data-testid="question-text">{ question }</h3>
-          <section data-testid="correct-answer">
+          <section>
             {
               incorrectAnswers.map((answers, index) => (
                 <Button
-                  data-testid={ `wrong-answer-${index}` }
+                  testId={ `wrong-answer-${index}` }
                   key={ answers }
                   name={ answers }
                   handleClick={ wrongClick }
-                  disabled={ questionsDesable }
+                  disabled={ questionsDisable }
+                  className={ color ? 'wrongColor' : null }
                 />
               ))
             }
             <Button
-              data-testid="correct-answer"
+              testId="correct-answer"
               name={ correctAnswer }
               handleClick={ correctClick }
-              disabled={ questionsDesable }
+              disabled={ questionsDisable }
+              className={ color ? 'correctColor' : null }
             />
           </section>
         </section>

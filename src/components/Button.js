@@ -9,6 +9,7 @@ export default class Button extends React.Component {
         testId,
         name,
         handleClick,
+        className,
       },
     } = this;
     return (
@@ -17,6 +18,7 @@ export default class Button extends React.Component {
         type="button"
         disabled={ disabled }
         onClick={ handleClick }
+        className={ className }
       >
         { name }
       </button>
@@ -31,11 +33,13 @@ Button.propTypes = {
   testId: string,
   name: string.isRequired,
   handleClick: func.isRequired,
+  className: bool,
 };
 
 Button.defaultProps = {
   disabled: false,
   testId: '',
+  className: '',
 };
 
 // export default Button;
