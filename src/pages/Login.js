@@ -21,6 +21,7 @@ class Login extends React.Component {
     this.submit = this.submit.bind(this);
     this.saveToken = this.saveToken.bind(this);
     this.redirect = this.redirect.bind(this);
+    this.savePlayer = this.savePlayer.bind(this);
   }
 
   async handleChange({ target }) {
@@ -53,11 +54,24 @@ class Login extends React.Component {
       await this.saveToken();
       this.setState({ shouldRedirectPlay: true });
     }
+
+    this.savePlayer();
   }
 
   saveToken() {
     const { token } = this.props;
     localStorage.setItem('token', JSON.stringify(token));
+  }
+
+  savePlayer() {
+    const { name, assertions, score, email } = this.props;
+    const player = {
+      name,
+      assertions,
+      score,
+      gravatarEmail: email,
+    };
+    localStorage.setItem('state', JSON.stringify({ player }));
   }
 
   redirect() {
@@ -118,6 +132,10 @@ class Login extends React.Component {
 
 const mapStateToProps = (state) => ({
   token: state.login.token,
+  name: state.login.name,
+  assertions: state.questions.assertions,
+  score: state.questions.score,
+  email: state.login.email,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -128,5 +146,9 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 Login.propTypes = {
+  name: PropTypes.string,
+  assertions: PropTypes.number,
+  score: PropTypes.number,
+  email: PropTypes.string,
   setLogin: PropTypes.func,
 }.isRequired;

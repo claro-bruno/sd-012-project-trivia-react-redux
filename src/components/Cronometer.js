@@ -17,7 +17,7 @@ class Cronometer extends Component {
     const { setOptionsDisabled } = this.props;
     if (prevProps.stopTime) clearInterval(this.interval);
     if (prevProps.time <= 0) {
-      setOptionsDisabled();
+      setOptionsDisabled(true);
       clearInterval(this.interval);
     }
   }
@@ -27,6 +27,7 @@ class Cronometer extends Component {
   }
 
   render() {
+    console.log('render timer');
     const { cronometerStatus, time } = this.props;
     if (cronometerStatus) {
       return (<div>0</div>);

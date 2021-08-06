@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Questions from '../components/Questions';
-import { nextQuestion } from '../redux/actions/nextQuestion';
+import optionsDisabled from '../redux/actions/optionsDisabled';
 
 class Play extends React.Component {
   constructor(props) {
@@ -11,14 +11,33 @@ class Play extends React.Component {
     this.state = {
       questions: [],
       loading: true,
+      numQuestion: 0,
     };
 
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.verifyNext = this.verifyNext.bind(this);
+    this.savePlayer = this.savePlayer.bind(this);
   }
 
   componentDidMount() {
     this.fetchQuestions();
+  }
+
+  verifyNext() {
+    console.log('verifyNext');
+    const { stopTime, optionsDisabled } = this.props;
+    if (stopTime || optionsDisabled) {
+      return (
+        <button
+          type="button"
+          data-testid="btn-next"
+          onClick={ this.handleClick }
+        >
+          Próxima
+        </button>
+      );
+    }
   }
 
   async fetchQuestions() {
@@ -30,14 +49,30 @@ class Play extends React.Component {
   }
 
   handleClick() {
-    const { setNextQuestion } = this.props;
-    setNextQuestion(false);
+    const { setoptionsDisabled } = this.props;
+    console.log('handleClick do proxima');
+    this.savePlayer();
+    this.setState((prevState) => ({
+      numQuestion: prevState.numQuestion + 1,
+    }));
+    setoptionsDisabled(false);
+  }
+
+  savePlayer() {
+    console.log('savePlayer');
+    const { name, assertions, score, email } = this.props;
+    const player = {
+      name,
+      assertions,
+      score,
+      gravatarEmail: email,
+    };
+    localStorage.setItem('state', JSON.stringify({ player }));
   }
 
   render() {
-    const { questions: { results } } = this.state;
-    const { numQuestion, nextVisible } = this.props;
-    const { loading } = this.state;
+    console.log('render play');
+    const { loading, questions: { results }, numQuestion } = this.state;
 
     if (loading) return <div>Loading...</div>;
 
@@ -45,31 +80,30 @@ class Play extends React.Component {
       <div>
         <Header />
         <Questions dataQuestion={ results[numQuestion] } />
-        <button
-          type="button"
-          data-testid="btn-next"
-          onClick={ this.handleClick }
-          disabled={ !nextVisible }
-        >
-          Próxima
-        </button>
+        { this.verifyNext() }
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  numQuestion: state.nextQuestion.nextCount,
-  nextVisible: state.nextQuestion.nextVisible,
+  stopTime: state.questions.stopTime,
+  optionsDisabled: state.questions.optionsDisabled,
+  name: state.login.name,
+  assertions: state.questions.assertions,
+  score: state.questions.score,
+  email: state.login.email,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setNextQuestion: (status) => dispatch(nextQuestion(status)),
+  setoptionsDisabled: (status) => dispatch(optionsDisabled(status)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);
 
 Play.propTypes = {
+  stopTime: PropTypes.bool,
+  optionsDisabled: PropTypes.bool,
   numQuestion: PropTypes.number,
   nextVisible: PropTypes.bool,
   setNextQuestion: PropTypes.func,

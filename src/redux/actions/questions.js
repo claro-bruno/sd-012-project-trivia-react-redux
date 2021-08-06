@@ -1,6 +1,7 @@
 export const SCORE_UPDATE = 'SEND_ANSWER';
 export const SEND_CRONOMETER = 'SEND_CRONOMETER';
 export const STOP_TIME = 'STOP_TIME';
+export const RESTART_TIME = 'RESTART_TIME';
 
 export const scoreUpdate = (answerValue, diffucultyValue) => ({
   type: SCORE_UPDATE,
@@ -14,4 +15,8 @@ export const sendCronometer = () => ({
 
 export const stopTime = () => ({
   type: STOP_TIME,
+});
+
+export const restartTime = () => ({
+  type: RESTART_TIME,
 });
