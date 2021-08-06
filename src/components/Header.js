@@ -14,7 +14,6 @@ class Header extends React.Component {
 
   render() {
     const { loginInfos } = this.props;
-    const headerScore = localStorage.getItem('playerScore');
     return (
       <header className="header-section">
         <div className="profile-section">
@@ -27,7 +26,7 @@ class Header extends React.Component {
         </div>
         <div className="score-section">
           <p>Pontos:</p>
-          <p data-testid="header-score">{headerScore}</p>
+          <p data-testid="header-score">{0}</p>
         </div>
       </header>
     );

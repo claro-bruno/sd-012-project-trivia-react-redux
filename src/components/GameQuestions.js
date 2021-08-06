@@ -9,6 +9,7 @@ class GameQuestions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+
       question: {
         category: 'Entertainment: Video Games',
         type: 'multiple',
@@ -17,7 +18,7 @@ class GameQuestions extends React.Component {
         correct_answer: 'A crowbar',
         incorrect_answers: ['A pistol', 'The H.E.V suit', 'Your fists'],
       },
-      playerScore: 0,
+
       sortedAnswers: [],
       timer: 30,
       timerIntervalID: 0,
@@ -32,7 +33,6 @@ class GameQuestions extends React.Component {
     this.setAnswers = this.setAnswers.bind(this);
     this.setTimer = this.setTimer.bind(this);
     this.disableAnswers = this.disableAnswers.bind(this);
-    this.scoreCalc = this.scoreCalc.bind(this);
   }
 
   componentDidMount() {
@@ -95,12 +95,13 @@ class GameQuestions extends React.Component {
   }
 
   scoreCalc(difficulty, timer) {
-    let diff;
-    const { playerScore } = this.state;
+    const state = JSON.parse(localStorage.getItem('state'));
+    let playerScore = state.player.score;
+    let diff = 0;
+    const ten = 10;
     switch (difficulty) {
     case 'hard':
-      // eslint-disable-next-line no-magic-numbers
-      diff = 3;
+      diff = 2 + 1;
       console.log(diff);
       break;
     case 'medium':
@@ -111,35 +112,33 @@ class GameQuestions extends React.Component {
       diff = 1;
       console.log(diff);
     }
-    // eslint-disable-next-line no-magic-numbers
-    const score = 10 + (diff * timer);
-    this.setState({
-      playerScore: playerScore + score,
-    });
+    const point = ten + (diff * timer);
+    playerScore += point;
+    this.updatePlayer(playerScore);
   }
 
-  handleClick(answerStatus) {
+  updatePlayer(scoreValue) {
+    const state = JSON.parse(localStorage.getItem('state'));
+    const newState = {
+      player: {
+        ...state.player,
+        score: scoreValue,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(newState));
+  }
+
+  handleClick() {
     // No momento que essa função for chamada significa que a pessoa respondeu e o botão de proximo pode aparacer
     const { showAnswer } = this.props;
-    const { timer, question, playerScore } = this.state;
     showAnswer('answer-btn-correct', 'answer-btn-wrong');
     this.setState({
       nextButton: true,
     });
-
-    if (answerStatus === 'correct') {
-      this.scoreCalc(question.difficulty, timer);
-    }
-    if (answerStatus === 'wrong') {
-      this.setState({
-        playerScore: playerScore + 0,
-      });
-    }
-    localStorage.setItem('playerScore', playerScore);
   }
 
   renderQuestions() {
-    const { question, disableAnswers, sortedAnswers } = this.state;
+    const { question, disableAnswers, sortedAnswers, difficulty, timer } = this.state;
     const { cBtnClass, wBtnClass } = this.props;
     const answers = sortedAnswers;
     return (
@@ -160,6 +159,7 @@ class GameQuestions extends React.Component {
                   disabled={ disableAnswers }
                   onClick={ () => {
                     this.handleClick('correct');
+                    this.scoreCalc(difficulty, timer);
                   } }
                 >
                   { answer.answer }
