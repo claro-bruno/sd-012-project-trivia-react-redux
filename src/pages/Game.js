@@ -6,8 +6,18 @@ import './Game.css';
 class Game extends React.Component {
   constructor(props) {
     super(props);
-
+    this.changeVisibility = this.handleClickAnswers.bind(this);
     this.renderQuestions = this.renderQuestions.bind(this);
+  }
+
+  handleClickAnswers() {
+    const cssValueWrong = '3px solid rgb(255, 0, 0)';
+    const cssCorrectValue = '3px solid rgb(6, 240, 15)';
+    document.getElementById('btn-next').style.display = 'block';
+    document.getElementById('btnCorrectAnswer').style.border = cssCorrectValue;
+    document.getElementById('btn-0').style.border = cssValueWrong;
+    document.getElementById('btn-1').style.border = cssValueWrong;
+    document.getElementById('btn-2').style.border = cssValueWrong;
   }
 
   // logica baseada no seguinte repositorio https://github.com/tryber/sd-012-project-trivia-react-redux/pull/8/commits/a93062a005d249fcc708168294a7926669bbf914
@@ -22,6 +32,10 @@ class Game extends React.Component {
           { triviaQuest[0].question }
         </p>
         <button
+          id="btnCorrectAnswer"
+          onClick={
+            this.handleClickAnswers
+          }
           type="button"
           data-testid="correct-answer"
         >
@@ -32,7 +46,11 @@ class Game extends React.Component {
             <button
               type="button"
               data-testid={ `wrong-answer-${index}` }
+              id={ `btn-${index}` }
               key={ key }
+              onClick={
+                this.handleClickAnswers
+              }
             >
               { key }
             </button>
@@ -47,7 +65,17 @@ class Game extends React.Component {
     const firstQuestion = triviaQuest[0];
     return (
       <section>
-        { firstQuestion ? this.renderQuestions() : <p>LOADING</p> }
+        <div>
+          { firstQuestion ? this.renderQuestions() : <p>LOADING</p> }
+        </div>
+        <button
+          type="button"
+          data-testid="btn-next"
+          id="btn-next"
+          // style={ { border: 'solid red 10px' } }
+        >
+          Next
+        </button>
       </section>
     );
   }
