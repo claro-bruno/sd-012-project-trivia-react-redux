@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { nameSet, emailSet, getToken } from '../redux/actions/index';
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
+import logo from '../trivia.png';
 
 class Login extends Component {
   constructor(props) {
@@ -66,16 +67,19 @@ class Login extends Component {
     };
 
     return (
-      <form>
-        <Input { ...inputNameProps } testId="input-player-name" />
-        <Input { ...inputEmailProps } testId="input-gravatar-email" />
-        <Link to="/game">
-          <SubmitButton { ...buttonProps } testId="btn-play" />
-        </Link>
-        <Link to="/settings">
-          <SubmitButton { ...settingsButtonProps } testId="btn-settings" />
-        </Link>
-      </form>
+      <header className="App-header">
+        <img src={ logo } className="App-logo" alt="logo" />
+        <form>
+          <Input { ...inputNameProps } testId="input-player-name" />
+          <Input { ...inputEmailProps } testId="input-gravatar-email" />
+          <Link to="/game">
+            <SubmitButton { ...buttonProps } testId="btn-play" />
+          </Link>
+          <Link to="/settings">
+            <SubmitButton { ...settingsButtonProps } testId="btn-settings" />
+          </Link>
+        </form>
+      </header>
     );
   }
 }
