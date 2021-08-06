@@ -41,7 +41,6 @@ class Game extends React.Component {
 
   render() {
     const { questions, indexQuestion } = this.state;
-    console.log(questions);
     if (questions.length < 1) return <div>Carregando...</div>;
     if (questions.length === indexQuestion) return <Redirect to="/feedback" />;
     return (

@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getScore } from '../redux/action';
 
 class Trivia extends React.Component {
   constructor(props) {
@@ -13,6 +15,7 @@ class Trivia extends React.Component {
     this.changeStyles = this.changeStyles.bind(this);
     this.button = this.button.bind(this);
     this.timer = this.timer.bind(this);
+    this.correctQuestion = this.correctQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -27,6 +30,52 @@ class Trivia extends React.Component {
     if (time === 0) {
       clearInterval(this.myInterval);
     }
+  }
+
+  componentWillUnmount() {
+    const { player } = this.props;
+    localStorage.setItem('state', JSON.stringify(player));
+  }
+
+  correctQuestion() {
+    this.savePoints();
+    this.changeStyles();
+  }
+
+  switchNivel() {
+    const { trivia } = this.props;
+    const { difficulty } = trivia;
+    const easy = 1;
+    const medium = 2;
+    const hard = 3;
+    let valueDificult;
+    switch (difficulty) {
+    case 'easy':
+      valueDificult = easy;
+      break;
+    case 'medium':
+      valueDificult = medium;
+      break;
+    default:
+      valueDificult = hard;
+      break;
+    }
+    return valueDificult;
+  }
+
+  savePoints() {
+    const { getPoints, player } = this.props;
+    const { time } = this.state;
+    const questionsRight = Number(player.assertions) + 1;
+    const point = 10;
+    const valueDificult = this.switchNivel();
+    const score = (point + (time * valueDificult)) + player.score;
+    const result = {
+      score,
+      questionsRight,
+    };
+    getPoints(result);
+  }
 
   // Algoritmo de embaralhamento de Fisher–Yates, retirado de https://pt.stackoverflow.com/questions/406037/mostrar-elementos-de-um-array-em-ordem-aleat%C3%B3ria
   shuffle(array) {
@@ -73,7 +122,7 @@ class Trivia extends React.Component {
         data-testid="correct-answer"
         type="button"
         value="correct"
-        onClick={ this.changeStyles }
+        onClick={ this.correctQuestion }
       >
         {answer}
       </button>
@@ -147,12 +196,24 @@ class Trivia extends React.Component {
 
 Trivia.propTypes = {
   onClick: PropTypes.func.isRequired,
+  getPoints: PropTypes.func.isRequired,
+  player: PropTypes.shape({
+    score: PropTypes.number.isRequired,
+    assertions: PropTypes.number.isRequired,
+  }).isRequired,
   trivia: PropTypes.shape({
     category: PropTypes.string.isRequired,
     question: PropTypes.string.isRequired,
     correct_answer: PropTypes.string.isRequired,
     incorrect_answers: PropTypes.arrayOf(PropTypes.string).isRequired,
+    difficulty: PropTypes.string.isRequired,
   }).isRequired,
 };
 
-export default Trivia;
+const mapStateToProps = (state) => ({
+  player: state.player,
+});
+const mapDispatchToProps = (dispatch) => ({
+  getPoints: (value) => dispatch(getScore(value)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Trivia);
