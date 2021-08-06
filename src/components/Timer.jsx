@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 class Timer extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      timer: props,
+      timer: 30,
     };
   }
 
   componentDidMount() {
-    const SECOND = 1000;
     this.interval = setInterval(
       () => this.setState((previousTime) => ({ timer: previousTime.timer - 1 })),
       SECOND,
@@ -19,8 +17,8 @@ class Timer extends Component {
 
   componentDidUpdate() {
     const { timer } = this.state;
-    const minimumTime = 0;
-    if (timer === minimumTime) {
+    const maximumTime = 0;
+    if (timer === maximumTime) {
       clearInterval(this.interval);
     }
   }
@@ -38,9 +36,5 @@ class Timer extends Component {
     );
   }
 }
-
-Timer.propTypes = {
-  timer: PropTypes.number,
-}.isRequired;
 
 export default Timer;
