@@ -1,42 +1,38 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-// import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
 
 const SCORE_NUMBER = 3;
-// const saveScore = localStorage.getItem(keyName);
-// const rightQuestions = localStorage.getItem(keyName);
 
 class Feedback extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
-    // this.state = {
-    //   score: saveScore,
-    //   questionsRight: rightQuestions,
-    //   pageLogin: false,
-    //   pageRanking: false,
-    // };
+    this.state = {
+      score: 0,
+      assertions: 0,
+    };
 
-    this.clickLogin = this.clickLogin.bind(this);
-    this.clickRanking = this.clickRanking.bind(this);
+    this.setValues = this.setValues.bind(this);
   }
 
-  clickLogin() {
-    // this.setState({ pageLogin: true });
+  componentDidMount() {
+    this.setValues();
   }
 
-  clickRanking() {
-    // this.setState({ pageRanking: true });
+  setValues() {
+    const stateLocal = JSON.parse(localStorage.getItem('state'));
+    const { player } = stateLocal;
+    const { score, assertions } = player;
+    this.setState({
+      score,
+      assertions,
+    });
   }
 
   render() {
-    const { score, questionsRight } = this.props;
-    if (questionsRight < SCORE_NUMBER) {
-      return <p data-testid="feedback-text">Podia ser melhor...</p>;
-    }
-    if (questionsRight >= SCORE_NUMBER) return <p data-testid="feedback-text">Mandou bem!</p>;
-    // if (pageLogin) return <Redirect to="/login" />;
+    const { score, assertions } = this.state;
     return (
       <>
         <div>
@@ -44,39 +40,43 @@ class Feedback extends React.Component {
         </div>
         <Header />
         <div>
-          <h3 data-testid="feedback-total-score">
-            Pontuação final: $
-            {score}
+          <h3>
+            Pontuação final:
+            <p data-testid="feedback-total-score">{score}</p>
           </h3>
-          <h3 data-testid="feedback-total-question">
-            Número de acertos: $
-            {questionsRight}
+          <h3>
+            Número de acertos:
+            <p data-testid="feedback-total-question">{assertions}</p>
           </h3>
+          {(assertions >= SCORE_NUMBER)
+            ? <p data-testid="feedback-text">Mandou bem!</p>
+            : <p data-testid="feedback-text">Podia ser melhor...</p> }
         </div>
         <div>
-          <button
-            type="button"
-            data-testid="btn-play-again"
-            onClick={ this.clickLogin }
-          >
-            Jogar novamente
-          </button>
-          <button
-            type="button"
-            data-testid="btn-ranking"
-            onClick={ this.clickRanking }
-          >
-            Ver Ranking
-          </button>
+          <Link to="/">
+            <button
+              type="button"
+              data-testid="btn-play-again"
+            >
+              Jogar novamente
+            </button>
+          </Link>
+          <Link to="/ranking">
+            <button
+              type="button"
+              data-testid="btn-ranking"
+            >
+              Ver Ranking
+            </button>
+          </Link>
         </div>
       </>
     );
   }
 }
 
-Feedback.propTypes = {
-  score: PropTypes.number.isRequired,
-  questionsRight: PropTypes.number.isRequired,
-};
+const mapStateToProps = (state) => ({
+  player: state.player,
+});
 
-export default Feedback;
+export default connect(mapStateToProps)(Feedback);
