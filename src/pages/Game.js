@@ -13,18 +13,33 @@ class Game extends React.Component {
 
     this.correctClick = this.correctClick.bind(this);
     this.wrongClick = this.wrongClick.bind(this);
+    this.timer = this.timer.bind(this);
+    this.startTime = this.startTime.bind(this);
+    this.stopTime = this.stopTime.bind(this);
 
     this.state = {
       correctAnswers: 0,
       questionPosition: 3,
       questionsDisable: false,
       color: false,
+      count: 30,
     };
   }
 
   componentDidMount() {
-    const { props: { setQuestions, getToken } } = this;
+    const {
+      startTime,
+      props: { setQuestions, getToken },
+    } = this;
+
     setQuestions(getToken);
+    startTime();
+  }
+
+  componentDidUpdate() {
+    const { stopTime } = this;
+
+    stopTime();
   }
 
   correctClick() {
@@ -40,17 +55,48 @@ class Game extends React.Component {
     }));
   }
 
+  startTime() {
+    const { timer } = this;
+    const ONE_SECOND = 1000;
+
+    this.interval = setInterval(timer, ONE_SECOND);
+  }
+
+  stopTime() {
+    const {
+      wrongClick,
+      state: { count },
+    } = this;
+
+    if (count === 0) {
+      clearInterval(this.interval);
+      wrongClick();
+    }
+  }
+
+  timer() {
+    const {
+      state: { count },
+    } = this;
+
+    this.setState((state) => ({
+      ...state,
+      count: count - 1,
+    }));
+  }
+
   wrongClick() {
     this.setState((state) => ({
       ...state,
       questionsDisable: true,
       color: true,
+      count: 30,
     }));
   }
 
   render() {
     const {
-      state: { questionPosition, questionsDisable, color },
+      state: { questionPosition, questionsDisable, color, count },
       correctClick,
       wrongClick,
     } = this;
@@ -66,6 +112,7 @@ class Game extends React.Component {
       <>
         <Header />
         <section>
+          <h2>{ count }</h2>
           <h2 data-testid="question-category">{ category }</h2>
           <h3 data-testid="question-text">{ question }</h3>
           <section>
