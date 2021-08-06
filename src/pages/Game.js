@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import './Game.css';
 
 class Game extends React.Component {
   constructor(props) {
