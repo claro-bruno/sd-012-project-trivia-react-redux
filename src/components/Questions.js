@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Timer from './Timer';
-import { updateGlobalKey } from '../redux/actions/timer';
+import { scoreUpdate, updateGlobalKey } from '../redux/actions/questions';
 import { nextQuestion } from '../redux/actions/nextQuestion';
 
 class Play extends React.Component {
@@ -15,6 +15,7 @@ class Play extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.changeBorders = this.changeBorders.bind(this);
     this.takeOffBorder = this.takeOffBorder.bind(this);
+    this.saveStorage = this.saveStorage.bind(this);
   }
 
   componentDidUpdate() {
@@ -36,7 +37,7 @@ class Play extends React.Component {
   }
 
   optionsAnswers(answer, index) {
-    const { optionsDisabled } = this.props;
+    const { globalKey } = this.props;
 
     if (answer.data === 'correct-answer') {
       return (
@@ -45,7 +46,7 @@ class Play extends React.Component {
           type="button"
           key={ index }
           data-testid={ answer.data }
-          disabled={ optionsDisabled }
+          disabled={ globalKey }
           value="right"
           onClick={ this.handleClick }
         >
@@ -59,7 +60,7 @@ class Play extends React.Component {
         type="button"
         key={ index }
         data-testid={ `wrong-answer${index}` }
-        disabled={ optionsDisabled }
+        disabled={ globalKey }
         value="wrong"
         onClick={ this.handleClick }
       >
@@ -81,7 +82,6 @@ class Play extends React.Component {
   }
 
   takeOffBorder() {
-    console.log('takeOffBorder');
     const answerButtons = document.querySelectorAll('#answerButton');
 
     answerButtons.forEach(({ style }) => {
@@ -89,31 +89,40 @@ class Play extends React.Component {
     });
   }
 
-  async handleClick() {
-    // let pontosAnswer = 0;
-    // let pontosDiffuculty;
-    // const n = { dez: 10, tres: 3, dois: 2, um: 1 };
+  async handleClick({ target }) {
+    let pontosDifficulty;
+    const n = { dez: 10, tres: 3, dois: 2, um: 1 };
+    const { question: { difficulty }, setScore } = this.props;
+    if (difficulty === 'hard') {
+      pontosDifficulty = n.tres;
+    } else if (difficulty === 'medium') {
+      pontosDifficulty = n.dois;
+    } else {
+      pontosDifficulty = n.um;
+    }
+    await this.onClickAnswer();
+    if (target.value === 'right') setScore(pontosDifficulty);
+    this.saveStorage();
+  }
 
-    // if (target.value === 'right') pontosAnswer = n.dez;
-
-    // const { dataQuestion: { difficulty } } = this.props;
-    // if (difficulty === 'hard') {
-    //   pontosDiffuculty = n.tres;
-    // } else if (difficulty === 'medium') {
-    //   pontosDiffuculty = n.dois;
-    // } else {
-    //   pontosDiffuculty = n.um;
-    // }
-    this.onClickAnswer();
+  saveStorage() {
+    const { name, score, assertions, email } = this.props;
+    const player = {
+      name,
+      assertions,
+      score,
+      gravatarEmail: email,
+    };
+    localStorage.setItem('state', JSON.stringify({ player }));
   }
 
   render() {
     const { globalKey, question, answers } = this.props;
-    console.log(answers, 'a');
     return (
       <div>
         { !globalKey ? <Timer /> : <div>0</div> }
         <div data-testid="question-category">{ question.category }</div>
+        <div>{ question.difficulty }</div>
         <div data-testid="question-text">{ question.question }</div>
 
         { answers.map((answer, index) => this.optionsAnswers(answer, index))}
@@ -122,6 +131,7 @@ class Play extends React.Component {
           <button
             type="button"
             onClick={ this.onClickNext }
+            data-testid="btn-next"
           >
             proximo
           </button>)}
@@ -132,11 +142,17 @@ class Play extends React.Component {
 
 const mapStateToProps = (state) => ({
   globalKey: state.questions.globalKey,
+  name: state.login.name,
+  email: state.login.email,
+  assertions: state.questions.assertions,
+  score: state.questions.score,
+  numQuestion: state.questions.numQuestion,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeGlobal: (status) => dispatch(updateGlobalKey(status)),
   next: () => dispatch(nextQuestion()),
+  setScore: (difficulty) => dispatch(scoreUpdate(difficulty)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);

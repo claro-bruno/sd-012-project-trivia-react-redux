@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { timerDecrement, updateGlobalKey } from '../redux/actions/timer';
+import { timerDecrement, updateGlobalKey } from '../redux/actions/questions';
 
 class Timer extends React.Component {
   constructor(props) {

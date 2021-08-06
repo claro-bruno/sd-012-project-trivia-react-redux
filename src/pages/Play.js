@@ -14,11 +14,13 @@ class Play extends React.Component {
     };
     this.concatenaAnswers = this.concatenaAnswers.bind(this);
     this.randomize = this.randomize.bind(this);
+    this.saveStorage = this.saveStorage.bind(this);
   }
 
   async componentDidMount() {
     await this.fetchAPI();
     this.concatenaAnswers();
+    this.saveStorage();
   }
 
   componentDidUpdate(prevProps) {
@@ -56,16 +58,25 @@ class Play extends React.Component {
       if (numbers.length === answer.length) break;
     }
     const ordenedAnwsers = numbers.map((number) => answer[number]);
-    console.log(ordenedAnwsers, 'randomize');
     this.setState({
       answers: ordenedAnwsers,
     });
   }
 
+  saveStorage() {
+    const { name, email } = this.props;
+    const player = {
+      name,
+      assertions: 0,
+      score: 0,
+      gravatarEmail: email,
+    };
+    localStorage.setItem('state', JSON.stringify({ player }));
+  }
+
   render() {
     const { numQuestion } = this.props;
     const { questions: { results }, loading, answers } = this.state;
-    console.log(answers, 'play');
     if (loading) return <div>Loading...</div>;
     return (
       <div>
@@ -78,6 +89,8 @@ class Play extends React.Component {
 
 const mapStateToProps = (state) => ({
   numQuestion: state.questions.nextQuestion,
+  name: state.login.name,
+  email: state.login.email,
 });
 
 export default connect(mapStateToProps)(Play);
