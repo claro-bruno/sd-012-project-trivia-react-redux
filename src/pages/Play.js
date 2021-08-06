@@ -28,16 +28,16 @@ class Play extends React.Component {
     return (
       <div>
         <Header />
-        { !globalKey ? <Timer /> : <div>0</div> }
-        <button type="button" onClick={ this.onClick }>Muda a chave global</button>
-        <button type="button" onClick={ this.anotherClick }>Muda a chave global</button>
+        { !globalKey ? <Timer /> : <div>hasdkf</div> }
+        <button type="button" onClick={ this.onClick }>reposta</button>
+        <button type="button" onClick={ this.anotherClick }>proximo</button>
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  globalKey: state.timer.globalKey,
+  globalKey: state.questions.globalKey,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,17 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { timerDecrement, updateGlobalKey } from '../redux/actions/timer';
 
 class Timer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      time: 30,
-    };
+
     this.timer = this.timer.bind(this);
   }
 
   componentDidMount() {
     this.timer();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { changeGlobal } = this.props;
+    if (prevProps.time <= 0) {
+      clearInterval(this.interval);
+      changeGlobal(true);
+    }
   }
 
   componentWillUnmount() {
@@ -20,14 +28,15 @@ class Timer extends React.Component {
 
   timer() {
     const oneSecond = 1000;
+    const { setTime } = this.props;
     this.interval = setInterval(() => {
-      this.setState((prevState) => ({ time: prevState.time - 1 }));
+      setTime();
     }, oneSecond);
   }
 
   render() {
-    const { time } = this.state;
-    console.log(time);
+    const { time } = this.props;
+    console.log('time');
     return (
       <div>{ time }</div>
     );
@@ -35,7 +44,18 @@ class Timer extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  globalKey: state.timer.globalKey,
+  globalKey: state.questions.globalKey,
+  time: state.questions.time,
 });
 
-export default connect(mapStateToProps, null)(Timer);
+const mapDispatchToProps = (dispatch) => ({
+  setTime: () => dispatch(timerDecrement()),
+  changeGlobal: (status) => dispatch(updateGlobalKey(status)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Timer);
+
+Timer.propTypes = {
+  time: PropTypes.number,
+  setTime: PropTypes.func,
+}.isRequired;
