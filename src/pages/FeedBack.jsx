@@ -4,11 +4,13 @@ import Header from '../components/Header';
 
 class FeedBack extends Component {
   render() {
-    const { player: { assertions } } = JSON.parse(localStorage.getItem('state'));
+    const { player: { assertions, score } } = JSON.parse(localStorage.getItem('state'));
     const three = 3;
     return (
       <div>
         <Header />
+        <p data-testid="feedback-total-question">{assertions}</p>
+        <p data-testid="feedback-total-score">{score}</p>
         <p data-testid="feedback-text">
           {assertions < three ? 'Podia ser melhor...' : 'Mandou bem!'}
         </p>
@@ -20,7 +22,7 @@ class FeedBack extends Component {
             Ver Ranking
           </button>
         </Link>
-        <Link to="/login">
+        <Link to="/">
           <button
             data-testid="btn-play-again"
             type="button"
