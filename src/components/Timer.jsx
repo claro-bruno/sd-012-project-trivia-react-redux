@@ -1,25 +1,46 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 class Timer extends Component {
-  render() {
-    const { answerClicked } = this.props;
-    if (answerClicked) {
-      return (null);
+  constructor(props) {
+    super(props);
+    this.state = {
+      timer: props,
+    };
+  }
+
+  componentDidMount() {
+    const SECOND = 1000;
+    this.interval = setInterval(
+      () => this.setState((previousTime) => ({ timer: previousTime.timer - 1 })),
+      SECOND,
+    );
+  }
+
+  componentDidUpdate() {
+    const { timer } = this.state;
+    const minimumTime = 0;
+    if (timer === minimumTime) {
+      clearInterval(this.interval);
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  render() {
+    const { timer } = this.state;
     return (
-      <div>Eu sou um Timer</div>
+      <div>
+        { timer }
+      </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  answerClicked: state.gameReducer.answerClicked,
-});
-
 Timer.propTypes = {
-  answerClicked: PropTypes.bool,
+  timer: PropTypes.number,
 }.isRequired;
 
-export default connect(mapStateToProps)(Timer);
+export default Timer;

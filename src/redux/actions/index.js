@@ -2,8 +2,6 @@ export const GET_TOKEN = 'GET_TOKEN';
 export const GET_TOKEN_SUCCESS = 'GET_TOKEN_SUCCESS';
 export const GET_TOKEN_ERROR = 'GET_TOKEN_ERROR';
 export const GET_TOKEN_LOADING = 'GET_TOKEN_LOADING';
-export const ANSWER_BUTTON_CLICKED = 'ANSWER_BUTTON_CLICKED';
-export const ANSWER_RESET = 'ANSWER_RESET';
 
 export const getToken = () => ({
   type: GET_TOKEN,
@@ -31,13 +29,3 @@ export const fetchAPI = () => async (dispatch) => {
     .then(({ token }) => dispatch(getTokenSuccess(token)))
     .catch((err) => dispatch(getTokenError(err)));
 };
-
-export const answerButtonClicked = () => ({
-  type: ANSWER_BUTTON_CLICKED,
-  payload: true,
-});
-
-export const answerReset = () => ({
-  type: ANSWER_RESET,
-  payload: false,
-});
