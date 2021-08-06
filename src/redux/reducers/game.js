@@ -4,6 +4,7 @@ import {
   GET_QUESTIONS_SUCCESS,
   NEXT_QUESTIONS,
   CHANGE_CLASS,
+  CORRECT_ANSWER,
 } from '../actions/actionsTypes';
 
 const normalButton = 'btn answer-btn';
@@ -14,6 +15,7 @@ const INITIAL_STATE = {
   questionNumber: 0,
   cBtnClass: normalButton,
   wBtnClass: normalButton,
+  correctAnswers: 0,
 };
 
 const game = (state = INITIAL_STATE, action) => {
@@ -41,6 +43,11 @@ const game = (state = INITIAL_STATE, action) => {
       ...state,
       cBtnClass: action.correct,
       wBtnClass: action.wrong,
+    };
+  case CORRECT_ANSWER:
+    return {
+      ...state,
+      correctAnswers: state.correctAnswers + 1,
     };
   default:
     return state;

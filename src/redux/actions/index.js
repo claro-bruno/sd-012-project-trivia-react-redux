@@ -5,6 +5,7 @@ import {
   GET_QUESTIONS_ERROR,
   NEXT_QUESTIONS,
   CHANGE_CLASS,
+  CORRECT_ANSWER,
 } from './actionsTypes';
 
 export const addPlayerInfo = (loginInfo) => ({
@@ -32,6 +33,10 @@ export const changeClass = (correct, wrong) => ({
   type: CHANGE_CLASS,
   correct,
   wrong,
+});
+
+export const correctAnswer = () => ({
+  type: CORRECT_ANSWER,
 });
 
 export const fetchAPI = () => (dispatch) => {
