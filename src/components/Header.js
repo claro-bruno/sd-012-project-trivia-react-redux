@@ -17,7 +17,7 @@ class Header extends React.Component {
   }
 
   render() {
-    const { name, score } = this.props;
+    const { name } = this.props;
     return (
       <header className="header">
         <img
@@ -27,7 +27,7 @@ class Header extends React.Component {
           data-testid="header-profile-picture"
         />
         <div data-testid="header-player-name" className="header-things">{ name }</div>
-        <div data-testid="header-score" className="header-things">{ score }</div>
+        <div data-testid="header-score" className="header-things">0</div>
       </header>
     );
   }
@@ -36,7 +36,6 @@ class Header extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.login.email,
   name: state.login.name,
-  score: state.questions.score,
 });
 
 export default connect(mapStateToProps, null)(Header);

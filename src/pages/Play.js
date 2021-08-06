@@ -1,76 +1,51 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
-import Questions from '../components/Questions';
-import { nextQuestion } from '../redux/actions/nextQuestion';
+import Timer from '../components/Timer';
+import { updateGlobalKey } from '../redux/actions/timer';
 
 class Play extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      questions: [],
-      loading: true,
-    };
 
-    this.fetchQuestions = this.fetchQuestions.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.anotherClick = this.anotherClick.bind(this);
   }
 
-  componentDidMount() {
-    this.fetchQuestions();
+  onClick() {
+    const { changeGlobal } = this.props;
+    changeGlobal(true);
   }
 
-  async fetchQuestions() {
-    const token = JSON.parse(localStorage.getItem('token'));
-    const END_POINT = `https://opentdb.com/api.php?amount=5&token=${token}`;
-    const response = await fetch(END_POINT);
-    const json = await response.json();
-    this.setState({ questions: json, loading: false });
-  }
-
-  handleClick() {
-    const { setNextQuestion } = this.props;
-    setNextQuestion(false);
+  anotherClick() {
+    const { changeGlobal } = this.props;
+    changeGlobal(false);
   }
 
   render() {
-    const { questions: { results } } = this.state;
-    const { numQuestion, nextVisible } = this.props;
-    const { loading } = this.state;
-
-    if (loading) return <div>Loading...</div>;
-
+    const { globalKey } = this.props;
     return (
       <div>
         <Header />
-        <Questions dataQuestion={ results[numQuestion] } />
-        <button
-          type="button"
-          data-testid="btn-next"
-          onClick={ this.handleClick }
-          disabled={ !nextVisible }
-        >
-          Próxima
-        </button>
+        { !globalKey ? <Timer /> : <div>0</div> }
+        <button type="button" onClick={ this.onClick }>Muda a chave global</button>
+        <button type="button" onClick={ this.anotherClick }>Muda a chave global</button>
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  numQuestion: state.nextQuestion.nextCount,
-  nextVisible: state.nextQuestion.nextVisible,
+  globalKey: state.timer.globalKey,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setNextQuestion: (status) => dispatch(nextQuestion(status)),
+  changeGlobal: (status) => dispatch(updateGlobalKey(status)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);
 
 Play.propTypes = {
-  numQuestion: PropTypes.number,
-  nextVisible: PropTypes.bool,
-  setNextQuestion: PropTypes.func,
+  changeGlobal: PropTypes.func,
 }.isRequired;

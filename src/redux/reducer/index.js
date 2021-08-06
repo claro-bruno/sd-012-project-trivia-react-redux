@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux';
 import login from './login';
-import questions from './questions';
-import nextQuestion from './nextQuestion';
+import timer from './timer';
 
-const reducer = combineReducers({ login, questions, nextQuestion });
+const reducer = combineReducers({ login, timer });
 
 export default reducer;
