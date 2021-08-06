@@ -7,13 +7,10 @@ import GamePage from './pages/GamePage';
 
 export default function App() {
   return (
-    <>
-      <Switch>
-        <Route exact path="/" component={ Login } />
-        <Route path="/settings" component={ Settings } />
-        <Route path="/game" component={ GamePage } />
-      </Switch>
-      <div />
-    </>
+    <Switch>
+      <Route exact path="/" component={ Login } />
+      <Route path="/settings" component={ Settings } />
+      <Route path="/game" component={ GamePage } />
+    </Switch>
   );
 }

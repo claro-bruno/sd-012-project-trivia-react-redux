@@ -1,109 +1,116 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchApi } from '../redux/actions';
 
 class TriviaQuestions extends Component {
   constructor() {
     super();
 
     this.state = {
-      border: '',
+      id: 0,
+      correctanswer: '',
+      incorrectanswer: '',
+      disabled: false,
     };
+
     this.handleClick = this.handleClick.bind(this);
+    this.correctAnswer = this.correctAnswer.bind(this);
+    this.incorrectAnswer = this.incorrectAnswer.bind(this);
+    this.shuffleQuestions = this.shuffleQuestions.bind(this);
   }
 
-  async componentDidMount() {
-    this.getQuestions();
+  correctAnswer() {
+    this.setState({
+      correctanswer: '3px solid rgb(6, 240, 15)',
+      incorrectanswer: '3px solid rgb(255, 0, 0)',
+      disabled: true,
+    });
   }
 
-  async getQuestions() {
-    const { fetchQuestions } = this.props;
-    const storage = JSON.parse(localStorage.getItem('token'));
-    const questions = await fetchQuestions(storage);
-    return questions;
+  incorrectAnswer() {
+    this.setState({
+      incorrectanswer: '3px solid rgb(255, 0, 0)',
+      correctanswer: '3px solid rgb(6, 240, 15)',
+      disabled: true,
+    });
+  }
+
+  shuffleQuestions({ correct_answer: correct, incorrect_answers: incorrect }) {
+    const arrayQuestions = [correct, ...incorrect];
+    const numOfQuestions = 0.5;
+    const randomQuestions = arrayQuestions.sort(() => Math.random() - numOfQuestions);
+    return randomQuestions;
   }
 
   handleClick() {
-    if (document.querySelectorAll('.incorrect-answers')) {
-      this.setState({
-        border: '3px solid red',
-      });
-    } else {
-      this.setState({
-        border: '3px solid rgb(6, 240, 15)',
-      });
-    }
-    console.log(classList);
+    this.setState((prevState) => ({
+      id: prevState.id + 1,
+      correctanswer: '',
+      incorrectanswer: '',
+      disabled: false,
+    }));
   }
 
-  // const { questions } = playerState;
   render() {
-    const { border } = this.state;
     const { playerState } = this.props;
+    const { correctanswer, incorrectanswer, id, disabled } = this.state;
+    if (playerState.length === 0) return <span>Carregando...</span>;
+    const { category, question, correct_answer: correct } = playerState[id];
+    const arrayQuestions = this.shuffleQuestions(playerState[id]);
     return (
-      <div>
-        <ul lassName="major-list-question">
-          { playerState.questions.map((question, index) => (
-            <li className="list-questions" key={ index }>
-              <p>{ question.category }</p>
-              <p>{ question.question }</p>
-              <section className="list-answers">
-                <button
-                  style={ { border } }
-                  className="incorrect-answer"
-                  type="button"
-                  onClick={ this.handleClick }
-                >
-                  { question.incorrect_answers[0] }
-                </button>
-                <button
-                  style={ { border } }
-                  className="incorrect-answer"
-                  type="button"
-                  onClick={ this.handleClick }
-                >
-                  { question.incorrect_answers[1] }
-                </button>
-                <button
-                  style={ { border } }
-                  className="incorrect-answer"
-                  type="button"
-                  onClick={ this.handleClick }
-                >
-                  { question.incorrect_answers[2] }
-                </button>
-                <button
-                  style={ { border } }
-                  className="correct-answer"
-                  type="button"
-                  onClick={ this.handleClick }
-                >
-                  { question.correct_answer }
-                </button>
-              </section>
-            </li>
-          )) }
-        </ul>
-      </div>
+      <section>
+        <h3 data-testid="question-category">{ category }</h3>
+        <h4 data-testid="question-text">{ question }</h4>
+        { arrayQuestions.map((answer, index) => {
+          const incorrectAnswers = arrayQuestions.filter((ans) => ans !== correct);
+          if (answer === correct) {
+            return (
+              <button
+                key={ index }
+                data-testid="correct-answer"
+                style={ { border: correctanswer } }
+                type="button"
+                onClick={ this.correctAnswer }
+                disabled={ disabled }
+              >
+                { answer }
+              </button>
+            );
+          }
+          const indexWrong = incorrectAnswers.indexOf(answer);
+          return (
+            <button
+              data-testid={ `wrong-answer-${indexWrong}` }
+              style={ { border: incorrectanswer } }
+              type="button"
+              key={ index }
+              onClick={ this.incorrectAnswer }
+              disabled={ disabled }
+            >
+              { answer }
+            </button>
+          );
+        }) }
+        <button
+          type="button"
+          onClick={ this.handleClick }
+        >
+          Próxima
+        </button>
+      </section>
     );
   }
 }
 
 TriviaQuestions.propTypes = {
-  fetchQuestions: PropTypes.func.isRequired,
-  playerState: PropTypes.shape({
-    forEach: PropTypes.func.isRequired,
+  playerState: PropTypes.objectOf({
+    question: PropTypes.string.isRequired,
     questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  playerState: state.fetchReducers,
+  playerState: state.fetchReducers.questions,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchQuestions: (token) => dispatch(fetchApi(token)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TriviaQuestions);
+export default connect(mapStateToProps)(TriviaQuestions);

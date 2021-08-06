@@ -59,14 +59,3 @@
   flex-direction: column;
   width: 50%;
 }
-
-.correct-answer {
-  background-color: white;
-}
-
-.incorrect-answer {
-  background-color: white;
-}
-
-/* border: 3px solid rgb(6, 240, 15);
-border: 3px solid red; */
