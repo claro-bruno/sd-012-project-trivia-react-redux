@@ -5,6 +5,7 @@ import {
   USER_ACTION,
   USER_ACTION_NAME,
   USER_ACTION_HASH,
+  GET_SECONDS,
 } from './actionTypes';
 
 export const userAction = (payload) => ({ type: USER_ACTION, payload });
@@ -18,6 +19,11 @@ export const getToken = () => ({ type: GET_TOKEN });
 export const getTokenSuccess = (token) => ({ type: GET_TOKEN_SUCCESS, token });
 
 export const getTokenError = (error) => ({ type: GET_TOKEN_ERROR, error });
+
+export const getSeconds = (seconds) => ({
+  type: GET_SECONDS,
+  seconds,
+});
 
 export const fetchToken = () => async (dispatch) => {
   dispatch(getToken());

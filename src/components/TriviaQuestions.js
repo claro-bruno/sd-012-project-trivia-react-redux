@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CountdownTimer from './CountDownTimer';
 
 class TriviaQuestions extends Component {
   render() {
@@ -6,6 +7,7 @@ class TriviaQuestions extends Component {
 
     return (
       <div>
+        <CountdownTimer />
         <h1 data-testId="question-category">Categoria</h1>
         <h2 data-testId="question-text">Questão:</h2>
         {
