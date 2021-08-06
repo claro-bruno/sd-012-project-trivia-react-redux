@@ -1,10 +1,10 @@
 import {
   USER_ACTION,
-  GET_TOKEN,
-  GET_TOKEN_ERROR,
-  GET_TOKEN_SUCCESS,
   USER_ACTION_NAME,
   USER_ACTION_HASH,
+  GET_TOKEN,
+  GET_TOKEN_SUCCESS,
+  GET_TOKEN_ERROR,
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
