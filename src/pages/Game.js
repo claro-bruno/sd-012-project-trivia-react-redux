@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { questionsFetchAPI } from '../redux/actions';
 import questions from '../questions';
+import Button from '../components/Button';
 
 class Game extends React.Component {
   componentDidMount() {
@@ -28,21 +29,17 @@ class Game extends React.Component {
           <section data-testid="correct-answer">
             {
               incorrectAnswers.map((answers, index) => (
-                <button
-                  type="button"
+                <Button
                   data-testid={ `wrong-answer-${index}` }
                   key={ answers }
-                >
-                  { answers }
-                </button>
+                  name={ answers }
+                />
               ))
             }
-            <button
-              type="button"
+            <Button
               data-testid="correct-answer"
-            >
-              { correctAnswer }
-            </button>
+              name={ correctAnswer }
+            />
           </section>
         </section>
       </>
