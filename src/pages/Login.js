@@ -32,7 +32,7 @@ class Login extends React.Component {
     const { name, email } = this.state;
     localStorage.setItem('state',
       JSON.stringify({
-        player: { name, assertions: 0, gravatarEmail: email, score: 0 } }));
+        player: { name, gravatarEmail: email, score: 0, assertions: 0 } }));
   }
 
   handleChange({ target: { name, value } }) {

@@ -14,6 +14,12 @@ class FeedBack extends React.Component {
     history.push('/');
   }
 
+  feedBackMessage() {
+    const { player: { assertions } } = JSON.parse(localStorage.getItem('state'));
+    const minAssertions = 3;
+    return assertions < minAssertions ? 'Podia ser melhor...' : 'Mandou bem!';
+  }
+
   goToRanking() {
     const { history } = this.props;
     history.push('/ranking');
@@ -38,6 +44,7 @@ class FeedBack extends React.Component {
         />
         <h3 data-testid="header-player-name">{name}</h3>
         <p data-testid="header-score">{score}</p>
+        <p data-testid="feedback-text">{this.feedBackMessage()}</p>
         <p data-testid="feedback-total-score">{score}</p>
         <p data-testid="feedback-total-question">{assertions}</p>
         <button
