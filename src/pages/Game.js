@@ -48,11 +48,14 @@ class Game extends React.Component {
       state: { correctAnswers },
     } = this;
 
+    clearInterval(this.interval);
+
     this.setState((state) => ({
       ...state,
       correctAnswers: correctAnswers + 1,
       questionsDisable: true,
       color: true,
+      count: 30,
     }));
     setAssertions(correctAnswers);
   }
@@ -88,6 +91,7 @@ class Game extends React.Component {
   }
 
   wrongClick() {
+    clearInterval(this.interval);
     this.setState((state) => ({
       ...state,
       questionsDisable: true,
