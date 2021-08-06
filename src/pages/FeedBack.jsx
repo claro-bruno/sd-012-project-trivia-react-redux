@@ -10,7 +10,7 @@ class FeedBack extends Component {
       <div>
         <Header />
         <p data-testid="feedback-text">
-          {assertions < three ? 'Podia ser melhor...' : 'Mandou bem!' }
+          {assertions < three ? 'Podia ser melhor...' : 'Mandou bem!'}
         </p>
         <Link to="/ranking">
           <button
@@ -20,8 +20,15 @@ class FeedBack extends Component {
             Ver Ranking
           </button>
         </Link>
-      </div>
-    );
+        <Link to="/login">
+          <button
+            data-testid="btn-play-again"
+            type="button"
+          >
+            Jogar novamente
+          </button>
+        </Link>
+      </div>);
   }
 }
 
