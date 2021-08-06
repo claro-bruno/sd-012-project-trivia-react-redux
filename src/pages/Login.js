@@ -46,7 +46,6 @@ class Login extends React.Component {
       ...state,
       redirectGame: true,
     }));
-
     setLogin(login);
   }
 
