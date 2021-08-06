@@ -1,56 +1,54 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Cronometer from './Cronometer';
-import { scoreUpdate, stopTime } from '../redux/actions/questions';
+import { Redirect } from 'react-router-dom';
+import Timer from './Timer';
+import { scoreUpdate, updateGlobalKey } from '../redux/actions/questions';
 import { nextQuestion } from '../redux/actions/nextQuestion';
 
-class Questions extends React.Component {
+class Play extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      answers: ['initial state'],
+      redirectCounter: 0,
+      shouldRedirect: false,
     };
 
-    // this.concatenaAnswers = this.concatenaAnswers.bind(this);
-    this.randomize = this.randomize.bind(this);
-    this.optionsAnswer = this.optionsAnswer.bind(this);
-    this.saveStoragePlayer = this.saveStoragePlayer.bind(this);
-    this.changeBorders = this.changeBorders.bind(this);
+    this.onClickAnswer = this.onClickAnswer.bind(this);
+    this.onClickNext = this.onClickNext.bind(this);
+    this.optionsAnswers = this.optionsAnswers.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.changeBorders = this.changeBorders.bind(this);
+    this.takeOffBorder = this.takeOffBorder.bind(this);
+    this.saveStorage = this.saveStorage.bind(this);
   }
 
-  componentDidMount() {
-    const { dataQuestion } = this.props;
-    const { correct_answer: correctAnswer,
-      incorrect_answers: incorrectAnswers } = dataQuestion;
-
-    const incorrectObject = incorrectAnswers.map((incorrect, index) => ({
-      data: 'wrong-answer', answer: incorrect, id: index,
-    }));
-
-    this.saveStoragePlayer();
-
-    const correctObject = { data: 'correct-answer', answer: correctAnswer };
-    const answer = [...incorrectObject, correctObject];
-    this.randomize(answer);
+  componentDidUpdate() {
+    const { globalKey } = this.props;
+    if (globalKey === false) {
+      this.takeOffBorder();
+    } else { this.changeBorders(); }
   }
 
-  randomize(answer) {
-    const numbers = [];
-    for (let index = 0; index < 100; index += 1) {
-      const number = Math.floor(Math.random() * answer.length);
-      if (!numbers.includes(number)) numbers.push(number);
-      if (numbers.length === answer.length) break;
-    }
-    const ordenedAnwsers = numbers.map((number) => answer[number]);
-    this.setState({
-      answers: ordenedAnwsers,
-    });
+  onClickAnswer() {
+    const { changeGlobal } = this.props;
+    changeGlobal(true);
   }
 
-  optionsAnswer(answer, index) {
-    const { optionsDisabled } = this.props;
+  onClickNext() {
+    const { changeGlobal, next } = this.props;
+    const { redirectCounter } = this.state;
+    const quatro = 4;
+    if (redirectCounter !== quatro) {
+      changeGlobal(false);
+      next();
+      this.setState((prevState) => ({ redirectCounter: prevState.redirectCounter + 1 }));
+    } else this.setState({ shouldRedirect: true });
+  }
+
+  optionsAnswers(answer, index) {
+    const { globalKey } = this.props;
 
     if (answer.data === 'correct-answer') {
       return (
@@ -59,7 +57,7 @@ class Questions extends React.Component {
           type="button"
           key={ index }
           data-testid={ answer.data }
-          disabled={ optionsDisabled }
+          disabled={ globalKey }
           value="right"
           onClick={ this.handleClick }
         >
@@ -73,25 +71,13 @@ class Questions extends React.Component {
         type="button"
         key={ index }
         data-testid={ `wrong-answer${index}` }
-        disabled={ optionsDisabled }
+        disabled={ globalKey }
         value="wrong"
         onClick={ this.handleClick }
       >
         { answer.answer }
-      </button>);
-  }
-
-  saveStoragePlayer() {
-    const { name, assertions, score, email } = this.props;
-
-    // const players = JSON.parse(localStorage.getItem('state'));
-    const player = {
-      name,
-      assertions,
-      score,
-      gravatarEmail: email,
-    };
-    localStorage.setItem('state', JSON.stringify({ player }));
+      </button>
+    );
   }
 
   changeBorders() {
@@ -104,76 +90,86 @@ class Questions extends React.Component {
         style.border = '3px solid rgb(255, 0, 0)';
       }
     });
+  }
 
-    // const { setNextQuestion } = this.props;
-    // setNextQuestion(true);
+  takeOffBorder() {
+    const answerButtons = document.querySelectorAll('#answerButton');
+
+    answerButtons.forEach(({ style }) => {
+      style.border = '1px solid black';
+    });
   }
 
   async handleClick({ target }) {
-    this.changeBorders();
-
-    let pontosAnswer = 0;
-    let pontosDiffuculty;
+    let pontosDifficulty;
     const n = { dez: 10, tres: 3, dois: 2, um: 1 };
-
-    if (target.value === 'right') pontosAnswer = n.dez;
-
-    const { dataQuestion: { difficulty } } = this.props;
+    const { question: { difficulty }, setScore } = this.props;
     if (difficulty === 'hard') {
-      pontosDiffuculty = n.tres;
+      pontosDifficulty = n.tres;
     } else if (difficulty === 'medium') {
-      pontosDiffuculty = n.dois;
+      pontosDifficulty = n.dois;
     } else {
-      pontosDiffuculty = n.um;
+      pontosDifficulty = n.um;
     }
+    await this.onClickAnswer();
+    if (target.value === 'right') setScore(pontosDifficulty);
+    this.saveStorage();
+  }
 
-    const { setScore, setStopTime } = this.props;
-    await setStopTime();
-    if (pontosAnswer === n.dez) {
-      await setScore(pontosAnswer, pontosDiffuculty);
-    }
-    this.saveStoragePlayer();
+  saveStorage() {
+    const { name, score, assertions, email } = this.props;
+    const player = {
+      name,
+      assertions,
+      score,
+      gravatarEmail: email,
+    };
+    localStorage.setItem('state', JSON.stringify({ player }));
   }
 
   render() {
-    const { dataQuestion: { category, question } } = this.props;
-    const { answers } = this.state;
+    const { globalKey, question, answers } = this.props;
+    const { shouldRedirect } = this.state;
+    if (shouldRedirect) return <Redirect to="/feedback" />;
     return (
       <div>
-        <Cronometer />
-        <div data-testid="question-category">{ category }</div>
-        <div data-testid="question-text">{ question }</div>
+        { !globalKey ? <Timer /> : <div>0</div> }
+        <div data-testid="question-category">{ question.category }</div>
+        <div>{ question.difficulty }</div>
+        <div data-testid="question-text">{ question.question }</div>
 
-        { answers.map((answer, index) => this.optionsAnswer(answer, index)) }
+        { answers.map((answer, index) => this.optionsAnswers(answer, index))}
+        <br />
+        { globalKey && (
+          <button
+            type="button"
+            onClick={ this.onClickNext }
+            data-testid="btn-next"
+          >
+            proximo
+          </button>)}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  optionsDisabled: state.questions.optionsDisabled,
+  globalKey: state.questions.globalKey,
   name: state.login.name,
+  email: state.login.email,
   assertions: state.questions.assertions,
   score: state.questions.score,
-  email: state.login.email,
+  numQuestion: state.questions.numQuestion,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setScore:
-    (answerValue, diffucultyValue) => dispatch(scoreUpdate(answerValue, diffucultyValue)),
-  setStopTime: () => dispatch(stopTime()),
-  setNextQuestion: (status) => dispatch(nextQuestion(status)),
+  changeGlobal: (status) => dispatch(updateGlobalKey(status)),
+  next: () => dispatch(nextQuestion()),
+  setScore: (difficulty) => dispatch(scoreUpdate(difficulty)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Questions);
+export default connect(mapStateToProps, mapDispatchToProps)(Play);
 
-Questions.propTypes = {
-  optionsDisabled: PropTypes.bool,
-  name: PropTypes.string,
-  assertions: PropTypes.number,
-  score: PropTypes.number,
-  email: PropTypes.string,
-  setScore: PropTypes.func,
-  setStopTime: PropTypes.func,
-  setNextQuestion: PropTypes.func,
+Play.propTypes = {
+  changeGlobal: PropTypes.func,
 }.isRequired;

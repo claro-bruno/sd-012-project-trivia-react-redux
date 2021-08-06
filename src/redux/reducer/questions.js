@@ -1,27 +1,28 @@
-import { OPTIONS_DISABLED } from '../actions/optionsDisabled';
-import { SCORE_UPDATE, SEND_CRONOMETER, STOP_TIME } from '../actions/questions';
+import { GLOBAL_KEY, TIMER_DECREMENT, SCORE_UPDATE } from '../actions/questions';
+import { NEXT_QUESTION } from '../actions/nextQuestion';
 
-const INITIAL_STATE = {
-  optionsDisabled: false,
+const INICIAL_STATE = {
+  globalKey: false,
   time: 30,
-  stopTime: false,
+  nextQuestion: 0,
   score: 0,
   assertions: 0,
 };
 
-const questions = (state = INITIAL_STATE, action) => {
+const questions = (state = INICIAL_STATE, action) => {
   switch (action.type) {
-  case OPTIONS_DISABLED:
-    return { ...state, optionsDisabled: true };
-  case SEND_CRONOMETER:
+  case GLOBAL_KEY:
+    return { ...state, globalKey: action.status, time: 30 };
+  case TIMER_DECREMENT:
     return { ...state, time: state.time - 1 };
-  case SCORE_UPDATE:
+  case NEXT_QUESTION:
+    return { ...state, nextQuestion: state.nextQuestion + 1 };
+  case SCORE_UPDATE: {
+    const dez = 10;
     return { ...state,
-      score:
-        state.score + (action.answerValue + (action.diffucultyValue * state.time)) - 2,
-      assertions: state.assertions + 1 };
-  case STOP_TIME:
-    return { ...state, stopTime: true };
+      assertions: state.assertions + 1,
+      score: state.score + (state.time * action.difficulty) + dez };
+  }
   default:
     return state;
   }
