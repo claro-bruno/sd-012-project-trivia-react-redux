@@ -83,14 +83,14 @@ class Game extends Component {
   }
 
   render() {
-    const { questions } = this.props;
+    const { token } = this.props;
     return (
       <>
         <header>
           <HeaderGame />
         </header>
         {
-          (questions[0].type !== '') ? this.createQuestion() : ''
+          (token === 0) ? this.createQuestion() : <p>LOADING</p>
         }
       </>
     );
@@ -99,6 +99,7 @@ class Game extends Component {
 
 const mapStateToProps = (state) => ({
   questions: state.questions.results,
+  token: state.token.response_code,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -107,6 +108,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Game.propTypes = {
   getAPI: PropTypes.func.isRequired,
+  token: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(Object).isRequired,
 };
 
