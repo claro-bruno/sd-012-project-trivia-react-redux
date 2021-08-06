@@ -1,51 +1,87 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
-import Timer from '../components/Timer';
-import { updateGlobalKey } from '../redux/actions/timer';
+import Questions from '../components/Questions';
 
 class Play extends React.Component {
   constructor(props) {
     super(props);
-
-    this.onClick = this.onClick.bind(this);
-    this.anotherClick = this.anotherClick.bind(this);
+    this.state = {
+      questions: {},
+      loading: true,
+      answers: [],
+    };
+    this.concatenaAnswers = this.concatenaAnswers.bind(this);
+    this.randomize = this.randomize.bind(this);
   }
 
-  onClick() {
-    const { changeGlobal } = this.props;
-    changeGlobal(true);
+  async componentDidMount() {
+    await this.fetchAPI();
+    this.concatenaAnswers();
   }
 
-  anotherClick() {
-    const { changeGlobal } = this.props;
-    changeGlobal(false);
+  componentDidUpdate(prevProps) {
+    const { numQuestion } = this.props;
+    if (prevProps.numQuestion !== numQuestion) this.concatenaAnswers();
+  }
+
+  async fetchAPI() {
+    const token = JSON.parse(localStorage.getItem('token'));
+    const END_POINT = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    const response = await fetch(END_POINT);
+    const json = await response.json();
+    this.setState({ questions: json, loading: false });
+  }
+
+  concatenaAnswers() {
+    const { numQuestion } = this.props;
+    const { questions: { results } } = this.state;
+    const { correct_answer: correctAnswer,
+      incorrect_answers: incorrectAnswers } = results[numQuestion];
+
+    const incorrectObject = incorrectAnswers.map((incorrect, index) => ({
+      data: 'wrong-answer', answer: incorrect, id: index,
+    }));
+    const correctObject = { data: 'correct-answer', answer: correctAnswer };
+    const answer = [...incorrectObject, correctObject];
+    this.randomize(answer);
+  }
+
+  randomize(answer) {
+    const numbers = [];
+    for (let index = 0; index < 100; index += 1) {
+      const number = Math.floor(Math.random() * answer.length);
+      if (!numbers.includes(number)) numbers.push(number);
+      if (numbers.length === answer.length) break;
+    }
+    const ordenedAnwsers = numbers.map((number) => answer[number]);
+    console.log(ordenedAnwsers, 'randomize');
+    this.setState({
+      answers: ordenedAnwsers,
+    });
   }
 
   render() {
-    const { globalKey } = this.props;
+    const { numQuestion } = this.props;
+    const { questions: { results }, loading, answers } = this.state;
+    console.log(answers, 'play');
+    if (loading) return <div>Loading...</div>;
     return (
       <div>
         <Header />
-        { !globalKey ? <Timer /> : <div>hasdkf</div> }
-        <button type="button" onClick={ this.onClick }>reposta</button>
-        <button type="button" onClick={ this.anotherClick }>proximo</button>
+        <Questions question={ results[numQuestion] } answers={ answers } />
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  globalKey: state.questions.globalKey,
+  numQuestion: state.questions.nextQuestion,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  changeGlobal: (status) => dispatch(updateGlobalKey(status)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Play);
+export default connect(mapStateToProps)(Play);
 
 Play.propTypes = {
-  changeGlobal: PropTypes.func,
+  numQuestion: PropTypes.number,
 }.isRequired;
