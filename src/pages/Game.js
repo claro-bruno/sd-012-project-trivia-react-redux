@@ -7,18 +7,56 @@ import questions from '../questions';
 import Button from '../components/Button';
 
 class Game extends React.Component {
+  constructor() {
+    super();
+
+    this.correctClick = this.correctClick.bind(this);
+    this.wrongClick = this.wrongClick.bind(this);
+
+    this.state = {
+      correctAnswers: 0,
+      questionPosition: 3,
+      questionsDesable: false,
+    };
+  }
+
   componentDidMount() {
     const { props: { setQuestions, getToken } } = this;
     setQuestions(getToken);
   }
 
+  correctClick() {
+    const {
+      state: { correctAnswers },
+    } = this;
+
+    this.setState((state) => ({
+      ...state,
+      correctAnswers: correctAnswers + 1,
+      questionsDesable: true,
+    }));
+  }
+
+  wrongClick() {
+    this.setState((state) => ({
+      ...state,
+      questionsDesable: true,
+    }));
+  }
+
   render() {
+    const {
+      state: { questionPosition, questionsDesable },
+      correctClick,
+      wrongClick,
+    } = this;
+
     const {
       category,
       question,
       correct_answer: correctAnswer,
       incorrect_answers: incorrectAnswers,
-    } = questions[0];
+    } = questions[questionPosition];
 
     return (
       <>
@@ -33,12 +71,16 @@ class Game extends React.Component {
                   data-testid={ `wrong-answer-${index}` }
                   key={ answers }
                   name={ answers }
+                  handleClick={ wrongClick }
+                  disabled={ questionsDesable }
                 />
               ))
             }
             <Button
               data-testid="correct-answer"
               name={ correctAnswer }
+              handleClick={ correctClick }
+              disabled={ questionsDesable }
             />
           </section>
         </section>
