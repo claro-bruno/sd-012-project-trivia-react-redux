@@ -75,7 +75,7 @@ class Game extends Component {
       const points = timer * (difficulty === 'hard' ? 1 : level) + score + pointsSum;
       const state = JSON.parse(localStorage.getItem('state')) || {};
       const local = JSON.stringify(
-        { player: { ...state.player, score: points, assertions } },
+        { player: { ...state.player, score: points, assertions: assertions + 1 } },
       );
       localStorage.setItem(
         'state',
