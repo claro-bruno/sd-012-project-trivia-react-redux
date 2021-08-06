@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { addPlayerInfo } from '../redux/actions';
-import FinalResults from '../components/FinalResults';
 
 class Login extends React.Component {
   constructor() {
@@ -99,7 +98,6 @@ class Login extends React.Component {
           </button>
         </Link>
         { shouldRedirect && <Redirect to="/game" /> }
-        <FinalResults />
       </form>
     );
   }

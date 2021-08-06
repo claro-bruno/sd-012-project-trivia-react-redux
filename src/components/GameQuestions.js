@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ButtonNext from './ButtonNext';
-import { changeClass } from '../redux/actions';
+import { changeClass, correctAnswer } from '../redux/actions';
 import './GameQuestions.css';
+import FinalResults from './FinalResults';
 
 class GameQuestions extends React.Component {
   constructor(props) {
@@ -101,7 +102,8 @@ class GameQuestions extends React.Component {
     });
 
     if (answerStatus === 'correct') {
-      // implementar comportamento quando acertar a pergunta
+      const { correct } = this.props;
+      correct();
     }
     if (answerStatus === 'wrong') {
       // implementar comportamento quando errar a pergunta.
@@ -170,6 +172,7 @@ class GameQuestions extends React.Component {
             timerIntervalID={ timerIntervalID }
           />}
         </div>
+        <FinalResults />
       </div>
     );
   }
@@ -184,6 +187,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   showAnswer: (correct, wrong) => dispatch(changeClass(correct, wrong)),
+  correct: () => dispatch(correctAnswer()),
 });
 
 GameQuestions.propTypes = {
@@ -192,6 +196,7 @@ GameQuestions.propTypes = {
   showAnswer: PropTypes.func.isRequired,
   cBtnClass: PropTypes.string.isRequired,
   wBtnClass: PropTypes.string.isRequired,
+  correct: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameQuestions);

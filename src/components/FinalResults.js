@@ -1,8 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class FinalResults extends React.Component {
   render() {
+    const { answersCount } = this.props;
+
     return (
       <section>
         <div>
@@ -11,11 +14,19 @@ class FinalResults extends React.Component {
         </div>
         <div>
           <p>Acertos:</p>
-          <p data-testid="feedback-total-question">{ 5 }</p>
+          <p data-testid="feedback-total-question">{ answersCount }</p>
         </div>
       </section>
     );
   }
 }
 
-export default connect()(FinalResults);
+const mapStateToProps = (state) => ({
+  answersCount: state.game.correctAnswers,
+});
+
+FinalResults.propTypes = {
+  answersCount: PropTypes.number.isRequired,
+};
+
+export default connect(mapStateToProps)(FinalResults);
