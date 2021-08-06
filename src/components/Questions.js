@@ -72,6 +72,8 @@ class Questions extends Component {
     correctAnswer.className = 'green-border';
     correctAnswer.disable = true;
     incorrectAnswers.disable = true;
+
+    this.setState({ activeButton: false });
   }
 
   async tokenRequire() {
@@ -118,7 +120,7 @@ class Questions extends Component {
           className="button-correct"
           data-testid="correct-answer"
           type="button"
-          onClick={ this.changeColorAnswer }
+          onClick={ () => this.changeColorAnswer() }
           disabled={ disabled }
         >
           { trivias[indexQuestion].correct_answer }
@@ -131,7 +133,7 @@ class Questions extends Component {
             data-testid={ `wrong-answer-${index}` }
             className="button-incorrect"
             key={ wrongAnswer }
-            onClick={ this.changeColorAnswer }
+            onClick={ () => this.changeColorAnswer() }
             disabled={ disabled }
           >
             { wrongAnswer }
