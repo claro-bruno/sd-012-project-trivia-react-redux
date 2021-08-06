@@ -40,8 +40,6 @@ class QuestionInfo extends Component {
     const incorrect = document.getElementsByName('incorrect-answer');
     incorrect.forEach((question) => question.classList.remove('questionWrong'));
     correct.classList.remove('questionCorrect');
-    const buttonNextQuestion = document.getElementsByClassName('btn-next')[0];
-    buttonNextQuestion.classList.remove('visible');
   }
 
   sumUserPoints() {
@@ -104,7 +102,7 @@ class QuestionInfo extends Component {
             innerText={ incorrect }
           />
         ))}
-        <Button
+        <UniqueButton
           className="btn-next"
           innerText="PRÓXIMA"
           onClick={ () => {
