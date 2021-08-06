@@ -17,6 +17,7 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRedirect = this.handleRedirect.bind(this);
+    this.stateUser = this.stateUser.bind(this);
   }
 
   emailChecker(value) {
@@ -58,9 +59,22 @@ class Login extends React.Component {
     });
   }
 
+  stateUser() {
+    localStorage.setItem(
+      'state',
+      JSON.stringify({
+        player: {
+          name: '',
+          gravatarEmail: '',
+          score: 0,
+          assertions: 0 },
+      }),
+    );
+  }
+
   render() {
     const { email, name, emailIsValid, nameIsValid, shouldRedirect } = this.state;
-
+    this.stateUser();
     return (
       <form onSubmit={ this.handleSubmit }>
         <input

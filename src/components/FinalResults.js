@@ -3,6 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class FinalResults extends React.Component {
+  getScore() {
+    const state = JSON.parse(localStorage.getItem('state'));
+    return state.player.score;
+  }
+
   render() {
     const { answersCount } = this.props;
 
@@ -10,7 +15,7 @@ class FinalResults extends React.Component {
       <section>
         <div>
           <p>Pontos:</p>
-          <p data-testid="feedback-total-score">{ 55 }</p>
+          <p data-testid="feedback-total-score">{ this.getScore() }</p>
         </div>
         <div>
           <p>Acertos:</p>
