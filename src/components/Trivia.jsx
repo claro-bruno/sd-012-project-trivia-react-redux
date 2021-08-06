@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getScore } from '../redux/action';
+import { getScore, setLocalStorage } from '../redux/action';
 
 class Trivia extends React.Component {
   constructor(props) {
@@ -19,6 +19,8 @@ class Trivia extends React.Component {
   }
 
   componentDidMount() {
+    const { player, setPlayer } = this.props;
+    setPlayer(player);
     const proxButton = document.getElementById('proxButton');
     proxButton.style.visibility = 'hidden';
     this.mountButtons();
@@ -30,11 +32,6 @@ class Trivia extends React.Component {
     if (time === 0) {
       clearInterval(this.myInterval);
     }
-  }
-
-  componentWillUnmount() {
-    const { player } = this.props;
-    localStorage.setItem('state', JSON.stringify(player));
   }
 
   correctQuestion() {
@@ -64,7 +61,7 @@ class Trivia extends React.Component {
   }
 
   savePoints() {
-    const { getPoints, player } = this.props;
+    const { getPoints, player, setPlayer } = this.props;
     const { time } = this.state;
     const questionsRight = Number(player.assertions) + 1;
     const point = 10;
@@ -74,6 +71,8 @@ class Trivia extends React.Component {
       score,
       questionsRight,
     };
+    const obj = { ...player, score: result.score, assertions: result.questionsRight };
+    setPlayer(obj);
     getPoints(result);
   }
 
@@ -195,6 +194,7 @@ class Trivia extends React.Component {
 }
 
 Trivia.propTypes = {
+  setPlayer: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   getPoints: PropTypes.func.isRequired,
   player: PropTypes.shape({
@@ -215,5 +215,6 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
   getPoints: (value) => dispatch(getScore(value)),
+  setPlayer: (value) => dispatch(setLocalStorage(value)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Trivia);

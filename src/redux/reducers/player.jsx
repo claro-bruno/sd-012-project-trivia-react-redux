@@ -13,6 +13,11 @@ const player = (state = initialState, action) => {
     return { ...state,
       score: action.value.score,
       assertions: action.value.questionsRight };
+  case 'SET_STORAGE': {
+    const obj = { player: action.player };
+    localStorage.setItem('state', JSON.stringify(obj));
+    return (state);
+  }
   default:
     return (state);
   }

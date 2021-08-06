@@ -33,3 +33,8 @@ export const getScore = (value) => ({
   type: GET_SCORE,
   value,
 });
+
+export const setLocalStorage = (player) => ({
+  type: 'SET_STORAGE',
+  player,
+});
