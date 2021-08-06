@@ -6,7 +6,7 @@ import Timer from './Timer';
 import { scoreUpdate, updateGlobalKey } from '../redux/actions/questions';
 import { nextQuestion } from '../redux/actions/nextQuestion';
 
-class Play extends React.Component {
+class Questions extends React.Component {
   constructor(props) {
     super(props);
 
@@ -168,8 +168,8 @@ const mapDispatchToProps = (dispatch) => ({
   setScore: (difficulty) => dispatch(scoreUpdate(difficulty)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Play);
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);
 
-Play.propTypes = {
+Questions.propTypes = {
   changeGlobal: PropTypes.func,
 }.isRequired;

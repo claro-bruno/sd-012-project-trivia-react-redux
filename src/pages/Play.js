@@ -52,10 +52,9 @@ class Play extends React.Component {
 
   randomize(answer) {
     const numbers = [];
-    for (let index = 0; index < 100; index += 1) {
+    while (numbers.length !== answer.length) {
       const number = Math.floor(Math.random() * answer.length);
       if (!numbers.includes(number)) numbers.push(number);
-      if (numbers.length === answer.length) break;
     }
     const ordenedAnwsers = numbers.map((number) => answer[number]);
     this.setState({
