@@ -35,8 +35,11 @@ class Feedback extends React.Component {
     if (questionsRight < SCORE_NUMBER) {
       return <p data-testid="feedback-text">Podia ser melhor...</p>;
     }
-    if (questionsRight >= SCORE_NUMBER) return <p data-testid="feedback-text">Mandou bem!</p>;
+    if (questionsRight >= SCORE_NUMBER) {
+      return <p data-testid="feedback-text">Mandou bem!</p>;
+    }
     // if (pageLogin) return <Redirect to="/login" />;
+    // if (pageRanking) return <Redirect to="/ranking" />;
     return (
       <>
         <div>
