@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loginAction } from '../actions/index';
+import { loginAction, fetchAPItoken } from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
@@ -11,6 +11,7 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.inputsValidation = this.inputsValidation.bind(this);
     this.handleGetEmail = this.handleGetEmail.bind(this);
+    this.tokenRequire = this.tokenRequire.bind(this);
 
     this.state = {
       name: false,
@@ -30,10 +31,9 @@ class Login extends React.Component {
   }
 
   async tokenRequire() {
-    const fetchAPI = await fetch('https://opentdb.com/api_token.php?command=request');
-    const response = await fetchAPI.json();
-    const { token } = response;
-    localStorage.setItem('token', JSON.stringify(token));
+    const { fetchAPI, tokenAPI } = this.props;
+    fetchAPI();
+    localStorage.setItem('token', tokenAPI);
   }
 
   inputsValidation() {
@@ -79,7 +79,7 @@ class Login extends React.Component {
             disabled={ this.inputsValidation() }
             data-testid="btn-play"
             type="button"
-            onClick={ this.tokenRequire }
+            onClick={ () => this.tokenRequire() }
           >
             JOGAR
           </button>
@@ -98,6 +98,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+  fetchAPI: () => dispatch(fetchAPItoken()),
   getEmail: (emailInput, nameInput) => dispatch(loginAction(emailInput, nameInput)),
 });
 
@@ -105,4 +106,6 @@ export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   getEmail: PropTypes.func,
+  fetchAPI: PropTypes.func,
+  tokenAPI: PropTypes.string,
 }.isRequired;
