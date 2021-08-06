@@ -68,7 +68,8 @@ class Questions extends Component {
     });
     correctAnswer.disable = true;
     incorrectAnswers.disable = true;
-    this.activeButtonNext();
+
+    this.setState({ activeButton: false }, () => this.activeButtonNext());
   }
 
   async tokenRequire() {
@@ -115,10 +116,7 @@ class Questions extends Component {
           className="button-correct"
           data-testid="correct-answer"
           type="button"
-          onClick={
-            () => (this.setState({ activeButton: false },
-              () => this.changeColorAnswer()))
-          }
+          onClick={ () => this.changeColorAnswer() }
           disabled={ disabled }
         >
           { trivias[indexQuestion].correct_answer }
@@ -131,8 +129,7 @@ class Questions extends Component {
             data-testid={ `wrong-answer-${index}` }
             className="button-incorrect"
             key={ wrongAnswer }
-            onClick={ () => (this.setState({ activeButton: false },
-              () => this.changeColorAnswer())) }
+            onClick={ () => this.changeColorAnswer() }
             disabled={ disabled }
           >
             { wrongAnswer }
