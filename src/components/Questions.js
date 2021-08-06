@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Timer from './Timer';
 import Loading from './Loading';
@@ -12,7 +13,7 @@ class Questions extends Component {
     this.state = {
       trivias: '',
       loading: true,
-      // indexQuestion: 0,
+      indexQuestion: 0,
       activeButton: false,
     };
 
@@ -24,10 +25,6 @@ class Questions extends Component {
   componentDidMount() {
     this.fetchQuestionsAndAnswers();
   }
-
-  // componentDidUpdate() {
-  //   this.activeButtonNext();
-  // }
 
   // Faz requisicao para API e guarda chave Results no estado da pagina.
   async fetchQuestionsAndAnswers() {
@@ -44,79 +41,52 @@ class Questions extends Component {
   }
 
   changeColorAnswer() {
-    const incorrectAnswers = document.getElementsByName('incorrect');
-    const correctAnswer = document.getElementById('correct');
-
-    incorrectAnswers.forEach((question) => {
-      question.className = 'red-border';
-    });
-    correctAnswer.className = 'green-border';
     this.setState({
       activeButton: true,
     });
   }
 
   activeButtonNext() {
+    const { activeButton, indexQuestion } = this.state;
+    const questionsLimit = 4;
     return (
       <button
+        className={ activeButton ? '' : 'nextButton' }
         type="button"
         data-testid="btn-next"
+        onClick={ () => this.nextQuestion() }
       >
-        Próxima
+        { indexQuestion === questionsLimit ? this.redirectToFeedback() : 'TRALALA' }
       </button>
     );
   }
 
-  // let token = JSON.parse(localStorage.getItem('token'));
-
-  // if (!token) {
-  //   await this.tokenRequire();
-  //   token = JSON.parse(localStorage.getItem('token'));
-  // }
-
-  // Funcao que ativa o botao de Proxima pergunta, o botao eh ativado independente da resposta ser errada ou certa
-  // activeButtonNext() {
-  //   const { activeButton } = this.state;
-
-  //   if (activeButton) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
-  // redirectToFeedback() {
-  //   return (
-  //     <Link to="/feedback">
-  //       Próxima
-  //     </Link>
-  //   );
-  // }
+  redirectToFeedback() {
+    return (
+      <Link to="/feedback">
+        Próxima
+      </Link>
+    );
+  }
 
   // Funcao que altera o estado indexQuestion, fazendo assim com que as perguntas mudem. Essa funcao eh chamada apos o clique em qualquer um dos botoes de resposta.
 
-  // nextQuestion() {
-  //   const { indexQuestion } = this.state;
-  //   this.setState({
-  //     indexQuestion: indexQuestion + 1,
-  //     activeButton: true,
-  //   });
-
-  //   const correctAnswer = document.getElementById('correct');
-  //   const incorrectAnswers = document.getElementsByName('incorrect');
-  //   correctAnswer.className = ('button-correct');
-  //   correctAnswer.disable = false;
-  //   incorrectAnswers.disable = false;
-  // }
+  nextQuestion() {
+    const { indexQuestion } = this.state;
+    this.setState({
+      indexQuestion: indexQuestion + 1,
+      activeButton: false,
+    });
+  }
 
   makeTrivias() {
-    const { trivias, activeButton } = this.state;
+    const { trivias, indexQuestion, activeButton } = this.state;
     const { disabled } = this.props;
-    // const questionsLimit = 4;
     return (
       <>
         <Timer />
-        <h1 data-testid="question-category">{ trivias[0].category }</h1>
-        <h2 data-testid="question-text">{ trivias[0].question }</h2>
+        <h1 data-testid="question-category">{ trivias[indexQuestion].category }</h1>
+        <h2 data-testid="question-text">{ trivias[indexQuestion].question }</h2>
         <ol>
           <li>
             <button
@@ -125,16 +95,18 @@ class Questions extends Component {
               type="button"
               onClick={ this.changeColorAnswer }
               disabled={ disabled }
+              className={ activeButton ? 'green-border' : '' }
             >
-              { trivias[0].correct_answer }
+              { trivias[indexQuestion].correct_answer }
             </button>
           </li>
-          { trivias[0].incorrect_answers.map(((wrongAnswer, index) => (
+          { trivias[indexQuestion].incorrect_answers.map(((wrongAnswer, index) => (
             <li key={ index }>
               <button
                 name="incorrect"
                 type="button"
                 data-testid={ `wrong-answer-${index}` }
+                className={ activeButton ? 'red-border' : '' }
                 onClick={ this.changeColorAnswer }
                 disabled={ disabled }
               >
@@ -143,7 +115,7 @@ class Questions extends Component {
             </li>
           ))) }
         </ol>
-        { activeButton && this.activeButtonNext() }
+        { this.activeButtonNext() }
       </>
     );
   }
@@ -152,18 +124,6 @@ class Questions extends Component {
     const { loading } = this.state;
     return loading ? <h1>Loading await...</h1> : this.makeTrivias();
   }
-
-  //       <button
-  //         className={ activeButton ? 'nextButton' : '' }
-  //         disabled={ this.activeButtonNext() }
-  //         type="button"
-  //         data-testid="btn-next"
-  //         onClick={ () => this.nextQuestion() }
-  //       >
-  //         { indexQuestion === questionsLimit ? this.redirectToFeedback() : 'Próxima' }
-  //       </button>
-  //   );
-  // }
 
   render() {
     const { load } = this.props;
