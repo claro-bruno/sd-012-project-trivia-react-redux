@@ -14,6 +14,7 @@ class Login extends Component {
       name: '',
       email: '',
       score: 0,
+      assertions: 0,
       game: false,
       config: false,
     };

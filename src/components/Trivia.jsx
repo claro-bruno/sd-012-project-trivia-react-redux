@@ -34,6 +34,11 @@ class Trivia extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const { player, setPlayer } = this.props;
+    setPlayer(player);
+  }
+
   correctQuestion() {
     this.savePoints();
     this.changeStyles();
