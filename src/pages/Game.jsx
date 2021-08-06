@@ -44,16 +44,11 @@ class Game extends Component {
     const enun = questions.map((elm, ind) => {
       const { category, question } = elm;
       return (
-        <>
-      <header>
-        <HeaderGame />
-      </header>
         <div key={ ind }>
           <h3 data-testid="question-category">{ category }</h3>
           <h2 data-testid="question-text">{ question }</h2>
           {this.createOptions()}
         </div>
-        </>
       );
     });
     return enun;
@@ -90,7 +85,14 @@ class Game extends Component {
   render() {
     const { questions } = this.props;
     return (
-      (questions[0].type !== '') ? this.createQuestion() : 'LOADING'
+      <>
+        <header>
+          <HeaderGame />
+        </header>
+        {
+          (questions[0].type !== '') ? this.createQuestion() : ''
+        }
+      </>
     );
   }
 }
