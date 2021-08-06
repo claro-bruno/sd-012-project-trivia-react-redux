@@ -62,9 +62,9 @@ class Questions extends Component {
     const correctAnswer = document.getElementById('correct');
     const incorrectAnswers = document.getElementsByName('incorrect');
 
-    correctAnswer.className = ('green-border');
+    correctAnswer.className = 'green-border';
     incorrectAnswers.forEach((question) => {
-      question.className = ('red-border');
+      question.className = 'red-border';
     });
     correctAnswer.disable = true;
     incorrectAnswers.disable = true;
