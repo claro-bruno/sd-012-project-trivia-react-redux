@@ -60,14 +60,25 @@ class Questions extends Component {
     ].sort((a, b) => a.answer.localeCompare(b.answer));
   }
 
+  replaceSpecialChars(str) { // remove aspas
+    return str.normalize('NFD')
+      .replace(/[^a-zA-Zs]/g, '');
+  }
+
   render() {
     const { index, btnClicked, nextQuestion } = this.state;
     const { questions, isDisabled } = this.props;
     const CORRECT_ANSWER = 'correct-answer';
+
     return (
       <>
         <div>
-          <p data-testid="question-category">{questions[index].category}</p>
+          <p data-testid="question-category">
+            {
+              this.replaceSpecialChars(questions[index].category)
+            }
+
+          </p>
           <p data-testid="question-text">{questions[index].question}</p>
         </div>
         <div>
