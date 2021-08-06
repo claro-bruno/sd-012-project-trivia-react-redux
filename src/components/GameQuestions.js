@@ -17,6 +17,7 @@ class GameQuestions extends React.Component {
         correct_answer: 'A crowbar',
         incorrect_answers: ['A pistol', 'The H.E.V suit', 'Your fists'],
       },
+      playerScore: 0,
       sortedAnswers: [],
       timer: 30,
       timerIntervalID: 0,
@@ -31,6 +32,7 @@ class GameQuestions extends React.Component {
     this.setAnswers = this.setAnswers.bind(this);
     this.setTimer = this.setTimer.bind(this);
     this.disableAnswers = this.disableAnswers.bind(this);
+    this.scoreCalc = this.scoreCalc.bind(this);
   }
 
   componentDidMount() {
@@ -92,20 +94,48 @@ class GameQuestions extends React.Component {
     }
   }
 
+  scoreCalc(difficulty, timer) {
+    let diff;
+    const { playerScore } = this.state;
+    switch (difficulty) {
+    case 'hard':
+      // eslint-disable-next-line no-magic-numbers
+      diff = 3;
+      console.log(diff);
+      break;
+    case 'medium':
+      diff = 2;
+      console.log(diff);
+      break;
+    default:
+      diff = 1;
+      console.log(diff);
+    }
+    // eslint-disable-next-line no-magic-numbers
+    const score = 10 + (diff * timer);
+    this.setState({
+      playerScore: playerScore + score,
+    });
+  }
+
   handleClick(answerStatus) {
     // No momento que essa função for chamada significa que a pessoa respondeu e o botão de proximo pode aparacer
     const { showAnswer } = this.props;
+    const { timer, question, playerScore } = this.state;
     showAnswer('answer-btn-correct', 'answer-btn-wrong');
     this.setState({
       nextButton: true,
     });
 
     if (answerStatus === 'correct') {
-      // implementar comportamento quando acertar a pergunta
+      this.scoreCalc(question.difficulty, timer);
     }
     if (answerStatus === 'wrong') {
-      // implementar comportamento quando errar a pergunta.
+      this.setState({
+        playerScore: playerScore + 0,
+      });
     }
+    localStorage.setItem('playerScore', playerScore);
   }
 
   renderQuestions() {
@@ -192,6 +222,7 @@ GameQuestions.propTypes = {
   showAnswer: PropTypes.func.isRequired,
   cBtnClass: PropTypes.string.isRequired,
   wBtnClass: PropTypes.string.isRequired,
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameQuestions);
