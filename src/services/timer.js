@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { func } from 'prop-types';
-import { actionDisabled } from '../redux/actions';
+import { actionDisabled, actionTimer } from '../redux/actions';
 
 class Timer extends React.Component {
   constructor() {
     super();
     this.state = {
-      timer: 1,
+      timer: 30,
     };
   }
 
@@ -16,14 +16,13 @@ class Timer extends React.Component {
   }
 
   setTimer() {
+    const { setTimer } = this.props;
     const second = 1000;
-    this.setState({
-      timer: 30,
-    });
     this.myInterval = setInterval(() => {
+      const { timer } = this.state;
       this.setState((prevState) => ({
         timer: prevState.timer - 1,
-      }));
+      }), () => setTimer(timer));
     }, second);
   }
 
@@ -40,10 +39,12 @@ class Timer extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   setDisabled: (isDisabled) => dispatch(actionDisabled(isDisabled)),
+  setTimer: (timer) => dispatch(actionTimer(timer)),
 });
 
 Timer.propTypes = {
   setDisabled: func.isRequired,
+  setTimer: func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Timer);

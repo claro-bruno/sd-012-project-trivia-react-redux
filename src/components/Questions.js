@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { actionDisabled, actionScore } from '../redux/actions';
 import fetchToken from '../services/fetchToken';
-import { actionDisabled, actionToken } from '../redux/actions';
-import '../App.css';
 import ButtonNext from './ButtonNext';
+import '../App.css';
 
 class Questions extends Component {
   constructor() {
@@ -12,12 +12,13 @@ class Questions extends Component {
 
     this.state = {
       index: 0,
+      assertions: 0,
       btnClicked: false,
       nextQuestion: false, // muda pra true na funçao de mudar a cor;
     };
 
-    // this.createQuestions = this.createQuestions.bind(this);
-    this.createQuestionsV2 = this.createQuestions.bind(this);
+    this.createQuestions = this.createQuestions.bind(this);
+    this.verifyAns = this.verifyAns.bind(this);
     this.selectedResponse = this.selectedResponse.bind(this);
   }
 
@@ -33,7 +34,6 @@ class Questions extends Component {
     localStorage.clear();
     fetchToken();
     getToken(localStorage.getItem('token'));
-    // this.createQuestions();
   }
 
   // Lógica feita com auxílio do meu colega Matheus Figueiredo,
@@ -60,9 +60,51 @@ class Questions extends Component {
     ].sort((a, b) => a.answer.localeCompare(b.answer));
   }
 
+  updatePlayer(scoreValue, assertionsValue) {
+    const state = JSON.parse(localStorage.getItem('state'));
+    const newState = {
+      player: {
+        ...state.player,
+        score: scoreValue,
+        assertions: assertionsValue,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(newState));
+  }
+
+  verifyAns({ target }) {
+    this.selectedResponse();
+    const ten = 10;
+    const values = { easy: 1, medium: 2, hard: 3 };
+    const { index } = this.state;
+    const { questions, timer, setScore, setDisabled } = this.props;
+    let result = 0;
+
+    if (target) {
+      setDisabled(true);
+      if (target.id === 'correct') {
+        if (questions[index].difficulty === 'easy') {
+          result += (ten + (timer * values.easy));
+        } else if (questions[index].difficulty === 'medium') {
+          result += (ten + (timer * values.medium));
+        } else if (questions[index].difficulty === 'hard') {
+          result += (ten + (timer * values.hard));
+        }
+        setScore(result);
+        this.setState((prev) => ({ assertions: prev.assertions + 1 }), () => {
+          const { assertions } = this.state;
+          this.updatePlayer(result, assertions);
+        });
+      }
+    }
+  }
+
   replaceSpecialChars(str) { // remove aspas
     return str.normalize('NFD')
-      .replace(/[^a-zA-Zs]/g, '');
+      .replace(/[^a-zA-Zs]/g, ' ');
+    // const cod = window.btoa(str);
+    // const decod = window.atob(cod);
+    // return decod;
   }
 
   render() {
@@ -74,12 +116,14 @@ class Questions extends Component {
       <>
         <div>
           <p data-testid="question-category">
-            {
-              this.replaceSpecialChars(questions[index].category)
-            }
+            {questions[index].category}
 
           </p>
-          <p data-testid="question-text">{questions[index].question}</p>
+          <p data-testid="question-text">
+            {
+              this.replaceSpecialChars(questions[index].question)
+            }
+          </p>
         </div>
         <div>
           {
@@ -88,13 +132,14 @@ class Questions extends Component {
                 data-testid={ question.id === CORRECT_ANSWER
                   ? CORRECT_ANSWER
                   : question.id }
+                id={ question.id === CORRECT_ANSWER ? 'correct' : 'incorrect' }
                 type="button"
                 key={ `${question.id}` }
                 disabled={ isDisabled }
+                onClick={ this.verifyAns }
                 className={ btnClicked
                   ? question.ifCorrect
                   : '' }
-                onClick={ this.selectedResponse }
               >
                 {question.answer}
               </button>
@@ -109,8 +154,11 @@ class Questions extends Component {
 }
 
 Questions.propTypes = {
-  getToken: PropTypes.func.isRequired,
   isDisabled: PropTypes.bool.isRequired,
+  timer: PropTypes.string.isRequired,
+  setScore: PropTypes.func.isRequired,
+  setDisabled: PropTypes.func.isRequired,
+  getToken: PropTypes.func.isRequired,
   questions: PropTypes.shape({
     category: PropTypes.string,
     question: PropTypes.string,
@@ -123,11 +171,13 @@ Questions.propTypes = {
 
 const mapStateToProps = (state) => ({
   isDisabled: state.disabledReducer.isDisabled,
+  timer: state.timerReducer.timer,
+  score: state.scoreReducer.score,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getToken: (token) => dispatch(actionToken(token)),
   setDisabled: (isDisabled) => dispatch(actionDisabled(isDisabled)),
+  setScore: (score) => dispatch(actionScore(score)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);

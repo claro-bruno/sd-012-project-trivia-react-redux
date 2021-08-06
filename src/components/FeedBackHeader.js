@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { string } from 'prop-types';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import Span from './Span';
 import Img from './Img';
-import Timer from '../services/timer';
-// import getScore from '../services/getScore';
 
-class Header extends React.Component {
+class FeedBackHeader extends Component {
   constructor() {
     super();
     this.createHash = this.createHash.bind(this);
@@ -15,7 +13,13 @@ class Header extends React.Component {
 
   getScore() {
     const score = localStorage.getItem('state');
-    return <h4 data-testid="header-score">{score}</h4>;
+    return (
+      <h4 data-testid="header-score">
+        your score:
+        {' '}
+        {score}
+      </h4>
+    );
   }
 
   createHash() {
@@ -26,9 +30,6 @@ class Header extends React.Component {
 
   render() {
     const { user, score } = this.props;
-    // const { user } = this.props;
-    // const scoreValue = localStorage.getItem('state');
-    // console.log(score);
     return (
       <header>
         <Img
@@ -41,11 +42,7 @@ class Header extends React.Component {
           textContent={ user }
           testId="header-player-name"
         />
-        <span data-testId="header-score">{ score }</span>
-        <Span
-          textContent={ <Timer /> }
-          testId="header-timer"
-        />
+        <span>{ score }</span>
       </header>
     );
   }
@@ -61,10 +58,10 @@ Span.propTypes = {
   textContent: string.isRequired,
 };
 
-Header.propTypes = {
+FeedBackHeader.propTypes = {
   email: string.isRequired,
-  user: string.isRequired,
   score: string.isRequired,
+  user: string.isRequired,
 };
 
-export default connect(mapStateToProps, null)(Header);
+export default connect(mapStateToProps)(FeedBackHeader);

@@ -28,15 +28,19 @@ class Login extends React.Component {
       });
     }
   }
-  // getToken(localStorage.getItem('token')); acessar na storage
 
   submitBtn() {
-    const { email, user } = this.state;
+    const { email: gravatarEmail, user: name } = this.state;
     const { history, getEmail, getName } = this.props;
-    getEmail(email);
-    getName(user);
-    // fetchToken();
-    // getToken(localStorage.getItem('token'));
+    getEmail(gravatarEmail);
+    getName(name);
+    const newUser = { player: {
+      name,
+      assertions: 0,
+      score: 0,
+      gravatarEmail,
+    } };
+    localStorage.setItem('state', JSON.stringify(newUser));
     history.push('/game');
   }
 
