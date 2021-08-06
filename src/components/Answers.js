@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Timer from './Timer';
 import { answerCheck, classChanger } from '../helpers';
 
 class Answers extends React.Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
+    this.disableAnswer = this.disableAnswer.bind(this);
     this.state = {
       click: false,
+      disableBtn: false,
     };
   }
 
@@ -20,11 +23,19 @@ class Answers extends React.Component {
     }
   }
 
+  disableAnswer() {
+    this.setState({
+      disableBtn: true,
+      click: true,
+    });
+  }
+
   render() {
     const { answers, correctAnswer } = this.props;
-    const { click } = this.state;
+    const { click, disableBtn } = this.state;
     return (
       <section className="btnSection">
+        <Timer disableAnswer={ this.disableAnswer } />
         { answers.map((e, i) => (
           <button
             type="button"
@@ -32,6 +43,7 @@ class Answers extends React.Component {
             key={ i }
             data-testid={ answerCheck(correctAnswer, e, i) }
             onClick={ this.handleClick }
+            disabled={ disableBtn }
           >
             { e }
           </button>)) }
