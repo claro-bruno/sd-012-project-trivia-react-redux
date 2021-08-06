@@ -5,6 +5,7 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import { actionEmail, actionName } from '../redux/actions';
 import ButtonConfig from '../components/ButtonConfig';
+import ButtonRanking from '../components/ButtonRanking';
 
 class Login extends React.Component {
   constructor() {
@@ -17,6 +18,7 @@ class Login extends React.Component {
     this.handleInputs = this.handleInputs.bind(this);
     this.submitBtn = this.submitBtn.bind(this);
     this.configBtn = this.configBtn.bind(this);
+    this.rankingBtn = this.rankingBtn.bind(this);
   }
 
   validade() {
@@ -47,6 +49,11 @@ class Login extends React.Component {
   configBtn() {
     const { history } = this.props;
     history.push('/config');
+  }
+
+  rankingBtn() {
+    const { history } = this.props;
+    history.push('/ranking');
   }
 
   handleInputs({ target }) {
@@ -88,6 +95,11 @@ class Login extends React.Component {
           itemName="Configurações"
           testId="btn-settings"
           onClick={ this.configBtn }
+        />
+        <ButtonRanking
+          itemName="Ver Ranking"
+          testId="btn-ranking"
+          onClick={ this.rankingBtn }
         />
       </form>
     );

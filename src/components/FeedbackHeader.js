@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Span from './Span';
 import Img from './Img';
 
-class FeedBackHeader extends Component {
+class FeedbackHeader extends Component {
   constructor() {
     super();
     this.createHash = this.createHash.bind(this);
@@ -58,10 +58,10 @@ Span.propTypes = {
   textContent: string.isRequired,
 };
 
-FeedBackHeader.propTypes = {
+FeedbackHeader.propTypes = {
   email: string.isRequired,
   score: string.isRequired,
   user: string.isRequired,
 };
 
-export default connect(mapStateToProps)(FeedBackHeader);
+export default connect(mapStateToProps)(FeedbackHeader);
