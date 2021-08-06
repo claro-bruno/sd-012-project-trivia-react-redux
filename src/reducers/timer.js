@@ -2,7 +2,7 @@ const GET_TIMER = 'GET_TIMER';
 
 const INITIAL_STATE = {
   time: '',
-  disable: '',
+  disabled: '',
 };
 
 const timer = (state = INITIAL_STATE, action) => {
@@ -10,7 +10,8 @@ const timer = (state = INITIAL_STATE, action) => {
   case GET_TIMER:
     return {
       time: action.time,
-      disable: action.disable,
+      disabled: action.disabled,
+      activeButton: action.activeButton,
     };
   default:
     return state;

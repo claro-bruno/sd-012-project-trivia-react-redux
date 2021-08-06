@@ -13,11 +13,12 @@ export function loginAction(emailInput, nameInput) {
   };
 }
 
-export function timerAction(timeValue, disableValue) {
+export function timerAction(timeValue, disabledValue, buttonValue) {
   return {
     type: GET_TIMER,
     time: timeValue,
-    disable: disableValue,
+    disabled: disabledValue,
+    activeButton: buttonValue,
   };
 }
 
