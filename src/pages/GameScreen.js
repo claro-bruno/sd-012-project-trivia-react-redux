@@ -10,7 +10,7 @@ class GameScreen extends Component {
     this.state = {
       count: 0,
       borderGreen: 'without',
-      borderRed: 'without,',
+      borderRed: 'without',
     };
 
     this.renderHeader = this.renderHeader.bind(this);
