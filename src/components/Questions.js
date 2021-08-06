@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import fetchToken from '../services/fetchToken';
 import { actionDisabled, actionToken } from '../redux/actions';
 import '../App.css';
+import ButtonNext from './ButtonNext';
 
 class Questions extends Component {
   constructor() {
@@ -12,6 +13,7 @@ class Questions extends Component {
     this.state = {
       index: 0,
       btnClicked: false,
+      nextQuestion: false, // muda pra true na funçao de mudar a cor;
     };
 
     // this.createQuestions = this.createQuestions.bind(this);
@@ -22,6 +24,7 @@ class Questions extends Component {
   selectedResponse() {
     this.setState({
       btnClicked: true,
+      nextQuestion: true,
     });
   }
 
@@ -58,7 +61,7 @@ class Questions extends Component {
   }
 
   render() {
-    const { index, btnClicked } = this.state;
+    const { index, btnClicked, nextQuestion } = this.state;
     const { questions, isDisabled } = this.props;
     const CORRECT_ANSWER = 'correct-answer';
     return (
@@ -87,6 +90,8 @@ class Questions extends Component {
             ))
           }
         </div>
+        { nextQuestion && <ButtonNext testId="btn-next" /> }
+
       </>
     );
   }
