@@ -13,3 +13,5 @@ export {
   GET_API_TRIVIA_QUESTIONS_ERROR,
   questionsFetchAPI,
 } from './questionsTriviaAction';
+
+export { ADD_ASSERTIONS, addAssertions } from './assertionsAction';
