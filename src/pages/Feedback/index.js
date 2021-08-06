@@ -15,10 +15,7 @@ class Feedback extends Component {
     const moreAssertion = 'Mandou bem!';
     const lessAssertion = 'Podia ser melhor...';
     const numberAssertions = 3;
-    if (assertions >= numberAssertions) {
-      return (<p data-testid="feedback-text">{ moreAssertion }</p>);
-    }
-    return (<p data-testid="feedback-text">{ lessAssertion }</p>);
+    return (assertions >= numberAssertions) ? moreAssertion : lessAssertion;
   }
 
   render() {
@@ -35,24 +32,21 @@ class Feedback extends Component {
           <span data-testid="header-player-name">{ name }</span>
           <span data-testid="header-score">{ score }</span>
         </header>
-        <div data-testid="feedback-text">FeedBack</div>
-        <div>{ this.performPlayer() }</div>
+        <h1 data-testid="feedback-text">Feedback</h1>
+        <p data-testid="feedback-text">{ this.performPlayer() }</p>
         <div>
           <p>
-            Pontuação:
-            {' '}
+            {'Pontuação: '}
             <span data-testid="feedback-total-score">
               {score}
             </span>
           </p>
           <p>
-            Acertou
-            {' '}
+            {'Acertou '}
             <span data-testid="feedback-total-question">
               {assertions}
             </span>
-            {' '}
-            perguntas
+            {' perguntas'}
           </p>
           <div>
             <Link to="/">
