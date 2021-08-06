@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Questions from '../components/Questions';
 import { loadingToken, actionToken } from '../redux/actions';
 import fetchToken from '../services/fetchToken';
+import ButtonNext from '../components/ButtonNext';
 
 class Game extends Component {
   constructor() {
@@ -14,6 +15,7 @@ class Game extends Component {
       questions: [],
       loading: true,
       responseCode: null,
+      nextQuestion: false, // muda pra true na funçao de mudar a cor;
     };
 
     this.fetchTokenQuestions = this.fetchTokenQuestions.bind(this);
@@ -26,7 +28,7 @@ class Game extends Component {
     this.fetchTokenQuestions();
   }
 
-  fetchTokenQuestions() { // pegar o token
+  fetchTokenQuestions() { // pegar o token;
     const { token } = this.props;
     try {
       const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
@@ -44,7 +46,7 @@ class Game extends Component {
   }
 
   render() {
-    const { questions, responseCode, loading } = this.state;
+    const { questions, responseCode, loading, nextQuestion } = this.state;
 
     return (
       <div>
@@ -56,6 +58,7 @@ class Game extends Component {
               : <Questions responseCode={ responseCode } questions={ questions } />
           }
         </div>
+        { nextQuestion && <ButtonNext testId="btn-next" /> }
       </div>
     );
   }
