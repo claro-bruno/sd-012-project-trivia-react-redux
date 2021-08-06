@@ -37,12 +37,17 @@ class Login extends React.Component {
   }
 
   async toQuestions() {
+    const player = {
+      player: { score: 0 },
+    };
     const { name, email } = this.state;
     const { saveToke, saveEmailD, saveNameD } = this.props;
     const token = await fetchAPI.getToken();
     saveEmailD(email);
     saveNameD(name);
     saveToke(token);
+    const playerstringfy = JSON.stringify(player);
+    localStorage.setItem('state', playerstringfy);
     this.setState({ redirectToQuest: true });
   }
 
