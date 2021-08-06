@@ -45,7 +45,7 @@ export default class Config extends React.Component {
           data-testid="btn-ranking"
           onClick={ this.redirectRanking }
         >
-          Ver Ranking
+          Ranking
         </button>
       </div>
     );
