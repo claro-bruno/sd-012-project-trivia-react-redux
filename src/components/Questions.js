@@ -168,7 +168,7 @@ class Questions extends Component {
                 key={ `${question.id}` }
                 disabled={ isDisabled }
                 onClick={ this.verifyAns }
-                className={ btnClicked
+                className={ btnClicked || timer === 0
                   ? question.ifCorrect
                   : '' }
               >
@@ -177,8 +177,8 @@ class Questions extends Component {
             ))
           }
         </div>
-        { nextQuestion
-        && <ButtonNext testId="btn-next" changeQuestion={ this.changeQuestion } /> }
+        { nextQuestion || timer === 0
+          ? <ButtonNext testId="btn-next" changeQuestion={ this.changeQuestion } /> : ''}
 
       </>
     );
