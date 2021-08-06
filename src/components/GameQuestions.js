@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import ButtonNext from './ButtonNext';
 import { changeClass } from '../redux/actions';
 import './GameQuestions.css';
-import FinalResults from './FinalResults';
 
 class GameQuestions extends React.Component {
   constructor(props) {
@@ -212,7 +211,6 @@ class GameQuestions extends React.Component {
             timerIntervalID={ timerIntervalID }
           />}
         </div>
-        <FinalResults />
       </div>
     );
   }
