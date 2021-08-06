@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
 
 const SCORE_NUMBER = 3;
@@ -19,6 +20,7 @@ class Feedback extends React.Component {
 
   componentDidMount() {
     this.setValues();
+    this.playerRanking();
   }
 
   setValues() {
@@ -29,6 +31,25 @@ class Feedback extends React.Component {
       score,
       assertions,
     });
+  }
+
+  playerRanking() {
+    if (!localStorage.getItem('ranking')) {
+      const list = [];
+      localStorage.setItem('ranking', JSON.stringify(list));
+    }
+    const rankList = JSON.parse(localStorage.getItem('ranking'));
+    const stateLocal = JSON.parse(localStorage.getItem('state'));
+    const { player } = stateLocal;
+    const { name, score, email } = player;
+    const gravatar = this.criptEmail(email);
+    rankList.push({ name, score, picture: gravatar });
+    localStorage.setItem('ranking', JSON.stringify(rankList));
+  }
+
+  criptEmail(email) {
+    const criptedEmail = md5(email).toString();
+    return (`https://www.gravatar.com/avatar/${criptedEmail}`);
   }
 
   render() {
