@@ -24,21 +24,18 @@ export default class Button extends React.Component {
   }
 }
 
-const {
-  bool,
-  string,
-  func,
-} = PropTypes;
+const { bool, string, func } = PropTypes;
 
 Button.propTypes = {
   disabled: bool,
-  testId: string.isRequired,
+  testId: string,
   name: string.isRequired,
   handleClick: func.isRequired,
 };
 
 Button.defaultProps = {
   disabled: false,
+  testId: '',
 };
 
 // export default Button;

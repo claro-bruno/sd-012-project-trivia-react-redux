@@ -24,7 +24,7 @@ const questionsTriviaReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       isLoading: false,
-      questions: payload.results,
+      questions: payload,
     };
 
   case GET_API_TRIVIA_QUESTIONS_ERROR:

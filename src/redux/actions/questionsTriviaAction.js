@@ -16,11 +16,19 @@ export const getQuestionsError = (error) => ({
   payload: error,
 });
 
+const fetchQuestions = async (token) => {
+  const END_POINT = `https://opentdb.com/api.php?amount=5&token=${token}`;
+  const response = await fetch(END_POINT);
+  const { results } = await response.json();
+  return results;
+};
+
 export const questionsFetchAPI = (token) => async (dispatch) => {
   dispatch(getQuestions());
-  const END_POINT = `https://opentdb.com/api.php?amount=5&token=${token}`;
-  fetch(END_POINT)
-    .then((data) => data.json())
-    .then((results) => dispatch(getQuestionsSucess(results)))
-    .catch((error) => dispatch(getQuestionsError(error)));
+  try {
+    const fetchAPIQuestions = await fetchQuestions(token);
+    await dispatch(getQuestionsSucess(fetchAPIQuestions));
+  } catch (error) {
+    await dispatch(getQuestionsError(error));
+  }
 };
