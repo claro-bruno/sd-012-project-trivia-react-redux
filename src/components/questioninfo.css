@@ -78,3 +78,13 @@
 .btn-next.visible {
   visibility: visible;
 }
+
+.changeStyle {
+  background-color: #c9c8c8;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 8px 0;
+  padding: 6px;
+  transition: background-color 0.2s;
+}

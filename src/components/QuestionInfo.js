@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import UniqueButton from './UniqueButton';
 import Button from './Button';
 import './questioninfo.css';
 
 class QuestionInfo extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       index: 0,
@@ -14,6 +15,8 @@ class QuestionInfo extends Component {
 
     this.changeColorsAnswer = this.changeColorsAnswer.bind(this);
     this.changeButtonVisibility = this.changeButtonVisibility.bind(this);
+    this.changeQuestions = this.changeQuestions.bind(this);
+    this.resetColors = this.resetColors.bind(this);
   }
 
   changeButtonVisibility() {
@@ -26,6 +29,17 @@ class QuestionInfo extends Component {
     const incorrect = document.getElementsByName('incorrect-answer');
     incorrect.forEach((question) => { question.className = 'questionWrong'; });
     correct.className = 'questionCorrect';
+  }
+
+  changeQuestions() {
+    this.setState((p) => ({ index: p.index + 1 }));
+  }
+
+  resetColors() {
+    const correct = document.getElementById('correct-answer');
+    const incorrect = document.getElementsByName('incorrect-answer');
+    incorrect.forEach((question) => question.classList.remove('questionWrong'));
+    correct.classList.remove('questionCorrect');
   }
 
   sumUserPoints() {
@@ -47,14 +61,15 @@ class QuestionInfo extends Component {
     const points = basePoints + (timer * difficultyMultiplier());
     const locals = JSON.parse(localStorage.getItem('state'));
     localStorage.setItem('state', JSON.stringify({
-      player: { ...locals.player, score: points },
+      player: { ...locals.player, score: locals.player.score + points },
     }));
   }
 
   render() {
     const { index } = this.state;
     const { questions, disabled } = this.props;
-
+    const finalQuestion = 5;
+    if (index === finalQuestion) return <Redirect to="/feedback" />;
     return (
       <div className="question-container">
         <p className="question-category" data-testid="question-category">
@@ -65,9 +80,6 @@ class QuestionInfo extends Component {
           <span className="question">Question:</span>
           {`${questions[index].question}`}
         </p>
-        {/* Aqui eu resolvi chamar de UniqueButton
-        pois ele não compartilha características
-        com os botões de resposta errada */}
         <UniqueButton
           disabled={ disabled }
           className="correct-answer"
@@ -94,6 +106,10 @@ class QuestionInfo extends Component {
           data-testid="btn-next"
           type="button"
           className="btn-next"
+          onClick={ () => {
+            this.changeQuestions();
+            this.resetColors();
+          } }
         >
           PRÓXIMA
         </button>

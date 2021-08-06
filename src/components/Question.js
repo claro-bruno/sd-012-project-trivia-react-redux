@@ -49,6 +49,7 @@ class Question extends Component {
               questions={ questions }
               disabled={ disabled }
               timer={ seconds }
+              count={ this.count }
             />
           )}
         <Timer />
