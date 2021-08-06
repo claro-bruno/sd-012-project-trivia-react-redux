@@ -24,6 +24,10 @@ class Questions extends Component {
     this.fetchQuestionsAndAnswers();
   }
 
+  componentDidUpdate() {
+    this.activeButtonNext();
+  }
+
   // Funcao que ativa o botao de Proxima pergunta, o botao eh ativado independente da resposta ser errada ou certa
   activeButtonNext() {
     const { activeButton } = this.state;
@@ -59,17 +63,15 @@ class Questions extends Component {
 
   // REQUISITO 7 - FUNÇÃO PARA ALTERAR A COR DAS ALTERNATIVAS
   changeColorAnswer() {
-    const correctAnswer = document.getElementById('correct');
     const incorrectAnswers = document.getElementsByName('incorrect');
+    const correctAnswer = document.getElementById('correct');
 
-    correctAnswer.className = 'green-border';
     incorrectAnswers.forEach((question) => {
       question.className = 'red-border';
     });
+    correctAnswer.className = 'green-border';
     correctAnswer.disable = true;
     incorrectAnswers.disable = true;
-
-    this.setState({ activeButton: false }, () => this.activeButtonNext());
   }
 
   async tokenRequire() {
@@ -116,7 +118,7 @@ class Questions extends Component {
           className="button-correct"
           data-testid="correct-answer"
           type="button"
-          onClick={ () => this.changeColorAnswer() }
+          onClick={ this.changeColorAnswer }
           disabled={ disabled }
         >
           { trivias[indexQuestion].correct_answer }
@@ -129,7 +131,7 @@ class Questions extends Component {
             data-testid={ `wrong-answer-${index}` }
             className="button-incorrect"
             key={ wrongAnswer }
-            onClick={ () => this.changeColorAnswer() }
+            onClick={ this.changeColorAnswer }
             disabled={ disabled }
           >
             { wrongAnswer }
