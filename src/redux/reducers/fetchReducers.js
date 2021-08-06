@@ -1,19 +1,25 @@
-import { getToken, getTokenSuccess, getTokenError } from '../actions/index';
+import {
+  GET_QUESTIONS,
+  GET_QUESTIONS_ERROR,
+  GET_QUESTIONS_SUCCESS,
+} from '../actions/actionTypes';
 
 const INITIAL_STATE = {
   questions: [],
   error: '',
 };
 
-export default function fetchReducers(state = INITIAL_STATE, action) {
+function fetchReducers(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case getToken:
+  case GET_QUESTIONS:
     return { ...state };
-  case getTokenSuccess:
+  case GET_QUESTIONS_SUCCESS:
     return { ...state, questions: action.payload };
-  case getTokenError:
+  case GET_QUESTIONS_ERROR:
     return { ...state, error: 'Impossível fazer requisição' };
   default:
     return state;
   }
 }
+
+export default fetchReducers;

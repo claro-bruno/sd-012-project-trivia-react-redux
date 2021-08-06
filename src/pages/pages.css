@@ -32,3 +32,41 @@
   display: flex;
   flex-direction: column;
 }
+
+.list-questions {
+  align-items: center;
+  border-radius: 25%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-flow: column nowrap;
+  list-style: none;
+  transition: 0.3s;
+}
+
+.major-list-question {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 50px;
+}
+
+.list-answers {
+  align-items: center;
+  background-color: cadetblue;
+  border-radius: 25%;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.correct-answer {
+  background-color: white;
+}
+
+.incorrect-answer {
+  background-color: white;
+}
+
+/* border: 3px solid rgb(6, 240, 15);
+border: 3px solid red; */
