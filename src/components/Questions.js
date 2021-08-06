@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import Timer from './Timer';
 import { scoreUpdate, updateGlobalKey } from '../redux/actions/questions';
 import { nextQuestion } from '../redux/actions/nextQuestion';
@@ -8,6 +9,11 @@ import { nextQuestion } from '../redux/actions/nextQuestion';
 class Play extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      redirectCounter: 0,
+      shouldRedirect: false,
+    };
 
     this.onClickAnswer = this.onClickAnswer.bind(this);
     this.onClickNext = this.onClickNext.bind(this);
@@ -32,8 +38,13 @@ class Play extends React.Component {
 
   onClickNext() {
     const { changeGlobal, next } = this.props;
-    changeGlobal(false);
-    next();
+    const { redirectCounter } = this.state;
+    const quatro = 4;
+    if (redirectCounter !== quatro) {
+      changeGlobal(false);
+      next();
+      this.setState((prevState) => ({ redirectCounter: prevState.redirectCounter + 1 }));
+    } else this.setState({ shouldRedirect: true });
   }
 
   optionsAnswers(answer, index) {
@@ -118,6 +129,8 @@ class Play extends React.Component {
 
   render() {
     const { globalKey, question, answers } = this.props;
+    const { shouldRedirect } = this.state;
+    if (shouldRedirect) return <Redirect to="/feedback" />;
     return (
       <div>
         { !globalKey ? <Timer /> : <div>0</div> }
