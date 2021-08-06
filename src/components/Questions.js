@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Timer from './Timer';
 import Loading from './Loading';
 import '../styles/Questions.css';
 
@@ -15,15 +14,19 @@ class Questions extends Component {
       loading: true,
       indexQuestion: 0,
       activeButton: false,
+      disabled: false,
+      time: 30,
     };
 
     this.fetchQuestionsAndAnswers = this.fetchQuestionsAndAnswers.bind(this);
-    this.changeColorAnswer = this.changeColorAnswer.bind(this);
+    this.makeActiveButtonToTrue = this.makeActiveButtonToTrue.bind(this);
     this.makeTrivias = this.makeTrivias.bind(this);
+    this.questionTimer = this.questionTimer.bind(this);
   }
 
   componentDidMount() {
     this.fetchQuestionsAndAnswers();
+    this.questionTimer();
   }
 
   // Faz requisicao para API e guarda chave Results no estado da pagina.
@@ -40,9 +43,10 @@ class Questions extends Component {
     });
   }
 
-  changeColorAnswer() {
+  makeActiveButtonToTrue() {
     this.setState({
       activeButton: true,
+      disabled: true,
     });
   }
 
@@ -56,7 +60,7 @@ class Questions extends Component {
         data-testid="btn-next"
         onClick={ () => this.nextQuestion() }
       >
-        { indexQuestion === questionsLimit ? this.redirectToFeedback() : 'TRALALA' }
+        { indexQuestion === questionsLimit ? this.redirectToFeedback() : 'Próxima' }
       </button>
     );
   }
@@ -76,15 +80,35 @@ class Questions extends Component {
     this.setState({
       indexQuestion: indexQuestion + 1,
       activeButton: false,
-    });
+      disabled: false,
+      time: 30,
+    }, () => this.questionTimer());
+  }
+
+  // Funcao que conta 30 segundos para responder a pergunta
+  questionTimer() {
+    const plus = 1000;
+    const questionTimer = setInterval(() => {
+      const { time } = this.state;
+      this.setState({
+        time: time - 1,
+      });
+      if (time <= 0) {
+        clearInterval(questionTimer);
+        this.setState({
+          disabled: true,
+          time: 'Tempo Esgotado',
+          activeButton: true,
+        });
+      }
+    }, plus);
   }
 
   makeTrivias() {
-    const { trivias, indexQuestion, activeButton } = this.state;
-    const { disabled } = this.props;
+    const { trivias, indexQuestion, activeButton, disabled, time } = this.state;
     return (
       <>
-        <Timer />
+        <span id="timer">{ time }</span>
         <h1 data-testid="question-category">{ trivias[indexQuestion].category }</h1>
         <h2 data-testid="question-text">{ trivias[indexQuestion].question }</h2>
         <ol>
@@ -93,7 +117,7 @@ class Questions extends Component {
               id="correct"
               data-testid="correct-answer"
               type="button"
-              onClick={ this.changeColorAnswer }
+              onClick={ this.makeActiveButtonToTrue }
               disabled={ disabled }
               className={ activeButton ? 'green-border' : '' }
             >
@@ -107,7 +131,7 @@ class Questions extends Component {
                 type="button"
                 data-testid={ `wrong-answer-${index}` }
                 className={ activeButton ? 'red-border' : '' }
-                onClick={ this.changeColorAnswer }
+                onClick={ this.makeActiveButtonToTrue }
                 disabled={ disabled }
               >
                 { wrongAnswer }
@@ -132,8 +156,6 @@ class Questions extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  timeValue: state.timer.time,
-  disableValue: state.timer.disabled,
   load: state.user.load,
   token: state.user.token,
 });
@@ -141,6 +163,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(Questions);
 
 Questions.propTypes = {
-  time: PropTypes.number,
-  disabled: PropTypes.bool,
+  timeValue: PropTypes.number,
+  disabledValue: PropTypes.bool,
 }.isRequired;
