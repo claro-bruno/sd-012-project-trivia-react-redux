@@ -22,7 +22,12 @@ class FeedBack extends React.Component {
   render() {
     const {
       player:
-      { name, gravatarEmail, score } } = JSON.parse(localStorage.getItem('state'));
+      {
+        name,
+        assertions,
+        gravatarEmail,
+        score,
+      } } = JSON.parse(localStorage.getItem('state'));
     return (
       <div>
         <p data-testid="feedback-text">FeedBack</p>
@@ -33,6 +38,8 @@ class FeedBack extends React.Component {
         />
         <h3 data-testid="header-player-name">{name}</h3>
         <p data-testid="header-score">{score}</p>
+        <p data-testid="feedback-total-score">{score}</p>
+        <p data-testid="feedback-total-question">{assertions}</p>
         <button
           type="button"
           data-testid="btn-play-again"

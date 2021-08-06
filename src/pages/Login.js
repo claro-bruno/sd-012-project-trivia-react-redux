@@ -31,7 +31,8 @@ class Login extends React.Component {
   setPlayerData() {
     const { name, email } = this.state;
     localStorage.setItem('state',
-      JSON.stringify({ player: { name, gravatarEmail: email, score: 0 } }));
+      JSON.stringify({
+        player: { name, assertions: 0, gravatarEmail: email, score: 0 } }));
   }
 
   handleChange({ target: { name, value } }) {
