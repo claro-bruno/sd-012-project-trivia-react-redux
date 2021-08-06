@@ -14,6 +14,14 @@ class Play extends React.Component {
     this.optionsAnswers = this.optionsAnswers.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.changeBorders = this.changeBorders.bind(this);
+    this.takeOffBorder = this.takeOffBorder.bind(this);
+  }
+
+  componentDidUpdate() {
+    const { globalKey } = this.props;
+    if (globalKey === false) {
+      this.takeOffBorder();
+    } else { this.changeBorders(); }
   }
 
   onClickAnswer() {
@@ -72,9 +80,16 @@ class Play extends React.Component {
     });
   }
 
-  async handleClick() {
-    this.changeBorders();
+  takeOffBorder() {
+    console.log('takeOffBorder');
+    const answerButtons = document.querySelectorAll('#answerButton');
 
+    answerButtons.forEach(({ style }) => {
+      style.border = '1px solid black';
+    });
+  }
+
+  async handleClick() {
     // let pontosAnswer = 0;
     // let pontosDiffuculty;
     // const n = { dez: 10, tres: 3, dois: 2, um: 1 };
@@ -102,9 +117,14 @@ class Play extends React.Component {
         <div data-testid="question-text">{ question.question }</div>
 
         { answers.map((answer, index) => this.optionsAnswers(answer, index))}
-
-        <button type="button" onClick={ this.handleClick }>reposta</button>
-        <button type="button" onClick={ this.onClickNext }>proximo</button>
+        <br />
+        { globalKey && (
+          <button
+            type="button"
+            onClick={ this.onClickNext }
+          >
+            proximo
+          </button>)}
       </div>
     );
   }
