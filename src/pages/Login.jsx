@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getLogin, getAPI } from '../redux/action/index';
+import { getLogin, getToken } from '../redux/action/index';
 import logo from '../trivia.png';
 
 const regEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/i;
@@ -16,7 +16,7 @@ class Login extends Component {
       name: '',
     };
     this.handle = this.handle.bind(this);
-    this.func = this.func.bind(this);
+    this.handleClickToken = this.handleClickToken.bind(this);
   }
 
   handle({ target: { name, value } }) {
@@ -25,10 +25,10 @@ class Login extends Component {
     });
   }
 
-  func() {
-    const { dataUser, callAPI } = this.props;
+  handleClickToken() {
+    const { fetchToken, dataUser } = this.props;
+    fetchToken();
     dataUser(this.state);
-    callAPI();
   }
 
   render() {
@@ -61,7 +61,7 @@ class Login extends Component {
               disabled={ !(regEmail.test(email) && name.length > nameSize) }
               data-testid="btn-play"
               type="button"
-              onClick={ this.func }
+              onClick={ this.handleClickToken }
             >
               Jogar
             </button>
@@ -81,8 +81,8 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  dataUser: (value) => dispatch(getLogin(value)),
-  callAPI: () => dispatch(getAPI()),
+  dataUser: (userLogin) => dispatch(getLogin(userLogin)),
+  fetchToken: () => dispatch(getToken()),
 });
 
 Login.propTypes = {

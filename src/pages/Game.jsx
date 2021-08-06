@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getTriviaAPI } from '../redux/action/index';
+// import { getTriviaAPI } from '../redux/action/index';
 import HeaderGame from '../components/HeaderGame';
 
 class Game extends Component {
@@ -103,7 +103,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getAPI: (token) => dispatch(getTriviaAPI(token)),
+//  getAPI: (token) => dispatch(getTriviaAPI(token)),
 });
 
 Game.propTypes = {
