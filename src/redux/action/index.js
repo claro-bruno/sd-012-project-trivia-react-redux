@@ -25,7 +25,11 @@ export const getAPI = () => async (dispatch) => {
 };
 
 export const getTriviaAPI = (token) => async (dispatch) => {
+<<<<<<< HEAD
   const questionsNumber = 2;
+=======
+  const questionsNumber = 1;
+>>>>>>> 08c193cf85a32f1403cccd32a3031c5589204572
   let request = await fetch(`https://opentdb.com/api.php?amount=${questionsNumber}&token=${token}`);
   request = await request.json();
   try {
