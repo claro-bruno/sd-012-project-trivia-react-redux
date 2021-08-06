@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
-import './App.css';
+
 import LoginPage from './pages/LoginPage';
 import ConfigPage from './pages/ConfigPage';
 import GamePage from './pages/GamePage';
