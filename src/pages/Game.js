@@ -7,6 +7,7 @@ import questions from '../questions';
 import Button from '../components/Button';
 
 class Game extends React.Component {
+<<<<<<< HEAD
   constructor() {
     super();
 
@@ -20,11 +21,14 @@ class Game extends React.Component {
     };
   }
 
+=======
+>>>>>>> af74a33f23c79838f333ce7f4c774c86ee31887c
   componentDidMount() {
     const { props: { setQuestions, getToken } } = this;
     setQuestions(getToken);
   }
 
+<<<<<<< HEAD
   correctClick() {
     const {
       state: { correctAnswers },
@@ -52,11 +56,19 @@ class Game extends React.Component {
     } = this;
 
     const {
+=======
+  render() {
+    const {
+>>>>>>> af74a33f23c79838f333ce7f4c774c86ee31887c
       category,
       question,
       correct_answer: correctAnswer,
       incorrect_answers: incorrectAnswers,
+<<<<<<< HEAD
     } = questions[questionPosition];
+=======
+    } = questions[0];
+>>>>>>> af74a33f23c79838f333ce7f4c774c86ee31887c
 
     return (
       <>
@@ -71,16 +83,22 @@ class Game extends React.Component {
                   data-testid={ `wrong-answer-${index}` }
                   key={ answers }
                   name={ answers }
+<<<<<<< HEAD
                   handleClick={ wrongClick }
                   disabled={ questionsDesable }
+=======
+>>>>>>> af74a33f23c79838f333ce7f4c774c86ee31887c
                 />
               ))
             }
             <Button
               data-testid="correct-answer"
               name={ correctAnswer }
+<<<<<<< HEAD
               handleClick={ correctClick }
               disabled={ questionsDesable }
+=======
+>>>>>>> af74a33f23c79838f333ce7f4c774c86ee31887c
             />
           </section>
         </section>
