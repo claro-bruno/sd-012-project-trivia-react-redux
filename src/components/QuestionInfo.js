@@ -61,7 +61,11 @@ class QuestionInfo extends Component {
     const points = basePoints + (timer * difficultyMultiplier());
     const locals = JSON.parse(localStorage.getItem('state'));
     localStorage.setItem('state', JSON.stringify({
-      player: { ...locals.player, score: locals.player.score + points },
+      player: {
+        ...locals.player,
+        assertions:
+        locals.player.assertions + 1,
+        score: locals.player.score + points },
     }));
   }
 
