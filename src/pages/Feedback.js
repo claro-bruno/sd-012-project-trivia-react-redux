@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import Performance from '../components/Performance';
 
-
 export default class Config extends React.Component {
   constructor(props) {
     super(props);
