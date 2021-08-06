@@ -1,0 +1,9 @@
+[data-testid='correct-answer'] {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+[data-testid='wrong-answer-0'],
+[data-testid='wrong-answer-1'],
+[data-testid='wrong-answer-2'] {
+  border: 3px solid rgb(255, 0, 0);
+}
