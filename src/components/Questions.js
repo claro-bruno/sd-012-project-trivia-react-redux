@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Timer from './Timer';
 import Loading from './Loading';
+import '../Questions.css';
 
 class Questions extends Component {
   constructor(props) {
@@ -48,18 +49,25 @@ class Questions extends Component {
       indexQuestion: indexQuestion + 1,
       activeButton: true,
     });
-    const correctAnswer = document.querySelector('.green-border');
+
+    const correctAnswer = document.getElementById('correct');
+    const incorrectAnswers = document.getElementsByName('incorrect');
     correctAnswer.className = ('button-correct');
+    correctAnswer.disable = false;
+    incorrectAnswers.disable = false;
   }
 
   // REQUISITO 7 - FUNÇÃO PARA ALTERAR A COR DAS ALTERNATIVAS
   changeColorAnswer() {
-    const correctAnswer = document.querySelector('.button-correct');
-    const incorrectAnswers = document.querySelectorAll('.button-incorrect');
+    const correctAnswer = document.getElementById('correct');
+    const incorrectAnswers = document.getElementsByName('incorrect');
+
     correctAnswer.className = ('green-border');
     incorrectAnswers.forEach((question) => {
       question.className = ('red-border');
     });
+    correctAnswer.disable = true;
+    incorrectAnswers.disable = true;
     this.activeButtonNext();
   }
 
@@ -101,10 +109,9 @@ class Questions extends Component {
       <>
         <Timer />
         <h1 data-testid="question-category">{ trivias[indexQuestion].category }</h1>
-        <h2 data-testid="question-text">
-          { trivias[indexQuestion].question }
-        </h2>
+        <h2 data-testid="question-text">{ trivias[indexQuestion].question }</h2>
         <button
+          id="correct"
           className="button-correct"
           data-testid="correct-answer"
           type="button"
@@ -119,6 +126,7 @@ class Questions extends Component {
 
         { trivias[indexQuestion].incorrect_answers.map((wrongAnswer, index) => (
           <button
+            name="incorrect"
             type="button"
             data-testid={ `wrong-answer-${index}` }
             className="button-incorrect"

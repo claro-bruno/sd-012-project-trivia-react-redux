@@ -7,18 +7,6 @@
   pointer-events: none;
 }
 
-.red-border {
-  border: 3px solid red;
-}
-
-.green-border {
-  border: 3px solid rgb(6, 240, 15);
-}
-
-.nextButton {
-  visibility: hidden;
-}
-
 @media ( prefers-reduced-motion : no-preference ) {
 
   .App-logo {
@@ -60,10 +48,3 @@
   }
 }
 
-/* .green-button {
-  border: 3px solid rgb(6, 240, 15);
-}
-
-.red-button {
-  border: 3px solid red;
-} */
