@@ -4,8 +4,6 @@ import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import Span from './Span';
 import Img from './Img';
-import Timer from '../services/timer';
-// import getScore from '../services/getScore';
 
 class Header extends React.Component {
   constructor() {
@@ -42,10 +40,7 @@ class Header extends React.Component {
           testId="header-player-name"
         />
         <span data-testId="header-score">{ score }</span>
-        <Span
-          textContent={ <Timer /> }
-          testId="header-timer"
-        />
+
       </header>
     );
   }

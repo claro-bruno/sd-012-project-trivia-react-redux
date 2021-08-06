@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { actionDisabled, actionScore } from '../redux/actions';
+import { Redirect } from 'react-router-dom';
+import { actionDisabled, actionScore, actionTimer } from '../redux/actions';
 import fetchToken from '../services/fetchToken';
 import ButtonNext from './ButtonNext';
 import '../App.css';
+import Span from './Span';
 
 class Questions extends Component {
   constructor() {
@@ -14,12 +16,30 @@ class Questions extends Component {
       index: 0,
       assertions: 0,
       btnClicked: false,
-      nextQuestion: false, // muda pra true na funçao de mudar a cor;
+      nextQuestion: false,
+      timer: 30,
     };
 
     this.createQuestions = this.createQuestions.bind(this);
     this.verifyAns = this.verifyAns.bind(this);
     this.selectedResponse = this.selectedResponse.bind(this);
+    this.changeQuestion = this.changeQuestion.bind(this);
+    this.setTimer = this.setTimer.bind(this);
+  }
+
+  componentDidMount() {
+    this.setTimer();
+  }
+
+  setTimer() {
+    const { setTimer } = this.props;
+    const second = 1000;
+    this.myInterval = setInterval(() => {
+      const { timer } = this.state;
+      this.setState((prevState) => ({
+        timer: prevState.timer - 1,
+      }), () => setTimer(timer));
+    }, second);
   }
 
   selectedResponse() {
@@ -27,6 +47,7 @@ class Questions extends Component {
       btnClicked: true,
       nextQuestion: true,
     });
+    clearInterval(this.myInterval);
   }
 
   validateToken() {
@@ -79,7 +100,6 @@ class Questions extends Component {
     const { index } = this.state;
     const { questions, timer, setScore, setDisabled } = this.props;
     let result = 0;
-
     if (target) {
       setDisabled(true);
       if (target.id === 'correct') {
@@ -107,23 +127,40 @@ class Questions extends Component {
     // return decod;
   }
 
+  changeQuestion() {
+    const { setDisabled } = this.props;
+    console.log(this.setTimer);
+    this.setState((prev) => ({
+      index: prev.index + 1,
+      btnClicked: false,
+      nextQuestion: false,
+      timer: 30,
+    }), () => this.setTimer());
+    setDisabled(false);
+  }
+
   render() {
-    const { index, btnClicked, nextQuestion } = this.state;
-    const { questions, isDisabled } = this.props;
+    const { index, btnClicked, nextQuestion, timer } = this.state;
+    const { questions, isDisabled, setDisabled } = this.props;
     const CORRECT_ANSWER = 'correct-answer';
+    if (timer === 0) {
+      setDisabled(true);
+      clearInterval(this.myInterval);
+    }
+    if (index === questions.length) { return <Redirect to="/feedback" />; }
 
     return (
       <>
         <div>
-          <p data-testid="question-category">
-            {questions[index].category}
-
-          </p>
+          <p data-testid="question-category">{questions[index].category}</p>
           <p data-testid="question-text">
-            {
-              this.replaceSpecialChars(questions[index].question)
-            }
+            {this.replaceSpecialChars(questions[index].question)}
           </p>
+
+          <Span
+            textContent={ timer }
+            testId="header-timer"
+          />
         </div>
         <div>
           {
@@ -146,7 +183,8 @@ class Questions extends Component {
             ))
           }
         </div>
-        { nextQuestion && <ButtonNext testId="btn-next" /> }
+        { nextQuestion
+        && <ButtonNext testId="btn-next" changeQuestion={ this.changeQuestion } /> }
 
       </>
     );
@@ -159,6 +197,7 @@ Questions.propTypes = {
   setScore: PropTypes.func.isRequired,
   setDisabled: PropTypes.func.isRequired,
   getToken: PropTypes.func.isRequired,
+  setTimer: PropTypes.func.isRequired,
   questions: PropTypes.shape({
     category: PropTypes.string,
     question: PropTypes.string,
@@ -178,6 +217,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setDisabled: (isDisabled) => dispatch(actionDisabled(isDisabled)),
   setScore: (score) => dispatch(actionScore(score)),
+  setTimer: (timer) => dispatch(actionTimer(timer)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);

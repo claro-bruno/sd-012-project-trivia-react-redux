@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import FeedBackHeader from '../components/FeedBackHeader';
 
-class FeedBack extends Component {
+class Feedback extends React.Component {
   render() {
     return (
       <div>
+        <h1 data-testid="feedback-text">Feedback</h1>
         <FeedBackHeader />
       </div>
     );
   }
 }
 
-export default FeedBack;
+export default Feedback;
