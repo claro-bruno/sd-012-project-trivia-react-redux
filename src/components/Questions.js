@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchToken from '../services/fetchToken';
 import { actionDisabled, actionToken } from '../redux/actions';
+import '../App.css';
 
 class Questions extends Component {
   constructor() {
@@ -10,10 +11,18 @@ class Questions extends Component {
 
     this.state = {
       index: 0,
+      btnClicked: false,
     };
 
     // this.createQuestions = this.createQuestions.bind(this);
     this.createQuestionsV2 = this.createQuestions.bind(this);
+    this.selectedResponse = this.selectedResponse.bind(this);
+  }
+
+  selectedResponse() {
+    this.setState({
+      btnClicked: true,
+    });
   }
 
   validateToken() {
@@ -38,16 +47,18 @@ class Questions extends Component {
       {
         answer: correctAnswer,
         id: CORRECT_ANSWER,
+        ifCorrect: CORRECT_ANSWER,
       },
       ...incorrectAnswers.map((item, i) => ({
         answer: item,
         id: `wrong-answer-${i}`,
+        ifCorrect: 'wrong-answer',
       })),
     ].sort((a, b) => a.answer.localeCompare(b.answer));
   }
 
   render() {
-    const { index } = this.state;
+    const { index, btnClicked } = this.state;
     const { questions, isDisabled } = this.props;
     const CORRECT_ANSWER = 'correct-answer';
     return (
@@ -66,6 +77,10 @@ class Questions extends Component {
                 type="button"
                 key={ `${question.id}` }
                 disabled={ isDisabled }
+                className={ btnClicked
+                  ? question.ifCorrect
+                  : '' }
+                onClick={ this.selectedResponse }
               >
                 {question.answer}
               </button>

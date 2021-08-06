@@ -10,7 +10,6 @@ import ButtonNext from '../components/ButtonNext';
 class Game extends Component {
   constructor() {
     super();
-
     this.state = {
       questions: [],
       loading: true,
