@@ -23,7 +23,7 @@ class Ranking extends React.Component {
           data-testid="btn-go-home"
           onClick={ this.playAgain }
         >
-          Voltar ao inicio
+          Voltar ao inicio:
         </button>
       </div>
     );
