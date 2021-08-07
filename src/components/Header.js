@@ -87,6 +87,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps)(Header);
 
+// proptypes do componente Header
 Header.propTypes = {
   nameUser: PropTypes.string,
   emailUser: PropTypes.string,
