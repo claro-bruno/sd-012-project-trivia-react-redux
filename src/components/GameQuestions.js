@@ -102,15 +102,15 @@ class GameQuestions extends React.Component {
     switch (difficulty) {
     case 'hard':
       diff = 2 + 1;
-      console.log(diff);
+      // console.log(diff);
       break;
     case 'medium':
       diff = 2;
-      console.log(diff);
+      // console.log(diff);
       break;
     default:
       diff = 1;
-      console.log(diff);
+      // console.log(diff);
     }
     const point = ten + (diff * timer);
     playerScore += point;
@@ -128,13 +128,24 @@ class GameQuestions extends React.Component {
     localStorage.setItem('state', JSON.stringify(newState));
   }
 
-  handleClick() {
-    // No momento que essa função for chamada significa que a pessoa respondeu e o botão de proximo pode aparacer
+  handleClick(answerStatus) {
+    this.disableAnswers();
     const { showAnswer } = this.props;
     showAnswer('answer-btn-correct', 'answer-btn-wrong');
     this.setState({
       nextButton: true,
     });
+
+    if (answerStatus === 'correct') {
+      const state = JSON.parse(localStorage.getItem('state'));
+      const newState = {
+        player: {
+          ...state.player,
+          assertions: state.player.assertions + 1,
+        },
+      };
+      localStorage.setItem('state', JSON.stringify(newState));
+    }
   }
 
   renderQuestions() {
@@ -222,7 +233,6 @@ GameQuestions.propTypes = {
   showAnswer: PropTypes.func.isRequired,
   cBtnClass: PropTypes.string.isRequired,
   wBtnClass: PropTypes.string.isRequired,
-
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameQuestions);

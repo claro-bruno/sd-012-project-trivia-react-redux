@@ -12,6 +12,11 @@ class Header extends React.Component {
     return imagePath;
   }
 
+  getScore() {
+    const state = JSON.parse(localStorage.getItem('state'));
+    return state.player.score;
+  }
+
   render() {
     const { loginInfos } = this.props;
     return (
@@ -26,7 +31,7 @@ class Header extends React.Component {
         </div>
         <div className="score-section">
           <p>Pontos:</p>
-          <p data-testid="header-score">{0}</p>
+          <p data-testid="header-score">{this.getScore()}</p>
         </div>
       </header>
     );
