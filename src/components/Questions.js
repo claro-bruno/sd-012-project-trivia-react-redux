@@ -181,10 +181,10 @@ class Questions extends Component {
               <button
                 name="incorrect"
                 type="button"
-                data-testid={ `wrong-answer-${index}` }
                 className={ activeButton ? 'red-border' : '' }
                 onClick={ this.showButtonNext }
                 disabled={ disabled }
+                data-testid={ `wrong-answer-${index}`}
               >
                 { wrongAnswer }
               </button>
