@@ -6,6 +6,7 @@ import loadingReducer from './loadingReducer';
 import disabledReducer from './disabledReducer';
 import timerReducer from './timerReducer';
 import scoreReducer from './scoreReducer';
+import assertionsReducer from './assertionsReducer';
 
 const rootReducer = combineReducers(
   {
@@ -16,6 +17,7 @@ const rootReducer = combineReducers(
     disabledReducer,
     timerReducer,
     scoreReducer,
+    assertionsReducer,
   },
 );
 
