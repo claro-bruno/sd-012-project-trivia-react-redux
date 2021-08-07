@@ -20,11 +20,12 @@ export function getTokenAction() {
   };
 }
 
-export function getScoreAction(scoreValue) {
+export function getScoreAction(scoreValue, assertsValue) {
   console.log('oi eu sou a login');
   return {
     type: GET_SCORE,
-    value: scoreValue,
+    score: scoreValue,
+    asserts: assertsValue,
   };
 }
 

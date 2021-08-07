@@ -18,6 +18,7 @@ class Questions extends Component {
       disabled: false,
       time: 30,
       score: 0,
+      asserts: 0,
     };
 
     this.fetchQuestionsAndAnswers = this.fetchQuestionsAndAnswers.bind(this);
@@ -34,10 +35,10 @@ class Questions extends Component {
   }
 
   makeProps() {
-    const { score } = this.state;
+    const { score, asserts } = this.state;
     const { getScore } = this.props;
 
-    getScore(score);
+    getScore(score, asserts);
   }
 
   // Faz requisicao para API e guarda chave Results no estado da pagina.
@@ -117,7 +118,7 @@ class Questions extends Component {
   }
 
   calculateScore() {
-    const { time, trivias, indexQuestion, score } = this.state;
+    const { time, trivias, indexQuestion, score, asserts } = this.state;
     const easy = 'easy';
     const medium = 'medium';
     const hard = 'hard';
@@ -129,13 +130,15 @@ class Questions extends Component {
     case easy:
       this.setState({
         score: score + baseValue + (1 * time),
+        asserts: asserts + 1,
         activeButton: true,
         disabled: true,
-      });
+      }, () => this.makeProps());
       break;
     case medium:
       this.setState({
         score: score + baseValue + (2 * time),
+        asserts: asserts + 1,
         activeButton: true,
         disabled: true,
       }, () => this.makeProps());
@@ -143,6 +146,7 @@ class Questions extends Component {
     case hard:
       this.setState({
         score: score + baseValue + (three * time),
+        asserts: asserts + 1,
         activeButton: true,
         disabled: true,
       }, () => this.makeProps());
@@ -151,7 +155,7 @@ class Questions extends Component {
       this.state({
         activeButton: true,
         disabled: true,
-      }, () => this.makeProps());
+      });
     }
   }
 
@@ -213,7 +217,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToprops = (dispatch) => ({
-  getScore: (scoreValue) => dispatch(getScoreAction(scoreValue)),
+  getScore: (scoreValue, assertsValue) => dispatch(
+    getScoreAction(scoreValue, assertsValue),
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToprops)(Questions);

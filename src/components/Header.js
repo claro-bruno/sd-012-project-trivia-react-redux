@@ -10,7 +10,6 @@ class Header extends Component {
     this.state = {
       criptoEmail: '',
       imgGravatar: '',
-      asserts: 10,
     };
 
     this.emailCript = this.emailCript.bind(this);
@@ -36,8 +35,8 @@ class Header extends Component {
 
   // função para pegar a imagem na api do gravatar
   async gravatar() {
-    const { criptoEmail, asserts } = this.state;
-    const { nameUser, playerScore } = this.props;
+    const { criptoEmail } = this.state;
+    const { nameUser, playerScore, playerAsserts } = this.props;
     const fetchGravatar = await fetch(`https://www.gravatar.com/avatar/${criptoEmail}`);
     this.setState({
       imgGravatar: fetchGravatar.url,
@@ -45,7 +44,7 @@ class Header extends Component {
 
     const player = {
       name: nameUser,
-      assertions: asserts,
+      assertions: playerAsserts,
       score: playerScore,
       gravatarEmail: criptoEmail,
     };
@@ -83,6 +82,7 @@ const mapStateToProps = (state) => ({
   nameUser: state.user.name,
   emailUser: state.user.email,
   playerScore: state.score.score,
+  playerAsserts: state.score.asserts,
 });
 
 export default connect(mapStateToProps)(Header);
