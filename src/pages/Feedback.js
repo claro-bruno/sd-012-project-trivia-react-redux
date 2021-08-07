@@ -23,8 +23,9 @@ class Feedback extends React.Component {
           onClick={ () => this.handleClick('/') }
         />
         <Button
+          type="button"
           buttonText="Ver Ranking"
-          testId="btn-ranking"
+          data-testid="btn-ranking"
           onClick={ () => this.handleClick('/ranking') }
         />
       </section>
