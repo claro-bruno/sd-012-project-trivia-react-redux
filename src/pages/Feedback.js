@@ -49,4 +49,3 @@ Feedback.propTypes = {
   nameUser: PropTypes.string,
   emailUser: PropTypes.string,
 }.isRequired;
-
