@@ -14,6 +14,7 @@ const INITIAL_STATE = {
   questionNumber: 0,
   cBtnClass: normalButton,
   wBtnClass: normalButton,
+  correctAnswers: 0,
 };
 
 const game = (state = INITIAL_STATE, action) => {
