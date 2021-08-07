@@ -1,27 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
+import styled from 'styled-components';
+
+const Header = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Avatar = styled.img`
+  border: 3px solid white;
+  width: 2.5rem;
+`;
 
 class HeaderPlayer extends Component {
   render() {
     const state = JSON.parse(localStorage.getItem('state'));
-    const { score } = state.player;
-    const { userInfo } = this.props;
-    const hash = md5(userInfo.email).toString();
+    const { score, name, gravatarEmail } = state.player;
+    const hash = md5(gravatarEmail).toString();
+
     return (
-      <header>
-        <img src={ `https://www.gravatar.com/avatar/${hash}` } alt="Avatar" data-testid="header-profile-picture" />
-        <p data-testid="header-score">{score}</p>
-        <p data-testid="header-player-name">{ userInfo.name }</p>
-      </header>
+      <Header>
+        <Avatar src={ `https://www.gravatar.com/avatar/${hash}` } alt="Avatar" data-testid="header-profile-picture" />
+        <div>
+          <p>
+            <span data-testid="header-score">{score}</span>
+            {' '}
+            pontos
+          </p>
+          <p data-testid="header-player-name">{ name }</p>
+        </div>
+      </Header>
     );
   }
 }
-
-HeaderPlayer.propTypes = {
-  userInfo: PropTypes.objectOf(Object).isRequired,
-};
 
 const mapStateToProps = (state) => ({
   userInfo: state.userInfo,

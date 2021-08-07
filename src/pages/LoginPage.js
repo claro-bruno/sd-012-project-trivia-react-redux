@@ -33,7 +33,6 @@ const Logo = styled.img`
 
 const Main = styled.main`
   align-items: center;
-  background-color: #282c34;
   color: white;
   display: flex;
   flex-direction: column;
