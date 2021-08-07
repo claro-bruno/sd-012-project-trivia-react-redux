@@ -55,9 +55,16 @@ const Answer = styled.button`
   margin-bottom: 1rem;
   margin-left: auto;
   margin-right: auto;
+  cursor: pointer;
 
   @media (min-width: 60rem) {
     max-width: none;
+  }
+
+  @media (hover:hover) {
+    &:hover {
+      filter: brightness(1.75);
+    }
   }
 `;
 
@@ -71,6 +78,7 @@ const NextBtn = styled.button`
   font-size: 1.25rem;
   font-weight: 600;
   margin: 2rem auto;
+  cursor: pointer;
 `;
 
 const Grid = styled.main`
