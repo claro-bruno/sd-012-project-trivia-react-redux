@@ -19,11 +19,18 @@ const Category = styled.h2`
   color: hsla(0, 0%, 100%, 62.5%);
   border-bottom: 1px dashed hsla(0, 0%, 100%, 62.5%); 
   margin-bottom: 1rem;
+
+  @media (min-width: 60rem) {
+    font-size: 1.75rem;
+  }
 `;
 
 const Question = styled.h3`
   font-size: 1.125rem;
-  margin-bottom: 2rem;
+
+  @media (min-width: 60rem) {
+    font-size: 1.25rem;
+  }
 `;
 
 const Answer = styled.button`
@@ -45,6 +52,9 @@ const Answer = styled.button`
   color: hsl(0, 0%, 100%);
   width: 100%;
   margin-bottom: 1rem;
+  max-width: 27.5rem;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const NextBtn = styled.button`
@@ -57,6 +67,20 @@ const NextBtn = styled.button`
   font-size: 1.25rem;
   font-weight: 600;
   margin: 2rem auto;
+`;
+
+const Grid = styled.main`
+  max-width: 30rem;
+  margin-left:auto;
+  margin-right:auto;
+  display: grid;
+  gap: 2rem;
+
+  @media screen and (min-width: 60rem) {
+    max-width: none;
+    grid-template-columns: 4fr 5fr;
+    gap: 4rem;
+  }
 `;
 
 class GameQuestions extends Component {
@@ -108,37 +132,41 @@ class GameQuestions extends Component {
         incorrect_answers: incorrectAnswers,
       } = questionObj;
     return (
-      <main>
-        <Timer />
-        <Category data-testid="question-category">{htmldecode(category)}</Category>
-        <Question data-testid="question-text">{htmldecode(question)}</Question>
-        {
-          this.generateAnswers(correctAnswer, incorrectAnswers)
-            .map(({ answer, id }) => (
-              <ThemeProvider theme={ { answered, over, id } } key={ id }>
-                <Answer
-                  type="button"
-                  data-testid={ id }
-                  id={ id }
-                  disabled={ answered || over }
-                  onClick={ (e) => this.questionAnswered(e) }
-                >
-                  {htmldecode(answer)}
-                </Answer>
-              </ThemeProvider>
-            ))
-        }
-        { answered || over
-          ? (
-            <NextBtn
-              type="button"
-              data-testid="btn-next"
-              onClick={ nextQuestion }
-            >
-              Próximo
-            </NextBtn>
-          ) : '' }
-      </main>
+      <Grid>
+        <div>
+          <Timer />
+          <Category data-testid="question-category">{htmldecode(category)}</Category>
+          <Question data-testid="question-text">{htmldecode(question)}</Question>
+        </div>
+        <div>
+          {
+            this.generateAnswers(correctAnswer, incorrectAnswers)
+              .map(({ answer, id }) => (
+                <ThemeProvider theme={ { answered, over, id } } key={ id }>
+                  <Answer
+                    type="button"
+                    data-testid={ id }
+                    id={ id }
+                    disabled={ answered || over }
+                    onClick={ (e) => this.questionAnswered(e) }
+                  >
+                    {htmldecode(answer)}
+                  </Answer>
+                </ThemeProvider>
+              ))
+          }
+          { answered || over
+            ? (
+              <NextBtn
+                type="button"
+                data-testid="btn-next"
+                onClick={ nextQuestion }
+              >
+                Próximo
+              </NextBtn>
+            ) : '' }
+        </div>
+      </Grid>
     );
   }
 }

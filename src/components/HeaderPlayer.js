@@ -8,11 +8,19 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+
+  @media (min-width: 60rem) {
+    margin-bottom: 4rem;
+  }
 `;
 
 const Avatar = styled.img`
   border: 3px solid white;
   width: 2.5rem;
+
+  @media (min-width: 60rem) {
+    width: 5rem;
+  }
 `;
 
 class HeaderPlayer extends Component {
