@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getLogin, getToken } from '../redux/action/index';
 import logo from '../trivia.png';
@@ -14,6 +14,7 @@ class Login extends Component {
     this.state = {
       email: '',
       name: '',
+      redirect: false,
     };
     this.handle = this.handle.bind(this);
     this.handleClickToken = this.handleClickToken.bind(this);
@@ -25,14 +26,18 @@ class Login extends Component {
     });
   }
 
-  handleClickToken() {
+  async handleClickToken() {
     const { fetchToken, dataUser } = this.props;
-    fetchToken();
+    await fetchToken();
     dataUser(this.state);
+    this.setState({
+      redirect: true,
+    });
   }
 
   render() {
-    const { email, name } = this.state;
+    const { email, name, redirect } = this.state;
+    if (redirect) return <Redirect to="/game" />;
     return (
       <div className="App">
         <header className="App-header">
@@ -56,16 +61,16 @@ class Login extends Component {
             value={ email }
             onChange={ this.handle }
           />
-          <Link to="/game">
-            <button
-              disabled={ !(regEmail.test(email) && name.length > nameSize) }
-              data-testid="btn-play"
-              type="button"
-              onClick={ this.handleClickToken }
-            >
-              Jogar
-            </button>
-          </Link>
+          {/* <Link to="/game"> */}
+          <button
+            disabled={ !(regEmail.test(email) && name.length > nameSize) }
+            data-testid="btn-play"
+            type="button"
+            onClick={ this.handleClickToken }
+          >
+            Jogar
+          </button>
+          {/* </Link> */}
           <Link to="/settings">
             <button
               data-testid="btn-settings"
@@ -87,7 +92,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   dataUser: PropTypes.func.isRequired,
-  callAPI: PropTypes.func.isRequired,
+  // callAPI: PropTypes.func.isRequired,
+  fetchToken: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
