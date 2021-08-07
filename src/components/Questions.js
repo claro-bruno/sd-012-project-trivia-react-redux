@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Loading from './Loading';
+import { getScoreAction } from '../actions';
 import '../styles/Questions.css';
 
 class Questions extends Component {
@@ -16,17 +17,27 @@ class Questions extends Component {
       activeButton: false,
       disabled: false,
       time: 30,
+      score: 0,
     };
 
     this.fetchQuestionsAndAnswers = this.fetchQuestionsAndAnswers.bind(this);
-    this.makeActiveButtonToTrue = this.makeActiveButtonToTrue.bind(this);
+    this.showButtonNext = this.showButtonNext.bind(this);
     this.makeTrivias = this.makeTrivias.bind(this);
     this.questionTimer = this.questionTimer.bind(this);
+    this.calculateScore = this.calculateScore.bind(this);
+    this.makeProps = this.makeProps.bind(this);
   }
 
   componentDidMount() {
     this.fetchQuestionsAndAnswers();
     this.questionTimer();
+  }
+
+  makeProps() {
+    const { score } = this.state;
+    const { getScore } = this.props;
+
+    getScore(score);
   }
 
   // Faz requisicao para API e guarda chave Results no estado da pagina.
@@ -43,13 +54,7 @@ class Questions extends Component {
     });
   }
 
-  makeActiveButtonToTrue() {
-    this.setState({
-      activeButton: true,
-      disabled: true,
-    });
-  }
-
+  // Renderiza botao de proxima pergunta. Esta sendo chamado na func MakeTrivias. O botao aparece quando o estado activeButton é setado para true.
   activeButtonNext() {
     const { activeButton, indexQuestion } = this.state;
     const questionsLimit = 4;
@@ -73,18 +78,6 @@ class Questions extends Component {
     );
   }
 
-  // Funcao que altera o estado indexQuestion, fazendo assim com que as perguntas mudem. Essa funcao eh chamada apos o clique em qualquer um dos botoes de resposta.
-
-  nextQuestion() {
-    const { indexQuestion } = this.state;
-    this.setState({
-      indexQuestion: indexQuestion + 1,
-      activeButton: false,
-      disabled: false,
-      time: 30,
-    }, () => this.questionTimer());
-  }
-
   // Funcao que conta 30 segundos para responder a pergunta
   questionTimer() {
     const plus = 1000;
@@ -104,6 +97,65 @@ class Questions extends Component {
     }, plus);
   }
 
+  // Funcao que altera o estado indexQuestion, fazendo assim com que as perguntas mudem. Essa funcao eh chamada apos o clique em qualquer um dos botoes de resposta. Apos alterar o estado, ela evoca a QuestionTimer.
+  nextQuestion() {
+    const { indexQuestion } = this.state;
+    this.setState({
+      indexQuestion: indexQuestion + 1,
+      activeButton: false,
+      disabled: false,
+      time: 30,
+    }, () => this.questionTimer());
+  }
+
+  // Seta estado ActiveButton para true apos o clique em algum dos botoes de resposta. Isso faz com que o botao de Proxima Questao aparece.
+  showButtonNext() {
+    this.setState({
+      activeButton: true,
+      disabled: true,
+    });
+  }
+
+  calculateScore() {
+    const { time, trivias, indexQuestion, score } = this.state;
+    const easy = 'easy';
+    const medium = 'medium';
+    const hard = 'hard';
+    const three = 3;
+    const baseValue = 10;
+    const questionDificulty = trivias[indexQuestion].difficulty;
+
+    switch (questionDificulty) {
+    case easy:
+      this.setState({
+        score: score + baseValue + (1 * time),
+        activeButton: true,
+        disabled: true,
+      });
+      break;
+    case medium:
+      this.setState({
+        score: score + baseValue + (2 * time),
+        activeButton: true,
+        disabled: true,
+      }, () => this.makeProps());
+      break;
+    case hard:
+      this.setState({
+        score: score + baseValue + (three * time),
+        activeButton: true,
+        disabled: true,
+      }, () => this.makeProps());
+      break;
+    default:
+      this.state({
+        activeButton: true,
+        disabled: true,
+      }, () => this.makeProps());
+    }
+  }
+
+  // Renderiza Perguntas da Trivia.
   makeTrivias() {
     const { trivias, indexQuestion, activeButton, disabled, time } = this.state;
     return (
@@ -117,7 +169,7 @@ class Questions extends Component {
               id="correct"
               data-testid="correct-answer"
               type="button"
-              onClick={ this.makeActiveButtonToTrue }
+              onClick={ this.calculateScore }
               disabled={ disabled }
               className={ activeButton ? 'green-border' : '' }
             >
@@ -131,7 +183,7 @@ class Questions extends Component {
                 type="button"
                 data-testid={ `wrong-answer-${index}` }
                 className={ activeButton ? 'red-border' : '' }
-                onClick={ this.makeActiveButtonToTrue }
+                onClick={ this.showButtonNext }
                 disabled={ disabled }
               >
                 { wrongAnswer }
@@ -160,7 +212,11 @@ const mapStateToProps = (state) => ({
   token: state.user.token,
 });
 
-export default connect(mapStateToProps)(Questions);
+const mapDispatchToprops = (dispatch) => ({
+  getScore: (scoreValue) => dispatch(getScoreAction(scoreValue)),
+});
+
+export default connect(mapStateToProps, mapDispatchToprops)(Questions);
 
 Questions.propTypes = {
   timeValue: PropTypes.number,
