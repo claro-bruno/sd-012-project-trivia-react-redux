@@ -1,7 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import Button from '../components/Button';
 
 class Ranking extends React.Component {
+  handleClick(route) {
+    const { history } = this.props;
+    history.push(route);
+  }
+
   render() {
     const playerRanking = JSON.parse(localStorage.getItem('ranking'));
     const ranking = playerRanking.sort((a, b) => b.score - a.score);
@@ -18,17 +24,20 @@ class Ranking extends React.Component {
               <p data-testid={ `player-score-${index}` }>{ user.score }</p>
             </li>))}
         </ol>
-        <Link to="/">
-          <button
-            type="button"
-            data-testid="btn-go-home"
-          >
-            Tela de preenchimento dos dados
-          </button>
-        </Link>
+        <Button
+          testid="btn-go-home"
+          onClick={ () => this.handleClick('/') }
+          buttonText="Tela de preenchimento dos dados"
+        />
       </div>
     );
   }
 }
+
+Ranking.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default Ranking;
