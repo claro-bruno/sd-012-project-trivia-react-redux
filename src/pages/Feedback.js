@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import FeedbackHeader from '../components/FeedbackHeader';
 import ButtonRanking from '../components/ButtonRanking';
@@ -16,10 +17,13 @@ class Feedback extends React.Component {
   }
 
   render() {
+    const { history, assertions, score } = this.props;
     return (
       <div>
         <h1 data-testid="feedback-text">Feedback</h1>
         <FeedbackHeader />
+        <h3 data-testid="feedback-total-score">{score}</h3>
+        <h3 data-testid="feedback-total-question">{assertions}</h3>
         <ButtonRanking
           itemName="Ver Ranking"
           testId="btn-ranking"
@@ -38,7 +42,14 @@ class Feedback extends React.Component {
 }
 
 Feedback.propTypes = {
-  history: PropTypes.objectOf('string').isRequired,
+  history: PropTypes.shape(Object).isRequired,
+  assertions: PropTypes.string.isRequired,
+  score: PropTypes.string.isRequired,
 };
 
-export default Feedback;
+const mapStateToProps = (state) => ({
+  assertions: state.assertionsReducer.assertions,
+  score: state.scoreReducer.score,
+});
+
+export default connect(mapStateToProps)(Feedback);
