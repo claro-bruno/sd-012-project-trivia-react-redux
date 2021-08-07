@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import AnswerButton from './AnswerButton';
+import Timer from './Timer';
 
 class TriviaQuestions extends Component {
   constructor() {
@@ -11,23 +13,15 @@ class TriviaQuestions extends Component {
       correctanswer: '',
       incorrectanswer: '',
       disabled: false,
+      myTimer: true,
     };
 
     this.handleClick = this.handleClick.bind(this);
-    this.correctAnswer = this.correctAnswer.bind(this);
-    this.incorrectAnswer = this.incorrectAnswer.bind(this);
+    this.changeClassStyle = this.changeClassStyle.bind(this);
     this.shuffleQuestions = this.shuffleQuestions.bind(this);
   }
 
-  correctAnswer() {
-    this.setState({
-      correctanswer: '3px solid rgb(6, 240, 15)',
-      incorrectanswer: '3px solid rgb(255, 0, 0)',
-      disabled: true,
-    });
-  }
-
-  incorrectAnswer() {
+  changeClassStyle() {
     this.setState({
       incorrectanswer: '3px solid rgb(255, 0, 0)',
       correctanswer: '3px solid rgb(6, 240, 15)',
@@ -48,12 +42,17 @@ class TriviaQuestions extends Component {
       correctanswer: '',
       incorrectanswer: '',
       disabled: false,
-    }));
+      myTimer: false,
+    }), () => {
+      this.setState({
+        myTimer: true,
+      });
+    });
   }
 
   render() {
     const { playerState } = this.props;
-    const { correctanswer, incorrectanswer, id, disabled } = this.state;
+    const { correctanswer, incorrectanswer, id, disabled, myTimer } = this.state;
     if (playerState.length === 0) return <span>Carregando...</span>;
     const { category, question, correct_answer: correct } = playerState[id];
     const arrayQuestions = this.shuffleQuestions(playerState[id]);
@@ -70,7 +69,7 @@ class TriviaQuestions extends Component {
                 data-testid="correct-answer"
                 style={ { border: correctanswer } }
                 type="button"
-                onClick={ this.correctAnswer }
+                onClick={ this.changeClassStyle }
                 disabled={ disabled }
               >
                 { answer }
@@ -84,19 +83,15 @@ class TriviaQuestions extends Component {
               style={ { border: incorrectanswer } }
               type="button"
               key={ index }
-              onClick={ this.incorrectAnswer }
+              onClick={ this.changeClassStyle }
               disabled={ disabled }
             >
               { answer }
             </button>
           );
         }) }
-        <button
-          type="button"
-          onClick={ this.handleClick }
-        >
-          Próxima
-        </button>
+        <AnswerButton handleClick={ this.handleClick } />
+        { myTimer ? <Timer changeClassStyle={ this.changeClassStyle } /> : '' }
       </section>
     );
   }
