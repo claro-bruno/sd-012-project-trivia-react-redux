@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Loading from '../components/Loading';
 import Header from '../components/Header';
+import Timer from '../components/Timer';
+import Answers from '../components/Answers';
 import './Game.css';
 
 class Game extends Component {
@@ -65,6 +67,7 @@ class Game extends Component {
       shouldShowBtn,
       currentQuestion,
     } = this.state;
+    const { timeOff } = this.props;
     return (
       <>
         <Header />
@@ -74,37 +77,18 @@ class Game extends Component {
           >
             {data.results[currentQuestion].category}
           </h1>
+          <Timer />
           <h2
             data-testid="question-text"
           >
             {data.results[currentQuestion].question}
           </h2>
-          <ol>
-            { data.results[currentQuestion].incorrect_answers
-              .map(((answer, index) => (
-                <li key={ index }>
-                  <button
-                    data-testid={ `wrong-answer-${index}` }
-                    type="button"
-                    onClick={ this.handleClickAnswer }
-                    name="incorrect"
-                  >
-                    { answer }
-                  </button>
-                </li>
-              ))) }
-            <li>
-              <button
-                type="button"
-                data-testid="correct-answer"
-                id="correct"
-                onClick={ this.handleClickAnswer }
-              >
-                {data.results[currentQuestion].correct_answer}
-              </button>
-            </li>
-          </ol>
-          {/* Chama o botão "Próxima"  */}
+          <Answers
+            data={ data }
+            currentQuestion={ currentQuestion }
+            timeOff={ timeOff }
+            handleClickAnswer={ this.handleClickAnswer }
+          />
           { shouldShowBtn && this.showBtnNextQuestion() }
         </fieldset>
       </>
@@ -125,11 +109,14 @@ class Game extends Component {
 const mapStateToProps = (state) => ({
   isLoading: state.login.isLoading,
   token: state.login.token,
+  timer: state.timerReducer.time,
+  timeOff: state.timerReducer.timeOff,
 });
 
 Game.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   token: PropTypes.string.isRequired,
+  timeOff: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps)(Game);
