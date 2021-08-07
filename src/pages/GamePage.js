@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import GameQuestions from '../components/GameQuestions';
 import HeaderPlayer from '../components/HeaderPlayer';
-import Timer from '../components/Timer';
 import { timeReset } from '../redux/actions';
 
 class GamePage extends Component {
@@ -50,9 +49,8 @@ class GamePage extends Component {
   render() {
     const { questions, counter, loading, answered } = this.state;
     return (
-      <main>
+      <>
         <HeaderPlayer />
-        <Timer />
         {loading
           ? 'Loading'
           : (
@@ -64,7 +62,7 @@ class GamePage extends Component {
               questionObj={ questions[counter] }
             />
           )}
-      </main>
+      </>
     );
   }
 }
