@@ -67,7 +67,7 @@ class Login extends React.Component {
   render() {
     const { disabled, playerName, email,
       shouldRedirectConfig, shouldRedirectPlay, getTokenError } = this.state;
-    if (shouldRedirectConfig) { return <Redirect to="/config" />; }
+    if (shouldRedirectConfig) { return <Redirect to="/settings" />; }
     if (shouldRedirectPlay) { return <Redirect to="/play" />; }
     if (getTokenError) { return <div>Erro! Tente novamente mais tarde.</div>; }
     return (

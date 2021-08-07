@@ -61,7 +61,7 @@ class Questions extends React.Component {
           value="right"
           onClick={ this.handleClick }
         >
-          { answer.answer }
+          { window.atob(answer.answer) }
         </button>
       );
     }
@@ -75,7 +75,7 @@ class Questions extends React.Component {
         value="wrong"
         onClick={ this.handleClick }
       >
-        { answer.answer }
+        { window.atob(answer.answer) }
       </button>
     );
   }
@@ -134,9 +134,11 @@ class Questions extends React.Component {
     return (
       <div>
         { !globalKey ? <Timer /> : <div>0</div> }
-        <div data-testid="question-category">{ question.category }</div>
-        <div>{ question.difficulty }</div>
-        <div data-testid="question-text">{ question.question }</div>
+        {/* uso do atob() usado conforme a dica do colega Thalles Carneiro e esse link:
+        https://developer.mozilla.org/pt-BR/docs/Web/API/WindowOrWorkerGlobalScope/atob */}
+        <div data-testid="question-category">{ window.atob(question.category) }</div>
+        <div>{ window.atob(question.difficulty) }</div>
+        <div data-testid="question-text">{ window.atob(question.question) }</div>
 
         { answers.map((answer, index) => this.optionsAnswers(answer, index))}
         <br />

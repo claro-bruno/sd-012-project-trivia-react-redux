@@ -29,8 +29,10 @@ class Play extends React.Component {
   }
 
   async fetchAPI() {
+    const { url } = this.props;
     const token = JSON.parse(localStorage.getItem('token'));
-    const END_POINT = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    const urlToken = `&token=${token}`;
+    const END_POINT = `${url}${urlToken}`;
     const response = await fetch(END_POINT);
     const json = await response.json();
     this.setState({ questions: json, loading: false });
@@ -76,7 +78,6 @@ class Play extends React.Component {
   render() {
     const { numQuestion } = this.props;
     const { questions: { results }, loading, answers } = this.state;
-    console.log('results', numQuestion);
     if (loading) return <div>Loading...</div>;
     return (
       <div>
@@ -88,6 +89,7 @@ class Play extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
+  url: state.settings.url,
   numQuestion: state.questions.nextQuestion,
   name: state.login.name,
   email: state.login.email,
@@ -96,5 +98,8 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(Play);
 
 Play.propTypes = {
+  url: PropTypes.string,
   numQuestion: PropTypes.number,
+  name: PropTypes.string,
+  email: PropTypes.string,
 }.isRequired;
