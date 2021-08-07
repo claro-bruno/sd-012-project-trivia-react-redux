@@ -12,7 +12,6 @@ const Container = styled.div`
   border-radius: 1.5rem;
   position: relative;
   overflow: hidden;
-  margin-top: 2rem;
   margin-bottom: 1rem;
   text-align: center;
   font-weight: 600;
