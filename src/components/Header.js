@@ -10,8 +10,6 @@ class Header extends Component {
     this.state = {
       criptoEmail: '',
       imgGravatar: '',
-      points: 0,
-      asserts: 0,
     };
 
     this.emailCript = this.emailCript.bind(this);
@@ -30,7 +28,6 @@ class Header extends Component {
   emailCript() {
     const { emailUser } = this.props;
     const stringEmail = md5(emailUser).toString();
-    // console.log(stringEmail);
     this.setState({
       criptoEmail: stringEmail,
     });
@@ -38,31 +35,31 @@ class Header extends Component {
 
   // função para pegar a imagem na api do gravatar
   async gravatar() {
-    const { criptoEmail, points, asserts } = this.state;
-    const { nameUser } = this.props;
-    // console.log(criptoEmail);
+    const { criptoEmail } = this.state;
+    const { nameUser, playerScore, playerAsserts } = this.props;
     const fetchGravatar = await fetch(`https://www.gravatar.com/avatar/${criptoEmail}`);
-    // console.log(fetchGravatar);
     this.setState({
       imgGravatar: fetchGravatar.url,
     });
 
-    localStorage.setItem('player', JSON.stringify({
-      gravatarEmail: criptoEmail,
-      score: points,
+    const player = {
       name: nameUser,
-      assertions: asserts,
-    }));
+      assertions: playerAsserts,
+      score: playerScore,
+      gravatarEmail: criptoEmail,
+    };
+    localStorage.setItem('state', JSON.stringify({ player }));
+
     localStorage.setItem('ranking', JSON.stringify([{
       name: nameUser,
-      score: points,
+      score: playerScore,
       picture: fetchGravatar.url,
     }]));
   }
 
   render() {
-    const { points, imgGravatar } = this.state;
-    const { nameUser } = this.props;
+    const { imgGravatar } = this.state;
+    const { nameUser, playerScore } = this.props;
     return (
       <div>
         <header>
@@ -72,7 +69,9 @@ class Header extends Component {
             src={ imgGravatar }
           />
           <p data-testid="header-player-name">{ nameUser }</p>
-          <p data-testid="header-score">{ points }</p>
+          <p data-testid="header-score">
+            {`Pontuacao obtida: ${playerScore}`}
+          </p>
         </header>
       </div>
     );
@@ -82,10 +81,13 @@ class Header extends Component {
 const mapStateToProps = (state) => ({
   nameUser: state.user.name,
   emailUser: state.user.email,
+  playerScore: state.score.score,
+  playerAsserts: state.score.asserts,
 });
 
 export default connect(mapStateToProps)(Header);
 
+// proptypes do componente Header
 Header.propTypes = {
   nameUser: PropTypes.string,
   emailUser: PropTypes.string,
