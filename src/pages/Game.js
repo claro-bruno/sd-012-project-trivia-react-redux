@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { getQuiz } from '../redux/actions';
 import Loading from '../components/Loading';
+import './Game.css';
 
 class Game extends React.Component {
   constructor() {
@@ -18,6 +19,7 @@ class Game extends React.Component {
     this.displayQuestion = this.displayQuestion.bind(this);
     this.shuffleArray = this.shuffleArray.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.borderChange = this.borderChange.bind(this);
   }
 
   componentDidMount() {
@@ -56,6 +58,15 @@ class Game extends React.Component {
     return `wrong-answer-${index}`;
   }
 
+  borderChange() {
+    const buttons = document.querySelectorAll('button');
+    // const { name } = target;
+    buttons.forEach((button) => {
+      if (button.id === 'correct-answer') button.classList.add('acertou');
+      else button.classList.add('errou');
+    });
+  }
+
   displayQuestion() {
     const { quizFromRedux } = this.props;
     const { index } = this.state;
@@ -77,9 +88,15 @@ class Game extends React.Component {
           { sortedArray.map((item, i) => (
             <li
               key={ item }
-              data-testid={ this.checkCorrect(item, correct, i) }
             >
-              <button type="button">{item}</button>
+              <button
+                type="button"
+                onClick={ this.borderChange }
+                data-testid={ this.checkCorrect(item, correct, i) }
+                id={ this.checkCorrect(item, correct, i) }
+              >
+                {item}
+              </button>
             </li>)) }
         </ul>
       </div>

@@ -1,0 +1,7 @@
+.errou {
+  border: 3px solid red;
+}
+
+.acertou {
+  border: 3px solid rgb(6, 240, 15);
+}
