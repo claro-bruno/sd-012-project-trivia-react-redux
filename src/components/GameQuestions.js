@@ -51,10 +51,14 @@ const Answer = styled.button`
   font-size: 0.875rem;
   color: hsl(0, 0%, 100%);
   width: 100%;
-  margin-bottom: 1rem;
   max-width: 27.5rem;
+  margin-bottom: 1rem;
   margin-left: auto;
   margin-right: auto;
+
+  @media (min-width: 60rem) {
+    max-width: none;
+  }
 `;
 
 const NextBtn = styled.button`
@@ -78,7 +82,7 @@ const Grid = styled.main`
 
   @media screen and (min-width: 60rem) {
     max-width: none;
-    grid-template-columns: 4fr 5fr;
+    grid-template-columns: 2fr 3fr;
     gap: 4rem;
   }
 `;
