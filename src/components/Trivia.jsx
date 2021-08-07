@@ -1,17 +1,84 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getScore, setLocalStorage } from '../redux/action';
 
 class Trivia extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      selected: false,
+      buttons: [],
+      time: 30,
     };
 
     this.changeStyles = this.changeStyles.bind(this);
-    this.nextButton = this.nextButton.bind(this);
     this.button = this.button.bind(this);
+    this.timer = this.timer.bind(this);
+    this.correctQuestion = this.correctQuestion.bind(this);
+  }
+
+  componentDidMount() {
+    const { player, setPlayer } = this.props;
+    setPlayer(player);
+    const proxButton = document.getElementById('proxButton');
+    proxButton.style.visibility = 'hidden';
+    this.mountButtons();
+    this.timer();
+  }
+
+  componentDidUpdate() {
+    const { time } = this.state;
+    if (time === 0) {
+      clearInterval(this.myInterval);
+    }
+  }
+
+  componentWillUnmount() {
+    const { player, setPlayer } = this.props;
+    setPlayer(player);
+  }
+
+  correctQuestion() {
+    this.savePoints();
+    this.changeStyles();
+  }
+
+  switchNivel() {
+    const { trivia } = this.props;
+    const { difficulty } = trivia;
+    const easy = 1;
+    const medium = 2;
+    const hard = 3;
+    let valueDificult;
+    switch (difficulty) {
+    case 'easy':
+      valueDificult = easy;
+      break;
+    case 'medium':
+      valueDificult = medium;
+      break;
+    default:
+      valueDificult = hard;
+      break;
+    }
+    return valueDificult;
+  }
+
+  savePoints() {
+    const { getPoints, player, setPlayer } = this.props;
+    const { time } = this.state;
+    const questionsRight = Number(player.assertions) + 1;
+    const point = 10;
+    const valueDificult = this.switchNivel();
+    const score = (point + (time * valueDificult)) + player.score;
+    const result = {
+      score,
+      questionsRight,
+    };
+    const obj = { ...player, score: result.score, assertions: result.questionsRight };
+    setPlayer(obj);
+    getPoints(result);
   }
 
   // Algoritmo de embaralhamento de Fisher–Yates, retirado de https://pt.stackoverflow.com/questions/406037/mostrar-elementos-de-um-array-em-ordem-aleat%C3%B3ria
@@ -26,14 +93,19 @@ class Trivia extends React.Component {
   changeStyles() {
     const buttons = document.querySelectorAll('button');
 
-    buttons.forEach(({ value, style }) => {
-      if (value === 'wrong') {
-        style.border = '3px solid rgb(255, 0, 0)';
-      } else {
-        style.border = '3px solid rgb(6, 240, 15)';
+    buttons.forEach((button) => {
+      if (button.value === 'wrong') {
+        button.style.border = '3px solid rgb(255, 0, 0)';
+        button.disabled = true;
+      } if (button.value === 'correct') {
+        button.style.border = '3px solid rgb(6, 240, 15)';
+        button.disabled = true;
       }
     });
-    this.nextButton();
+    const proxButton = document.getElementById('proxButton');
+    proxButton.style.visibility = 'visible';
+
+    clearInterval(this.myInterval);
   }
 
   createButtons(wrongList, answer) {
@@ -45,7 +117,7 @@ class Trivia extends React.Component {
         value="wrong"
         onClick={ this.changeStyles }
       >
-        {wrong}
+        {this.verficaString(wrong)}
       </button>));
 
     const asnwerButton = (
@@ -54,19 +126,13 @@ class Trivia extends React.Component {
         data-testid="correct-answer"
         type="button"
         value="correct"
-        onClick={ this.changeStyles }
+        onClick={ this.correctQuestion }
       >
-        {answer}
+        {this.verficaString(answer)}
       </button>
     );
     buttonList.push(asnwerButton);
     return buttonList;
-  }
-
-  nextButton() {
-    this.setState({
-      selected: true,
-    });
   }
 
   button() {
@@ -75,11 +141,38 @@ class Trivia extends React.Component {
       <button
         data-testid="btn-next"
         type="button"
+        id="proxButton"
         onClick={ onClick }
       >
         Próxima
       </button>
     );
+  }
+
+  timer() {
+    const timeout = 1000;
+    this.myInterval = setInterval(() => {
+      this.setState((prevState) => ({
+        time: prevState.time - 1,
+      }));
+    }, timeout);
+  }
+
+  mountButtons() {
+    this.setState({
+      buttons: this.renderButtons(),
+    });
+  }
+
+  verficaString(str) {
+    // Solução do Thiago Prado no Slack
+    // link: https://trybecourse.slack.com/archives/C01T2C18DSM/p1628208310464000?thread_ts=1628191723.454400&cid=C01T2C18DSM
+    const htmldecode = (str2) => {
+      const txt = document.createElement('textarea');
+      txt.innerHTML = str2;
+      return txt.value;
+    };
+    return (htmldecode(str));
   }
 
   renderButtons() {
@@ -93,26 +186,42 @@ class Trivia extends React.Component {
   render() {
     const { trivia } = this.props;
     const { category, question } = trivia;
-    const { selected } = this.state;
+    const { buttons, time } = this.state;
     return (
       <div>
+        <div>{time}</div>
         <h4 data-testid="question-category">{category}</h4>
-        <h3 data-testid="question-text">{`Pergunta: ${question}`}</h3>
-        { this.renderButtons() }
-        { (selected) ? this.button() : null }
+        <h3 data-testid="question-text">{`Pergunta:${this.verficaString(question)}`}</h3>
+        { buttons }
+        { this.button() }
+        { (time === 0) ? this.changeStyles() : null }
       </div>
     );
   }
 }
 
 Trivia.propTypes = {
+  setPlayer: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
+  getPoints: PropTypes.func.isRequired,
+  player: PropTypes.shape({
+    score: PropTypes.number.isRequired,
+    assertions: PropTypes.number.isRequired,
+  }).isRequired,
   trivia: PropTypes.shape({
     category: PropTypes.string.isRequired,
     question: PropTypes.string.isRequired,
     correct_answer: PropTypes.string.isRequired,
     incorrect_answers: PropTypes.arrayOf(PropTypes.string).isRequired,
+    difficulty: PropTypes.string.isRequired,
   }).isRequired,
 };
 
-export default Trivia;
+const mapStateToProps = (state) => ({
+  player: state.player,
+});
+const mapDispatchToProps = (dispatch) => ({
+  getPoints: (value) => dispatch(getScore(value)),
+  setPlayer: (value) => dispatch(setLocalStorage(value)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Trivia);
