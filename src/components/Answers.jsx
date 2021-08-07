@@ -11,31 +11,24 @@ class Answers extends Component {
     } = this.props;
     return (
       <ol>
-        { data.results[currentQuestion].incorrect_answers
-          .map(((answer, index) => (
-            <li key={ index }>
-              <button
-                data-testid={ `wrong-answer-${index}` }
-                type="button"
-                onClick={ handleClickAnswer }
-                name="incorrect"
-                disabled={ timeOff }
-              >
-                { answer }
-              </button>
-            </li>
-          ))) }
-        <li>
-          <button
-            type="button"
-            data-testid="correct-answer"
-            id="correct"
-            onClick={ handleClickAnswer }
-            disabled={ timeOff }
-          >
-            {data.results[currentQuestion].correct_answer}
-          </button>
-        </li>
+        { data.results[currentQuestion].answers
+          .map(((answer, index) => {
+            const { correct } = answer;
+            return (
+              <li key={ index }>
+                <button
+                  data-testid={ correct ? 'correct-answer' : `wrong-answer-${index}` }
+                  type="button"
+                  onClick={ handleClickAnswer }
+                  name={ correct ? 'correct' : 'incorrect' }
+                  id={ correct && 'correct' }
+                  disabled={ timeOff }
+                >
+                  { answer.text }
+                </button>
+              </li>
+            );
+          })) }
       </ol>
     );
   }
