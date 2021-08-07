@@ -29,6 +29,9 @@ const Question = styled.h3`
 const Answer = styled.button`
   display: block;
   padding: 0.625rem;
+  opacity: ${({ theme: { answered, over } }) => {
+    if (answered || over) return '0.875';
+  }};
   border: ${({ theme: { answered, over, id } }) => {
     if (answered || over) {
       return `3px solid ${id === correctAnswerId

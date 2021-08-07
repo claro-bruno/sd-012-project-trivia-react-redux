@@ -14,7 +14,6 @@ const GlobalStyle = createGlobalStyle`
     color: hsl(0, 0%, 100%);
     font-family: 'Poppins', sans-serif;
     padding: 1rem;
-    font-weight: 400;
   }
 
   h1, h2, h3 {
