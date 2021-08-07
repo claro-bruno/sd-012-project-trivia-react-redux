@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { actionDisabled, actionScore, actionTimer } from '../redux/actions';
-import fetchToken from '../services/fetchToken';
+import {
+  actionAssertions, actionDisabled, actionScore, actionTimer } from '../redux/actions';
 import ButtonNext from './ButtonNext';
 import '../App.css';
 import Span from './Span';
@@ -15,6 +15,7 @@ class Questions extends Component {
     this.state = {
       index: 0,
       assertions: 0,
+      total: 0,
       btnClicked: false,
       nextQuestion: false,
       timer: 30,
@@ -50,13 +51,6 @@ class Questions extends Component {
     clearInterval(this.myInterval);
   }
 
-  validateToken() {
-    const { getToken } = this.props;
-    localStorage.clear();
-    fetchToken();
-    getToken(localStorage.getItem('token'));
-  }
-
   // Lógica feita com auxílio do meu colega Matheus Figueiredo,
   // onde nos ajudou nos fornecendo a lógica do sort
   createQuestions() {
@@ -82,7 +76,9 @@ class Questions extends Component {
   }
 
   updatePlayer(scoreValue, assertionsValue) {
+    const { setAssertions } = this.props;
     const state = JSON.parse(localStorage.getItem('state'));
+    setAssertions(assertionsValue);
     const newState = {
       player: {
         ...state.player,
@@ -97,12 +93,12 @@ class Questions extends Component {
     this.selectedResponse();
     const ten = 10;
     const values = { easy: 1, medium: 2, hard: 3 };
-    const { index } = this.state;
-    const { questions, timer, setScore, setDisabled } = this.props;
-    let result = 0;
+    const { index, timer } = this.state;
+    const { questions, setScore, setDisabled } = this.props;
     if (target) {
       setDisabled(true);
       if (target.id === 'correct') {
+        let result = 0;
         if (questions[index].difficulty === 'easy') {
           result += (ten + (timer * values.easy));
         } else if (questions[index].difficulty === 'medium') {
@@ -110,10 +106,11 @@ class Questions extends Component {
         } else if (questions[index].difficulty === 'hard') {
           result += (ten + (timer * values.hard));
         }
-        setScore(result);
-        this.setState((prev) => ({ assertions: prev.assertions + 1 }), () => {
-          const { assertions } = this.state;
-          this.updatePlayer(result, assertions);
+        this.setState((prev) => ({ assertions: prev.assertions + 1,
+          total: prev.total + result }), () => {
+          const { assertions, total } = this.state;
+          setScore(total);
+          this.updatePlayer(total, assertions);
         });
       }
     }
@@ -193,11 +190,10 @@ class Questions extends Component {
 
 Questions.propTypes = {
   isDisabled: PropTypes.bool.isRequired,
-  timer: PropTypes.string.isRequired,
   setScore: PropTypes.func.isRequired,
   setDisabled: PropTypes.func.isRequired,
-  getToken: PropTypes.func.isRequired,
   setTimer: PropTypes.func.isRequired,
+  setAssertions: PropTypes.func.isRequired,
   questions: PropTypes.shape({
     category: PropTypes.string,
     question: PropTypes.string,
@@ -218,6 +214,7 @@ const mapDispatchToProps = (dispatch) => ({
   setDisabled: (isDisabled) => dispatch(actionDisabled(isDisabled)),
   setScore: (score) => dispatch(actionScore(score)),
   setTimer: (timer) => dispatch(actionTimer(timer)),
+  setAssertions: (assertions) => dispatch(actionAssertions(assertions)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);

@@ -5,6 +5,7 @@ export const GET_LOADING = 'GET_LOADING';
 export const ISDISABLED = 'IS_DISABLED';
 export const TIMER = 'TIMER';
 export const SCORE = 'SCORE';
+export const ASSERTIONS = 'ASSERTIONS';
 
 export const actionEmail = (email) => ({
   type: GET_EMAIL,
@@ -39,4 +40,9 @@ export const actionTimer = (timer) => ({
 export const actionScore = (score) => ({
   type: SCORE,
   score,
+});
+
+export const actionAssertions = (assertions) => ({
+  type: ASSERTIONS,
+  assertions,
 });
