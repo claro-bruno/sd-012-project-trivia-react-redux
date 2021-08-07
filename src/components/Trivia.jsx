@@ -7,7 +7,7 @@ class Trivia extends React.Component {
 
     this.state = {
       selected: false,
-    }
+    };
 
     this.changeStyles = this.changeStyles.bind(this);
     this.nextButton = this.nextButton.bind(this);
@@ -33,7 +33,7 @@ class Trivia extends React.Component {
         style.border = '3px solid rgb(6, 240, 15)';
       }
     });
-    this.nextButton()
+    this.nextButton();
   }
 
   createButtons(wrongList, answer) {
@@ -63,6 +63,25 @@ class Trivia extends React.Component {
     return buttonList;
   }
 
+  nextButton() {
+    this.setState({
+      selected: true,
+    });
+  }
+
+  button() {
+    const { onClick } = this.props;
+    return (
+      <button
+        data-testid="btn-next"
+        type="button"
+        onClick={ onClick }
+      >
+        Próxima
+      </button>
+    );
+  }
+
   renderButtons() {
     const { trivia } = this.props;
     const { correct_answer: answer, incorrect_answers: wrong } = trivia;
@@ -71,29 +90,10 @@ class Trivia extends React.Component {
     return randomQuestions;
   }
 
-  nextButton() {
-    this.setState({
-      selected: true,
-    });
-  }
-
-  button() {
-    const { onClick } = this.props
-    return (
-      <button
-      data-testid="btn-next"
-      type="button"
-      onClick={ onClick }
-    >
-      Próxima
-    </button>
-    )
-  }
-
   render() {
     const { trivia } = this.props;
     const { category, question } = trivia;
-    const { selected } = this.state
+    const { selected } = this.state;
     return (
       <div>
         <h4 data-testid="question-category">{category}</h4>
@@ -106,6 +106,7 @@ class Trivia extends React.Component {
 }
 
 Trivia.propTypes = {
+  onClick: PropTypes.func.isRequired,
   trivia: PropTypes.shape({
     category: PropTypes.string.isRequired,
     question: PropTypes.string.isRequired,
