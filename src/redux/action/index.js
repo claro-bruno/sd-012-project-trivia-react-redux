@@ -3,6 +3,9 @@ export const SEND_USER_INFO = 'SEND_USER_INFO';
 export const AWAIT_TRIVIA = 'AWAIT_TRIVIA';
 export const GET_TRIVIA = 'GET_TRIVIA';
 export const ERR_TRIVIA = 'ERR_TRIVIA';
+export const UPDATE_SCORE = 'UPDATE_SCORE';
+export const UPDATE_RIGHT_QUESTIONS = 'UPDATE_RIGHT_QUESTIONS';
+export const TIMER_ACTION = 'TIMER_ACTION';
 
 export const sendUserInfo = (name, email, image) => ({
   type: SEND_USER_INFO, name, email, image,
@@ -33,3 +36,15 @@ export function requestTrivia() {
       .catch((err) => dispatch(errTrivia(err)));
   };
 }
+
+export const updateScore = (score) => ({
+  type: UPDATE_SCORE, score,
+});
+
+export const updateRightQuestions = () => ({
+  type: UPDATE_RIGHT_QUESTIONS,
+});
+
+export const timerAction = (time) => ({
+  type: TIMER_ACTION, time,
+});
