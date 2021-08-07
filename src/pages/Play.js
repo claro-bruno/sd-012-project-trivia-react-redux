@@ -76,6 +76,7 @@ class Play extends React.Component {
   render() {
     const { numQuestion } = this.props;
     const { questions: { results }, loading, answers } = this.state;
+    console.log('results', numQuestion);
     if (loading) return <div>Loading...</div>;
     return (
       <div>

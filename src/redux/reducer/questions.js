@@ -1,5 +1,5 @@
 import { GLOBAL_KEY, TIMER_DECREMENT, SCORE_UPDATE } from '../actions/questions';
-import { NEXT_QUESTION } from '../actions/nextQuestion';
+import { NEXT_QUESTION, RESET_QUESTIONS } from '../actions/nextQuestion';
 
 const INICIAL_STATE = {
   globalKey: false,
@@ -23,6 +23,8 @@ const questions = (state = INICIAL_STATE, action) => {
       assertions: state.assertions + 1,
       score: state.score + (state.time * action.difficulty) + dez };
   }
+  case RESET_QUESTIONS:
+    return { ...state, nextQuestion: 0 };
   default:
     return state;
   }

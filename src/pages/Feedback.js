@@ -1,9 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import Performance from '../components/Performance';
+import { updateGlobalKey } from '../redux/actions/questions';
+import { resetQuestions } from '../redux/actions/nextQuestion';
 
-export default class Config extends React.Component {
+class Feedback extends React.Component {
   constructor(props) {
     super(props);
 
@@ -12,11 +16,36 @@ export default class Config extends React.Component {
       shouldRedirectRanking: false,
     };
 
+    this.rankingUpdate = this.rankingUpdate.bind(this);
     this.redirectLogin = this.redirectLogin.bind(this);
     this.redirectRanking = this.redirectRanking.bind(this);
   }
 
+  componentDidMount() {
+    this.rankingUpdate();
+  }
+
+  rankingUpdate() {
+    const { name, score, picture } = this.props;
+    const rankingSaved = JSON.parse(localStorage.getItem('ranking'));
+
+    let ranking = [];
+    if (rankingSaved) {
+      ranking = [
+        ...rankingSaved,
+        { name, score, picture },
+      ];
+    } else {
+      ranking = [{ name, score, picture }];
+    }
+    ranking.sort((a, b) => b.score - a.score);
+    localStorage.setItem('ranking', JSON.stringify(ranking));
+  }
+
   redirectLogin() {
+    const { changeGlobal, setResetQuestions } = this.props;
+    changeGlobal(false);
+    setResetQuestions();
     this.setState({ shouldRedirectLogin: true });
   }
 
@@ -51,3 +80,24 @@ export default class Config extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  name: state.login.name,
+  score: state.questions.score,
+  picture: state.login.picture,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeGlobal: (status) => dispatch(updateGlobalKey(status)),
+  setResetQuestions: () => dispatch(resetQuestions()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
+
+Feedback.propTypes = {
+  name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+  picture: PropTypes.string.isRequired,
+  changeGlobal: PropTypes.func.isRequired,
+  setResetQuestions: PropTypes.func.isRequired,
+};

@@ -1,5 +1,6 @@
 export const SAVE_LOGIN = 'SAVE_LOGIN';
 export const GET_TOKEN = 'GET_TOKEN';
+export const SAVE_PICTURE = 'SAVE_PICTURE';
 
 export const saveLogin = (name, email) => ({
   type: SAVE_LOGIN,
@@ -10,6 +11,11 @@ export const saveLogin = (name, email) => ({
 export const getToken = (response) => ({
   type: GET_TOKEN,
   response,
+});
+
+export const savePicture = (url) => ({
+  type: SAVE_PICTURE,
+  url,
 });
 
 export const fetchTrivia = () => async (dispatch) => {
