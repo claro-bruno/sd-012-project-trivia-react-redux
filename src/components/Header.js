@@ -70,7 +70,7 @@ class Header extends Component {
           />
           <p data-testid="header-player-name">{ nameUser }</p>
           <p data-testid="header-score">
-            {playerScore}
+            { playerScore }
           </p>
         </header>
       </div>
