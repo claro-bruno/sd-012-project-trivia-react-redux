@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import Performance from '../components/Performance';
+import { updateGlobalKey } from '../redux/actions/questions';
+import { resetQuestions } from '../redux/actions/nextQuestion';
 
-class Config extends React.Component {
+class Feedback extends React.Component {
   constructor(props) {
     super(props);
 
@@ -19,9 +21,14 @@ class Config extends React.Component {
     this.redirectRanking = this.redirectRanking.bind(this);
   }
 
+  componentDidMount() {
+    this.rankingUpdate();
+  }
+
   rankingUpdate() {
-    const rankingSaved = JSON.parse(localStorage.getItem('ranking'));
     const { name, score, picture } = this.props;
+    const rankingSaved = JSON.parse(localStorage.getItem('ranking'));
+
     let ranking = [];
     if (rankingSaved) {
       ranking = [
@@ -31,10 +38,14 @@ class Config extends React.Component {
     } else {
       ranking = [{ name, score, picture }];
     }
+    ranking.sort((a, b) => b.score - a.score);
     localStorage.setItem('ranking', JSON.stringify(ranking));
   }
 
   redirectLogin() {
+    const { changeGlobal, setResetQuestions } = this.props;
+    changeGlobal(false);
+    setResetQuestions();
     this.setState({ shouldRedirectLogin: true });
   }
 
@@ -43,7 +54,6 @@ class Config extends React.Component {
   }
 
   render() {
-    this.rankingUpdate();
     const { shouldRedirectLogin, shouldRedirectRanking } = this.state;
     if (shouldRedirectLogin) return <Redirect to="/" />;
     if (shouldRedirectRanking) return <Redirect to="/ranking" />;
@@ -77,10 +87,17 @@ const mapStateToProps = (state) => ({
   picture: state.login.picture,
 });
 
-export default connect(mapStateToProps)(Config);
+const mapDispatchToProps = (dispatch) => ({
+  changeGlobal: (status) => dispatch(updateGlobalKey(status)),
+  setResetQuestions: () => dispatch(resetQuestions()),
+});
 
-Config.propTypes = {
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
+
+Feedback.propTypes = {
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
   picture: PropTypes.string.isRequired,
+  changeGlobal: PropTypes.func.isRequired,
+  setResetQuestions: PropTypes.func.isRequired,
 };
