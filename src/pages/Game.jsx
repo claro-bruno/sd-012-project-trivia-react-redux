@@ -22,10 +22,32 @@ class Game extends Component {
     this.page = this.page.bind(this);
     this.handleClickAnswer = this.handleClickAnswer.bind(this);
     this.showBtnNextQuestion = this.showBtnNextQuestion.bind(this);
+    this.handleAnswers = this.handleAnswers.bind(this);
   }
 
   componentDidMount() {
     this.fetchApi();
+  }
+
+  handleAnswers(data) {
+    const splitNumber = 0.5;
+    const answers = data.results.map((question) => {
+      const wrongAnswers = question.incorrect_answers
+        .map((option) => ({
+          text: option,
+          correct: false,
+        }));
+      const allAnswers = [
+        ...wrongAnswers,
+        {
+          text: question.correct_answer,
+          correct: true,
+        },
+      ];
+      return allAnswers
+        .sort(() => Math.random() - splitNumber); // código retirado de https://flaviocopes.com/
+    });
+    return answers;
   }
 
   async fetchApi() {
@@ -34,7 +56,17 @@ class Game extends Component {
     try {
       const response = await fetch(apiUrl);
       const data = await response.json();
-      this.setState({ data, loading: false });
+      const answers = this.handleAnswers(data);
+      this.setState({
+        loading: false,
+        data: {
+          ...data,
+          results: answers.map((answer, index) => ({
+            ...data.results[index],
+            answers: answer,
+          })),
+        },
+      });
       return data;
     } catch (error) {
       return error;
