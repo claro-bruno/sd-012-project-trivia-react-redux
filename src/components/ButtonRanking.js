@@ -7,7 +7,7 @@ class ButtonRanking extends React.Component {
     return (
       <button
         type="button"
-        className="ranking-btn"
+        className="btn-ranking"
         data-testid={ testId }
         onClick={ onClick }
       >
