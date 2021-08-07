@@ -16,6 +16,8 @@ class Game extends React.Component {
     this.timer = this.timer.bind(this);
     this.startTime = this.startTime.bind(this);
     this.stopTime = this.stopTime.bind(this);
+    this.calculateHits = this.calculateHits.bind(this);
+    this.statesAfterResponse = this.statesAfterResponse.bind(this);
 
     this.state = {
       correctAnswers: 0,
@@ -42,21 +44,33 @@ class Game extends React.Component {
     stopTime();
   }
 
-  correctClick() {
-    const {
-      props: { setAssertions },
-      state: { correctAnswers },
-    } = this;
-
+  statesAfterResponse(points = 0) {
     clearInterval(this.interval);
-
     this.setState((state) => ({
       ...state,
-      correctAnswers: correctAnswers + 1,
       questionsDisable: true,
+      correctAnswers: points,
       color: true,
       count: 30,
     }));
+  }
+
+  calculateHits(difficulty, count) {
+    const level = { hard: 3, medium: 2, easy: 1 }[difficulty];
+    const TEN = 10;
+    const points = TEN + (level * count);
+    return points;
+  }
+
+  correctClick(difficulty) {
+    const {
+      calculateHits,
+      props: { setAssertions },
+      state: { correctAnswers, count },
+    } = this;
+
+    this.statesAfterResponse(calculateHits(difficulty, count));
+
     setAssertions(correctAnswers);
   }
 
@@ -91,13 +105,7 @@ class Game extends React.Component {
   }
 
   wrongClick() {
-    clearInterval(this.interval);
-    this.setState((state) => ({
-      ...state,
-      questionsDisable: true,
-      color: true,
-      count: 30,
-    }));
+    this.statesAfterResponse();
   }
 
   render() {
@@ -110,6 +118,7 @@ class Game extends React.Component {
     const {
       category,
       question,
+      difficulty,
       correct_answer: correctAnswer,
       incorrect_answers: incorrectAnswers,
     } = questions[questionPosition];
@@ -137,7 +146,7 @@ class Game extends React.Component {
             <Button
               testId="correct-answer"
               name={ correctAnswer }
-              handleClick={ correctClick }
+              handleClick={ () => correctClick(difficulty) }
               disabled={ questionsDisable }
               className={ color ? 'correctColor' : null }
             />
@@ -158,11 +167,13 @@ Game.propTypes = {
 const mapStateToProps = (state) => ({
   getToken: state.tokenTriviaReducer.token,
   getQuestions: state.questionsTriviaReducer.questions,
+  getUserData: state.addLoginReducer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setQuestions: (token) => dispatch(questionsFetchAPI(token)),
   setAssertions: (assertions) => dispatch(addAssertions(assertions)),
+  // setScore: (userData, assertions) => dispatch(addStorage(userData, assertions)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
