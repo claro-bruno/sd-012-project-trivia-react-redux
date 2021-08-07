@@ -10,7 +10,7 @@ class Header extends Component {
     this.state = {
       criptoEmail: '',
       imgGravatar: '',
-      asserts: 0,
+      asserts: 10,
     };
 
     this.emailCript = this.emailCript.bind(this);
