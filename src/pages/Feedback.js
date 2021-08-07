@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import Performance from '../components/Performance';
 import { updateGlobalKey } from '../redux/actions/questions';
-import { resetQuestions } from '../redux/actions/nextQuestion';
+import { resetGame } from '../redux/actions/nextQuestion';
 
 class Feedback extends React.Component {
   constructor(props) {
@@ -43,9 +43,9 @@ class Feedback extends React.Component {
   }
 
   redirectLogin() {
-    const { changeGlobal, setResetQuestions } = this.props;
+    const { changeGlobal, setResetGame } = this.props;
     changeGlobal(false);
-    setResetQuestions();
+    setResetGame();
     this.setState({ shouldRedirectLogin: true });
   }
 
@@ -89,7 +89,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   changeGlobal: (status) => dispatch(updateGlobalKey(status)),
-  setResetQuestions: () => dispatch(resetQuestions()),
+  setResetGame: () => dispatch(resetGame()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
@@ -99,5 +99,5 @@ Feedback.propTypes = {
   score: PropTypes.number.isRequired,
   picture: PropTypes.string.isRequired,
   changeGlobal: PropTypes.func.isRequired,
-  setResetQuestions: PropTypes.func.isRequired,
+  setResetGame: PropTypes.func.isRequired,
 };

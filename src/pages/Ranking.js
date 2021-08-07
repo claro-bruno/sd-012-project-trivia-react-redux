@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { updateGlobalKey } from '../redux/actions/questions';
-import { resetQuestions } from '../redux/actions/nextQuestion';
+import { resetGame } from '../redux/actions/nextQuestion';
 
 class Ranking extends Component {
   constructor(props) {
@@ -33,9 +33,9 @@ class Ranking extends Component {
   }
 
   redirectLogin() {
-    const { changeGlobal, setResetQuestions } = this.props;
+    const { changeGlobal, setResetGame } = this.props;
     changeGlobal(false);
-    setResetQuestions();
+    setResetGame();
     this.setState({ shouldRedirectLogin: true });
   }
 
@@ -63,12 +63,12 @@ class Ranking extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   changeGlobal: (status) => dispatch(updateGlobalKey(status)),
-  setResetQuestions: () => dispatch(resetQuestions()),
+  setResetGame: () => dispatch(resetGame()),
 });
 
 export default connect(null, mapDispatchToProps)(Ranking);
 
 Ranking.propTypes = {
   changeGlobal: PropTypes.func.isRequired,
-  setResetQuestions: PropTypes.func.isRequired,
+  setResetGame: PropTypes.func.isRequired,
 };
