@@ -1,4 +1,11 @@
-import { GET_TRIVIA, AWAIT_TRIVIA, ERR_TRIVIA } from '../action';
+import {
+  GET_TRIVIA,
+  AWAIT_TRIVIA,
+  ERR_TRIVIA,
+  UPDATE_SCORE,
+  UPDATE_RIGHT_QUESTIONS,
+  TIMER_ACTION,
+} from '../action';
 
 const INITIAL_GAME_STATE = {
   response: 3,
@@ -7,6 +14,7 @@ const INITIAL_GAME_STATE = {
   err: '',
   score: 0,
   rightQuestions: 0,
+  timer: 30,
 };
 
 function game(state = INITIAL_GAME_STATE, action) {
@@ -28,6 +36,21 @@ function game(state = INITIAL_GAME_STATE, action) {
       ...state,
       err: action.err,
     });
+  case UPDATE_SCORE:
+    return {
+      ...state,
+      score: state.score + action.score,
+    };
+  case UPDATE_RIGHT_QUESTIONS:
+    return {
+      ...state,
+      rightQuestions: state.score + 1,
+    };
+  case TIMER_ACTION:
+    return {
+      ...state,
+      timer: action.time,
+    };
   default:
     return state;
   }

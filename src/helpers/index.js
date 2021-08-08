@@ -10,11 +10,12 @@ export const requestToken = async () => {
   localStorage.setItem('token', token);
 };
 
-export const addItemToStorage = (key, valueKey, value) => {
-  const localObject = JSON.parse(localStorage.getItem(key));
+export const addStateToStorage = (valueKey, value) => {
+  const stateObject = JSON.parse(localStorage.getItem('state'));
+  const playerObject = stateObject ? stateObject.player : {};
   localStorage.setItem(
-    key,
-    JSON.stringify({ ...localObject, [valueKey]: value }),
+    'state',
+    JSON.stringify({ player: { ...playerObject, [valueKey]: value } }),
   );
 };
 

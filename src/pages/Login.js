@@ -6,7 +6,7 @@ import { sendUserInfo } from '../redux/action';
 import Button from '../components/Button';
 import {
   requestToken,
-  addItemToStorage,
+  addStateToStorage,
   requestImageGravatar,
 } from '../helpers';
 
@@ -60,8 +60,9 @@ class Login extends React.Component {
     const { name, email } = this.state;
     const { send } = this.props;
     const image = requestImageGravatar(email);
-    addItemToStorage('state', 'name', name);
-    addItemToStorage('state', 'gravatarEmail', email);
+    addStateToStorage('name', name);
+    addStateToStorage('gravatarEmail', email);
+    addStateToStorage('score', 0);
     await requestToken();
     send(name, email, image);
   }

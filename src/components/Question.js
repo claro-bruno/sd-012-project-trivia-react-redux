@@ -10,6 +10,7 @@ class Question extends React.Component {
     const {
       category,
       question,
+      difficulty,
       correct_answer: correctAnswer,
       incorrect_answers: incorrectAnswers,
     } = questions[0];
@@ -22,6 +23,7 @@ class Question extends React.Component {
         <Answers
           answers={ answers }
           correctAnswer={ correctAnswer }
+          difficulty={ difficulty }
         />
       </section>
     );

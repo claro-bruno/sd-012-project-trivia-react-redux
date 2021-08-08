@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Timer from './Timer';
-import { answerCheck, classChanger } from '../helpers';
+import { answerCheck, classChanger, addStateToStorage } from '../helpers';
+import { updateScore, updateRightQuestions } from '../redux/action';
 import NextButton from './NextButton';
 
 class Answers extends React.Component {
@@ -16,13 +18,32 @@ class Answers extends React.Component {
     };
   }
 
-  handleClick() {
+  updateScoreAndQuestions(isCorrect) {
+    const { upScore, right, difficulty, timer, score } = this.props;
+    const defaultScore = 10;
+    const hardScore = 3;
+    const mediumScore = 2;
+    const easyScore = 1;
+    let questionScore = 0;
+    if (difficulty === 'hard') questionScore = defaultScore + (timer * hardScore);
+    if (difficulty === 'medium') questionScore = defaultScore + (timer * mediumScore);
+    if (difficulty === 'easy') questionScore = defaultScore + (timer * easyScore);
+
+    if (isCorrect === 'correct-answer') {
+      right();
+      upScore(questionScore);
+      addStateToStorage('score', questionScore + score);
+    }
+  }
+
+  handleClick(isCorrect) {
     const { click } = this.state;
     if (!click) {
       this.setState({
         click: true,
         show: true,
       });
+      this.updateScoreAndQuestions(isCorrect);
     }
   }
 
@@ -38,17 +59,19 @@ class Answers extends React.Component {
     const { click, disableBtn, show } = this.state;
     return (
       <section className="btnSection">
-        <Timer disableAnswer={ this.disableAnswer } />
-        { answers.map((e, i) => (
+        <Timer disableAnswer={ this.disableAnswer } clickAnswer={ click } />
+        { answers.map((answer, index) => (
           <button
             type="button"
-            className={ classChanger(correctAnswer, e, click) }
-            key={ i }
-            data-testid={ answerCheck(correctAnswer, e, i) }
-            onClick={ this.handleClick }
+            className={ classChanger(correctAnswer, answer, click) }
+            key={ index }
+            data-testid={ answerCheck(correctAnswer, answer, index) }
+            onClick={
+              () => this.handleClick(answerCheck(correctAnswer, answer, index))
+            }
             disabled={ disableBtn }
           >
-            { e }
+            { answer }
           </button>)) }
         { show && <NextButton /> }
       </section>
@@ -59,6 +82,22 @@ class Answers extends React.Component {
 Answers.propTypes = {
   answers: PropTypes.arrayOf(PropTypes.string).isRequired,
   correctAnswer: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+  timer: PropTypes.number.isRequired,
+  difficulty: PropTypes.string.isRequired,
+  right: PropTypes.func.isRequired,
+  upScore: PropTypes.func.isRequired,
 };
 
-export default Answers;
+const mapStateToProps = (state) => ({
+  score: state.game.score,
+  rightQuestions: state.game.rightQuestions,
+  timer: state.game.timer,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  upScore: (score) => dispatch(updateScore(score)),
+  right: () => dispatch(updateRightQuestions()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Answers);
