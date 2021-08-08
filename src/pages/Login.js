@@ -63,6 +63,7 @@ class Login extends React.Component {
     addStateToStorage('name', name);
     addStateToStorage('gravatarEmail', email);
     addStateToStorage('score', 0);
+    addStateToStorage('assertions', 0);
     await requestToken();
     send(name, email, image);
   }

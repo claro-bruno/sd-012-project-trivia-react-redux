@@ -19,6 +19,15 @@ export const addStateToStorage = (valueKey, value) => {
   );
 };
 
+export const addRankingToStorage = (newRanking) => {
+  const rankingStorage = JSON.parse(localStorage.getItem('ranking'));
+  const rankingArray = rankingStorage || [];
+  localStorage.setItem(
+    'ranking',
+    JSON.stringify([...rankingArray, newRanking]),
+  );
+};
+
 export const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
