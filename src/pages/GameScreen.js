@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import '../App.css';
+import { Link } from 'react-router-dom';
 
 class GameScreen extends Component {
   constructor() {
@@ -12,6 +13,7 @@ class GameScreen extends Component {
       borderRed: 'without,',
       isDisable: false,
       timeCount: 30,
+      btnNextDisabled: true,
     };
 
     this.renderHeader = this.renderHeader.bind(this);
@@ -30,6 +32,9 @@ class GameScreen extends Component {
           timeCount: remainingTime,
         });
       } else {
+        this.setState({
+          btnNextDisabled: false,
+        });
         this.stopTimer();
       }
     }, second);
@@ -39,6 +44,7 @@ class GameScreen extends Component {
     this.setState({
       borderGreen: 'border-green',
       borderRed: 'border-red',
+      btnNextDisabled: false,
     });
     return (this.stopTimer());
   }
@@ -65,7 +71,7 @@ class GameScreen extends Component {
 
   renderQuestionsApi() {
     const { requestGameApi } = this.props;
-    const { count, borderGreen, borderRed, isDisable } = this.state;
+    const { count, borderGreen, borderRed, isDisable, btnNextDisabled } = this.state;
     const dataResults = requestGameApi.results;
     const incorrectAnswers = dataResults && dataResults
       .map((item) => item.incorrect_answers)[count];
@@ -98,6 +104,15 @@ class GameScreen extends Component {
             { item }
           </button>
         )) }
+        <Link to="/nextQuestion">
+          <button
+            type="button"
+            data-testid="btn-next"
+            disabled={ btnNextDisabled }
+          >
+            Próxima
+          </button>
+        </Link>
       </>
     );
   }
