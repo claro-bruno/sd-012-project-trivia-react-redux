@@ -3,6 +3,7 @@ export const GET_TOKEN = 'GET_TOKEN';
 export const GET_TOKEN_SUCCESS = 'GET_TOKEN_SUCCESS';
 export const GET_TOKEN_LOAD = 'GET_TOKEN_LOAD';
 export const GET_TIMER = 'GET_TIMER';
+export const GET_SCORE = 'GET_SCORE';
 
 // action para pegar o email e nome do login
 export function loginAction(emailInput, nameInput) {
@@ -13,17 +14,18 @@ export function loginAction(emailInput, nameInput) {
   };
 }
 
-export function timerAction(timeValue, disableValue) {
-  return {
-    type: GET_TIMER,
-    time: timeValue,
-    disable: disableValue,
-  };
-}
-
 export function getTokenAction() {
   return {
     type: GET_TOKEN,
+  };
+}
+
+export function getScoreAction(scoreValue, assertsValue) {
+  console.log('oi eu sou a login');
+  return {
+    type: GET_SCORE,
+    score: scoreValue,
+    asserts: assertsValue,
   };
 }
 

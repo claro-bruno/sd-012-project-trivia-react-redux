@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { timerAction } from '../actions';
 
 class Timer extends Component {
   constructor() {
@@ -9,7 +8,8 @@ class Timer extends Component {
 
     this.state = {
       disabled: false,
-      time: 30,
+      time: 5,
+      buttonValue: false,
     };
 
     this.questionTimer = this.questionTimer.bind(this);
@@ -19,6 +19,10 @@ class Timer extends Component {
   componentDidMount() {
     this.makeProps();
     this.questionTimer();
+  }
+
+  componentDidUpdate() {
+    this.makeProps();
   }
 
   // Funcao que conta 30 segundos para responder a pergunta
@@ -33,17 +37,18 @@ class Timer extends Component {
         clearInterval(questionTimer);
         this.setState({
           disabled: true,
-          time: 'Tempo Esgostado',
+          time: 'Tempo Esgotado',
+          buttonValue: true,
         });
       }
     }, plus);
   }
 
   makeProps() {
-    const { disabled, time } = this.state;
+    const { disabled, time, buttonValue } = this.state;
     const { getTime } = this.props;
 
-    getTime(time, disabled);
+    getTime(time, disabled, buttonValue);
   }
 
   render() {
@@ -56,7 +61,9 @@ class Timer extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getTime: (timeValue, disableValue) => dispatch(timerAction(timeValue, disableValue)),
+  getTime: (timeValue, disabledValue, buttonValue) => dispatch(
+    timerAction(timeValue, disabledValue, buttonValue),
+  ),
 });
 
 export default connect(null, mapDispatchToProps)(Timer);
