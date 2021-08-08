@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+// import { Timer } from 'react-countdown-clock-timer';
 
 import '../App.css';
 
@@ -11,18 +12,42 @@ class GameScreen extends Component {
       count: 0,
       borderGreen: 'without',
       borderRed: 'without,',
+      isDisable: false,
+      timeCount: 30,
     };
 
     this.renderHeader = this.renderHeader.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
     this.renderQuestionsApi = this.renderQuestionsApi.bind(this);
-    this.changeBorderAnswerClick = this.changeBorderAnswerClick.bind(this);
+    this.handleButtonAnswerClick = this.handleButtonAnswerClick.bind(this);
   }
 
-  changeBorderAnswerClick() {
+  componentDidMount() {
+    const second = 1000;
+    this.timer = setInterval(() => {
+      const { timeCount } = this.state;
+      const remainingTime = timeCount - 1;
+      if (remainingTime >= 0) {
+        this.setState({
+          timeCount: remainingTime,
+        });
+      } else {
+        this.stopTimer();
+      }
+    }, second);
+  }
+
+  handleButtonAnswerClick() {
     this.setState({
       borderGreen: 'border-green',
       borderRed: 'border-red',
     });
+    return (this.stopTimer());
+  }
+
+  stopTimer() {
+    this.setState({ isDisable: true });
+    return (clearInterval(this.timer));
   }
 
   renderHeader() {
@@ -42,13 +67,10 @@ class GameScreen extends Component {
 
   renderQuestionsApi() {
     const { requestGameApi } = this.props;
-    const { count } = this.state;
+    const { count, borderGreen, borderRed, isDisable } = this.state;
     const dataResults = requestGameApi.results;
     const incorrectAnswers = dataResults && dataResults
       .map((item) => item.incorrect_answers)[count];
-
-    const { borderGreen } = this.state;
-    const { borderRed } = this.state;
 
     return (
       <>
@@ -60,7 +82,8 @@ class GameScreen extends Component {
               type="button"
               data-testid="correct-answer"
               className={ borderGreen }
-              onClick={ () => this.changeBorderAnswerClick() }
+              disabled={ isDisable }
+              onClick={ () => this.handleButtonAnswerClick() }
             >
               { item.correct_answer }
             </button>
@@ -72,7 +95,8 @@ class GameScreen extends Component {
             data-testid={ `wrong-answer-${index}` }
             key={ index }
             className={ borderRed }
-            onClick={ () => this.changeBorderAnswerClick() }
+            disabled={ isDisable }
+            onClick={ () => this.handleButtonAnswerClick() }
           >
             { item }
           </button>
@@ -82,10 +106,15 @@ class GameScreen extends Component {
   }
 
   render() {
+    const { timeCount } = this.state;
     return (
       <div>
         <h1>Tela Jogo</h1>
         { this.renderHeader() }
+        <p>
+          {' '}
+          { timeCount }
+        </p>
         { this.renderQuestionsApi() }
       </div>
     );
