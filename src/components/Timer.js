@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { timerAction } from '../redux/action';
+import { timerAction, timerRestartChange } from '../redux/action';
 
 class Timer extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.timerCd = this.timerCd.bind(this);
     this.state = {
       time: 30,
@@ -26,6 +26,15 @@ class Timer extends React.Component {
     if (time > 0 && !clickAnswer) {
       this.timerCd();
     } else sendTimer(time);
+    this.shouldRestartTimer();
+  }
+
+  shouldRestartTimer() {
+    const { restartTimerChange, restartTimer } = this.props;
+    if (restartTimer) {
+      this.setState({ time: 30 });
+      restartTimerChange();
+    }
   }
 
   timerCd() {
@@ -50,11 +59,18 @@ class Timer extends React.Component {
 Timer.propTypes = {
   disableAnswer: PropTypes.func.isRequired,
   sendTimer: PropTypes.func.isRequired,
+  restartTimerChange: PropTypes.func.isRequired,
+  restartTimer: PropTypes.bool.isRequired,
   clickAnswer: PropTypes.bool.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  sendTimer: (time) => dispatch(timerAction(time)),
+const mapStateToProps = (state) => ({
+  restartTimer: state.game.restartTimer,
 });
 
-export default connect(null, mapDispatchToProps)(Timer);
+const mapDispatchToProps = (dispatch) => ({
+  sendTimer: (time) => dispatch(timerAction(time)),
+  restartTimerChange: () => dispatch(timerRestartChange()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Timer);

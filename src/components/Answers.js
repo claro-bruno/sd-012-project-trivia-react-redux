@@ -3,23 +3,25 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Timer from './Timer';
 import { answerCheck, classChanger, addStateToStorage } from '../helpers';
-import { updateScore, updateRightQuestions } from '../redux/action';
-import NextButton from './NextButton';
+import { updateScore, timerRestartChange } from '../redux/action';
+import Button from './Button';
+
+const INITIAL_STATE = {
+  click: false,
+  disableBtn: false,
+  show: false,
+};
 
 class Answers extends React.Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
     this.disableAnswer = this.disableAnswer.bind(this);
-    this.state = {
-      click: false,
-      disableBtn: false,
-      show: false,
-    };
+    this.state = INITIAL_STATE;
   }
 
   updateScoreAndQuestions(isCorrect) {
-    const { upScore, right, difficulty, timer, score } = this.props;
+    const { upScore, difficulty, timer, score, rightQuestions } = this.props;
     const defaultScore = 10;
     const hardScore = 3;
     const mediumScore = 2;
@@ -30,9 +32,9 @@ class Answers extends React.Component {
     if (difficulty === 'easy') questionScore = defaultScore + (timer * easyScore);
 
     if (isCorrect === 'correct-answer') {
-      right();
       upScore(questionScore);
       addStateToStorage('score', questionScore + score);
+      addStateToStorage('assertions', 1 + rightQuestions);
     }
   }
 
@@ -55,7 +57,7 @@ class Answers extends React.Component {
   }
 
   render() {
-    const { answers, correctAnswer } = this.props;
+    const { answers, correctAnswer, nextQuestion, restartTimer } = this.props;
     const { click, disableBtn, show } = this.state;
     return (
       <section className="btnSection">
@@ -73,7 +75,15 @@ class Answers extends React.Component {
           >
             { answer }
           </button>)) }
-        { show && <NextButton /> }
+        { show && <Button
+          buttonText="Próxima"
+          testId="btn-next"
+          onClick={ () => {
+            nextQuestion();
+            this.setState(INITIAL_STATE);
+            restartTimer();
+          } }
+        /> }
       </section>
     );
   }
@@ -85,19 +95,21 @@ Answers.propTypes = {
   score: PropTypes.number.isRequired,
   timer: PropTypes.number.isRequired,
   difficulty: PropTypes.string.isRequired,
-  right: PropTypes.func.isRequired,
+  rightQuestions: PropTypes.number.isRequired,
   upScore: PropTypes.func.isRequired,
+  nextQuestion: PropTypes.func.isRequired,
+  restartTimer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   score: state.game.score,
-  rightQuestions: state.game.rightQuestions,
+  rightQuestions: state.game.assertions,
   timer: state.game.timer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   upScore: (score) => dispatch(updateScore(score)),
-  right: () => dispatch(updateRightQuestions()),
+  restartTimer: () => dispatch(timerRestartChange()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Answers);

@@ -19,13 +19,13 @@ class Ranking extends React.Component {
         <ol>
           { ranking.map((user, index) => (
             <li key={ index }>
-              <img src={ user.image } alt="Foto" />
+              <img src={ user.picture } alt="Foto" />
               <p data-testid={ `player-name-${index}` }>{ user.name }</p>
               <p data-testid={ `player-score-${index}` }>{ user.score }</p>
             </li>))}
         </ol>
         <Button
-          testid="btn-go-home"
+          testId="btn-go-home"
           onClick={ () => this.handleClick('/') }
           buttonText="Tela de preenchimento dos dados"
         />

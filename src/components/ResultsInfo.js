@@ -25,7 +25,7 @@ ResultsInfo.propTypes = {
 
 const mapStateToProps = (state) => ({
   totalScore: state.game.score,
-  totalQuestions: state.game.rightQuestions,
+  totalQuestions: state.game.assertions,
 });
 
 export default connect(mapStateToProps)(ResultsInfo);

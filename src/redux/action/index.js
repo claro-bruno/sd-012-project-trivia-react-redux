@@ -6,6 +6,8 @@ export const ERR_TRIVIA = 'ERR_TRIVIA';
 export const UPDATE_SCORE = 'UPDATE_SCORE';
 export const UPDATE_RIGHT_QUESTIONS = 'UPDATE_RIGHT_QUESTIONS';
 export const TIMER_ACTION = 'TIMER_ACTION';
+export const TIMER_RESTART_CHANGE = 'TIMER_RESTART_CHANGE';
+export const RESTORE_STORE = 'RESTORE_STORE';
 
 export const sendUserInfo = (name, email, image) => ({
   type: SEND_USER_INFO, name, email, image,
@@ -41,10 +43,14 @@ export const updateScore = (score) => ({
   type: UPDATE_SCORE, score,
 });
 
-export const updateRightQuestions = () => ({
-  type: UPDATE_RIGHT_QUESTIONS,
-});
-
 export const timerAction = (time) => ({
   type: TIMER_ACTION, time,
+});
+
+export const timerRestartChange = () => ({
+  type: TIMER_RESTART_CHANGE,
+});
+
+export const restoreStore = () => ({
+  type: RESTORE_STORE,
 });
