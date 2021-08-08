@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchApiGame } from '../actions';
+
+import '../App.css';
 
 class GameScreen extends Component {
   constructor() {
     super();
     this.state = {
       count: 0,
+      borderGreen: 'without',
+      borderRed: 'without,',
     };
 
     this.renderHeader = this.renderHeader.bind(this);
     this.renderQuestionsApi = this.renderQuestionsApi.bind(this);
+    this.changeBorderAnswerClick = this.changeBorderAnswerClick.bind(this);
   }
 
-  componentDidMount() {
-    const { dispatchGameApi } = this.props;
-    dispatchGameApi();
+  changeBorderAnswerClick() {
+    this.setState({
+      borderGreen: 'border-green',
+      borderRed: 'border-red',
+    });
   }
 
   renderHeader() {
@@ -38,31 +44,40 @@ class GameScreen extends Component {
     const { requestGameApi } = this.props;
     const { count } = this.state;
     const dataResults = requestGameApi.results;
+    const incorrectAnswers = dataResults && dataResults
+      .map((item) => item.incorrect_answers)[count];
 
-    console.log(dataResults);
+    const { borderGreen } = this.state;
+    const { borderRed } = this.state;
 
     return (
-      <div>
-        { dataResults && dataResults.map((item, index) => (
+      <>
+        { dataResults && dataResults.map((item) => (
           <>
             <p data-testid="question-category">{ item.category }</p>
             <p data-testid="question-text">{ item.question }</p>
             <button
               type="button"
-              data-testid={ `wrong-answer-${index}` }
-              key={ index }
-            >
-              { item.incorrect_answers }
-            </button>
-            <button
-              type="button"
               data-testid="correct-answer"
+              className={ borderGreen }
+              onClick={ () => this.changeBorderAnswerClick() }
             >
               { item.correct_answer }
             </button>
           </>
         ))[count] }
-      </div>
+        { incorrectAnswers && incorrectAnswers.map((item, index) => (
+          <button
+            type="button"
+            data-testid={ `wrong-answer-${index}` }
+            key={ index }
+            className={ borderRed }
+            onClick={ () => this.changeBorderAnswerClick() }
+          >
+            { item }
+          </button>
+        )) }
+      </>
     );
   }
 
@@ -89,8 +104,4 @@ const mapStateToProps = (state) => ({
   requestGameApi: state.game.gameDataApi,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  dispatchGameApi: (state) => dispatch(fetchApiGame(state)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);
+export default connect(mapStateToProps)(GameScreen);
