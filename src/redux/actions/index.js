@@ -27,3 +27,29 @@ export const fetchToken = () => (dispatch) => {
     .then((json) => dispatch(getResponse(json)))
     .catch((error) => dispatch(getError(error)));
 };
+
+const sendQuestionsRequest = () => ({
+  type: 'SEND_QUESTIONS_REQUEST',
+});
+
+const getQuestions = (response) => ({
+  type: 'GET_QUESTIONS',
+  response,
+});
+
+const getQuestionsError = (error) => ({
+  type: 'GET_QUESTIONS_ERROR',
+  error,
+});
+
+export const fetchQuestions = (token) => (dispatch) => {
+  dispatch(sendQuestionsRequest());
+  fetch(`https://opentdb.com/api.php?amount=5&token=${token}`)
+    .then((response) => response.json())
+    .then((json) => dispatch(getQuestions(json)))
+    .catch((error) => dispatch(getQuestionsError(error)));
+};
+
+export const nextQuestion = () => ({
+  type: 'NEXT_QUESTION',
+});

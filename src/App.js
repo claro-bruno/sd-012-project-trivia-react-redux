@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Login from './Components/Login';
-import Game from './Components/Game';
-import NotFound from './Components/NotFound';
-import Results from './Components/Results';
-import Ranking from './Components/Ranking';
-import Configs from './Components/Configs';
+import Login from './pages/Login';
+import Game from './pages/Game';
+import NotFound from './pages/NotFound';
+import Results from './pages/Results';
+import Configs from './pages/Configs';
 import './App.css';
 
 class App extends Component {
@@ -24,10 +23,6 @@ class App extends Component {
         <Route
           path="/results"
           component={ Results }
-        />
-        <Route
-          path="/ranking"
-          component={ Ranking }
         />
         <Route
           path="/configs"
