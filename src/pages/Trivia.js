@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Loading from '../components/Loading';
+import './Trivia.css';
 
 class Trivia extends Component {
   constructor() {
@@ -11,6 +12,7 @@ class Trivia extends Component {
     };
     this.shuffle = this.shuffle.bind(this);
     this.shuffledAnswers = this.shuffledAnswers.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   shuffle(array) {
@@ -24,6 +26,14 @@ class Trivia extends Component {
       array[j] = x;
     }
     return array;
+  }
+
+  handleClickCorrect() {
+    const correctAnswer = document.getElementsByClassName('correct_answer');
+    const wrongAnswer = document.getElementsByClassName('wrong_answer');
+
+    correctAnswer.style.border = '3px solid rgb(6, 240, 15)';
+    wrongAnswer.classList.add('btn-wrong');
   }
 
   shuffledAnswers(question) {
@@ -40,9 +50,11 @@ class Trivia extends Component {
         if (answer === question.correct_answer) {
           return (
             <button
+              className="correct_answer"
               key={ index }
               data-testid="correct-answer"
               type="button"
+              onClick={ this.handleClick }
             >
               { question.correct_answer }
             </button>
@@ -51,9 +63,11 @@ class Trivia extends Component {
         controllIncorrects += 1;
         return (
           <button
+            className="wrong_answer"
             key={ index }
             data-testid={ `wrong-answer-${controllIncorrects - 1}` }
             type="button"
+            onClick={ this.handleClick }
           >
             { question.incorrect_answers[controllIncorrects - 1] }
           </button>
@@ -91,6 +105,7 @@ Trivia.propTypes = {
   questions: PropTypes.arrayOf(
     PropTypes.object.isRequired,
   ).isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps)(Trivia);
