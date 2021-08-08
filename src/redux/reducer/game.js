@@ -3,8 +3,9 @@ import {
   AWAIT_TRIVIA,
   ERR_TRIVIA,
   UPDATE_SCORE,
-  UPDATE_RIGHT_QUESTIONS,
   TIMER_ACTION,
+  TIMER_RESTART_CHANGE,
+  RESTORE_STORE,
 } from '../action';
 
 const INITIAL_GAME_STATE = {
@@ -13,8 +14,9 @@ const INITIAL_GAME_STATE = {
   loading: true,
   err: '',
   score: 0,
-  rightQuestions: 0,
+  assertions: 0,
   timer: 30,
+  restartTimer: false,
 };
 
 function game(state = INITIAL_GAME_STATE, action) {
@@ -40,17 +42,20 @@ function game(state = INITIAL_GAME_STATE, action) {
     return {
       ...state,
       score: state.score + action.score,
-    };
-  case UPDATE_RIGHT_QUESTIONS:
-    return {
-      ...state,
-      rightQuestions: state.score + 1,
+      assertions: state.assertions + 1,
     };
   case TIMER_ACTION:
     return {
       ...state,
       timer: action.time,
     };
+  case TIMER_RESTART_CHANGE:
+    return {
+      ...state,
+      restartTimer: !state.restartTimer,
+    };
+  case RESTORE_STORE:
+    return INITIAL_GAME_STATE;
   default:
     return state;
   }
