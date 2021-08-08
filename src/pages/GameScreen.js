@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { Timer } from 'react-countdown-clock-timer';
-
 import '../App.css';
 
 class GameScreen extends Component {
@@ -37,7 +35,7 @@ class GameScreen extends Component {
     }, second);
   }
 
-  handleButtonAnswerClick() {
+  handleButtonAnswerClick() {    
     this.setState({
       borderGreen: 'border-green',
       borderRed: 'border-red',
@@ -71,7 +69,6 @@ class GameScreen extends Component {
     const dataResults = requestGameApi.results;
     const incorrectAnswers = dataResults && dataResults
       .map((item) => item.incorrect_answers)[count];
-
     return (
       <>
         { dataResults && dataResults.map((item) => (
