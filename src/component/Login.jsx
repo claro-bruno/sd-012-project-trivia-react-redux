@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
-// import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import logo from '../trivia.png';
 import * as fetchAPI from '../helpers/fetchAPI';
