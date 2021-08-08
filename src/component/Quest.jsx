@@ -10,6 +10,7 @@ import './Quest.css';
 
 const count4 = 4;
 const count5 = 5;
+const correctAnswerId = 'correct-answer';
 
 class Quest extends React.Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class Quest extends React.Component {
     const { count } = this.state;
     if (count <= count4) {
       const wrongButtons = document.getElementsByName('wrong-answer');
-      const correctButton = document.getElementById('correct-answer');
+      const correctButton = document.getElementById(correctAnswerId);
       const nextButton = document.getElementById('btn-next');
       wrongButtons.forEach((button) => {
         button.className = '';
@@ -86,7 +87,7 @@ class Quest extends React.Component {
     const { count } = this.state;
     if (count <= count4) {
       const wrongButtons = document.getElementsByName('wrong-answer');
-      const correctButton = document.getElementById('correct-answer');
+      const correctButton = document.getElementById(correctAnswerId);
       wrongButtons.forEach((button) => {
         button.className = 'wrong-answer-clicked';
         button.disabled = boolean;
@@ -126,7 +127,7 @@ class Quest extends React.Component {
     const { timerId } = this.state;
 
     this.endTimerFunction(true);
-    const correctButton = document.getElementById('correct-answer');
+    const correctButton = document.getElementById(correctAnswerId);
     const nextButton = document.getElementById('btn-next');
     nextButton.className = 'show';
     clearInterval(timerId);
