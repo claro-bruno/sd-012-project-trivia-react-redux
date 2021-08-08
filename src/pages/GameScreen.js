@@ -35,7 +35,7 @@ class GameScreen extends Component {
     }, second);
   }
 
-  handleButtonAnswerClick() {    
+  handleButtonAnswerClick() {
     this.setState({
       borderGreen: 'border-green',
       borderRed: 'border-red',
