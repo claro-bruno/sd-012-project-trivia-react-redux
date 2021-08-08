@@ -13,13 +13,13 @@ class GameScreen extends Component {
       borderRed: 'without,',
       isDisable: false,
       timeCount: 30,
-      btnNextDisabled: true,
+      isActive: false,
     };
 
     this.renderHeader = this.renderHeader.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.renderQuestionsApi = this.renderQuestionsApi.bind(this);
-    this.handleButtonAnswerClick = this.handleButtonAnswerClick.bind(this);
+    this.handleAnswerButtonClick = this.handleAnswerButtonClick.bind(this);
   }
 
   componentDidMount() {
@@ -33,18 +33,18 @@ class GameScreen extends Component {
         });
       } else {
         this.setState({
-          btnNextDisabled: false,
+          isActive: true,
         });
         this.stopTimer();
       }
     }, second);
   }
 
-  handleButtonAnswerClick() {
+  handleAnswerButtonClick() {
     this.setState({
       borderGreen: 'border-green',
       borderRed: 'border-red',
-      btnNextDisabled: false,
+      isActive: true,
     });
     return (this.stopTimer());
   }
@@ -71,7 +71,7 @@ class GameScreen extends Component {
 
   renderQuestionsApi() {
     const { requestGameApi } = this.props;
-    const { count, borderGreen, borderRed, isDisable, btnNextDisabled } = this.state;
+    const { count, borderGreen, borderRed, isDisable, isActive } = this.state;
     const dataResults = requestGameApi.results;
     const incorrectAnswers = dataResults && dataResults
       .map((item) => item.incorrect_answers)[count];
@@ -86,7 +86,7 @@ class GameScreen extends Component {
               data-testid="correct-answer"
               className={ borderGreen }
               disabled={ isDisable }
-              onClick={ () => this.handleButtonAnswerClick() }
+              onClick={ () => this.handleAnswerButtonClick() }
             >
               { item.correct_answer }
             </button>
@@ -99,20 +99,23 @@ class GameScreen extends Component {
             key={ index }
             className={ borderRed }
             disabled={ isDisable }
-            onClick={ () => this.handleButtonAnswerClick() }
+            onClick={ () => this.handleAnswerButtonClick() }
           >
             { item }
           </button>
         )) }
-        <Link to="/nextQuestion">
-          <button
-            type="button"
-            data-testid="btn-next"
-            disabled={ btnNextDisabled }
-          >
-            Próxima
-          </button>
-        </Link>
+        <div>
+          { isActive ? (
+            <Link to="/nextQuestion">
+              <button
+                type="button"
+                data-testid="btn-next"
+              >
+                Próxima
+              </button>
+            </Link>
+          ) : null}
+        </div>
       </>
     );
   }
