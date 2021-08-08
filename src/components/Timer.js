@@ -21,11 +21,16 @@ class Timer extends React.Component {
 
   componentDidUpdate() {
     const { time } = this.state;
-    const { clickAnswer, restartTimerChange, restartTimer } = this.props;
+    const { clickAnswer } = this.props;
     const { sendTimer } = this.props;
     if (time > 0 && !clickAnswer) {
       this.timerCd();
     } else sendTimer(time);
+    this.shouldRestartTimer();
+  }
+
+  shouldRestartTimer() {
+    const { restartTimerChange, restartTimer } = this.props;
     if (restartTimer) {
       this.setState({ time: 30 });
       restartTimerChange();
@@ -54,6 +59,8 @@ class Timer extends React.Component {
 Timer.propTypes = {
   disableAnswer: PropTypes.func.isRequired,
   sendTimer: PropTypes.func.isRequired,
+  restartTimerChange: PropTypes.func.isRequired,
+  restartTimer: PropTypes.bool.isRequired,
   clickAnswer: PropTypes.bool.isRequired,
 };
 

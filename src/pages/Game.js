@@ -16,7 +16,7 @@ class Game extends React.Component {
     return (
       <main>
         <Header />
-        { (loading) ? <h1>Loading</h1> : <Question history={ history }/> }
+        { (loading) ? <h1>Loading</h1> : <Question history={ history } /> }
       </main>
     );
   }
@@ -31,6 +31,9 @@ const mapStateToProps = (state) => ({
 });
 
 Game.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   loading: PropTypes.bool.isRequired,
   request: PropTypes.func.isRequired,
 };
