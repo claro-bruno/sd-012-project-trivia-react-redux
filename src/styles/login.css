@@ -1,9 +1,6 @@
-body {
-  background-image: url('./images/bg.jpg');
-}
-
 .login-screen {
   align-items: center;
+  background-image: url('../images/bg.jpg');
   display: flex;
   height: 100vh;
   justify-content: center;
@@ -28,7 +25,7 @@ body {
   width: 200px;
 }
 
-.form {
+form {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -133,13 +130,3 @@ input:-webkit-autofill {
   width: 50px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.header-things {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-}

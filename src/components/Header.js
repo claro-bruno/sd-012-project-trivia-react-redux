@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import { savePicture } from '../redux/actions/login';
+import '../styles/header.css';
 
 class Header extends React.Component {
   constructor(props) {
@@ -22,15 +23,17 @@ class Header extends React.Component {
     const url = `https://www.gravatar.com/avatar/${this.hash()}`;
     setURL(url);
     return (
-      <header className="header">
-        <img
-          className="header-things"
-          src={ url }
-          alt="Player"
-          data-testid="header-profile-picture"
-        />
-        <div data-testid="header-player-name" className="header-things">{ name }</div>
-        <div data-testid="header-score" className="header-things">{ score }</div>
+      <header>
+        <div className="profile">
+          <img
+            className="profile-pic"
+            src={ url }
+            alt="Player"
+            data-testid="header-profile-picture"
+          />
+          <div data-testid="header-player-name" className="player-name">Nome</div>
+        </div>
+        <div data-testid="header-score" className="score">{ score }</div>
       </header>
     );
   }

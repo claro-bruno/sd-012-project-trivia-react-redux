@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Questions from '../components/Questions';
+import '../styles/play.css';
 
 class Play extends React.Component {
   constructor(props) {
@@ -80,7 +81,7 @@ class Play extends React.Component {
     const { questions: { results }, loading, answers } = this.state;
     if (loading) return <div>Loading...</div>;
     return (
-      <div>
+      <div className="play">
         <Header />
         <Questions question={ results[numQuestion] } answers={ answers } />
       </div>

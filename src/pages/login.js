@@ -7,6 +7,7 @@ import { saveLogin, fetchTrivia } from '../redux/actions/login';
 import brain from '../images/brain.png';
 // Link image: href="https://www.freepik.com"
 import gear from '../images/gear.png';
+import '../styles/login.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -106,7 +107,7 @@ class Login extends React.Component {
       <div className="login-screen">
         <div className="login-box">
           <img className="brain" src={ brain } alt="Brain" />
-          <form className="form">
+          <form>
             { this.loginInputs(playerName, email) }
             <button
               type="button"
