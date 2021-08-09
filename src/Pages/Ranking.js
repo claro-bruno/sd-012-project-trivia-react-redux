@@ -12,7 +12,9 @@ class Ranking extends Component {
 
     return (
       <fieldset>
-        <legend>Ranking</legend>
+        <legend>
+          <h2 data-testid="ranking-title">Ranking</h2>
+        </legend>
         {players
           .sort((a, b) => b[1] - a[1])
           .map(([player, score], i) => (
