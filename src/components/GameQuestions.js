@@ -135,6 +135,7 @@ class GameQuestions extends Component {
 
   render() {
     const { questionObj, nextQuestion, answered, over, counter } = this.props;
+    // if (questionObj === undefined) return 'Erro';
     const lastQuestion = 5;
     if (counter === lastQuestion) return <Redirect to="/feedback" />;
     const

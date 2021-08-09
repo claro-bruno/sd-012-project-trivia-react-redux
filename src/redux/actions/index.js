@@ -4,6 +4,7 @@ export const ADD_TOKEN = 'ADD_TOKEN';
 export const IS_OVER = 'IS_OVER';
 export const PASS_TIME = 'PASS_TIME';
 export const TIME_RESET = 'TIME_RESET';
+export const CHANGE_SETTINGS = 'CHANGE_SETTINGS';
 
 export const addEmail = (userEmail) => ({
   type: ADD_EMAIL,
@@ -31,4 +32,9 @@ export const timePass = () => ({
 
 export const timeReset = () => ({
   type: TIME_RESET,
+});
+
+export const changeSettings = (settings) => ({
+  type: CHANGE_SETTINGS,
+  payload: settings,
 });

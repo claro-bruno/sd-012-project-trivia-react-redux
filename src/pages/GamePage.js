@@ -26,8 +26,9 @@ class GamePage extends Component {
   }
 
   async fetchQuestions() {
-    const { userInfo: { token } } = this.props;
-    const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    const { userInfo: { token }, settings: { category, difficulty, type } } = this.props;
+    console.log(category, difficulty, type);
+    const url = `https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}&type=${type}&token=${token}`;
     const res = await fetch(url);
     const data = await res.json();
     this.setState({
@@ -48,11 +49,13 @@ class GamePage extends Component {
 
   render() {
     const { questions, counter, loading, answered } = this.state;
+    const MIN_QUESTIONS = 5;
+    if (loading) return 'Loading';
     return (
       <>
         <HeaderPlayer />
-        {loading
-          ? 'Loading'
+        {questions.length < MIN_QUESTIONS
+          ? 'Error'
           : (
             <GameQuestions
               onAnswer={ this.questionAnswered }
@@ -69,11 +72,13 @@ class GamePage extends Component {
 
 GamePage.propTypes = {
   userInfo: PropTypes.objectOf(Object).isRequired,
+  settings: PropTypes.objectOf(Object).isRequired,
   resetTimer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   userInfo: state.userInfo,
+  settings: state.settings,
 });
 
 const mapDispatchToProps = (dispatch) => ({
