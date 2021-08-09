@@ -35,7 +35,7 @@ class Question extends Component {
               type="button"
               key={ index }
               data-testid={ dataTestId }
-              onClick={ handleAnswer }
+              onClick={ () => handleAnswer(isCorrect) }
               disabled={ resolved }
             >
               {answer}

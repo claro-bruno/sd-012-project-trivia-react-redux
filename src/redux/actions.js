@@ -30,3 +30,16 @@ export const fetchAPI = () => async (dispatch) => {
     .then(({ token }) => dispatch(getTokenSuccess(token)))
     .catch((err) => dispatch(getTokenError(err)));
 };
+
+export const CHANGE_SCORE = 'CHANGE_SCORE';
+export const CHANGE_ASSERTIONS = 'CHANGE_ASSERTIONS';
+
+export const changeUserScore = (payload) => ({
+  type: CHANGE_SCORE,
+  payload,
+});
+
+export const changeUserAssertions = (payload) => ({
+  type: CHANGE_ASSERTIONS,
+  payload,
+});

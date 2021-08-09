@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Question from '../components/Question';
 import { fetchTrivia } from '../services/api';
 import Loading from '../components/Loading';
+import { changeUserAssertions, changeUserScore } from '../redux/actions';
 
 const ONE_SECOND = 1000;
 
@@ -33,23 +36,27 @@ class Trivia extends Component {
     const questions = data.results;
     this.setQuestions(questions);
 
-    // this.timer = setInterval(() => {
-    //   const { timeCounter } = this.state;
-    //   const remainingTime = timeCounter - 1;
-    //   if (remainingTime >= 0) {
-    //     this.setState({
-    //       timeCounter: remainingTime,
-    //     });
-    //   } else {
-    //     // this.setState({ resolved: false });
-    //     this.stopTimer();
-    //   }
-    // }, ONE_SECOND);
     this.countDown();
   }
 
   setQuestions(questions) {
     this.setState({ questions, loading: false });
+  }
+
+  getResult(value) {
+    const { timeCounter } = this.state;
+    const DEFAULT_VALUE = 10;
+    const { score, assertions, changeScore, changeAssertions } = this.props;
+    const result = DEFAULT_VALUE + (timeCounter * value);
+    changeScore(score + result);
+    changeAssertions(assertions + 1);
+    const userInfos = JSON.parse(localStorage.getItem('state'));
+    localStorage.setItem('state', JSON.stringify({ player: {
+      ...userInfos.player,
+      score: score + result,
+      assertions: assertions + 1,
+    },
+    }));
   }
 
   countDown() {
@@ -66,8 +73,25 @@ class Trivia extends Component {
     }, ONE_SECOND);
   }
 
-  handleAnswer() {
+  handleAnswer(isCorrect) {
     this.setState({ resolved: true });
+    this.stopTimer();
+
+    const { questions, questionNumber } = this.state;
+    const currentQuestion = questions[questionNumber];
+
+    if (isCorrect) {
+      const { difficulty } = currentQuestion;
+
+      if (difficulty === 'easy') {
+        this.getResult(1);
+      } else if (difficulty === 'medium') {
+        this.getResult(2);
+      } else {
+        const HARD_VALUE = 3;
+        this.getResult(HARD_VALUE);
+      }
+    }
   }
 
   handleNext() {
@@ -128,4 +152,19 @@ class Trivia extends Component {
   }
 }
 
-export default Trivia;
+const mapDispatchToProps = (dispatch) => ({
+  changeScore: (userScore) => dispatch(changeUserScore(userScore)),
+  changeAssertions: (userAssertions) => dispatch(changeUserAssertions(userAssertions)),
+});
+
+const mapStateToProps = (state) => ({
+  score: state.player.score,
+  assertions: state.player.assertions,
+});
+
+Trivia.propTypes = {
+  score: PropTypes.number,
+  assertions: PropTypes.number,
+}.isRequired;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Trivia);

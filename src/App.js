@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import './App.css';
 import HeaderInGame from './components/HeaderInGame';
 import Config from './pages/Config';
+import Feedback from './pages/Feedback';
 
 export default class App extends Component {
   render() {
@@ -17,7 +18,7 @@ export default class App extends Component {
         </Switch>
         <Switch>
           <Route path="/game/trivia" component={ Trivia } />
-          <Route path="/game/feedback" />
+          <Route path="/game/feedback" component={ Feedback } />
           <Route path="/game/ranking" />
         </Switch>
       </>
