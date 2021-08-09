@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Questions from '../components/Questions';
 import { fetchQuestions } from '../actions/game';
 import Header from '../components/Header';
+import Loading from '../components/Loading';
 
 class Game extends Component {
   constructor() {
@@ -47,7 +48,7 @@ class Game extends Component {
 
   render() {
     const { questions } = this.props;
-    if (!questions.length) return 'Loading';
+    if (!questions.length) return <Loading />;
     return (
       <main className="game-page d-flex">
         <Header />

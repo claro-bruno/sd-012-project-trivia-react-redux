@@ -125,7 +125,7 @@ class Questions extends React.Component {
             data-testid={ testid }
             className={
               showAnswers ? `${className} ${isCorrect}`
-                : `${isCorrect} btn btn-outline-secondary`
+                : `${isCorrect} btn btn-secondary`
             }
             disabled={ disabled }
             onClick={ ({ target }) => (
