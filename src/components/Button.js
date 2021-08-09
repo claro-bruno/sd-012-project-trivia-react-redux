@@ -7,6 +7,7 @@ class Button extends React.Component {
     return (
       <button
         type="button"
+        className="login-btn"
         data-testid={ testId }
         disabled={ disabled }
         onClick={ onClick }

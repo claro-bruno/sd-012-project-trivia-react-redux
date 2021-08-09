@@ -19,6 +19,7 @@ class Header extends React.Component {
   createHash() {
     const { email } = this.props;
     const hash = md5(email).toString();
+    localStorage.setItem('hash', hash);
     return hash;
   }
 

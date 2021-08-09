@@ -56,7 +56,6 @@ class Game extends Component {
               : <Questions responseCode={ responseCode } questions={ questions } />
           }
         </div>
-        {/* { nextQuestion && <ButtonNext testId="btn-next" /> } */}
       </div>
     );
   }
