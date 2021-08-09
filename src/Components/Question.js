@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import shuffle from '../data/helpers';
-import { nextQuestion } from '../redux/actions';
+import { shuffle, difficultyToPoints } from '../data/helpers';
+import { updateScore } from '../redux/actions';
 import Stopwatch from './Stopwatch';
+import NextButton from './NextButton';
 
 class Question extends Component {
   constructor(props) {
@@ -16,18 +17,32 @@ class Question extends Component {
     };
   }
 
+  componentDidMount() {
+    const { dispatchUpdateScore } = this.props;
+    dispatchUpdateScore();
+  }
+
   handleAnswer(isCorrect) {
     const {
-      dispatchNextQuestion,
+      question,
+      dispatchUpdateScore,
       stopTimer,
+      remainingTime,
     } = this.props;
     stopTimer();
-    dispatchNextQuestion();
-    console.log(isCorrect);
+    dispatchUpdateScore(
+      remainingTime, difficultyToPoints(question.difficulty), isCorrect,
+    );
   }
 
   render() {
-    const { question, isOutOfTime } = this.props;
+    const {
+      question,
+      isOutOfTime,
+      isQuestionAnswered,
+      isAnswering,
+      history,
+    } = this.props;
     const { answers } = this.state;
     return (
       <>
@@ -42,7 +57,7 @@ class Question extends Component {
                 type="button"
                 key={ answer.correctAnswer }
                 onClick={ () => this.handleAnswer(true) }
-                disabled={ isOutOfTime }
+                disabled={ isOutOfTime || isQuestionAnswered }
               >
                 {answer.correctAnswer}
               </button>
@@ -53,30 +68,42 @@ class Question extends Component {
                 type="button"
                 key={ answer }
                 onClick={ () => this.handleAnswer(false) }
-                disabled={ isOutOfTime }
+                disabled={ isOutOfTime || isQuestionAnswered }
               >
                 {answer}
               </button>
             )
         ))}
+        { !isAnswering && <NextButton history={ history } /> }
       </>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
+  remainingTime: state.timer.remainingTime,
   stopTimer: state.timer.stopTimerCallback,
   isOutOfTime: state.timer.isOutOfTime,
+  isAnswering: state.timer.isAnswering,
+  isQuestionAnswered: state.timer.isQuestionAnswered,
 });
 const mapDispatchToProps = (dispatch) => ({
-  dispatchNextQuestion: () => dispatch(nextQuestion()),
+  dispatchUpdateScore: (timer, difficulty, isCorrect) => dispatch(
+    updateScore(timer, difficulty, isCorrect),
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question);
 
 Question.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   question: PropTypes.shape().isRequired,
-  dispatchNextQuestion: PropTypes.func.isRequired,
+  dispatchUpdateScore: PropTypes.func.isRequired,
   stopTimer: PropTypes.func.isRequired,
   isOutOfTime: PropTypes.bool.isRequired,
+  isQuestionAnswered: PropTypes.bool.isRequired,
+  isAnswering: PropTypes.bool.isRequired,
+  remainingTime: PropTypes.number.isRequired,
 };

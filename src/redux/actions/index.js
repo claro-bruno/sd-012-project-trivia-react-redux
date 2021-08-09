@@ -76,3 +76,10 @@ export const isQuestionAnsweredAction = () => ({
 export const isAnsweringAction = () => ({
   type: 'IS_ANSWERING',
 });
+
+export const updateScore = (timer, difficulty, isCorrect) => ({
+  type: 'UPDATE_SCORE',
+  timer,
+  difficulty,
+  isCorrect,
+});

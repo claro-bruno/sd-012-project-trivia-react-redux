@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
+import Score from './Score';
 
 class Header extends Component {
   render() {
@@ -18,11 +19,9 @@ class Header extends Component {
         >
           { name }
         </h1>
-        <h1
+        <Score
           data-testid="header-score"
-        >
-          { 0 }
-        </h1>
+        />
       </header>
     );
   }
