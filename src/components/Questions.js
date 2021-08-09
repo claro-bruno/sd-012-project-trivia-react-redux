@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import Timer from './Timer';
 import { scoreUpdate, updateGlobalKey } from '../redux/actions/questions';
 import { nextQuestion } from '../redux/actions/nextQuestion';
+import timerZero from '../timer.svg';
 
 class Questions extends React.Component {
   constructor(props) {
@@ -133,7 +134,7 @@ class Questions extends React.Component {
     if (shouldRedirect) return <Redirect to="/feedback" />;
     return (
       <div>
-        { !globalKey ? <Timer /> : <div>0</div> }
+        { !globalKey ? <Timer /> : <img src={ timerZero } alt="Timer Zerado" /> }
         {/* uso do atob() usado conforme a dica do colega Thalles Carneiro e esse link:
         https://developer.mozilla.org/pt-BR/docs/Web/API/WindowOrWorkerGlobalScope/atob */}
         <div data-testid="question-category">{ window.atob(question.category) }</div>
