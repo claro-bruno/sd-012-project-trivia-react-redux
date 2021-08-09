@@ -13,6 +13,9 @@ class Game extends React.Component {
       index: 0,
     };
     this.showNextQuestion = this.showNextQuestion.bind(this);
+    this.btnNext = this.btnNext.bind(this);
+    this.incorrectAndCorrectQuestion = this.incorrectAndCorrectQuestion.bind(this);
+    this.showBtnNext = this.showBtnNext.bind(this);
   }
 
   componentDidMount() {
@@ -26,10 +29,54 @@ class Game extends React.Component {
     }));
   }
 
-  render() {
-    const { questions, isFetching, history: { push } } = this.props;
+  btnNext() {
+    const { questions, history: { push } } = this.props;
     const { index } = this.state;
     const numberQuestions = 4;
+
+    if (index !== 0 && index < numberQuestions) {
+      return (
+        <button
+          type="button"
+          data-testid="btn-next"
+          onClick={ () => this.showNextQuestion(questions) }
+        >
+          Próxima
+        </button>
+      );
+    }
+    if (index !== 0 && index > numberQuestions) {
+      return (
+        <button
+          type="button"
+          onClick={ () => push('/') } // fazer push para a tela de feedback
+        >
+          Ver Resultado
+        </button>
+      );
+    }
+  }
+
+  showBtnNext() {
+    const { questions } = this.props;
+    return (
+      <button
+        type="button"
+        data-testid="btn-next"
+        onClick={ () => this.showNextQuestion(questions) }
+      >
+        Próxima
+      </button>
+    );
+  }
+
+  incorrectAndCorrectQuestion() {
+    this.showNextQuestion();
+  }
+
+  render() {
+    const { questions, isFetching } = this.props;
+    const { index } = this.state;
     if (isFetching) return <Loading />;
     return (
       <>
@@ -46,25 +93,12 @@ class Game extends React.Component {
                   <strong>Pergunta: </strong>
                   { questions[index].question }
                 </h3>
-                <Answers question={ questions[index] } />
+                <Answers
+                  question={ questions[index] }
+                  onClick={ this.incorrectAndCorrectQuestion }
+                />
               </div>
-
-              { index < numberQuestions ? (
-                <button
-                  type="button"
-                  data-testid="btn-next"
-                  onClick={ () => this.showNextQuestion(questions) }
-                >
-                  Próxima
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={ () => push('/') } // fazer push para a tela de feedback
-                >
-                  Ver Resultado
-                </button>
-              )}
+              { this.btnNext() }
             </section>
           )
             : <Loading />
