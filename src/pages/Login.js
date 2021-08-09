@@ -88,22 +88,9 @@ class Login extends React.Component {
   render() {
     const { notValid } = this.state;
     return (
-      <div>
-        <img src={ logo } alt="Logo Trivia" />
-        { this.renderEmailInput() }
-        { this.renderNameInput() }
-        <div className="button-container">
-          <Link to="/quiz">
-            <button
-              disabled={ notValid }
-              type="button"
-              data-testid="btn-play"
-              onClick={ this.handleSubmit }
-              className="bg-green-400 rounded-md py-1 px-3"
-            >
-              Jogar!
-            </button>
-          </Link>
+      <div className="container flex">
+        <div className="flex flex-col">
+          <img src={ logo } alt="Logo Trivia" />
           <Link to="/settings">
             <button
               type="button"
@@ -112,6 +99,21 @@ class Login extends React.Component {
               Configurações
             </button>
           </Link>
+          { this.renderEmailInput() }
+          { this.renderNameInput() }
+          <div className="button-container">
+            <Link to="/quiz">
+              <button
+                disabled={ notValid }
+                type="button"
+                data-testid="btn-play"
+                onClick={ this.handleSubmit }
+                className="bg-green-400 rounded-md py-1 px-3"
+              >
+                Jogar!
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     );
