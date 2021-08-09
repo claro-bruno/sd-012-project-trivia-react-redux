@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Game from './pages/Game';
 import NotFound from './pages/NotFound';
-import Results from './pages/Results';
+import Feedback from './pages/Feedback';
 import Configs from './pages/Configs';
 import './App.css';
 
@@ -21,8 +21,8 @@ class App extends Component {
           component={ Game }
         />
         <Route
-          path="/results"
-          component={ Results }
+          path="/feedback"
+          component={ Feedback }
         />
         <Route
           path="/configs"
