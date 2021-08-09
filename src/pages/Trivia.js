@@ -47,9 +47,10 @@ class Trivia extends Component {
   }
 
   updateTimer(prevState) {
-    if (prevState.timer === 0) {
+    if (prevState.timer <= 0) {
       this.setState({
         currentQuestion: prevState.currentQuestion + 1,
+        timer: 30,
       });
     }
   }

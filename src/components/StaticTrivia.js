@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { questionTest } from '../data';
 
@@ -78,6 +79,9 @@ class StaticTrivia extends Component {
           style={ { display: 'none' } }
         >
           Próxima
+        </button>
+        <button type="button" data-testid="btn-play-again">
+          <Link to="/">Jogar novamente</Link>
         </button>
       </div>
     );
