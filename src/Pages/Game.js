@@ -8,6 +8,7 @@ import HeaderGame from '../Components/HeaderGame';
 // o componente HeaderGame é um mock do requisito 4
 // feito somente para passar no teste.
 // Implementar o requisito 4 neste componemte
+import Timer from '../Components/timer';
 
 class Game extends React.Component {
   constructor() {
@@ -40,6 +41,7 @@ class Game extends React.Component {
         {
           questions.length > 0 ? (
             <section className="App">
+              <Timer />
               <div>
                 <p data-testid="question-category">
                   <strong>Categoria: </strong>

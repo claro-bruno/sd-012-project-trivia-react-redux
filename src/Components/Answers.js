@@ -32,6 +32,7 @@ class Answers extends React.Component {
               key={ index }
               type="button"
               data-testid="correct-answer"
+              className="answer-btn"
             >
               { question.correct_answer }
             </button>
@@ -44,6 +45,7 @@ class Answers extends React.Component {
             key={ index }
             data-testid={ `wrong-answer-${controllIncorrects - 1}` }
             type="button"
+            className="answer-btn"
           >
             { question.incorrect_answers[controllIncorrects - 1] }
           </button>
