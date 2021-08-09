@@ -5,6 +5,7 @@ import { scoreUpdate } from '../redux/actions';
 import Header from '../components/Header';
 import getUserInfo from '../services/api';
 import saveLocalStorage from '../helper/saveLocalStorage';
+import { guessUpdate } from '../redux/actions/gameActions';
 import './game.css';
 
 class Game extends React.Component {
@@ -18,6 +19,7 @@ class Game extends React.Component {
       timer: 30,
       idTimer: 0,
       showButton: false,
+      correctGuess: 0,
     };
 
     this.fetchApi = this.fetchApi.bind(this);
@@ -80,16 +82,20 @@ class Game extends React.Component {
   }
 
   checkAnswer(e) {
-    const { questionNumber, questions, idTimer, timer } = this.state;
+    const { questionNumber, questions, idTimer, timer, correctGuess } = this.state;
     clearInterval(idTimer);
+    const correctAnswer = questions[questionNumber].correct_answer;
     if (e) {
       this.handleScore(e, questions[questionNumber], timer);
+      if (e.target.value === correctAnswer) {
+        this.setState({ correctGuess: correctGuess + 1 });
+      }
     }
     this.setState({ showButton: true });
 
     const answers = document.querySelectorAll('.alternative-btn');
     answers.forEach((answer) => {
-      if (answer.value === questions[questionNumber].correct_answer) {
+      if (answer.value === correctAnswer) {
         answer.style.border = '3px solid rgb(6, 240, 15)';
         answer.disabled = true;
       } else {
@@ -142,7 +148,7 @@ class Game extends React.Component {
   }
 
   nextQuestion() {
-    const { questionNumber, questions } = this.state;
+    const { questionNumber, questions, correctGuess } = this.state;
     this.setState({
       showButton: false,
     });
@@ -159,7 +165,11 @@ class Game extends React.Component {
       });
     } else {
       // Aqui deve ser a chamada da proxima pagina caso tenha sido a ultima questão.
-      const { history } = this.props;
+      const storage = JSON.parse(localStorage.getItem('state'));
+      storage.player.assertions = correctGuess;
+      localStorage.setItem('state', JSON.stringify(storage));
+      const { history, getScore } = this.props;
+      getScore(correctGuess);
       history.push('/feedback');
     }
   }
@@ -215,6 +225,7 @@ class Game extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   getPoint: (point) => dispatch(scoreUpdate(point)),
+  getScore: (state) => dispatch(guessUpdate(state)),
 });
 
 Game.propTypes = {
@@ -222,6 +233,7 @@ Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  getScore: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Game);
