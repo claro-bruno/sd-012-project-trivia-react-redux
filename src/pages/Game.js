@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
+import Questions from '../components/Questions';
 
 class Game extends React.Component {
   constructor(props) {
@@ -18,16 +20,18 @@ class Game extends React.Component {
       next: false,
       seconds: 30,
     };
-
     this.getQuestions = this.getQuestions.bind(this);
     this.getScore = this.getScore.bind(this);
     this.timer = this.timer.bind(this);
     this.buttonColorDisabler = this.buttonColorDisabler.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
+    this.enableButton = this.enableButton.bind(this);
   }
 
   componentDidMount() {
+    const interval = 1000;
     this.getQuestions();
-    this.timer();
+    this.count = setInterval(this.timer, interval);
   }
 
   componentDidUpdate() {
@@ -58,7 +62,7 @@ class Game extends React.Component {
 
   getScore(target) {
     const { id, name } = target;
-    const { assertions, score } = this.state;
+    const { assertions, score, seconds } = this.state;
     const right = 10;
     const notas = {
       hard: 3,
@@ -69,17 +73,17 @@ class Game extends React.Component {
     switch (name) {
     case 'correct': switch (id) {
     case 'hard': this.setState({
-      score: (score + right + notas.hard),
+      score: right + ((seconds - 1) * notas.hard) + score,
       assertions: (assertions + 1),
     });
       break;
     case 'medium': this.setState({
-      score: (score + right + notas.medium),
+      score: right + ((seconds - 1) * notas.medium) + score,
       assertions: (assertions + 1),
     });
       break;
     case 'easy': this.setState({
-      score: (score + right + notas.easy),
+      score: right + ((seconds - 1) * notas.easy) + score,
       assertions: (assertions + 1),
     });
       break;
@@ -89,18 +93,23 @@ class Game extends React.Component {
     default:
     }
     this.buttonColorDisabler();
+    this.timer(target.name);
   }
 
-  timer() {
-    const interval = 1000;
+  timer(target) {
     const limit = 30000;
-    setInterval(() => {
-      const { seconds } = this.state;
-      if (seconds > 0) this.setState({ seconds: seconds - 1 });
-    }, interval);
     setTimeout(() => {
       this.buttonColorDisabler();
     }, limit);
+    const { seconds } = this.state;
+    if (seconds > 0) this.setState({ seconds: seconds - 1 });
+    switch (target) {
+    case 'correct': clearTimeout(this.count);
+      break;
+    case 'incorrect': clearTimeout(this.count);
+      break;
+    default:
+    }
   }
 
   buttonColorDisabler() {
@@ -118,9 +127,35 @@ class Game extends React.Component {
     });
   }
 
+  enableButton() {
+    const correctAnswerButton = document.getElementsByClassName('c-answer');
+    correctAnswerButton[0].style.border = '1px solid black';
+    correctAnswerButton[0].removeAttribute('disabled', 'disabled');
+
+    const incorrectAnswerButton = document.querySelectorAll('.w-answer');
+    incorrectAnswerButton.forEach((button) => {
+      button.style.border = '1px solid black';
+      button.removeAttribute('disabled', 'disabled');
+    });
+  }
+
+  nextQuestion() {
+    const interval = 1000;
+    const resetTimer = 30;
+    const { questionNumber } = this.state;
+    this.setState({
+      questionNumber: (questionNumber + 1),
+      seconds: resetTimer,
+    });
+    this.count = setInterval(this.timer, interval);
+    this.enableButton();
+  }
+
   render() {
     const { questions, questionNumber, loading, score, seconds, next } = this.state;
     const { getUrl, getName } = this.props;
+    const max = 4;
+    if (questionNumber > max) return <Redirect to="/feedback" />;
     if (!loading) {
       return (
         <main>
@@ -132,31 +167,23 @@ class Game extends React.Component {
             <p data-testid="question-text">
               { questions[questionNumber].question }
             </p>
-            <div>
-              { questions[questionNumber]
-                .incorrect_answers.map((answer, index) => (
+            <Questions
+              questions={ questions }
+              questionNumber={ questionNumber }
+              getScore={ this.getScore }
+            />
+            {
+              next
+                ? (
                   <button
-                    key={ index }
                     type="button"
-                    data-testid={ `wrong-answer-${index}` }
-                    onClick={ ({ target }) => this.getScore(target) }
-                    className="w-answer"
+                    data-testid="btn-next"
+                    onClick={ this.nextQuestion }
                   >
-                    { answer }
-                  </button>
-                )) }
-              <button
-                id={ questions[questionNumber].difficulty }
-                name="correct"
-                type="button"
-                data-testid="correct-answer"
-                onClick={ ({ target }) => this.getScore(target) }
-                className="c-answer"
-              >
-                { questions[questionNumber].correct_answer }
-              </button>
-            </div>
-            {next ? <button type="button" data-testid="btn-next">Próxima</button> : null}
+                    Próxima
+                  </button>)
+                : null
+            }
           </Paper>
           <span>{ seconds }</span>
         </main>
