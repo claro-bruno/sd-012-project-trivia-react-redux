@@ -48,7 +48,7 @@ const game = (state = INITIAL_STATE, action) => {
       ...state,
       cBtnClass: action.correct,
       wBtnClass: action.wrong,
-      questionNumber: state.questionNumber + 1,
+      questionNumber: state.questionNumber + action.num,
     };
   case RESET_GAME:
     return INITIAL_STATE;

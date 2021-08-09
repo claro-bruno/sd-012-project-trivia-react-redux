@@ -31,10 +31,11 @@ export const nextQuestion = () => ({
   type: NEXT_QUESTIONS,
 });
 
-export const changeClass = (correct, wrong) => ({
+export const changeClass = (correct, wrong, num) => ({
   type: CHANGE_CLASS,
   correct,
   wrong,
+  num,
 });
 
 export const resetGame = () => ({

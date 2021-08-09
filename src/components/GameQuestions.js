@@ -63,7 +63,12 @@ class GameQuestions extends React.Component {
   }
 
   setTimer() {
-    this.setState({ timer: 30, disableAnswers: false, canDisable: true, nextButton: false });
+    this.setState({
+      timer: 30,
+      disableAnswers: false,
+      canDisable: true,
+      nextButton: false,
+    });
     const timerStep = 1000;
 
     const timerIntervalID = setInterval(() => {
@@ -73,10 +78,16 @@ class GameQuestions extends React.Component {
     this.setState({ timerIntervalID });
   }
 
+  timeoutQuestion() {
+    const { showAnswer } = this.props;
+    showAnswer('answer-btn-correct', 'answer-btn-wrong', 1);
+  }
+
   disableAnswers() {
     const { canDisable } = this.state;
     if (canDisable) {
       this.setState({ disableAnswers: true, canDisable: false, nextButton: true });
+      this.timeoutQuestion();
     }
   }
 
@@ -119,7 +130,7 @@ class GameQuestions extends React.Component {
   handleClick(answerStatus) {
     this.disableAnswers();
     const { showAnswer } = this.props;
-    showAnswer('answer-btn-correct', 'answer-btn-wrong');
+    showAnswer('answer-btn-correct', 'answer-btn-wrong', 0);
     this.setState({
       nextButton: true,
     });
@@ -143,7 +154,9 @@ class GameQuestions extends React.Component {
     return (
       <div className="questions-card">
         <div className="questions-text">
-          <span className="cat" data-testid="question-category">{window.atob(question.category)}</span>
+          <span className="cat" data-testid="question-category">
+            {window.atob(question.category)}
+          </span>
           <span data-testid="question-text">{window.atob(question.question)}</span>
         </div>
         <div className="questions-answers">
@@ -213,7 +226,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  showAnswer: (correct, wrong) => dispatch(changeClass(correct, wrong)),
+  showAnswer: (correct, wrong, num) => dispatch(changeClass(correct, wrong, num)),
   updateScore: (score) => dispatch(userScore(score)),
 });
 
