@@ -14,6 +14,7 @@ class TriviaQuestions extends Component {
       incorrectanswer: '',
       disabled: false,
       myTimer: true,
+      answerBtn: false,
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -26,6 +27,7 @@ class TriviaQuestions extends Component {
       incorrectanswer: '3px solid rgb(255, 0, 0)',
       correctanswer: '3px solid rgb(6, 240, 15)',
       disabled: true,
+      answerBtn: true,
     });
   }
 
@@ -43,6 +45,7 @@ class TriviaQuestions extends Component {
       incorrectanswer: '',
       disabled: false,
       myTimer: false,
+      answerBtn: false,
     }), () => {
       this.setState({
         myTimer: true,
@@ -52,7 +55,9 @@ class TriviaQuestions extends Component {
 
   render() {
     const { playerState } = this.props;
-    const { correctanswer, incorrectanswer, id, disabled, myTimer } = this.state;
+    const {
+      correctanswer, incorrectanswer, id, disabled, myTimer, answerBtn,
+    } = this.state;
     if (playerState.length === 0) return <span>Carregando...</span>;
     const { category, question, correct_answer: correct } = playerState[id];
     const arrayQuestions = this.shuffleQuestions(playerState[id]);
@@ -90,7 +95,7 @@ class TriviaQuestions extends Component {
             </button>
           );
         }) }
-        <AnswerButton handleClick={ this.handleClick } />
+        { answerBtn ? <AnswerButton handleClick={ this.handleClick } /> : '' }
         { myTimer ? <Timer changeClassStyle={ this.changeClassStyle } /> : '' }
       </section>
     );
