@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import Button from '../Button';
 import { questionsFetchAPI } from '../../redux/actions';
 
@@ -26,13 +25,10 @@ class SectionQuestions extends React.Component {
         questions,
       },
     } = this;
-    const numberMax = 5;
 
-    if (!questions) return <h2>Loading...</h2>;
-    if (questionPosition === numberMax) {
-      return <Redirect to="feedback" />;
+    if (questions.length === 0) {
+      return <h2>Loading...</h2>;
     }
-
     return (
       <section>
         <h2>{ count }</h2>
