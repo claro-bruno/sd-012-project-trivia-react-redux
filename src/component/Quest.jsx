@@ -100,7 +100,7 @@ class Quest extends React.Component {
 
   updateScore() {
     const { player: { score } } = JSON.parse(localStorage.getItem('state'));
-    const state = JSON.parse(localStorage.getItem('state'));
+    const { player } = JSON.parse(localStorage.getItem('state'));
     const fixNumber = 10;
     const { timer, count } = this.state;
     const { quests } = this.props;
@@ -113,10 +113,8 @@ class Quest extends React.Component {
     const points = fixNumber + (timer * difMult[difficulty]);
     const olderPoints = parseInt(score, 10);
     const newPoints = points + olderPoints;
-    console.log(score, points, olderPoints, newPoints);
     const updatedPlayer = {
-      ...state,
-      player: { score: newPoints },
+      player: { ...player, score: newPoints },
     };
     const playerstringfy = JSON.stringify(updatedPlayer);
     localStorage.setItem('state', playerstringfy);
