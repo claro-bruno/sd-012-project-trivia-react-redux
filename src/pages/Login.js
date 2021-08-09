@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { BsGear } from 'react-icons/bs';
 import { actionUserInfo, getTokenThunk } from '../redux/actions';
 import logo from '../images/logo.svg';
 
@@ -88,15 +89,19 @@ class Login extends React.Component {
   render() {
     const { notValid } = this.state;
     return (
-      <div className="container flex">
+      <div className="container flex flex-col items-center">
+        <img
+          src={ logo }
+          alt="Logo Trivia"
+          className="w-1/3 my-20"
+        />
         <div className="flex flex-col">
-          <img src={ logo } alt="Logo Trivia" />
           <Link to="/settings">
             <button
               type="button"
               data-testid="btn-settings"
             >
-              Configurações
+              <BsGear />
             </button>
           </Link>
           { this.renderEmailInput() }
