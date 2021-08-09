@@ -1,0 +1,9 @@
+.headerImg {
+  display: flex;
+  margin-left: 20px ;
+}
+
+.headerPonts {
+  display: flex;
+  justify-content: center;
+}

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Answers from './Answers';
 import { shuffleArray, addRankingToStorage } from '../helpers';
+import './question.module.css';
 
 class Question extends React.Component {
   constructor(props) {

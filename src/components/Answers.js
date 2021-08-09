@@ -5,6 +5,7 @@ import Timer from './Timer';
 import { answerCheck, classChanger, addStateToStorage } from '../helpers';
 import { updateScore, timerRestartChange } from '../redux/action';
 import Button from './Button';
+import styles from './question.module.css';
 
 const INITIAL_STATE = {
   click: false,
@@ -60,7 +61,7 @@ class Answers extends React.Component {
     const { answers, correctAnswer, nextQuestion, restartTimer } = this.props;
     const { click, disableBtn, show } = this.state;
     return (
-      <section className="btnSection">
+      <section className={ styles.btnSection }>
         <Timer disableAnswer={ this.disableAnswer } clickAnswer={ click } />
         { answers.map((answer, index) => (
           <button
