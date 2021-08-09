@@ -66,25 +66,25 @@ class Game extends React.Component {
       <>
         <HeaderGame />
         { questions.length > 0 ? (
-            <section className="App">
-              <Timer />
-              <div>
-                <p data-testid="question-category">
-                  <strong>Categoria: </strong>
-                  { questions[index].category }
-                </p>
-                <h3 data-testid="question-text">
-                  <strong>Pergunta: </strong>
-                  { questions[index].question }
-                </h3>
-                <Answers
-                  show={ show }
-                  question={ questions[index] }
-                  sendShowAnswers={ sendShowAnswers }
-                />
-              </div>
-              { this.btnNext() }
-            </section>
+          <section className="App">
+            <Timer />
+            <div>
+              <p data-testid="question-category">
+                <strong>Categoria: </strong>
+                { questions[index].category }
+              </p>
+              <h3 data-testid="question-text">
+                <strong>Pergunta: </strong>
+                { questions[index].question }
+              </h3>
+              <Answers
+                show={ show }
+                question={ questions[index] }
+                sendShowAnswers={ sendShowAnswers }
+              />
+            </div>
+            { this.btnNext() }
+          </section>
         ) : (
           <Loading />
         )}
