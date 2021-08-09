@@ -82,6 +82,9 @@ class StaticTrivia extends Component {
         <button type="button" data-testid="btn-play-again">
           <Link to="/">Jogar novamente</Link>
         </button>
+        <button type="button" data-testid="btn-ranking">
+          <Link to="/ranking">Ver Ranking</Link>
+        </button>
       </div>
     );
   }
