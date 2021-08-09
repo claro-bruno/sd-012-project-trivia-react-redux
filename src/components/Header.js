@@ -14,7 +14,7 @@ class Header extends React.Component {
     return (
       <header>
         <div>
-          <img data-testid="header-profile-picture" src={ urlGravatar } alt="Imagem do jogador" />
+          <img data-testid="header-profile-picture" src={ urlGravatar } alt="Imagem do gamer" />
           <p data-testid="header-player-name">
             { name }
           </p>
