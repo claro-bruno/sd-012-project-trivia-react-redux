@@ -14,7 +14,7 @@ class Game extends Component {
     this.state = {
       questions: [],
       index: 0,
-      disableButton: true,
+      disableButton: false,
       timer: 30,
     };
 
