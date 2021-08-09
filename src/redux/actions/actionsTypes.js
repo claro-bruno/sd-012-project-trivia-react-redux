@@ -6,3 +6,4 @@ export const NEXT_QUESTIONS = 'NEXT_QUESTIONS';
 export const CHANGE_CLASS = 'CHANGE_CLASS';
 export const RESET_PLAYER = 'RESET_PLAYER';
 export const RESET_GAME = 'RESET_GAME';
+export const UPDATE_SCORE = 'UPDATE_SCORE';

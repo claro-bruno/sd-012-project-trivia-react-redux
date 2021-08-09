@@ -7,6 +7,7 @@ import {
   CHANGE_CLASS,
   RESET_GAME,
   RESET_PLAYER,
+  UPDATE_SCORE,
 } from './actionsTypes';
 
 export const addPlayerInfo = (loginInfo) => ({
@@ -42,6 +43,11 @@ export const resetGame = () => ({
 
 export const resetPlayer = () => ({
   type: RESET_PLAYER,
+});
+
+export const userScore = (score) => ({
+  type: UPDATE_SCORE,
+  score,
 });
 
 export const fetchAPI = () => (dispatch) => {
