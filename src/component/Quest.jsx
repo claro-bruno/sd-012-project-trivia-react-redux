@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { fetchQuest } from '../actions';
 import Header from './Header';
 import * as fetchAPI from '../helpers/fetchAPI';
 import './Quest.css';
+
+const count4 = 4;
+const count5 = 5;
+const correctAnswerId = 'correct-answer';
 
 class Quest extends React.Component {
   constructor(props) {
@@ -14,10 +19,12 @@ class Quest extends React.Component {
       timer: 30,
       timerId: null,
       click: 'off',
+      count: 0,
     };
     this.timerRunner = this.timerRunner.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.updateScore = this.updateScore.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +46,26 @@ class Quest extends React.Component {
     clearInterval(timerId);
   }
 
+  resetStyles() {
+    const { count } = this.state;
+    if (count <= count4) {
+      const wrongButtons = document.getElementsByName('wrong-answer');
+      const correctButton = document.getElementById(correctAnswerId);
+      const nextButton = document.getElementById('btn-next');
+      wrongButtons.forEach((button) => {
+        button.className = '';
+      });
+      correctButton.className = '';
+      nextButton.className = 'hide';
+    }
+  }
+
+  nextQuestion() {
+    this.setState(({ count }) => ({
+      count: count + 1,
+    }), () => { this.timerRunner(); this.endTimerFunction(false); this.resetStyles(); });
+  }
+
   timerRunner() {
     const oneSecond = 1000;
     const time = setInterval(() => {
@@ -47,32 +74,37 @@ class Quest extends React.Component {
         const newTime = timer - 1;
         this.setState({ timer: newTime });
       } else {
-        this.endTimerFunction();
+        this.endTimerFunction(true);
         clearInterval(time);
+        const nextButton = document.getElementById('btn-next');
+        nextButton.className = 'show';
       }
     }, oneSecond);
-    this.setState({ timerId: time });
+    this.setState(() => ({ timerId: time, timer: 30 }));
   }
 
-  endTimerFunction() {
-    const wrongButtons = document.getElementsByName('wrong-answer');
-    const correctButton = document.getElementById('correct-answer');
-    wrongButtons.forEach((button) => {
-      button.className = 'wrong-answer-clicked';
-      button.disabled = true;
-    });
+  endTimerFunction(boolean) {
+    const { count } = this.state;
+    if (count <= count4) {
+      const wrongButtons = document.getElementsByName('wrong-answer');
+      const correctButton = document.getElementById(correctAnswerId);
+      wrongButtons.forEach((button) => {
+        button.className = 'wrong-answer-clicked';
+        button.disabled = boolean;
+      });
 
-    correctButton.className = 'correct-answer-clicked';
-    correctButton.disabled = true;
+      correctButton.className = 'correct-answer-clicked';
+      correctButton.disabled = boolean;
+    }
   }
 
   updateScore() {
     const { player: { score } } = JSON.parse(localStorage.getItem('state'));
     const state = JSON.parse(localStorage.getItem('state'));
     const fixNumber = 10;
-    const { timer } = this.state;
+    const { timer, count } = this.state;
     const { quests } = this.props;
-    const { difficulty } = quests[0];
+    const { difficulty } = quests[count];
     const difMult = {
       easy: 1,
       medium: 2,
@@ -94,16 +126,9 @@ class Quest extends React.Component {
   handleClick(event) {
     const { timerId } = this.state;
 
-    const wrongButtons = document.getElementsByName('wrong-answer');
-    const correctButton = document.getElementById('correct-answer');
+    this.endTimerFunction(true);
+    const correctButton = document.getElementById(correctAnswerId);
     const nextButton = document.getElementById('btn-next');
-    wrongButtons.forEach((button) => {
-      button.className = 'wrong-answer-clicked';
-      button.disabled = true;
-    });
-
-    correctButton.className = 'correct-answer-clicked';
-    correctButton.disabled = true;
     nextButton.className = 'show';
     clearInterval(timerId);
 
@@ -114,15 +139,13 @@ class Quest extends React.Component {
 
   render() {
     const { quests, isLoading, name, email } = this.props;
-    const { timer } = this.state;
+    const { timer, count } = this.state;
+    if (count === count5) return <Redirect to="/feedback" />;
     if (isLoading) return <div>Loading...</div>;
     const avatar = fetchAPI.fetAvatar(md5(email).toString());
     const {
-      question,
-      category,
-      correct_answer: correctAnswer,
-      incorrect_answers: incorret,
-    } = quests[0];
+      question, category, correct_answer: correctAnswer,
+      incorrect_answers: incorret } = quests[count];
     return (
       <div>
         <Header name={ name } avatar={ avatar } />
@@ -151,6 +174,7 @@ class Quest extends React.Component {
           </button>)) }
         <div>
           <button
+            onClick={ this.nextQuestion }
             data-testid="btn-next"
             id="btn-next"
             type="button"
