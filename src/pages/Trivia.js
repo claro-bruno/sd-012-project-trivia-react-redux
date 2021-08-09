@@ -19,7 +19,7 @@ class Trivia extends Component {
 
   async componentDidMount() {
     // Token de teste, para funcionar de verdade o token verdadeiro tem de ser retirado do localStorage e colocado aqui
-    const token = '5918261f2d6fc70c64c978ff9d93cf6d907ad70a6d3121bf01f8147eebe75314';
+    const token = 'ddf55f6e70dcfd16a28529486e7f4a580da6500246de72c750c393ef92fc16e7';
     const data = await fetchTrivia(token);
     const questions = data.results;
     this.setQuestions(questions);

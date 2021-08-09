@@ -28,7 +28,6 @@ class Login extends Component {
   }
 
   async handlePlayBtn(state) {
-    // utilizacao do LocalStorage talvez?
     const url = 'https://opentdb.com/api_token.php?command=request';
     const DATA = await fetchApi(url);
     const TOKEN = DATA.token;
