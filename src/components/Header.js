@@ -7,7 +7,7 @@ class Header extends React.Component {
     return (
       <header>
         <img
-          style={ { width: '90px' } }
+          style={ { width: '90px', borderRadius: '50px' } }
           data-testid="header-profile-picture"
           src={ getUrl }
           alt="Profile"

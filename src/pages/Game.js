@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Paper from '@material-ui/core/Paper';
 import Header from '../components/Header';
+import Loading from '../components/Loading';
 
 class Game extends React.Component {
   constructor(props) {
@@ -13,15 +15,19 @@ class Game extends React.Component {
       loading: true,
       score: 0,
       assertions: 0,
+      next: false,
+      seconds: 30,
     };
 
     this.getQuestions = this.getQuestions.bind(this);
-    this.changeBordersColor = this.changeBordersColor.bind(this);
     this.getScore = this.getScore.bind(this);
+    this.timer = this.timer.bind(this);
+    this.buttonColorDisabler = this.buttonColorDisabler.bind(this);
   }
 
   componentDidMount() {
     this.getQuestions();
+    this.timer();
   }
 
   componentDidUpdate() {
@@ -50,8 +56,8 @@ class Game extends React.Component {
       }));
   }
 
-  getScore(question) {
-    const { id, name } = question.target;
+  getScore(target) {
+    const { id, name } = target;
     const { assertions, score } = this.state;
     const right = 10;
     const notas = {
@@ -82,62 +88,83 @@ class Game extends React.Component {
       break;
     default:
     }
+    this.buttonColorDisabler();
   }
 
-  changeBordersColor(click) {
-    this.setState({
-      corrAnsBorder: { border: '3px solid rgb(6, 240, 15)' },
-      incorrAnsBorder: { border: '3px solid rgb(255, 0, 0)' },
+  timer() {
+    const interval = 1000;
+    const limit = 30000;
+    setInterval(() => {
+      const { seconds } = this.state;
+      if (seconds > 0) this.setState({ seconds: seconds - 1 });
+    }, interval);
+    setTimeout(() => {
+      this.buttonColorDisabler();
+    }, limit);
+  }
+
+  buttonColorDisabler() {
+    const correctAnswerButton = document.getElementsByClassName('c-answer');
+    correctAnswerButton[0].style.border = '3px solid rgb(6, 240, 15)';
+    correctAnswerButton[0].setAttribute('disabled', 'disabled');
+
+    const incorrectAnswerButton = document.querySelectorAll('.w-answer');
+    incorrectAnswerButton.forEach((button) => {
+      button.style.border = '3px solid rgb(255, 0, 0)';
+      button.setAttribute('disabled', 'disabled');
     });
-    this.getScore(click);
+    this.setState({
+      next: true,
+    });
   }
 
   render() {
-    const { questions, score, questionNumber,
-      loading, corrAnsBorder, incorrAnsBorder } = this.state;
+    const { questions, questionNumber, loading, score, seconds, next } = this.state;
     const { getUrl, getName } = this.props;
     if (!loading) {
       return (
         <main>
-          <Header
-            getUrl={ getUrl }
-            getName={ getName }
-            score={ score }
-          />
-          <div>
-            <p data-testid="question-category">{ questions[questionNumber].category }</p>
-            <p data-testid="question-text">{ questions[questionNumber].question }</p>
-          </div>
-          <div>
-            { questions[questionNumber]
-              .incorrect_answers.map((answer, index) => (
-                <button
-                  key={ index }
-                  type="button"
-                  name="incorrect"
-                  data-testid={ `wrong-answer-${index}` }
-                  style={ incorrAnsBorder }
-                  onClick={ this.changeBordersColor }
-                >
-                  { answer }
-                </button>
-              )) }
-            <button
-              type="button"
-              data-testid="correct-answer"
-              id={ questions[questionNumber].difficulty }
-              name="correct"
-              difficulty={ questions[questionNumber].difficulty }
-              style={ corrAnsBorder }
-              onClick={ this.changeBordersColor }
-            >
-              { questions[questionNumber].correct_answer }
-            </button>
-          </div>
+          <Header getUrl={ getUrl } getName={ getName } score={ score } />
+          <Paper elevation={ 3 }>
+            <p data-testid="question-category">
+              { questions[questionNumber].category }
+            </p>
+            <p data-testid="question-text">
+              { questions[questionNumber].question }
+            </p>
+            <div>
+              { questions[questionNumber]
+                .incorrect_answers.map((answer, index) => (
+                  <button
+                    key={ index }
+                    type="button"
+                    data-testid={ `wrong-answer-${index}` }
+                    onClick={ ({ target }) => this.getScore(target) }
+                    className="w-answer"
+                  >
+                    { answer }
+                  </button>
+                )) }
+              <button
+                id={ questions[questionNumber].difficulty }
+                name="correct"
+                type="button"
+                data-testid="correct-answer"
+                onClick={ ({ target }) => this.getScore(target) }
+                className="c-answer"
+              >
+                { questions[questionNumber].correct_answer }
+              </button>
+            </div>
+            {next ? <button type="button" data-testid="btn-next">Próxima</button> : null}
+          </Paper>
+          <span>{ seconds }</span>
         </main>
       );
     }
-    return (<p>Loading...</p>);
+    return (
+      <Loading />
+    );
   }
 }
 
