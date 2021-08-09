@@ -1,4 +1,5 @@
 import React from 'react';
+import md5 from 'crypto-js/md5';
 
 class FinalResults extends React.Component {
   componentDidMount() {
@@ -8,11 +9,26 @@ class FinalResults extends React.Component {
   setLocalRanking() {
     const state = JSON.parse(localStorage.getItem('state'));
     const localRanking = JSON.parse(localStorage.getItem('ranking'));
+    const emailHash = md5(state.player.gravatarEmail).toString();
+    const imagePath = `https://www.gravatar.com/avatar/${emailHash}`;
     if (localRanking === null) {
-      const ranking = [{ name: state.player.name, score: state.player.score, picture: 'https://www.gravatar.com/avatar/' }];
+      const ranking = [
+        {
+          name: state.player.name,
+          score: state.player.score,
+          picture: imagePath,
+        },
+      ];
       localStorage.setItem('ranking', JSON.stringify(ranking));
     } else {
-      const ranking = [...localRanking, { name: state.player.name, score: state.player.score, picture: 'https://www.gravatar.com/avatar/' }];
+      const ranking = [
+        ...localRanking,
+        {
+          name: state.player.name,
+          score: state.player.score,
+          picture: imagePath,
+        },
+      ];
       localStorage.setItem('ranking', JSON.stringify(ranking));
     }
   }
