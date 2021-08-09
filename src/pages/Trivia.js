@@ -4,6 +4,8 @@ import Question from '../components/Question';
 import { fetchTrivia } from '../services/api';
 import Loading from '../components/Loading';
 
+const ONE_SECOND = 1000;
+
 class Trivia extends Component {
   constructor() {
     super();
@@ -12,11 +14,15 @@ class Trivia extends Component {
       questionNumber: 0,
       loading: true,
       resolved: false,
+      seconds: 30,
     };
     this.setQuestions = this.setQuestions.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
     this.handleNext = this.handleNext.bind(this);
     this.renderQuestionOrRedirect = this.renderQuestionOrRedirect.bind(this);
+
+    this.countDown = this.countDown.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
   }
 
   async componentDidMount() {
@@ -26,10 +32,38 @@ class Trivia extends Component {
     const data = await fetchTrivia(token);
     const questions = data.results;
     this.setQuestions(questions);
+
+    // this.timer = setInterval(() => {
+    //   const { seconds } = this.state;
+    //   const remainingTime = seconds - 1;
+    //   if (remainingTime >= 0) {
+    //     this.setState({
+    //       seconds: remainingTime,
+    //     });
+    //   } else {
+    //     // this.setState({ resolved: false });
+    //     this.stopTimer();
+    //   }
+    // }, ONE_SECOND);
+    this.countDown();
   }
 
   setQuestions(questions) {
     this.setState({ questions, loading: false });
+  }
+
+  countDown() {
+    this.timer = setInterval(() => {
+      const { seconds } = this.state;
+      const remainingTime = seconds - 1;
+      if (remainingTime >= 0) {
+        this.setState({
+          seconds: remainingTime,
+        });
+      } else {
+        this.stopTimer();
+      }
+    }, ONE_SECOND);
   }
 
   handleAnswer() {
@@ -41,12 +75,19 @@ class Trivia extends Component {
       {
         resolved: false,
         questionNumber: prevState.questionNumber + 1,
+        seconds: 30,
       }));
+    this.countDown();
+  }
+
+  stopTimer() {
+    this.setState({ resolved: true });
+    return (clearInterval(this.timer));
   }
 
   renderQuestionOrRedirect() {
     const { handleAnswer } = this;
-    const { questionNumber, resolved, questions } = this.state;
+    const { questionNumber, resolved, questions, seconds } = this.state;
 
     const maxQuestionsNumber = 4;
     const currentQuestion = questions[questionNumber];
@@ -54,6 +95,7 @@ class Trivia extends Component {
       ? <Redirect to="/game/feedback" />
       : (
         <Question
+          seconds={ seconds }
           handleAnswer={ handleAnswer }
           resolved={ resolved }
           question={ currentQuestion }
@@ -61,7 +103,7 @@ class Trivia extends Component {
   }
 
   render() {
-    const { loading, resolved } = this.state;
+    const { loading, resolved, seconds } = this.state;
     const { handleNext, renderQuestionOrRedirect } = this;
     return (
       <section>
@@ -71,7 +113,7 @@ class Trivia extends Component {
             : renderQuestionOrRedirect()
         }
         {
-          resolved
+          (resolved || seconds === 0)
             && (
               <button
                 type="button"
