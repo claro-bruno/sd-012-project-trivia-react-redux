@@ -54,4 +54,7 @@ export const setScore = (state, action) => ({
     : state.score,
 });
 
-export const isLastQuestion = (state) => state.questions.length - 2 === state.currentQuestion;
+export const isLastQuestion = (state) => {
+  const { questions, currentQuestion } = state;
+  return questions.length - 2 === currentQuestion;
+};

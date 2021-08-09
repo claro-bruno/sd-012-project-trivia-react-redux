@@ -12,7 +12,7 @@ class Game extends Component {
   }
 
   render() {
-    const { isFetchingQuestions, questions, currentQuestion } = this.props;
+    const { isFetchingQuestions, questions, currentQuestion, history } = this.props;
 
     if (isFetchingQuestions) { return <h1> Loading.... </h1>; }
 
@@ -26,6 +26,7 @@ class Game extends Component {
                 <Question
                   key={ index }
                   question={ question }
+                  history={ history }
                 />
               )
           ))}
