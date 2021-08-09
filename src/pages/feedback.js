@@ -60,8 +60,8 @@ class Feedback extends React.Component {
   brainReturn() {
     const { assertions } = this.props;
     const tres = 3;
-    if (assertions > tres) return brain;
-    return sadBrain;
+    if (assertions < tres) return sadBrain;
+    return brain;
   }
 
   render() {
