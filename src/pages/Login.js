@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import LinkWithButton from '../components/LinkWithButton';
+import { Link, Redirect } from 'react-router-dom';
 import { actionCreateLogin } from '../redux/actions';
 import { fetchApi } from '../services/api';
 
@@ -13,6 +12,7 @@ class Login extends Component {
       btnDisable: true,
       email: '',
       name: '',
+      redirect: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.btnDisable = this.btnDisable.bind(this);
@@ -23,33 +23,35 @@ class Login extends Component {
     const { name, value } = target;
     this.setState({
       [name]: value,
+    }, () => {
+      this.btnDisable();
     });
-    this.btnDisable();
   }
 
   async handlePlayBtn(state) {
+    // utilizacao do LocalStorage talvez?
     const url = 'https://opentdb.com/api_token.php?command=request';
     const DATA = await fetchApi(url);
     const TOKEN = DATA.token;
     localStorage.setItem('token', JSON.stringify(TOKEN));
     const { createLogin } = this.props;
     createLogin(state);
+    this.setState({ redirect: true });
   }
 
   btnDisable() {
     const { name, email } = this.state;
-    const validator = name.length > 0 && email.length > 0;
-    if (validator) {
-      this.setState({
-        btnDisable: false,
-      });
-    }
+    const validator = name !== '' && email !== '';
+    this.setState({ btnDisable: !validator });
   }
 
   render() {
-    const { name, email, btnDisable } = this.state;
+    const { name, email, btnDisable, redirect } = this.state;
     return (
       <fieldset>
+        {
+          redirect && <Redirect to="/game/trivia" />
+        }
         <label
           htmlFor="input-player-name"
         >
@@ -74,12 +76,14 @@ class Login extends Component {
             data-testid="input-gravatar-email"
           />
         </label>
-        <LinkWithButton
-          pathTo="/game/trivia"
+        <button
+          type="button"
+          data-testid="btn-play"
           disabled={ btnDisable }
-          handlePlayBtn={ () => this.handlePlayBtn(this.state) }
-          btnText="Jogar"
-        />
+          onClick={ () => this.handlePlayBtn(this.state) }
+        >
+          Jogar
+        </button>
         <div>
           <Link to="/config" data-testid="btn-settings">
             <button type="button">Configurações</button>
