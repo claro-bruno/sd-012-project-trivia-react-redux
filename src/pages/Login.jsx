@@ -30,14 +30,12 @@ class Login extends Component {
     const { fetchToken, dataUser } = this.props;
     await fetchToken();
     dataUser(this.state);
-    this.setState({
-      redirect: true,
-    });
   }
 
   render() {
-    const { email, name, redirect } = this.state;
-    if (redirect) return <Redirect to="/game" />;
+    const { email, name } = this.state;
+    const { results } = this.props;
+    if (results.length > 0) return <Redirect to="/game" />;
     return (
       <div className="App">
         <header className="App-header">
@@ -85,9 +83,16 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  token: state.token.token,
+  results: state.questions.results,
+
+});
+
 const mapDispatchToProps = (dispatch) => ({
   dataUser: (userLogin) => dispatch(getLogin(userLogin)),
   fetchToken: () => dispatch(getToken()),
+  // getQuestions: (token) => dispatch(getAllQuestions(token)),
 });
 
 Login.propTypes = {
@@ -96,4 +101,4 @@ Login.propTypes = {
   fetchToken: PropTypes.func.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

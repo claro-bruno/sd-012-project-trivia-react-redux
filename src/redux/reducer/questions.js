@@ -13,13 +13,14 @@ const questions = (state = STATE_INITIAL, action) => {
       ...state,
       loading: true,
     };
+
   case GET_QUESTION_SUCCESS:
-    console.log(action.payload);
     return {
       ...state,
       results: action.payload,
       loading: false,
     };
+
   case GET_QUESTION_ERROR:
     return {
       ...state,
