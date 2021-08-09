@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class GenericBtn extends React.Component {
   render() {
-    const { id, value, disabled, onClick, name } = this.props;
+    const { id, value, disabled, onClick, name, style } = this.props;
 
     return (
       <button
@@ -13,6 +13,7 @@ class GenericBtn extends React.Component {
         onClick={ onClick }
         data-testid={ id }
         name={ name }
+        style={ style }
       >
         {value}
       </button>

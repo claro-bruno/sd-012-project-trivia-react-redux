@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import getRanking from '../utils/player';
-import GenericBtn from '../components/GenericBtn';
+import { getRanking, getAvatar } from '../utils/player';
 
 class Ranking extends React.Component {
   render() {
@@ -21,7 +19,7 @@ class Ranking extends React.Component {
         <h1 data-testid="ranking-title">Ranking</h1>
         {ranking.map((player, index) => (
           <div key={ index }>
-            <img alt={ player.name } src={ player.gravatarEmail } />
+            <img alt={ player.name } src={ getAvatar(player.gravatarEmail) } />
             <p data-testid={ `player-name-${index}` }>{ player.name }</p>
             <p data-testid={ `player-score-${index}` }>{ player.score }</p>
           </div>

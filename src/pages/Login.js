@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import md5 from 'crypto-js/md5';
 import UserInputs from '../components/UserInputs';
 import GenericBtn from '../components/GenericBtn';
 import { playerInfo } from '../redux/actions';
 import { requestToken } from '../services';
+import { getAvatar } from '../utils/player';
 
 class Login extends React.Component {
   constructor() {
@@ -55,16 +55,19 @@ class Login extends React.Component {
     const { username, email } = this.state;
     const { play } = this.props;
     const token = await requestToken();
-    const hash = md5(email).toString();
-    console.log(hash);
-    const avatar = `https://www.gravatar.com/avatar/${hash}`;
+    localStorage.setItem('token', token);
+    const avatar = getAvatar(email);
     const user = {
       name: username,
       email,
       avatar,
     };
+<<<<<<< HEAD
+
+=======
     console.log(user);
     localStorage.setItem('token', token);
+>>>>>>> main-group-8
     play(user);
   }
 

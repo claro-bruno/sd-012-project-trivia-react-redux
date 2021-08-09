@@ -1,9 +1,11 @@
 import { requestTrivia } from '../../services';
 
 export const REQUEST_TRIVIA = 'REQUEST_TRIVIA';
-const REQUEST_ERROR = 'REQUEST_ERROR';
-export const CURRENT_SCORE = 'CURRENT_SCORE';
+export const REQUEST_ERROR = 'REQUEST_ERROR';
 export const PLAYER_INFO = 'PLAYER_INFO';
+export const NEXT_QUESTION = 'NEXT_QUESTION';
+export const CURRENT_SCORE = 'CURRENT_SCORE';
+export const PLAYER_ASSERTIONS = 'PLAYER_ASSERTIONS';
 
 export const playerInfo = ({ name, email, avatar }) => ({
   type: PLAYER_INFO,
