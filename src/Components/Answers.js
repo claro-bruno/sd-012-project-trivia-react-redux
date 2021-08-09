@@ -23,9 +23,7 @@ class Answers extends React.Component {
   answers(question, show, sendShowAnswers) {
     const answers = [...question.incorrect_answers, question.correct_answer];
     const arrayAnswers = this.shuffleArray(answers);
-    const { onClick } = this.props;
     let controllIncorrects = 0;
-    
     return (
       arrayAnswers.map((answer, index) => {
         if (answer === question.correct_answer) {
@@ -33,12 +31,12 @@ class Answers extends React.Component {
             <button
               key={ index }
               type="button"
+              onClick={ () => sendShowAnswers(true) }
               data-testid="correct-answer"
-              className="answer-btn"
-              name="correct-answer"
-              onClick={ (e) => onClick(e) }
+              className={ show ? 'correct answer-btn' : 'answer-btn' }
+              name="wrong-answer"
             >
-              { question.correct_answer }
+              {question.correct_answer}
             </button>
           );
         }
@@ -48,29 +46,15 @@ class Answers extends React.Component {
           <button
             key={ index }
             type="button"
+            className={ show ? 'wrong answer-btn' : 'answer-btn' }
             onClick={ () => sendShowAnswers(true) }
-            data-testid="correct-answer"
-            className={ show ? 'correct' : '', "answer-btn" }
-            name="wrong-answer"
+            data-testid={ `wrong-answer-${controllIncorrects - 1}` }
           >
-            {question.correct_answer}
+            {question.incorrect_answers[controllIncorrects - 1]}
           </button>
         );
-      }
-
-      controllIncorrects += 1;
-      return (
-        <button
-          key={ index }
-          type="button"
-          className={ show ? 'wrong' : '', "answer-btn" }
-          onClick={ () => sendShowAnswers(true) }
-          data-testid={ `wrong-answer-${controllIncorrects - 1}` }
-        >
-          {question.incorrect_answers[controllIncorrects - 1]}
-        </button>
-      );
-    });
+      })
+    );
   }
 
   render() {
