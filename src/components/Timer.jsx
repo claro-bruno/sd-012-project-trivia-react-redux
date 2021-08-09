@@ -36,9 +36,9 @@ class Timer extends Component {
   render() {
     const { timer } = this.state;
     return (
-      <div>
+      <div className="timer">
         <p>
-          Tempo:
+          {/* Tempo: */}
           { timer }
         </p>
       </div>

@@ -50,45 +50,46 @@ class Login extends Component {
   render() {
     const { name, email, btnDisable } = this.state;
     return (
-      <>
-        <fieldset>
-          <label
-            htmlFor="input-player-name"
-          >
-            Nome:
-            <input
-              value={ name }
-              name="name"
-              onChange={ this.handleChange }
-              type="text"
-              data-testid="input-player-name"
-            />
-          </label>
-          <label
-            htmlFor="input-gravatar-email"
-          >
-            Email:
-            <input
-              value={ email }
-              name="email"
-              onChange={ this.handleChange }
-              type="text"
-              data-testid="input-gravatar-email"
-            />
-          </label>
-          <Link to="/game">
-            <button
-              disabled={ btnDisable }
-              type="button"
-              data-testid="btn-play"
-              onClick={ () => this.handleClick() }
-            >
-              Jogar
-            </button>
-          </Link>
-        </fieldset>
-        <ConfigButton />
-      </>
+      <div className="main-login">
+        <section className="section-logo">
+          G5
+        </section>
+        <section className="section-login">
+          <fieldset className="fieldset-login">
+            <label className="labelForm" htmlFor="input-player-name">
+              Nome:
+              <input
+                value={ name }
+                name="name"
+                onChange={ this.handleChange }
+                type="text"
+                data-testid="input-player-name"
+              />
+            </label>
+            <label className="labelForm" htmlFor="input-gravatar-email">
+              Email:
+              <input
+                value={ email }
+                name="email"
+                onChange={ this.handleChange }
+                type="text"
+                data-testid="input-gravatar-email"
+              />
+            </label>
+            <Link to="/game">
+              <button
+                disabled={ btnDisable }
+                type="button"
+                data-testid="btn-play"
+                onClick={ () => this.handleClick() }
+              >
+                Jogar
+              </button>
+            </Link>
+            <ConfigButton />
+          </fieldset>
+        </section>
+      </div>
     );
   }
 }
