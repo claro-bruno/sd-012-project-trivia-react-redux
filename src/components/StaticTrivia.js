@@ -76,7 +76,6 @@ class StaticTrivia extends Component {
           data-testid="btn-next"
           type="button"
           onClick={ nextQuestion }
-          style={ { display: 'none' } }
         >
           Próxima
         </button>
