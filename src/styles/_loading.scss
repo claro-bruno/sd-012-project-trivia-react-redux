@@ -1,12 +1,18 @@
+@font-face {
+  font-family: EternalLogo;
+  src: url('./fonts/EternalLogo-MVO7Y.ttf');
+}
+
 .loading-screen {
-  background-color: black;
   align-items: center;
+  background-color: black;
   justify-content: center;
 
   h1 {
-    width: fit-content;
     color: white;
+    font-family: EternalLogo;
     margin: 0;
+    width: fit-content;
   }
 }
 

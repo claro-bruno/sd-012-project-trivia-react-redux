@@ -11950,22 +11950,28 @@ fieldset:disabled .btn {
   }
 }
 
+@font-face {
+  font-family: EternalLogo;
+  src: url("./fonts/EternalLogo-MVO7Y.ttf");
+}
+
 .loading-screen {
-  background-color: black;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  background-color: black;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
 }
 
 .loading-screen h1, .loading-screen .h1 {
+  color: white;
+  font-family: EternalLogo;
+  margin: 0;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  color: white;
-  margin: 0;
 }
 
 .lds-ellipsis {
