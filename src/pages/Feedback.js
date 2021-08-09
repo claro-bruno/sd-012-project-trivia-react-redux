@@ -19,14 +19,21 @@ class Feedback extends React.Component {
   }
 
   render() {
-    const { correctAnswers } = this.props;
+    const { correctAnswers, score } = this.props;
+    console.log(typeof (correctAnswers));
     return (
       <>
         <Game />
         <p>
           Acertos:
-          <span>
+          <span data-testid="feedback-total-question">
             { correctAnswers }
+          </span>
+        </p>
+        <p>
+          Seu score:
+          <span data-testid="feedback-total-score">
+            { score }
           </span>
         </p>
         <p data-testid="feedback-text">{ this.feedbackText() }</p>
@@ -37,10 +44,12 @@ class Feedback extends React.Component {
 
 Feedback.propTypes = {
   correctAnswers: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 /*  const mapStateToProps = (state) => ({
-  correctAnswers: state.user.assertions,
+  correctAnswers: state.-(ver onde estará no redux)-.assertions,
+  score: state.(ver onde estará no redux).score,
 }); */
 
 export default Feedback;
