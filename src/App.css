@@ -31,6 +31,10 @@
   min-height: 100vh;
 }
 
+.oi {
+  background-color: violet;
+}
+
 .App-link {
   color: #61dafb;
 }
