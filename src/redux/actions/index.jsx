@@ -31,6 +31,7 @@ import fetchApiGame from '../../services/fetchApiGame';
 export const REQUEST_API_GAME_LOADING = 'REQUEST_API_GAME';
 export const REQUEST_API_GAME_SUCCESS = 'REQUEST_API_GAME_SUCCESS';
 export const REQUEST_API_GAME_ERROR = 'REQUEST_API_GAME_ERROR';
+export const SCORE_UPDATE = 'SCORE_UPDATE';
 
 export const actionRequestApiLoading = () => ({
   type: REQUEST_API_GAME_LOADING,
@@ -79,3 +80,8 @@ export function fetchLoginAction(nome, email) {
     })
     .catch(console.error);
 }
+
+export const dispatchScore = (score) => ({
+  type: SCORE_UPDATE,
+  payload: score,
+});
