@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import FeedbackText from '../component/FeedbackText';
+import FeedbackInfo from '../component/FeedbackInfo';
 
 class Feedback extends React.Component {
   constructor(props) {
@@ -40,6 +41,7 @@ class Feedback extends React.Component {
         </header>
         <div>
           <FeedbackText />
+          <FeedbackInfo />
         </div>
         <div>
           <h1 data-testid="feedback-text">Feedbacks</h1>
