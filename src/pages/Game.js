@@ -1,5 +1,7 @@
 import React from 'react';
+import Paper from '@material-ui/core/Paper';
 import Header from '../components/Header';
+import Loading from '../components/Loading';
 
 class Game extends React.Component {
   constructor(props) {
@@ -10,12 +12,12 @@ class Game extends React.Component {
       questions: [],
       corrAnsBorder: {},
       incorrAnsBorder: {},
+      next: false,
       loading: true,
       seconds: 30,
     };
 
     this.getQuestions = this.getQuestions.bind(this);
-    this.changeBordersColor = this.changeBordersColor.bind(this);
     this.timer = this.timer.bind(this);
     this.buttonColorDisabler = this.buttonColorDisabler.bind(this);
   }
@@ -57,60 +59,58 @@ class Game extends React.Component {
       button.style.border = '3px solid rgb(255, 0, 0)';
       button.setAttribute('disabled', 'disabled');
     });
-  }
-
-  changeBordersColor() {
     this.setState({
-      corrAnsBorder: { border: '3px solid rgb(6, 240, 15)' },
-      incorrAnsBorder: { border: '3px solid rgb(255, 0, 0)' },
+      next: true,
     });
   }
 
   render() {
     const { questions,
-      questionNumber, loading, corrAnsBorder, incorrAnsBorder, seconds } = this.state;
+      questionNumber, loading,
+      incorrAnsBorder, corrAnsBorder, seconds, next } = this.state;
     if (!loading) {
       return (
         <main>
           <Header />
-          <div>
+          <Paper elevation={ 3 }>
             <p data-testid="question-category">
               { questions[questionNumber].category }
             </p>
             <p data-testid="question-text">
               { questions[questionNumber].question }
             </p>
-          </div>
-          <div>
-            { questions[questionNumber]
-              .incorrect_answers.map((answer, index) => (
-                <button
-                  key={ index }
-                  type="button"
-                  data-testid={ `wrong-answer-${index}` }
-                  style={ incorrAnsBorder }
-                  onClick={ this.buttonColorDisabler }
-                  className="w-answer"
-                >
-                  { answer }
-                </button>
-              )) }
-            <button
-              type="button"
-              data-testid="correct-answer"
-              style={ corrAnsBorder }
-              onClick={ this.buttonColorDisabler }
-              className="c-answer"
-            >
-              { questions[questionNumber].correct_answer }
-            </button>
-          </div>
+            <div>
+              { questions[questionNumber]
+                .incorrect_answers.map((answer, index) => (
+                  <button
+                    key={ index }
+                    type="button"
+                    data-testid={ `wrong-answer-${index}` }
+                    style={ incorrAnsBorder }
+                    onClick={ this.buttonColorDisabler }
+                    className="w-answer"
+                  >
+                    { answer }
+                  </button>
+                )) }
+              <button
+                type="button"
+                data-testid="correct-answer"
+                style={ corrAnsBorder }
+                onClick={ this.buttonColorDisabler }
+                className="c-answer"
+              >
+                { questions[questionNumber].correct_answer }
+              </button>
+            </div>
+            {next ? <button type="button" data-testid="btn-next">Próxima</button> : null}
+          </Paper>
           <span>{ seconds }</span>
         </main>
       );
     }
     return (
-      <p>Loading...</p>
+      <Loading />
     );
   }
 }
