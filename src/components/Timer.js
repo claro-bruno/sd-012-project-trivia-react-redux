@@ -43,7 +43,10 @@ class Timer extends Component {
     const oneSecond = 1000;
     const { passTime } = this.props;
     setInterval(
-      () => passTime(), oneSecond,
+      () => {
+        const { over, answered } = this.props;
+        if (!over && !answered) return passTime();
+      }, oneSecond,
     );
   }
 
@@ -70,6 +73,7 @@ class Timer extends Component {
 Timer.propTypes = {
   timeIsOver: PropTypes.func.isRequired,
   over: PropTypes.bool.isRequired,
+  answered: PropTypes.bool.isRequired,
   time: PropTypes.number.isRequired,
   passTime: PropTypes.func.isRequired,
 };
