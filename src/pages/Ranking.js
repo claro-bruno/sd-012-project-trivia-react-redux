@@ -3,25 +3,6 @@ import { Link } from 'react-router-dom';
 
 class Ranking extends React.Component {
   getLocalStorage() {
-    const pic = 'https://www.gravatar.com/avatar/';
-    const ranking = [
-      {
-        name: 'jogador 1',
-        score: 10,
-        picture: pic,
-      },
-      {
-        name: 'jogador 2',
-        score: 5,
-        picture: pic,
-      },
-      {
-        name: 'jogador 3',
-        score: 15,
-        picture: pic,
-      },
-    ];
-    localStorage.setItem('ranking', JSON.stringify(ranking));
     const localRanking = JSON.parse(localStorage.getItem('ranking'));
     return localRanking;
   }

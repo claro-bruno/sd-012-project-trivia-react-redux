@@ -1,4 +1,4 @@
-import { USER_PLAYER } from '../actions/actionsTypes';
+import { RESET_PLAYER, USER_PLAYER } from '../actions/actionsTypes';
 
 const INITIAL_STATE = {
   playerInfo: {
@@ -14,6 +14,8 @@ const loginReducers = (state = INITIAL_STATE, action) => {
       ...state,
       playerInfo: action.loginInfo,
     };
+  case RESET_PLAYER:
+    return INITIAL_STATE;
   default:
     return state;
   }

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ButtonNext from './ButtonNext';
-import { changeClass } from '../redux/actions';
+import { changeClass, userScore } from '../redux/actions';
 import './GameQuestions.css';
 
 class GameQuestions extends React.Component {
@@ -118,6 +118,7 @@ class GameQuestions extends React.Component {
   }
 
   updatePlayer(scoreValue) {
+    const { updateScore } = this.props;
     const state = JSON.parse(localStorage.getItem('state'));
     const newState = {
       player: {
@@ -126,6 +127,7 @@ class GameQuestions extends React.Component {
       },
     };
     localStorage.setItem('state', JSON.stringify(newState));
+    updateScore(scoreValue);
   }
 
   handleClick(answerStatus) {
@@ -225,6 +227,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   showAnswer: (correct, wrong) => dispatch(changeClass(correct, wrong)),
+  updateScore: (score) => dispatch(userScore(score)),
 });
 
 GameQuestions.propTypes = {
@@ -233,6 +236,7 @@ GameQuestions.propTypes = {
   showAnswer: PropTypes.func.isRequired,
   cBtnClass: PropTypes.string.isRequired,
   wBtnClass: PropTypes.string.isRequired,
+  updateScore: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameQuestions);

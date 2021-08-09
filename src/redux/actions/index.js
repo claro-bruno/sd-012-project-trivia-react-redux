@@ -5,6 +5,9 @@ import {
   GET_QUESTIONS_ERROR,
   NEXT_QUESTIONS,
   CHANGE_CLASS,
+  RESET_GAME,
+  RESET_PLAYER,
+  UPDATE_SCORE,
 } from './actionsTypes';
 
 export const addPlayerInfo = (loginInfo) => ({
@@ -32,6 +35,19 @@ export const changeClass = (correct, wrong) => ({
   type: CHANGE_CLASS,
   correct,
   wrong,
+});
+
+export const resetGame = () => ({
+  type: RESET_GAME,
+});
+
+export const resetPlayer = () => ({
+  type: RESET_PLAYER,
+});
+
+export const userScore = (score) => ({
+  type: UPDATE_SCORE,
+  score,
 });
 
 export const fetchAPI = () => (dispatch) => {
