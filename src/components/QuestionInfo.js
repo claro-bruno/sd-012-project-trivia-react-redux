@@ -27,8 +27,8 @@ class QuestionInfo extends Component {
   changeColorsAnswer() {
     const correct = document.getElementById('correct-answer');
     const incorrect = document.getElementsByName('incorrect-answer');
-    incorrect.forEach((question) => { question.className = 'questionWrong'; });
-    correct.className = 'questionCorrect';
+    incorrect.forEach((question) => { question.className += ' questionWrong'; });
+    correct.className += ' questionCorrect';
   }
 
   changeQuestions() {
@@ -76,7 +76,8 @@ class QuestionInfo extends Component {
     const fixedQuestion = question
       .replace(/&quot;/gi, '')
       .replace(/&#039;/gi, '')
-      .replace(/&eacute/gi);
+      .replace(/&eacute/gi, '')
+      .replace(/&amp/gi, '');
     return fixedQuestion;
   }
 

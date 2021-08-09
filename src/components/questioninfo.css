@@ -37,14 +37,6 @@
   transition: background-color 0.2s;
 }
 
-.correct-answer:hover {
-  background-color: #b3b2b2;
-}
-
-.correct-answer:active {
-  transform: scale(0.98);
-}
-
 .incorrect-answer {
   background-color: #c9c8c8;
   border: 0;
@@ -64,11 +56,23 @@
 }
 
 .questionCorrect {
+  background-color: #c9c8c8;
   border: 3px solid rgb(6, 240, 15);
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 8px 0;
+  padding: 6px;
+  transition: background-color 0.2s;
 }
 
 .questionWrong {
+  background-color: #c9c8c8;
   border: 3px solid red;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 8px 0;
+  padding: 6px;
+  transition: background-color 0.2s;
 }
 
 .btn-next {
@@ -81,7 +85,7 @@
 
 .changeStyle {
   background-color: #c9c8c8;
-  border: 0;
+  border: 3px solid red;
   border-radius: 4px;
   cursor: pointer;
   margin: 8px 0;
