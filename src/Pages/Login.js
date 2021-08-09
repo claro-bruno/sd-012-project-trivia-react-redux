@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-import ConfigButton from '../Components/ConfigButton';
+import { Link } from 'react-router-dom';
 import { fetchLoginAction } from '../redux/actions';
-// import logo from '../trivia.png';
+import ConfigButton from '../Components/ConfigButton';
+import logo from '../trivia.png';
 
 class Login extends React.Component {
   constructor() {
@@ -26,12 +26,8 @@ class Login extends React.Component {
     const { history: { push }, sendAction } = this.props;
     return (
       <div className="App">
-        <header>
-          {/* <header className="App-header"> */}
-          {/* <img src={ logo } className="App-logo" alt="logo" /> */}
-          <p>
-            SUA VEZ
-          </p>
+        <header className="App-header">
+          <img src={ logo } className="App-logo" alt="logo" />
         </header>
         <form>
           <label htmlFor="input-name">
@@ -56,15 +52,16 @@ class Login extends React.Component {
               data-testid="input-gravatar-email"
             />
           </label>
-          <button
-            type="button"
-            data-testid="btn-play"
-            disabled={ !nome || !email }
-            onClick={ () => sendAction(nome, email) }
-          >
-            Jogar
-          </button>
-
+          <Link to="/game">
+            <button
+              type="button"
+              data-testid="btn-play"
+              disabled={ !nome || !email }
+              onClick={ () => sendAction(nome, email) }
+            >
+              Jogar
+            </button>
+          </Link>
         </form>
         <ConfigButton push={ push } />
       </div>
@@ -73,9 +70,9 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  history: PropTypes.arrayOf().isRequired,
+  history: PropTypes.arrayOf().isRequired, //  precisa arrumar essa props
   sendAction: PropTypes.func.isRequired,
-  push: PropTypes.func.isRequired,
+  push: PropTypes.func.isRequired, //  precisa arrumar essa props
 };
 
 const mapDispatchToProps = (dispatch) => ({
