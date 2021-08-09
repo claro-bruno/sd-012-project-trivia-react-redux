@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-<<<<<<< HEAD
-import { getTriviaAPI } from '../redux/action';
-=======
 import { getTriviaAPI } from '../redux/action/index';
 import HeaderGame from '../components/HeaderGame';
->>>>>>> 08c193cf85a32f1403cccd32a3031c5589204572
 
 class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
-<<<<<<< HEAD
-    };
-=======
       alternatives: [],
       randomIndex: '',
     };
@@ -87,7 +80,6 @@ class Game extends Component {
         )
     ));
     return buttons;
->>>>>>> 08c193cf85a32f1403cccd32a3031c5589204572
   }
 
   componentDidMount() {
@@ -154,15 +146,6 @@ class Game extends Component {
   // }
 
   render() {
-<<<<<<< HEAD
-    const { getAPI, questions } = this.props;
-    const token = JSON.parse(localStorage.getItem('token'));
-    console.log(questions)
-    return (
-      <>
-        <button type="button" onClick={ () => getAPI(token) }>Update question</button>
-        <p>{questions.difficulty}</p>
-=======
     const { token } = this.props;
     return (
       <>
@@ -172,7 +155,6 @@ class Game extends Component {
         {
           (token === 0) ? this.createQuestion() : <p>LOADING</p>
         }
->>>>>>> 08c193cf85a32f1403cccd32a3031c5589204572
       </>
     );
   }
@@ -180,10 +162,7 @@ class Game extends Component {
 
 const mapStateToProps = (state) => ({
   questions: state.questions.results,
-<<<<<<< HEAD
-=======
   token: state.token.response_code,
->>>>>>> 08c193cf85a32f1403cccd32a3031c5589204572
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -192,19 +171,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 Game.propTypes = {
   getAPI: PropTypes.func.isRequired,
-<<<<<<< HEAD
-  questions: PropTypes.shape({
-    results: PropTypes.shape({
-      category: PropTypes.string,
-      question: PropTypes.string,
-      correctAnswer: PropTypes.string,
-      incorrectAnswers: PropTypes.string,
-    }),
-  }).isRequired,
-=======
   token: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(Object).isRequired,
->>>>>>> 08c193cf85a32f1403cccd32a3031c5589204572
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
