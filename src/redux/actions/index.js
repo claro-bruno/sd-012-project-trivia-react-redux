@@ -53,7 +53,7 @@ export const userScore = (score) => ({
 export const fetchAPI = () => (dispatch) => {
   dispatch(getQuestions());
   const token = localStorage.getItem('token');
-  const endpoint = `https://opentdb.com/api.php?amount=5&token=${token}`;
+  const endpoint = `https://opentdb.com/api.php?amount=5&encode=base64&token=${token}`;
   fetch(endpoint)
     .then((data) => data.json())
     .then((response) => dispatch(getQuestionsSuccess(response.results)))

@@ -45,13 +45,13 @@ class GameQuestions extends React.Component {
   setAnswers() {
     const { question } = this.props;
     const incorrectAnswers = question.incorrect_answers.map((answer) => ({
-      answer,
+      answer: window.atob(answer),
       isCorrect: false,
       id: Math.random(),
     }));
     const answers = [
       {
-        answer: question.correct_answer,
+        answer: window.atob(question.correct_answer),
         isCorrect: true,
         id: Math.random(),
       },
@@ -143,8 +143,8 @@ class GameQuestions extends React.Component {
     return (
       <div className="questions-card">
         <div className="questions-text">
-          <span className="cat" data-testid="question-category">{question.category}</span>
-          <span data-testid="question-text">{question.question}</span>
+          <span className="cat" data-testid="question-category">{window.atob(question.category)}</span>
+          <span data-testid="question-text">{window.atob(question.question)}</span>
         </div>
         <div className="questions-answers">
           {answers.map((answer, index) => {
