@@ -6,7 +6,6 @@ import './Game.css';
 class Game extends React.Component {
   constructor(props) {
     super(props);
-
     this.renderQuestions = this.renderQuestions.bind(this);
   }
 
