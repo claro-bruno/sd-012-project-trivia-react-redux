@@ -29,6 +29,7 @@ class Feedback extends React.Component {
       <div>
         <Header />
         <FinalResults />
+        <p data-testid="feedback-text">Texto do Feedback</p>
         {this.playAgainBtn()}
         {this.rankingBtn()}
       </div>
