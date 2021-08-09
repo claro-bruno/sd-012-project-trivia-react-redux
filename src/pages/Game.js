@@ -3,33 +3,40 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { questionsFetchAPI, addAssertions } from '../redux/actions';
-import questions from '../questions';
-import Button from '../components/Button';
+import ButtonNext from '../components/gameControlled/ButtonNext';
+import SectionQuestions from '../components/gameControlled/SectionQuestions';
 import '../App.css';
 
 class Game extends React.Component {
   constructor() {
     super();
 
+    this.buttonNextStatus = this.buttonNextStatus.bind(this);
     this.correctClick = this.correctClick.bind(this);
-    this.wrongClick = this.wrongClick.bind(this);
-    this.timer = this.timer.bind(this);
+    this.nextClick = this.nextClick.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
     this.startTime = this.startTime.bind(this);
     this.stopTime = this.stopTime.bind(this);
+    this.setButtonQuestionStyle = this.setButtonQuestionStyle.bind(this);
+    this.setCorrectAnswer = this.setCorrectAnswer.bind(this);
+    this.setInicialCount = this.setInicialCount.bind(this);
+    this.setStateProperties = this.setStateProperties.bind(this);
+    this.timer = this.timer.bind(this);
+    this.wrongClick = this.wrongClick.bind(this);
 
     this.state = {
       correctAnswers: 0,
-      questionPosition: 3,
+      questionPosition: 0,
       questionsDisable: false,
       color: false,
       count: 30,
+      nextButtonInvisible: true,
     };
   }
 
   componentDidMount() {
     const {
-      startTime,
-      props: { setQuestions, getToken },
+      startTime, props: { setQuestions, getToken },
     } = this;
 
     setQuestions(getToken);
@@ -42,22 +49,85 @@ class Game extends React.Component {
     stopTime();
   }
 
+  setCorrectAnswer() {
+    const {
+      setStateProperties, buttonNextStatus, state: { correctAnswers },
+    } = this;
+
+    setStateProperties('correctAnswers', correctAnswers + 1);
+    buttonNextStatus();
+  }
+
+  setButtonQuestionStyle() {
+    const {
+      setStateProperties, state: { questionsDisable, color },
+    } = this;
+
+    setStateProperties('questionsDisable', !questionsDisable);
+    setStateProperties('color', !color);
+  }
+
+  setInicialCount() {
+    const { setStateProperties } = this;
+    const VALUE_COUNT = 30;
+
+    setStateProperties('count', VALUE_COUNT);
+  }
+
+  setStateProperties(key, value) {
+    this.setState((state) => ({
+      ...state,
+      [key]: value,
+    }));
+  }
+
   correctClick() {
     const {
+      setCorrectAnswer,
+      setButtonQuestionStyle,
+      buttonNextStatus,
       props: { setAssertions },
       state: { correctAnswers },
     } = this;
 
     clearInterval(this.interval);
 
-    this.setState((state) => ({
-      ...state,
-      correctAnswers: correctAnswers + 1,
-      questionsDisable: true,
-      color: true,
-      count: 30,
-    }));
+    setCorrectAnswer();
+    setButtonQuestionStyle();
     setAssertions(correctAnswers);
+    buttonNextStatus();
+  }
+
+  nextClick() {
+    const {
+      startTime,
+      setInicialCount,
+      setButtonQuestionStyle,
+      buttonNextStatus,
+      nextQuestion,
+    } = this;
+
+    nextQuestion();
+    setButtonQuestionStyle();
+    setInicialCount();
+    startTime();
+    buttonNextStatus();
+  }
+
+  buttonNextStatus() {
+    const {
+      setStateProperties, state: { nextButtonInvisible },
+    } = this;
+
+    setStateProperties('nextButtonInvisible', !nextButtonInvisible);
+  }
+
+  nextQuestion() {
+    const {
+      setStateProperties, state: { questionPosition },
+    } = this;
+
+    setStateProperties('questionPosition', questionPosition + 1);
   }
 
   startTime() {
@@ -68,81 +138,56 @@ class Game extends React.Component {
   }
 
   stopTime() {
-    const {
-      wrongClick,
-      state: { count },
-    } = this;
+    const { wrongClick, setInicialCount, state: { count } } = this;
 
     if (count === 0) {
       clearInterval(this.interval);
       wrongClick();
+      setInicialCount();
     }
   }
 
   timer() {
     const {
-      state: { count },
-    } = this;
+      setStateProperties, state: { count } } = this;
 
-    this.setState((state) => ({
-      ...state,
-      count: count - 1,
-    }));
+    setStateProperties('count', count - 1);
   }
 
   wrongClick() {
+    const { setButtonQuestionStyle, buttonNextStatus } = this;
+
     clearInterval(this.interval);
-    this.setState((state) => ({
-      ...state,
-      questionsDisable: true,
-      color: true,
-      count: 30,
-    }));
+
+    setButtonQuestionStyle();
+    buttonNextStatus();
   }
 
   render() {
     const {
-      state: { questionPosition, questionsDisable, color, count },
+      state: { questionPosition,
+        questionsDisable,
+        color,
+        count,
+        nextButtonInvisible,
+      },
+      nextClick,
       correctClick,
       wrongClick,
     } = this;
 
-    const {
-      category,
-      question,
-      correct_answer: correctAnswer,
-      incorrect_answers: incorrectAnswers,
-    } = questions[questionPosition];
-
     return (
       <>
         <Header />
-        <section>
-          <h2>{ count }</h2>
-          <h2 data-testid="question-category">{ category }</h2>
-          <h3 data-testid="question-text">{ question }</h3>
-          <section>
-            {
-              incorrectAnswers.map((answers, index) => (
-                <Button
-                  testId={ `wrong-answer-${index}` }
-                  key={ answers }
-                  name={ answers }
-                  handleClick={ wrongClick }
-                  disabled={ questionsDisable }
-                  className={ color ? 'wrongColor' : null }
-                />
-              ))
-            }
-            <Button
-              testId="correct-answer"
-              name={ correctAnswer }
-              handleClick={ correctClick }
-              disabled={ questionsDisable }
-              className={ color ? 'correctColor' : null }
-            />
-          </section>
-        </section>
+        <ButtonNext invisible={ nextButtonInvisible } handleClick={ nextClick } />
+        <SectionQuestions
+          questionPosition={ questionPosition }
+          correctClick={ correctClick }
+          wrongClick={ wrongClick }
+          questionsDisable={ questionsDisable }
+          color={ color }
+          count={ count }
+        />
       </>
     );
   }
