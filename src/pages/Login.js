@@ -99,6 +99,7 @@ class Login extends React.Component {
               type="button"
               data-testid="btn-play"
               onClick={ this.handleSubmit }
+              className="bg-green-400 rounded-md py-1 px-3"
             >
               Jogar!
             </button>
