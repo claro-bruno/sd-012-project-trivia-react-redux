@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { MD5 } from 'crypto-js';
 import { getQuestions } from '../services/api';
+import Timer from '../components/Timer';
 
 class Game extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       questions: [],
+      timer: 30,
     };
 
     this.getQuestions1 = this.getQuestions1.bind(this);
@@ -28,20 +30,23 @@ class Game extends Component {
   }
 
   renderQuestions() {
-    const { questions } = this.state;
+    const { questions, timer } = this.state;
     const questionFilter = questions.filter((category) => questions
       .indexOf(category) === 0);
-    console.log(questions);
 
     return (
       questionFilter.map((quest, index) => (
         <div key={ index } className="questions">
+          <Timer
+            timer={ timer }
+          />
           <h3 data-testid="question-category">{quest.category}</h3>
           <p data-testid="question-text">{quest.question}</p>
-          <p data-testid="correct-answer">{quest.correct_answer}</p>
           <button
             type="button"
             data-testid="correct-answer"
+            className="correct-answer-btn"
+            id="correct-btn"
           >
             {quest.correct_answer}
           </button>
@@ -50,6 +55,7 @@ class Game extends Component {
               data-testid={ `wrong-answer-${index1}` }
               key={ index1 }
               type="button"
+              className="incorrect-answer-btn"
             >
               {wrong}
             </button>
