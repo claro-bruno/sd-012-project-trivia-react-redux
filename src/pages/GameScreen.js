@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import '../App.css';
-import { Link } from 'react-router-dom';
 
 class GameScreen extends Component {
   constructor() {
@@ -14,12 +13,18 @@ class GameScreen extends Component {
       isDisable: false,
       timeCount: 30,
       isActive: false,
+      score: 0,
+      assertions: 0,
+      name: '',
+      gravatarEmail: '',
     };
 
     this.renderHeader = this.renderHeader.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.renderQuestionsApi = this.renderQuestionsApi.bind(this);
     this.handleAnswerButtonClick = this.handleAnswerButtonClick.bind(this);
+    this.getPointsAndSaveInLocalStorage = this.getPointsAndSaveInLocalStorage.bind(this);
+    this.createLocalStorage = this.createLocalStorage.bind(this);
   }
 
   componentDidMount() {
@@ -40,12 +45,55 @@ class GameScreen extends Component {
     }, second);
   }
 
-  handleAnswerButtonClick() {
+  getPointsAndSaveInLocalStorage(difficulty) {
+    const { timeCount } = this.state;
+    const point = 10;
+    const easy = 1;
+    const medium = 2;
+    const hard = 3;
+    let difficultyPoint = 0;
+
+    switch (difficulty) {
+    case 'easy':
+      difficultyPoint = easy;
+      break;
+    case 'medium':
+      difficultyPoint = medium;
+      break;
+    case 'hard':
+      difficultyPoint = hard;
+      break;
+    default:
+      return difficultyPoint;
+    }
+    this.setState((prevState) => ({
+      score: prevState.score + point + (timeCount * difficultyPoint),
+      assertions: prevState.assertions + 1,
+    }));
+  }
+
+  createLocalStorage() {
+    const { score, assertions, name, gravatarEmail } = this.state;
+
+    const stateLocalStorage = {
+      player: {
+        score,
+        assertions,
+        name,
+        gravatarEmail,
+      },
+    };
+    const keyLocalStorage = JSON.stringify(stateLocalStorage);
+    localStorage.setItem('state', keyLocalStorage);
+  }
+
+  handleAnswerButtonClick(difficulty) {
     this.setState({
       borderGreen: 'border-green',
       borderRed: 'border-red',
       isActive: true,
     });
+    this.getPointsAndSaveInLocalStorage(difficulty);
     return (this.stopTimer());
   }
 
@@ -56,6 +104,7 @@ class GameScreen extends Component {
 
   renderHeader() {
     const { userPlayer: { name, gravatarEmail } } = this.props;
+    const { score } = this.state;
     return (
       <header>
         <img
@@ -63,8 +112,8 @@ class GameScreen extends Component {
           alt="Imagem Avatar"
           data-testid="header-profile-picture"
         />
-        <h2 data-testid="header-player-name">{ name }</h2>
-        <h3 data-testid="header-score">0</h3>
+        <h2 data-testid="header-player-name">{name}</h2>
+        <h3 data-testid="header-score">{score}</h3>
       </header>
     );
   }
@@ -77,23 +126,25 @@ class GameScreen extends Component {
       .map((item) => item.incorrect_answers)[count];
     return (
       <>
-        { dataResults && dataResults.map((item) => (
+        {dataResults && dataResults.map((item) => (
           <>
-            <p data-testid="question-category">{ item.category }</p>
-            <p data-testid="question-text">{ item.question }</p>
+            <p data-testid="question-category">{item.category}</p>
+            <p data-testid="question-text">{item.question}</p>
             <button
+              name="correct"
               type="button"
               data-testid="correct-answer"
               className={ borderGreen }
               disabled={ isDisable }
-              onClick={ () => this.handleAnswerButtonClick() }
+              onClick={ () => this.handleAnswerButtonClick(item.difficulty) }
             >
-              { item.correct_answer }
+              {item.correct_answer}
             </button>
           </>
-        ))[count] }
-        { incorrectAnswers && incorrectAnswers.map((item, index) => (
+        ))[count]}
+        {incorrectAnswers && incorrectAnswers.map((item, index) => (
           <button
+            name="incorrect"
             type="button"
             data-testid={ `wrong-answer-${index}` }
             key={ index }
@@ -101,19 +152,17 @@ class GameScreen extends Component {
             disabled={ isDisable }
             onClick={ () => this.handleAnswerButtonClick() }
           >
-            { item }
+            {item}
           </button>
-        )) }
+        ))}
         <div>
-          { isActive ? (
-            <Link to="/nextQuestion">
-              <button
-                type="button"
-                data-testid="btn-next"
-              >
-                Próxima
-              </button>
-            </Link>
+          {isActive ? (
+            <button
+              type="button"
+              data-testid="btn-next"
+            >
+              Próxima
+            </button>
           ) : null}
         </div>
       </>
@@ -125,12 +174,13 @@ class GameScreen extends Component {
     return (
       <div>
         <h1>Tela Jogo</h1>
-        { this.renderHeader() }
+        {this.renderHeader()}
         <p>
           {' '}
-          { timeCount }
+          {timeCount}
         </p>
-        { this.renderQuestionsApi() }
+        {this.renderQuestionsApi()}
+        {this.createLocalStorage()}
       </div>
     );
   }
