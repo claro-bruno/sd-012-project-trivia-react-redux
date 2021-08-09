@@ -1,0 +1,36 @@
+header {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+header img {
+  height: 100px;
+  width: 100px;
+}
+
+header .user {
+  color: #fffffe;
+  font-weight: 400;
+  margin-right: 8px;
+}
+
+header h2 {
+  color: #7f5af0;
+  font-weight: 600;
+}
+
+header span {
+  color: #fffffe;
+  margin-bottom: 8px;
+}
+
+header .score-text {
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+header .score {
+  color: #7f5af0;
+  font-size: 20px;
+}

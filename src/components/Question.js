@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Timer from './Timer';
 import QuestionInfo from './QuestionInfo';
+import './question.css';
 
 class Question extends Component {
   constructor() {
@@ -41,7 +42,8 @@ class Question extends Component {
     const { disabled, seconds } = this.state;
     const { questions } = this.props;
     return (
-      <div>
+      <div className="container">
+        <Timer />
         { !questions.length
           ? null
           : (
@@ -52,7 +54,6 @@ class Question extends Component {
               count={ this.count }
             />
           )}
-        <Timer />
       </div>
     );
   }

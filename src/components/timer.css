@@ -1,0 +1,20 @@
+.timer {
+  align-items: center;
+  color: #fffffe;
+  display: flex;
+  flex-direction: column;
+  margin-left: -80px;
+}
+
+.timer span {
+  align-items: center;
+  background-color: #7f5af0;
+  border-radius: 50%;
+  color: #fffffe;
+  display: flex;
+  font-weight: 600;
+  height: 80px;
+  justify-content: center;
+  text-align: center;
+  width: 80px;
+}

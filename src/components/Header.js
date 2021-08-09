@@ -1,24 +1,31 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
+import './header.css';
 
-function Header(props) {
-  const { email, name } = props;
-  return (
-    <header>
-      <img
-        src={ `https://www.gravatar.com/avatar/${md5(email).toString()}` }
-        data-testid="header-profile-picture"
-        alt={ `Name:${name}` }
-      />
-      <h2 data-testid="header-player-name">
-        User:
-        { name }
-      </h2>
-      <span data-testid="header-score">Placar:0</span>
-    </header>
-  );
+class Header extends Component {
+  render() {
+    const { email, name } = this.props;
+    const { player: { score } } = JSON.parse(localStorage.getItem('state'));
+    return (
+      <header>
+        <img
+          src={ `https://www.gravatar.com/avatar/${md5(email).toString()}` }
+          data-testid="header-profile-picture"
+          alt={ `Name:${name}` }
+        />
+        <h2 data-testid="header-player-name">
+          <span className="user">User:</span>
+          { name }
+        </h2>
+        <span data-testid="header-score" className="score">
+          <span className="score-text">Placar:</span>
+          {score}
+        </span>
+      </header>
+    );
+  }
 }
 
 Header.propTypes = {
