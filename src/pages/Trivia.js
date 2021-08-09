@@ -10,14 +10,24 @@ class Trivia extends Component {
     super();
     this.state = {
       currentQuestion: 0,
+      timer: 30,
     };
     this.shuffle = this.shuffle.bind(this);
     this.shuffledAnswers = this.shuffledAnswers.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
+    this.updateTimer = this.updateTimer.bind(this);
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
+    const second = 1000;
+    setInterval(() => this.setState((prevState) => ({
+      timer: prevState.timer - 1,
+    })), second);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { timer } = this.state;
     const correct = document.querySelector('.correct-answer');
     const incorrects = document.querySelectorAll('.wrong-answer');
     const next = document.querySelector('.btn-next');
@@ -26,6 +36,22 @@ class Trivia extends Component {
       incorrects[i].style.border = BORDER_BLACK;
     }
     next.style.display = 'none';
+    if (timer <= 0) {
+      correct.disabled = 'true';
+      for (let i = 0; i < incorrects.length; i += 1) {
+        incorrects[i].disabled = 'true';
+      }
+      next.disabled = 'true';
+    }
+    this.updateTimer(prevState);
+  }
+
+  updateTimer(prevState) {
+    if (prevState.timer === 0) {
+      this.setState({
+        currentQuestion: prevState.currentQuestion + 1,
+      });
+    }
   }
 
   shuffle(array) {
@@ -114,12 +140,13 @@ class Trivia extends Component {
   }
 
   render() {
-    const { currentQuestion } = this.state;
+    const { currentQuestion, timer } = this.state;
     const { questions } = this.props;
     if (questions.length === 0) {
       return (
         <div>
           <Header />
+          <span>{ timer }</span>
           <StaticTrivia
             handleClick={ this.handleClick }
             nextQuestion={ this.nextQuestion }
@@ -130,6 +157,7 @@ class Trivia extends Component {
     return (
       <div>
         <Header />
+        <span>{ timer }</span>
         <span data-testid="question-category">
           { questions[currentQuestion].category }
         </span>
