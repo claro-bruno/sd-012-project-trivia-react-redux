@@ -1,6 +1,22 @@
 import React from 'react';
 
 class FinalResults extends React.Component {
+  componentDidMount() {
+    this.setLocalRanking();
+  }
+
+  setLocalRanking() {
+    const state = JSON.parse(localStorage.getItem('state'));
+    const localRanking = JSON.parse(localStorage.getItem('ranking'));
+    if (localRanking === null) {
+      const ranking = [{ name: state.player.name, score: state.player.score, picture: 'https://www.gravatar.com/avatar/' }];
+      localStorage.setItem('ranking', JSON.stringify(ranking));
+    } else {
+      const ranking = [...localRanking, { name: state.player.name, score: state.player.score, picture: 'https://www.gravatar.com/avatar/' }];
+      localStorage.setItem('ranking', JSON.stringify(ranking));
+    }
+  }
+
   getScore() {
     const state = JSON.parse(localStorage.getItem('state'));
     return state.player.score;
