@@ -2,6 +2,7 @@ import { requestTrivia } from '../../services';
 
 const REQUEST_TRIVIA = 'REQUEST_TRIVIA';
 const REQUEST_ERROR = 'REQUEST_ERROR';
+export const CURRENT_SCORE = 'CURRENT_SCORE';
 export const PLAYER_INFO = 'PLAYER_INFO';
 
 export const playerInfo = ({ name, email, avatar }) => ({
@@ -9,6 +10,11 @@ export const playerInfo = ({ name, email, avatar }) => ({
   name,
   email,
   avatar,
+});
+
+export const currentScore = (score) => ({
+  type: CURRENT_SCORE,
+  payload: score,
 });
 
 const APISucess = (questions) => ({

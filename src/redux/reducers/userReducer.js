@@ -3,7 +3,9 @@ import {
 } from '../actions';
 
 const INTIAL_STATE = {
-
+  name: '',
+  email: '',
+  avatar: '',
 };
 
 const userReducer = (state = INTIAL_STATE, { type, name, email, avatar }) => {

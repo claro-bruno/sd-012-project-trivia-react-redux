@@ -63,6 +63,7 @@ class Login extends React.Component {
       email,
       avatar,
     };
+    console.log(user);
     localStorage.setItem('token', token);
     play(user);
   }

@@ -7,14 +7,14 @@ class Ranking extends React.Component {
   render() {
     const ranking = getRanking();
     const { history } = this.props;
-    
+
     const homeBtnProps = {
       id: 'btn-go-home',
       name: 'home',
       value: 'Voltar ao início',
       onClick: () => history.push('/'),
     };
-    
+
     return (
       <div>
         <GenericBtn { ...homeBtnProps } />
