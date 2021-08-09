@@ -14,22 +14,25 @@ class Feedback extends React.Component {
 
   feedbackMsgProps(assertions, score) {
     const avgScore = 3;
-    switch (assertions) {
-    case assertions < avgScore:
-      return ({
+
+    if (assertions < avgScore) {
+      return {
         msg: 'Podia ser melhor...',
         score,
         assertions,
-      });
-    case assertions >= avgScore:
-      return ({
+      };
+    }
+
+    if (assertions >= avgScore) {
+      return {
         msg: 'Mandou bem!',
         score,
         assertions,
-      });
-    default:
-      return '';
+      };
     }
+    return {
+      msg: 'Me desculpe, algo deu errado...',
+    };
   }
 
   handleClick({ target }) {
