@@ -17,8 +17,8 @@ class Question extends React.Component {
 
   nextClick() {
     const { questionNumber } = this.state;
-    const { history, name, score, picture } = this.props;
-    const lastPosition = 4;
+    const { history, name, score, picture, questions } = this.props;
+    const lastPosition = questions.length - 1;
 
     if (questionNumber < lastPosition) {
       this.setState((prevState) => ({
