@@ -79,3 +79,6 @@ export function fetchLoginAction(nome, email) {
     })
     .catch(console.error);
 }
+
+export const ACTION_SHOW_ANSWERS = 'ACTION_SHOW_ANSWERS';
+export const showAnswers = (show) => ({ type: ACTION_SHOW_ANSWERS, show });
