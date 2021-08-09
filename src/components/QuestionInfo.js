@@ -69,6 +69,17 @@ class QuestionInfo extends Component {
     }));
   }
 
+  renderQuestions() {
+    const { questions } = this.props;
+    const { index } = this.state;
+    const { question } = questions[index];
+    const fixedQuestion = question
+      .replace(/&quot;/gi, '')
+      .replace(/&#039;/gi, '')
+      .replace(/&eacute/gi);
+    return fixedQuestion;
+  }
+
   render() {
     const { index } = this.state;
     const { questions, disabled } = this.props;
@@ -82,7 +93,7 @@ class QuestionInfo extends Component {
         </p>
         <p data-testid="question-text" className="question-text">
           <span className="question">Question:</span>
-          {`${questions[index].question}`}
+          {`${this.renderQuestions()}`}
         </p>
         <UniqueButton
           disabled={ disabled }
