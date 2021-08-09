@@ -60,12 +60,13 @@ class Login extends React.Component {
   }
 
   stateUser() {
+    const { email, name } = this.state;
     localStorage.setItem(
       'state',
       JSON.stringify({
         player: {
-          name: '',
-          gravatarEmail: '',
+          name,
+          gravatarEmail: email,
           score: 0,
           assertions: 0 },
       }),
