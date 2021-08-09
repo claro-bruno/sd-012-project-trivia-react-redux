@@ -1,9 +1,12 @@
 import React from 'react';
+import FeedbackText from '../component/FeedbackText';
 
 class Feedback extends React.Component {
   render() {
     return (
-      <h1 data-testid="feedback-text">Feedbacks</h1>
+      <div>
+        <FeedbackText />
+      </div>
     );
   }
 }

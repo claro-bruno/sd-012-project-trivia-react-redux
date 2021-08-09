@@ -37,7 +37,10 @@ class Login extends React.Component {
 
   async toQuestions() {
     const player = {
-      player: { score: 0 },
+      player: {
+        score: 0,
+        assertions: 0,
+      },
     };
     const { name, email } = this.state;
     const { saveToke, saveEmailD, saveNameD } = this.props;
