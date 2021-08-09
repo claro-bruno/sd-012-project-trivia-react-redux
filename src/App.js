@@ -4,14 +4,16 @@ import './App.css';
 import Game from './Pages/Game';
 import Config from './Pages/Config';
 import Login from './Pages/Login';
+import Feedback from './Pages/Feedback';
 
 class App extends React.Component {
   render() {
     return (
       <Switch>
+        <Route exact path="/" render={ (props) => <Login { ...props } /> } />
         <Route path="/game" render={ (props) => <Game { ...props } /> } />
         <Route path="/configs" render={ (props) => <Config { ...props } /> } />
-        <Route exact path="/" render={ (props) => <Login { ...props } /> } />
+        <Route path="/feedback" render={ (props) => <Feedback { ...props } /> } />
       </Switch>
     );
   }
