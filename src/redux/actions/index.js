@@ -1,6 +1,6 @@
 import { requestTrivia } from '../../services';
 
-const REQUEST_TRIVIA = 'REQUEST_TRIVIA';
+export const REQUEST_TRIVIA = 'REQUEST_TRIVIA';
 const REQUEST_ERROR = 'REQUEST_ERROR';
 export const PLAYER_INFO = 'PLAYER_INFO';
 
