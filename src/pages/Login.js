@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { actionUserInfo, getTokenThunk } from '../redux/actions';
+import logo from '../images/logo.svg';
 
 class Login extends React.Component {
   constructor(props) {
@@ -52,6 +53,7 @@ class Login extends React.Component {
     const { name, email, notValid } = this.state;
     return (
       <div>
+        <img src={ logo } alt="Logo Trivia" />
         <label htmlFor="email-input">
           Email
           <input
