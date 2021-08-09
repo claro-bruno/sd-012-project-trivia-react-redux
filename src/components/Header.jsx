@@ -6,22 +6,28 @@ class Header extends React.Component {
   render() {
     const { name, hashEmail, score } = this.props;
     return (
-      <header>
-        <img
-          data-testid="header-profile-picture"
-          src={ `https://www.gravatar.com/avatar/${hashEmail}` }
-          alt={ `Foto do perfil de ${name}` }
-        />
-        <span
-          data-testid="header-player-name"
-        >
-          { name }
-        </span>
-        <span
-          data-testid="header-score"
-        >
-          { score }
-        </span>
+      <header className="header">
+        <section className="centered-block">
+          <img
+            className="player-img"
+            data-testid="header-profile-picture"
+            src={ `https://www.gravatar.com/avatar/${hashEmail}` }
+            alt={ `Foto do perfil de ${name}` }
+          />
+          <span
+            className="player-name"
+            data-testid="header-player-name"
+          >
+            { name }
+          </span>
+          <span
+            className="player-score"
+            data-testid="header-score"
+          >
+            {/* Aqui vai a pontuação do jogador no lugar do 0  */}
+            0
+          </span>
+        </section>
       </header>
     );
   }
