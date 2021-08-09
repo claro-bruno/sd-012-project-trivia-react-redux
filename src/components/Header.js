@@ -19,7 +19,10 @@ class Header extends Component {
           <span className="user">User:</span>
           { name }
         </h2>
-        <span data-testid="header-score">{`Placar: ${score}`}</span>
+        <span data-testid="header-score" className="score">
+          <span className="score-text">Placar:</span>
+          {score}
+        </span>
       </header>
     );
   }
