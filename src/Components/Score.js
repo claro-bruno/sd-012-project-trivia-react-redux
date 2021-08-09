@@ -15,12 +15,12 @@ class Score extends Component {
   }
 }
 
-Score.propTypes = {
-  score: PropTypes.number.isRequired,
-};
-
 const mapStateToProps = (state) => ({
   score: state.user.score,
 });
 
 export default connect(mapStateToProps)(Score);
+
+Score.propTypes = {
+  score: PropTypes.number.isRequired,
+};

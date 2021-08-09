@@ -10,7 +10,9 @@ class NextButton extends Component {
       <button
         data-testid="btn-next"
         type="button"
-        onClick={ isLastQuestion ? () => history.push('/results') : dispatchNextQuestion }
+        onClick={ isLastQuestion
+          ? () => history.push('/feedback')
+          : dispatchNextQuestion }
       >
         Next
       </button>
