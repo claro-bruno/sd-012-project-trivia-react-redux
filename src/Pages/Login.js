@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { fetchLoginAction } from '../redux/actions';
 import ConfigButton from '../Components/ConfigButton';
-// import logo from '../trivia.png';
+import logo from '../trivia.png';
 
 class Login extends React.Component {
   constructor() {
@@ -20,15 +23,11 @@ class Login extends React.Component {
 
   render() {
     const { nome, email } = this.state;
-    const { history: { push } } = this.props;
+    const { history: { push }, sendAction } = this.props;
     return (
       <div className="App">
-        <header>
-          {/* <header className="App-header"> */}
-          {/* <img src={ logo } className="App-logo" alt="logo" /> */}
-          <p>
-            SUA VEZ
-          </p>
+        <header className="App-header">
+          <img src={ logo } className="App-logo" alt="logo" />
         </header>
         <form>
           <label htmlFor="input-name">
@@ -53,14 +52,16 @@ class Login extends React.Component {
               data-testid="input-gravatar-email"
             />
           </label>
-          <button
-            type="button"
-            disabled={ !nome || !email }
-            data-testid="btn-play"
-          >
-            Jogar
-          </button>
-
+          <Link to="/game">
+            <button
+              type="button"
+              data-testid="btn-play"
+              disabled={ !nome || !email }
+              onClick={ () => sendAction(nome, email) }
+            >
+              Jogar
+            </button>
+          </Link>
         </form>
         <ConfigButton push={ push } />
       </div>
@@ -69,8 +70,13 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  history: PropTypes.arrayOf(Object).isRequired,
-  push: PropTypes.func.isRequired,
+  history: PropTypes.arrayOf().isRequired, //  precisa arrumar essa props
+  sendAction: PropTypes.func.isRequired,
+  push: PropTypes.func.isRequired, //  precisa arrumar essa props
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  sendAction: (nome, email) => dispatch(fetchLoginAction(nome, email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
