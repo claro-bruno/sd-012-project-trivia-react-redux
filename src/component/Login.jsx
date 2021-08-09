@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import md5 from 'crypto-js/md5';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import logo from '../trivia.png';
@@ -36,13 +37,16 @@ class Login extends React.Component {
   }
 
   async toQuestions() {
+    const { name, email } = this.state;
+    const avatar = fetchAPI.fetAvatar(md5(email).toString());
     const player = {
       player: {
+        name,
         score: 0,
+        gravatarEmail: avatar,
         assertions: 0,
       },
     };
-    const { name, email } = this.state;
     const { saveToke, saveEmailD, saveNameD } = this.props;
     const token = await fetchAPI.getToken();
     saveEmailD(email);

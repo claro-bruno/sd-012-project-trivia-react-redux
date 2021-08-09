@@ -126,7 +126,6 @@ class Quest extends React.Component {
     const points = fixNumber + (timer * difMult[difficulty]);
     const olderPoints = parseInt(score, 10);
     const newPoints = points + olderPoints;
-    console.log(score, points, olderPoints, newPoints);
     const updatedPlayer = {
       player: { ...player, score: newPoints },
     };
