@@ -30,7 +30,7 @@ class Game extends React.Component {
     }));
     sendShowAnswers(false);
   }
-  
+
   // requisito 10
   btnNext() {
     const { questions, history: { push } } = this.props;
@@ -61,8 +61,7 @@ class Game extends React.Component {
   }
 
   page(params) {
-    const { show, questions, sendShowAnswers, push, index, numberQuestions,
-    } = params;
+    const { show, questions, sendShowAnswers, index } = params;
     return (
       <>
         <HeaderGame />
