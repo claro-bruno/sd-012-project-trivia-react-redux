@@ -9,16 +9,6 @@ class GameQuestions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
-      question: {
-        category: 'Entertainment: Video Games',
-        type: 'multiple',
-        difficulty: 'easy',
-        question: 'What is the first weapon you acquire in Half-Life?',
-        correct_answer: 'A crowbar',
-        incorrect_answers: ['A pistol', 'The H.E.V suit', 'Your fists'],
-      },
-
       sortedAnswers: [],
       timer: 30,
       timerIntervalID: 0,
@@ -36,7 +26,7 @@ class GameQuestions extends React.Component {
   }
 
   componentDidMount() {
-    this.getQuestion();
+    this.setAnswers();
     this.setTimer();
   }
 
@@ -49,23 +39,19 @@ class GameQuestions extends React.Component {
   }
 
   getQuestion() {
-    const { questions, questionNumber } = this.props;
-    const question = questions[questionNumber];
-    this.setState({
-      question,
-    }, () => this.setAnswers());
+    this.setState({}, () => this.setAnswers());
   }
 
   setAnswers() {
-    const { question } = this.state;
+    const { question } = this.props;
     const incorrectAnswers = question.incorrect_answers.map((answer) => ({
-      answer,
+      answer: window.atob(answer),
       isCorrect: false,
       id: Math.random(),
     }));
     const answers = [
       {
-        answer: question.correct_answer,
+        answer: window.atob(question.correct_answer),
         isCorrect: true,
         id: Math.random(),
       },
@@ -77,7 +63,12 @@ class GameQuestions extends React.Component {
   }
 
   setTimer() {
-    this.setState({ timer: 30, disableAnswers: false, canDisable: true });
+    this.setState({
+      timer: 30,
+      disableAnswers: false,
+      canDisable: true,
+      nextButton: false,
+    });
     const timerStep = 1000;
 
     const timerIntervalID = setInterval(() => {
@@ -87,10 +78,16 @@ class GameQuestions extends React.Component {
     this.setState({ timerIntervalID });
   }
 
+  timeoutQuestion() {
+    const { showAnswer } = this.props;
+    showAnswer('answer-btn-correct', 'answer-btn-wrong', 1);
+  }
+
   disableAnswers() {
     const { canDisable } = this.state;
     if (canDisable) {
       this.setState({ disableAnswers: true, canDisable: false, nextButton: true });
+      this.timeoutQuestion();
     }
   }
 
@@ -133,7 +130,7 @@ class GameQuestions extends React.Component {
   handleClick(answerStatus) {
     this.disableAnswers();
     const { showAnswer } = this.props;
-    showAnswer('answer-btn-correct', 'answer-btn-wrong');
+    showAnswer('answer-btn-correct', 'answer-btn-wrong', 0);
     this.setState({
       nextButton: true,
     });
@@ -151,14 +148,16 @@ class GameQuestions extends React.Component {
   }
 
   renderQuestions() {
-    const { question, disableAnswers, sortedAnswers, difficulty, timer } = this.state;
-    const { cBtnClass, wBtnClass } = this.props;
+    const { disableAnswers, sortedAnswers, difficulty, timer } = this.state;
+    const { cBtnClass, wBtnClass, question } = this.props;
     const answers = sortedAnswers;
     return (
       <div className="questions-card">
         <div className="questions-text">
-          <span className="cat" data-testid="question-category">{question.category}</span>
-          <span data-testid="question-text">{question.question}</span>
+          <span className="cat" data-testid="question-category">
+            {window.atob(question.category)}
+          </span>
+          <span data-testid="question-text">{window.atob(question.question)}</span>
         </div>
         <div className="questions-answers">
           {answers.map((answer, index) => {
@@ -223,20 +222,25 @@ const mapStateToProps = (state) => ({
   questionNumber: state.game.questionNumber,
   cBtnClass: state.game.cBtnClass,
   wBtnClass: state.game.wBtnClass,
+  question: state.game.question,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  showAnswer: (correct, wrong) => dispatch(changeClass(correct, wrong)),
+  showAnswer: (correct, wrong, num) => dispatch(changeClass(correct, wrong, num)),
   updateScore: (score) => dispatch(userScore(score)),
 });
 
 GameQuestions.propTypes = {
-  questions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  questionNumber: PropTypes.number.isRequired,
   showAnswer: PropTypes.func.isRequired,
   cBtnClass: PropTypes.string.isRequired,
   wBtnClass: PropTypes.string.isRequired,
   updateScore: PropTypes.func.isRequired,
+  question: PropTypes.shape({
+    category: PropTypes.string.isRequired,
+    question: PropTypes.string.isRequired,
+    incorrect_answers: PropTypes.arrayOf(PropTypes.string).isRequired,
+    correct_answer: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameQuestions);

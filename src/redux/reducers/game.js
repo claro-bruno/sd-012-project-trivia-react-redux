@@ -12,6 +12,7 @@ const normalButton = 'btn answer-btn';
 
 const INITIAL_STATE = {
   questions: [],
+  question: {},
   isLoading: true,
   questionNumber: 0,
   cBtnClass: normalButton,
@@ -29,6 +30,7 @@ const game = (state = INITIAL_STATE, action) => {
       ...state,
       error: null,
       questions: action.payload,
+      question: action.payload[0],
       isLoading: false,
     };
   case GET_QUESTIONS_ERROR:
@@ -36,7 +38,8 @@ const game = (state = INITIAL_STATE, action) => {
   case NEXT_QUESTIONS:
     return {
       ...state,
-      questionNumber: state.questionNumber + 1,
+      // questionNumber: state.questionNumber + 1,
+      question: state.questions[state.questionNumber],
       cBtnClass: normalButton,
       wBtnClass: normalButton,
     };
@@ -45,6 +48,7 @@ const game = (state = INITIAL_STATE, action) => {
       ...state,
       cBtnClass: action.correct,
       wBtnClass: action.wrong,
+      questionNumber: state.questionNumber + action.num,
     };
   case RESET_GAME:
     return INITIAL_STATE;
