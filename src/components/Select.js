@@ -30,7 +30,9 @@ Select.propTypes = {
   labelText: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  options: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.object.isRequired,
+  ).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

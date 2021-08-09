@@ -36,8 +36,6 @@ export function requestTrivia({ amount, category, difficulty, type }) {
   const categoryURL = category === 'any' ? '' : `&category=${category}`;
   const difficultyURL = difficulty === 'any' ? '' : `&difficulty=${difficulty}`;
   const typeURL = type === 'any' ? '' : `&type=${type}`;
-  console.log(`${URL_TRIVIA_API}${amountURL}${tokenURL}`
-  + `${categoryURL}${difficultyURL}${typeURL}`);
   return (dispatch) => {
     dispatch(awaitTriviaFetch());
     return (

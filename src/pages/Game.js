@@ -17,7 +17,7 @@ class Game extends React.Component {
     const { loading, history } = this.props;
     return (
       <main>
-        <ReactAudioPlayer autoPlay="true" loop src={ Show } volume={ 0.1 } />
+        <ReactAudioPlayer autoPlay loop src={ Show } volume={ 0.1 } />
         <Header />
         { (loading) ? <h1>Loading</h1> : <Question history={ history } /> }
       </main>
