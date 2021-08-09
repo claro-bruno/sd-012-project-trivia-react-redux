@@ -1,9 +1,14 @@
+import { saveScore, setScore } from '../../data/helpers';
+
 const INITIAL_STATE = {
   token: '',
   isFetchingToken: false,
   tokenError: {},
-  email: '',
   name: '',
+  email: '',
+  score: 0,
+  assertions: 0,
+  minScore: 10,
 };
 
 function user(state = INITIAL_STATE, action) {
@@ -32,6 +37,9 @@ function user(state = INITIAL_STATE, action) {
       tokenError: { ...action.error },
       isFetchingToken: false,
     };
+  case 'UPDATE_SCORE':
+    localStorage.setItem('state', JSON.stringify(saveScore(state, action)));
+    return setScore(state, action);
   default: return state;
   }
 }

@@ -1,8 +1,11 @@
+import { isLastQuestion } from '../../data/helpers';
+
 const INITIAL_STATE = {
   questions: [],
   questionsError: {},
   isFetchingQuestions: false,
   currentQuestion: 0,
+  isLastQuestion: false,
 };
 
 function game(state = INITIAL_STATE, action) {
@@ -17,6 +20,7 @@ function game(state = INITIAL_STATE, action) {
       ...state,
       questions: [...action.response.results],
       isFetchingQuestions: false,
+      isLastQuestion: false,
     };
   case 'GET_QUESTIONS_ERROR':
     return {
@@ -25,10 +29,11 @@ function game(state = INITIAL_STATE, action) {
       isFetchingQuestions: false,
     };
   case 'NEXT_QUESTION':
-    if (state.questions.length - 1 === state.currentQuestion) {
+    if (isLastQuestion(state)) {
       return {
         ...state,
         currentQuestion: state.questions.length - 1,
+        isLastQuestion: true,
       };
     }
     return {

@@ -1,34 +1,52 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import shuffle from '../data/helpers';
-import { nextQuestion } from '../redux/actions';
+import { shuffle, difficultyToPoints } from '../data/helpers';
+import { updateScore } from '../redux/actions';
+import Stopwatch from './Stopwatch';
+import NextButton from './NextButton';
 
 class Question extends Component {
   constructor(props) {
     super(props);
-    this.handleCorrectAnswer = this.handleCorrectAnswer.bind(this);
-    this.handleIncorrectAnswer = this.handleIncorrectAnswer.bind(this);
+    this.handleAnswer = this.handleAnswer.bind(this);
+    this.state = {
+      answers: shuffle([
+        { correctAnswer: props.question.correct_answer },
+        ...props.question.incorrect_answers]),
+    };
   }
 
-  handleCorrectAnswer() {
-    const { dispatchNextQuestion } = this.props;
-    dispatchNextQuestion();
+  componentDidMount() {
+    const { dispatchUpdateScore } = this.props;
+    dispatchUpdateScore();
   }
 
-  handleIncorrectAnswer() {
-    const { dispatchNextQuestion } = this.props;
-    dispatchNextQuestion();
+  handleAnswer(isCorrect) {
+    const {
+      question,
+      dispatchUpdateScore,
+      stopTimer,
+      remainingTime,
+    } = this.props;
+    stopTimer();
+    dispatchUpdateScore(
+      remainingTime, difficultyToPoints(question.difficulty), isCorrect,
+    );
   }
 
   render() {
-    const { question } = this.props;
-    const answers = shuffle([
-      { correctAnswer: question.correct_answer },
-      ...question.incorrect_answers,
-    ]);
+    const {
+      question,
+      isOutOfTime,
+      isQuestionAnswered,
+      isAnswering,
+      history,
+    } = this.props;
+    const { answers } = this.state;
     return (
       <>
+        <Stopwatch />
         <h2 data-testid="question-category">{`Categoria: ${question.category}`}</h2>
         <h3 data-testid="question-text">{`Pergunta: ${question.question}`}</h3>
         {answers.map((answer, index) => (
@@ -38,7 +56,8 @@ class Question extends Component {
                 data-testid="correct-answer"
                 type="button"
                 key={ answer.correctAnswer }
-                onClick={ this.handleCorrectAnswer }
+                onClick={ () => this.handleAnswer(true) }
+                disabled={ isOutOfTime || isQuestionAnswered }
               >
                 {answer.correctAnswer}
               </button>
@@ -48,27 +67,43 @@ class Question extends Component {
                 data-testid={ `wrong-answer-${index}` }
                 type="button"
                 key={ answer }
-                onClick={ this.handleIncorrectAnswer }
+                onClick={ () => this.handleAnswer(false) }
+                disabled={ isOutOfTime || isQuestionAnswered }
               >
                 {answer}
               </button>
             )
         ))}
+        { !isAnswering && <NextButton history={ history } /> }
       </>
     );
   }
 }
 
-Question.propTypes = {
-  question: PropTypes.shape().isRequired,
-  dispatchNextQuestion: PropTypes.func.isRequired,
-};
-
 const mapStateToProps = (state) => ({
-  state,
+  remainingTime: state.timer.remainingTime,
+  stopTimer: state.timer.stopTimerCallback,
+  isOutOfTime: state.timer.isOutOfTime,
+  isAnswering: state.timer.isAnswering,
+  isQuestionAnswered: state.timer.isQuestionAnswered,
 });
 const mapDispatchToProps = (dispatch) => ({
-  dispatchNextQuestion: () => dispatch(nextQuestion()),
+  dispatchUpdateScore: (timer, difficulty, isCorrect) => dispatch(
+    updateScore(timer, difficulty, isCorrect),
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question);
+
+Question.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  question: PropTypes.shape().isRequired,
+  dispatchUpdateScore: PropTypes.func.isRequired,
+  stopTimer: PropTypes.func.isRequired,
+  isOutOfTime: PropTypes.bool.isRequired,
+  isQuestionAnswered: PropTypes.bool.isRequired,
+  isAnswering: PropTypes.bool.isRequired,
+  remainingTime: PropTypes.number.isRequired,
+};
