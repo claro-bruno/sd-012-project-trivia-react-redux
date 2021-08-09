@@ -35,7 +35,7 @@ class UserProfile extends Component {
         />
         <div className="player-score">
           <span data-testid="header-player-name">{ myUserState.name }</span>
-          <span data-testid="header-score">Placar: 0</span>
+          <span data-testid="header-score">{ `Placar: ${myUserState.score}` }</span>
         </div>
       </section>
     );

@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AnswerButton from './AnswerButton';
 import Timer from './Timer';
+import { getScore } from '../redux/actions';
+
+const easyRate = 1;
+const mediumRate = 2;
+const hardRate = 3;
+const standardValue = 10;
 
 class TriviaQuestions extends Component {
   constructor() {
@@ -20,6 +26,35 @@ class TriviaQuestions extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.changeClassStyle = this.changeClassStyle.bind(this);
     this.shuffleQuestions = this.shuffleQuestions.bind(this);
+    this.onCorrectAnswer = this.onCorrectAnswer.bind(this);
+  }
+
+  onCorrectAnswer() {
+    const { playerState, sendScore } = this.props;
+    const { id } = this.state;
+    const { difficulty } = playerState[id];
+    const timerOnScreen = document.querySelector('.timer-value').innerHTML;
+
+    const score = standardValue + (
+      Number(timerOnScreen) + this.difficultyRate(difficulty)
+    );
+
+    this.changeClassStyle();
+    const userState = JSON.parse(localStorage.getItem('state'));
+    userState.player.score += score;
+    userState.player.assertions += 1;
+    sendScore(score);
+    localStorage.setItem('state', JSON.stringify(userState));
+  }
+
+  difficultyRate(value) {
+    if (value === 'easy') {
+      return easyRate;
+    }
+    if (value === 'medium') {
+      return mediumRate;
+    }
+    return hardRate;
   }
 
   changeClassStyle() {
@@ -74,7 +109,7 @@ class TriviaQuestions extends Component {
                 data-testid="correct-answer"
                 style={ { border: correctanswer } }
                 type="button"
-                onClick={ this.changeClassStyle }
+                onClick={ this.onCorrectAnswer }
                 disabled={ disabled }
               >
                 { answer }
@@ -107,10 +142,15 @@ TriviaQuestions.propTypes = {
     question: PropTypes.string.isRequired,
     questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   }).isRequired,
+  sendScore: PropTypes.func.isRequired,
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  sendScore: (payload) => dispatch(getScore(payload)),
+});
 
 const mapStateToProps = (state) => ({
   playerState: state.fetchReducers.questions,
 });
 
-export default connect(mapStateToProps)(TriviaQuestions);
+export default connect(mapStateToProps, mapDispatchToProps)(TriviaQuestions);
