@@ -1,0 +1,83 @@
+.feedback-container {
+  align-items: center;
+  color: #fffffe;
+  display: flex;
+  flex-direction: column;
+}
+
+.feedback-container img {
+  margin-top: 8px;
+  width: 120px;
+}
+
+.feedback-container h3 {
+  color: #7f5af0;
+  font-size: 22px;
+}
+
+.feedback-container h3 span {
+  font-size: 18px;
+}
+
+.feedback-container .player {
+  margin-right: 8px;
+}
+
+.total-score {
+  align-items: center;
+  background-color: #7f5af0;
+  border-radius: 50%;
+  display: flex;
+  font-size: 32px;
+  height: 80px;
+  justify-content: center;
+  margin-top: 0;
+  width: 80px;
+}
+
+.results {
+  align-items: center;
+  background-color: #fffffe;
+  border-radius: 8px;
+  color: #010101;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  width: 400px;
+}
+
+.results h2 {
+  margin-bottom: 0;
+}
+
+.results .assertions span {
+  color: #7f5af0;
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+.results .points span {
+  color: #7f5af0;
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+.results .buttons-container button {
+  background-color: #7f5af0;
+  border: 1px solid #7f5af0;
+  border-radius: 4px;
+  color: #eee;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 8px 0;
+  margin-right: 12px;
+  padding: 4px;
+  transition: background-color 0.2s;
+}
+
+.results .buttons-container button:hover {
+  background-color: #5c41ad;
+}

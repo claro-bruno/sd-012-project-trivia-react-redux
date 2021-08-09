@@ -21,13 +21,13 @@ header h2 {
 }
 
 header span {
-  margin-bottom: 8px;
   color: #fffffe;
+  margin-bottom: 8px;
 }
 
 header .score-text {
-  margin-right: 8px;
   font-size: 14px;
+  margin-right: 8px;
 }
 
 header .score {

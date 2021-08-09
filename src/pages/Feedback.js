@@ -1,6 +1,7 @@
 import React from 'react';
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
+import './feedback.css';
 
 class FeedBack extends React.Component {
   constructor() {
@@ -35,28 +36,39 @@ class FeedBack extends React.Component {
         score,
       } } = JSON.parse(localStorage.getItem('state'));
     return (
-      <div>
-        <p data-testid="feedback-text">FeedBack</p>
-        <img
-          src={ `https://www.gravatar.com/avatar/${md5(gravatarEmail).toString()}` }
-          data-testid="header-profile-picture"
-          alt={ `Name:${name}` }
-        />
-        <h3 data-testid="header-player-name">{name}</h3>
-        <p data-testid="header-score">{score}</p>
-        <p data-testid="feedback-text">{this.feedBackMessage()}</p>
-        <p data-testid="feedback-total-score">{score}</p>
-        <p data-testid="feedback-total-question">{assertions}</p>
-        <button
-          type="button"
-          data-testid="btn-play-again"
-          onClick={ this.playAgain }
-        >
-          Jogar Novamente
-        </button>
-        <button type="button" data-testid="btn-ranking" onClick={ this.goToRanking }>
-          Ver Ranking
-        </button>
+      <div className="feedback-container">
+        <header>
+          <img
+            src={ `https://www.gravatar.com/avatar/${md5(gravatarEmail).toString()}` }
+            data-testid="header-profile-picture"
+            alt={ `Name:${name}` }
+          />
+          <h3 data-testid="header-player-name">
+            <span className="player">Jogador:</span>
+            {name}
+          </h3>
+          <p className="total-score" data-testid="header-score">{score}</p>
+        </header>
+        <div className="results">
+          <h2>Resultados</h2>
+          <p className="assertions">
+            Número de acertos:
+            <span data-testid="feedback-total-question">{assertions}</span>
+          </p>
+          <p className="points">
+            Pontuação:
+            <span data-testid="feedback-total-score">{score}</span>
+          </p>
+          <p data-testid="feedback-text">{this.feedBackMessage()}</p>
+          <div className="buttons-container">
+            <button type="button" data-testid="btn-play-again" onClick={ this.playAgain }>
+              Jogar Novamente
+            </button>
+            <button type="button" data-testid="btn-ranking" onClick={ this.goToRanking }>
+              Ver Ranking
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
