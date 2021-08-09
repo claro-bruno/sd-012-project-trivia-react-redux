@@ -63,7 +63,7 @@ class GameQuestions extends React.Component {
   }
 
   setTimer() {
-    this.setState({ timer: 30, disableAnswers: false, canDisable: true });
+    this.setState({ timer: 30, disableAnswers: false, canDisable: true, nextButton: false });
     const timerStep = 1000;
 
     const timerIntervalID = setInterval(() => {
