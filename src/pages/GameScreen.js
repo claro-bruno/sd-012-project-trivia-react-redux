@@ -20,14 +20,21 @@ class GameScreen extends Component {
     };
 
     this.renderHeader = this.renderHeader.bind(this);
+    this.renderNextButton = this.renderNextButton.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.renderQuestionsApi = this.renderQuestionsApi.bind(this);
     this.handleAnswerButtonClick = this.handleAnswerButtonClick.bind(this);
     this.getPointsAndSaveInLocalStorage = this.getPointsAndSaveInLocalStorage.bind(this);
     this.createLocalStorage = this.createLocalStorage.bind(this);
+    this.handleNextButton = this.handleNextButton.bind(this);
+    this.setTimer = this.setTimer.bind(this);
   }
 
   componentDidMount() {
+    return (this.setTimer());
+  }
+
+  setTimer() {
     const second = 1000;
     this.timer = setInterval(() => {
       const { timeCount } = this.state;
@@ -102,6 +109,43 @@ class GameScreen extends Component {
     return (clearInterval(this.timer));
   }
 
+  handleNextButton() {
+    const { count } = this.state;
+    const fourQuestions = 4;
+    const { history } = this.props;
+    if (count < fourQuestions) {
+      this.setState({
+        count: count + 1,
+        timeCount: 30,
+        isDisable: false,
+        borderGreen: 'without',
+        borderRed: 'without,',
+        isActive: false,
+      });
+      this.setTimer();
+    } else {
+      return (history.push('/feedback'));
+    }
+  }
+
+  renderNextButton() {
+    const { isActive, count } = this.state;
+    const fourQuestions = 4;
+    return (
+      <div>
+        {isActive ? (
+          <button
+            type="button"
+            data-testid="btn-next"
+            onClick={ () => this.handleNextButton() }
+          >
+            { count < fourQuestions ? 'Próxima' : 'Resultado'}
+          </button>
+        ) : null}
+      </div>
+    );
+  }
+
   renderHeader() {
     const { userPlayer: { name, gravatarEmail } } = this.props;
     const { score } = this.state;
@@ -120,7 +164,7 @@ class GameScreen extends Component {
 
   renderQuestionsApi() {
     const { requestGameApi } = this.props;
-    const { count, borderGreen, borderRed, isDisable, isActive } = this.state;
+    const { count, borderGreen, borderRed, isDisable } = this.state;
     const dataResults = requestGameApi.results;
     const incorrectAnswers = dataResults && dataResults
       .map((item) => item.incorrect_answers)[count];
@@ -155,16 +199,7 @@ class GameScreen extends Component {
             {item}
           </button>
         ))}
-        <div>
-          {isActive ? (
-            <button
-              type="button"
-              data-testid="btn-next"
-            >
-              Próxima
-            </button>
-          ) : null}
-        </div>
+        {this.renderNextButton()}
       </>
     );
   }
