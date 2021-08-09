@@ -107,7 +107,7 @@ class Timer extends React.Component {
   render() {
     const { time } = this.props;
     return (
-      <div>{ chronometer(time) }</div>
+      <div className="timer">{ chronometer(time) }</div>
     );
   }
 }

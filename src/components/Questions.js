@@ -6,6 +6,7 @@ import Timer from './Timer';
 import { scoreUpdate, updateGlobalKey } from '../redux/actions/questions';
 import { nextQuestion } from '../redux/actions/nextQuestion';
 import timerZero from '../timer.svg';
+import arrow from '../images/arrow.jpg';
 
 class Questions extends React.Component {
   constructor(props) {
@@ -135,7 +136,7 @@ class Questions extends React.Component {
     const { shouldRedirect } = this.state;
     if (shouldRedirect) return <Redirect to="/feedback" />;
     return (
-      <div>
+      <div className="questions">
         { !globalKey ? <Timer /> : <img src={ timerZero } alt="Timer Zerado" /> }
         {/* uso do atob() usado conforme a dica do colega Thalles Carneiro e esse link:
         https://developer.mozilla.org/pt-BR/docs/Web/API/WindowOrWorkerGlobalScope/atob */}
@@ -168,8 +169,9 @@ class Questions extends React.Component {
             type="button"
             onClick={ this.onClickNext }
             data-testid="btn-next"
+            className="next-button"
           >
-            proximo
+            <img className="arrow-next" src={ arrow } alt="arrow" />
           </button>)}
       </div>
     );

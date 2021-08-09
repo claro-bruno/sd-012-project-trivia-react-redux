@@ -7,22 +7,37 @@ class Performance extends React.Component {
     super(props);
 
     this.genMessage = this.genMessage.bind(this);
+    this.genFakeMsg = this.genFakeMsg.bind(this);
   }
 
-  genMessage() {
+  genFakeMsg() {
     const { assertions } = this.props;
     const tres = 3;
     if (assertions < tres) return 'Podia ser melhor...';
     return 'Mandou bem!';
   }
 
+  genMessage() {
+    const { assertions } = this.props;
+    const tres = 3;
+    if (assertions < tres) return 'It could be better...';
+    return 'Very well!';
+  }
+
   render() {
     const { assertions, score } = this.props;
     return (
-      <div>
-        <div data-testid="feedback-text">{ this.genMessage() }</div>
-        <div data-testid="feedback-total-score">{ score }</div>
-        <div data-testid="feedback-total-question">{ assertions }</div>
+      <div className="performance">
+        <div data-testid="feedback-text" className="fake-msg">{ this.genFakeMsg() }</div>
+        <div className="message">{ this.genMessage() }</div>
+        <span className="results">
+          <div className="results-text">Score:</div>
+          <div data-testid="feedback-total-score">{ score }</div>
+        </span>
+        <span className="results">
+          <div className="results-text">Assertions:</div>
+          <div data-testid="feedback-total-question">{ assertions }</div>
+        </span>
       </div>
     );
   }

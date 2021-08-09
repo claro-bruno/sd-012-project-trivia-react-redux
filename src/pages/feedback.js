@@ -6,6 +6,9 @@ import Header from '../components/Header';
 import Performance from '../components/Performance';
 import { updateGlobalKey } from '../redux/actions/questions';
 import { resetGame } from '../redux/actions/nextQuestion';
+import '../styles/feedback.css';
+import brain from '../images/brain.png';
+import sadBrain from '../images/brain-sad.png';
 
 class Feedback extends React.Component {
   constructor(props) {
@@ -19,6 +22,7 @@ class Feedback extends React.Component {
     this.rankingUpdate = this.rankingUpdate.bind(this);
     this.redirectLogin = this.redirectLogin.bind(this);
     this.redirectRanking = this.redirectRanking.bind(this);
+    this.brainReturn = this.brainReturn.bind(this);
   }
 
   componentDidMount() {
@@ -53,29 +57,49 @@ class Feedback extends React.Component {
     this.setState({ shouldRedirectRanking: true });
   }
 
+  brainReturn() {
+    const { assertions } = this.props;
+    const tres = 3;
+    if (assertions > tres) return brain;
+    return sadBrain;
+  }
+
   render() {
     const { shouldRedirectLogin, shouldRedirectRanking } = this.state;
     if (shouldRedirectLogin) return <Redirect to="/" />;
     if (shouldRedirectRanking) return <Redirect to="/ranking" />;
     return (
-      <div>
+      <div className="feedback-background">
         <Header />
-        <h1 data-testid="feedback-text">Feedback Bonito</h1>
-        <Performance />
-        <button
-          type="button"
-          data-testid="btn-play-again"
-          onClick={ this.redirectLogin }
-        >
-          Jogar novamente
-        </button>
-        <button
-          type="button"
-          data-testid="btn-ranking"
-          onClick={ this.redirectRanking }
-        >
-          Ranking
-        </button>
+        <div className="feedback-screen">
+          <div className="feedback-box">
+            <img
+              data-testid="feedback-text"
+              className="brain"
+              src={ this.brainReturn() }
+              alt="brain"
+            />
+            <Performance />
+            <span className="feedback-buttons">
+              <button
+                type="button"
+                data-testid="btn-play-again"
+                onClick={ this.redirectLogin }
+                className="feedback-button"
+              >
+                Play Again
+              </button>
+              <button
+                type="button"
+                data-testid="btn-ranking"
+                onClick={ this.redirectRanking }
+                className="feedback-button"
+              >
+                Ranking
+              </button>
+            </span>
+          </div>
+        </div>
       </div>
     );
   }
@@ -85,6 +109,7 @@ const mapStateToProps = (state) => ({
   name: state.login.name,
   score: state.questions.score,
   picture: state.login.picture,
+  assertions: state.questions.assertions,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -100,4 +125,5 @@ Feedback.propTypes = {
   picture: PropTypes.string.isRequired,
   changeGlobal: PropTypes.func.isRequired,
   setResetGame: PropTypes.func.isRequired,
+  assertions: PropTypes.number.isRequired,
 };

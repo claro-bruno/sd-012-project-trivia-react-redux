@@ -99,7 +99,7 @@ class Settings extends React.Component {
           </select>
           <button className="apply" type="button" onClick={ this.onClick }>Apply</button>
           <button className="back-button" type="button" onClick={ this.redirectLogin }>
-            <img className="arrow" src={ arrow } alt="arrow" />
+            <img className="arrow-back" src={ arrow } alt="arrow" />
           </button>
         </form>
       </div>

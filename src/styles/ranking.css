@@ -1,0 +1,45 @@
+.ranking-screen {
+  align-items: center;
+  background-image: url('../images/bg.jpg');
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+}
+
+h1 {
+  color: #03071e;
+  font-family: Varela Round , sans-serif;
+  font-size: 40px;
+  font-weight: 600;
+}
+
+li {
+  color: #03071e;
+  font-family: Varela Round , sans-serif;
+  font-size: 35px;
+  font-weight: 600;
+}
+
+.li-div {
+  align-items: center;
+  background-color: #d00000;
+  border: none;
+  border-radius: 50px;
+  color: #ffefd3;
+  display: flex;
+  flex-direction: row;
+  font-family: Varela Round , sans-serif;
+  font-size: 35px;
+  font-weight: 600;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 5px 40px;
+  width: 600px;
+}
+
+.ranking-li {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
