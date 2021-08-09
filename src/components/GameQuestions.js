@@ -2,13 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ButtonNext from './ButtonNext';
-import { changeClass } from '../redux/actions';
+import { changeClass, userScore } from '../redux/actions';
 import './GameQuestions.css';
 
 class GameQuestions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+
       question: {
         category: 'Entertainment: Video Games',
         type: 'multiple',
@@ -17,6 +18,7 @@ class GameQuestions extends React.Component {
         correct_answer: 'A crowbar',
         incorrect_answers: ['A pistol', 'The H.E.V suit', 'Your fists'],
       },
+
       sortedAnswers: [],
       timer: 30,
       timerIntervalID: 0,
@@ -92,8 +94,44 @@ class GameQuestions extends React.Component {
     }
   }
 
+  scoreCalc(difficulty, timer) {
+    const state = JSON.parse(localStorage.getItem('state'));
+    let playerScore = state.player.score;
+    let diff = 0;
+    const ten = 10;
+    switch (difficulty) {
+    case 'hard':
+      diff = 2 + 1;
+      // console.log(diff);
+      break;
+    case 'medium':
+      diff = 2;
+      // console.log(diff);
+      break;
+    default:
+      diff = 1;
+      // console.log(diff);
+    }
+    const point = ten + (diff * timer);
+    playerScore += point;
+    this.updatePlayer(playerScore);
+  }
+
+  updatePlayer(scoreValue) {
+    const { updateScore } = this.props;
+    const state = JSON.parse(localStorage.getItem('state'));
+    const newState = {
+      player: {
+        ...state.player,
+        score: scoreValue,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(newState));
+    updateScore(scoreValue);
+  }
+
   handleClick(answerStatus) {
-    // No momento que essa função for chamada significa que a pessoa respondeu e o botão de proximo pode aparacer
+    this.disableAnswers();
     const { showAnswer } = this.props;
     showAnswer('answer-btn-correct', 'answer-btn-wrong');
     this.setState({
@@ -101,15 +139,19 @@ class GameQuestions extends React.Component {
     });
 
     if (answerStatus === 'correct') {
-      // implementar comportamento quando acertar a pergunta
-    }
-    if (answerStatus === 'wrong') {
-      // implementar comportamento quando errar a pergunta.
+      const state = JSON.parse(localStorage.getItem('state'));
+      const newState = {
+        player: {
+          ...state.player,
+          assertions: state.player.assertions + 1,
+        },
+      };
+      localStorage.setItem('state', JSON.stringify(newState));
     }
   }
 
   renderQuestions() {
-    const { question, disableAnswers, sortedAnswers } = this.state;
+    const { question, disableAnswers, sortedAnswers, difficulty, timer } = this.state;
     const { cBtnClass, wBtnClass } = this.props;
     const answers = sortedAnswers;
     return (
@@ -130,6 +172,7 @@ class GameQuestions extends React.Component {
                   disabled={ disableAnswers }
                   onClick={ () => {
                     this.handleClick('correct');
+                    this.scoreCalc(difficulty, timer);
                   } }
                 >
                   { answer.answer }
@@ -184,6 +227,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   showAnswer: (correct, wrong) => dispatch(changeClass(correct, wrong)),
+  updateScore: (score) => dispatch(userScore(score)),
 });
 
 GameQuestions.propTypes = {
@@ -192,6 +236,7 @@ GameQuestions.propTypes = {
   showAnswer: PropTypes.func.isRequired,
   cBtnClass: PropTypes.string.isRequired,
   wBtnClass: PropTypes.string.isRequired,
+  updateScore: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameQuestions);

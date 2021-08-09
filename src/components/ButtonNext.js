@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { nextQuestion } from '../redux/actions';
@@ -27,6 +28,20 @@ class ButtonNext extends React.Component {
   }
 
   renderButton() {
+    const { questionNumber, questions } = this.props;
+    if (questionNumber >= questions.length - 1) {
+      return (
+        <Link to="/feedback">
+          <button
+            onClick={ this.handleClick }
+            data-testid="btn-next"
+            type="button"
+          >
+            Próxima
+          </button>
+        </Link>
+      );
+    }
     return (
       <button
         onClick={ this.handleClick }
