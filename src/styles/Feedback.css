@@ -4,9 +4,58 @@
 }
 
 .div-messages {
+  align-items: center;
   display: flex;
+  justify-content: space-evenly;
+  margin: 50px;
 }
 
 .div-msg {
   background-color: #228be6;
+  color: #511f52;
+  text-align: center;
+  width: 50%;
+}
+
+.div-score {
+  text-align: center;
+  width: 50%;
+}
+
+.correct-questions {
+  color: #e67700;
+}
+
+.div-btn {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+}
+
+.btn-ranking {
+  background-color: #fa5252;
+  border-color: #228be6;
+  border-radius: 5px;
+  color: #228be6;
+  height: 35px;
+  margin-right: 50px;
+  width: 150px;
+}
+
+.btn-ranking:hover {
+  background-color: #511f52;
+}
+
+.btn-play-again {
+  background-color: #511f52;
+  border-color: #228be6;
+  border-radius: 5px;
+  color: #228be6;
+  height: 35px;
+  width: 150px;
+}
+
+.btn-play-again:hover {
+  background-color: #fa5252;
 }

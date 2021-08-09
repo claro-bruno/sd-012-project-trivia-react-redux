@@ -14,8 +14,14 @@ class Feedback extends React.Component {
         <Header />
         <div className="div-messages">
           <div className="div-score">
-            <p data-testid="feedback-total-score">{playerScore}</p>
-            <p data-testid="feedback-total-question">{playerAsserts}</p>
+            <p className="correct-questions" data-testid="feedback-total-question">
+              Correct questions:
+              { playerAsserts }
+            </p>
+            <p className="correct-questions" data-testid="feedback-total-score">
+              Score:
+              {playerScore}
+            </p>
           </div>
           <div className="div-msg">
             <p data-testid="feedback-text">
@@ -25,22 +31,26 @@ class Feedback extends React.Component {
             </p>
           </div>
         </div>
-        <Link to="/ranking">
-          <button
-            data-testid="btn-ranking"
-            type="button"
-          >
-            Ver Ranking
-          </button>
-        </Link>
-        <Link to="/">
-          <button
-            data-testid="btn-play-again"
-            type="button"
-          >
-            Jogar novamente
-          </button>
-        </Link>
+        <div className="div-btn">
+          <Link to="/ranking">
+            <button
+              className="btn-ranking"
+              data-testid="btn-ranking"
+              type="button"
+            >
+              Ranking
+            </button>
+          </Link>
+          <Link to="/">
+            <button
+              className="btn-play-again"
+              data-testid="btn-play-again"
+              type="button"
+            >
+              Play again
+            </button>
+          </Link>
+        </div>
       </div>);
   }
 }
