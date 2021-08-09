@@ -5,9 +5,6 @@ import { actionFetchApiGame } from '../redux/actions';
 import Loading from '../Components/Loading';
 import Answers from '../Components/Answers';
 import HeaderGame from '../Components/HeaderGame';
-// o componente HeaderGame é um mock do requisito 4
-// feito somente para passar no teste.
-// Implementar o requisito 4 neste componemte
 
 class Game extends React.Component {
   constructor() {
