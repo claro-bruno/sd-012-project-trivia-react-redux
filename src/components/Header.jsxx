@@ -1,0 +1,47 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
+import PropTypes from 'prop-types';
+
+class Header extends Component {
+  imageAvatar() {
+    const { loginData } = this.props;
+    const idEmail = md5(loginData.email).toString();
+    const imageUser = `https://www.gravatar.com/avatar/${idEmail}`;
+    return imageUser;
+  }
+  // O {loginData} deveria estar recebendo via props o {idEmmail} do email que está sendo buscado no (Reducer -> feedback.js), que é disparado pela Action USER_PLAYER
+
+  render() {
+    const { loginData } = this.props;
+    return (
+      <header className="header-section">
+        <div className="profile-section">
+          <img
+            data-testid="header-profile-picture"
+            src={ this.imageAvatar() }
+            alt="foto de perfil"
+          />
+          <h1 data-testid="header-player-name">{ loginData.name }</h1>
+        </div>
+        <div className="score-section">
+          <p>Pontos:</p>
+          <p data-testid="header-score">0</p>
+        </div>
+      </header>
+    );
+  }
+}
+const mapStateToProps = (state) => ({
+  loginData: state.feedback.playerInfo,
+  // O loginData está indo buscar no estado de (reducer -> feedeback) os dados de loginData em (playerInfo)
+});
+
+export default connect(mapStateToProps)(Header);
+
+Header.propTypes = {
+  loginData: PropTypes.shape({
+    email: PropTypes.string,
+    name: PropTypes.string,
+  }).isRequired,
+};
