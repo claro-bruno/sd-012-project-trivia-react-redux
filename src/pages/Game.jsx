@@ -113,6 +113,7 @@ class Game extends Component {
   showBtnNextQuestion() {
     return (
       <button
+        className="button-nextQuestion"
         type="button"
         data-testid="btn-next"
       >
@@ -127,29 +128,31 @@ class Game extends Component {
     } = this.state;
     const { timeOff } = this.props;
     return (
-      <>
+      <section>
         <Header />
-        <fieldset>
-          <h1
-            data-testid="question-category"
-          >
-            {data.results[currentQuestion].category}
-          </h1>
-          <Timer />
-          <h2
-            data-testid="question-text"
-          >
-            {data.results[currentQuestion].question}
-          </h2>
-          <Answers
-            data={ data }
-            currentQuestion={ currentQuestion }
-            timeOff={ timeOff }
-            handleClickAnswer={ this.handleClickAnswer }
-          />
-          { timeOff && this.showBtnNextQuestion() }
-        </fieldset>
-      </>
+        <section className="section-game">
+          <fieldset className="fieldset-question">
+            <Timer />
+            <h1
+              data-testid="question-category"
+            >
+              {data.results[currentQuestion].category}
+            </h1>
+            <h2
+              data-testid="question-text"
+            >
+              {data.results[currentQuestion].question}
+            </h2>
+            <Answers
+              data={ data }
+              currentQuestion={ currentQuestion }
+              timeOff={ timeOff }
+              handleClickAnswer={ this.handleClickAnswer }
+            />
+            { timeOff && this.showBtnNextQuestion() }
+          </fieldset>
+        </section>
+      </section>
     );
   }
 
