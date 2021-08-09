@@ -49,33 +49,49 @@ class Login extends React.Component {
     changingInfo(name, email);
   }
 
+  renderEmailInput() {
+    const { email } = this.state;
+
+    return (
+      <label htmlFor="email-input">
+        Email
+        <input
+          id="email-input"
+          type="text"
+          name="email"
+          value={ email }
+          onChange={ this.handleOnChange }
+          data-testid="input-gravatar-email"
+        />
+      </label>
+    );
+  }
+
+  renderNameInput() {
+    const { name } = this.state;
+
+    return (
+      <label htmlFor="name-input">
+        Nome
+        <input
+          id="name-input"
+          type="text"
+          name="name"
+          value={ name }
+          onChange={ this.handleOnChange }
+          data-testid="input-player-name"
+        />
+      </label>
+    );
+  }
+
   render() {
-    const { name, email, notValid } = this.state;
+    const { notValid } = this.state;
     return (
       <div>
         <img src={ logo } alt="Logo Trivia" />
-        <label htmlFor="email-input">
-          Email
-          <input
-            id="email-input"
-            type="text"
-            name="email"
-            value={ email }
-            onChange={ this.handleOnChange }
-            data-testid="input-gravatar-email"
-          />
-        </label>
-        <label htmlFor="name-input">
-          Nome
-          <input
-            id="name-input"
-            type="text"
-            name="name"
-            value={ name }
-            onChange={ this.handleOnChange }
-            data-testid="input-player-name"
-          />
-        </label>
+        { this.renderEmailInput() }
+        { this.renderNameInput() }
         <div className="button-container">
           <Link to="/quiz">
             <button
