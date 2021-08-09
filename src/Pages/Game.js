@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import Loading from '../Components/Loading';
 import Answers from '../Components/Answers';
 import HeaderGame from '../Components/HeaderGame';
 import { actionFetchApiGame, showAnswers } from '../redux/actions';
-// o componente HeaderGame é um mock do requisito 4
-// feito somente para passar no teste.
-// Implementar o requisito 4 neste componemte
+import Timer from '../Components/timer';
 
 class Game extends React.Component {
   constructor() {
@@ -17,6 +14,8 @@ class Game extends React.Component {
       index: 0,
     };
     this.showNextQuestion = this.showNextQuestion.bind(this);
+    this.btnNext = this.btnNext.bind(this);
+    this.incorrectAndCorrectQuestion = this.incorrectAndCorrectQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -31,6 +30,35 @@ class Game extends React.Component {
     }));
     sendShowAnswers(false);
   }
+  
+  // requisito 10
+  btnNext() {
+    const { questions, history: { push } } = this.props;
+    const { index } = this.state;
+    const numberQuestions = 4;
+
+    if (index !== 0 && index < numberQuestions) {
+      return (
+        <button
+          type="button"
+          data-testid="btn-next"
+          onClick={ () => this.showNextQuestion(questions) }
+        >
+          Próxima
+        </button>
+      );
+    }
+    if (index !== 0 && index > numberQuestions) {
+      return (
+        <button
+          type="button"
+          onClick={ () => push('/') } // fazer push para a tela de feedback
+        >
+          Ver Resultado
+        </button>
+      );
+    }
+  }
 
   page(params) {
     const { show, questions, sendShowAnswers, push, index, numberQuestions,
@@ -38,41 +66,26 @@ class Game extends React.Component {
     return (
       <>
         <HeaderGame />
-        {questions.length > 0 ? (
-          <section className="App">
-            <div>
-              <p data-testid="question-category">
-                <strong>Categoria: </strong>
-                {questions[index].category}
-              </p>
-              <h3 data-testid="question-text">
-                <strong>Pergunta: </strong>
-                {questions[index].question}
-              </h3>
-              <Answers
-                show={ show }
-                question={ questions[index] }
-                sendShowAnswers={ sendShowAnswers }
-              />
-            </div>
-
-            {index < numberQuestions ? (
-              <button
-                type="button"
-                data-testid="btn-next"
-                onClick={ () => this.showNextQuestion(questions) }
-              >
-                Próxima
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={ () => push('/') } // fazer push para a tela de feedback
-              >
-                Ver Resultado
-              </button>
-            )}
-          </section>
+        { questions.length > 0 ? (
+            <section className="App">
+              <Timer />
+              <div>
+                <p data-testid="question-category">
+                  <strong>Categoria: </strong>
+                  { questions[index].category }
+                </p>
+                <h3 data-testid="question-text">
+                  <strong>Pergunta: </strong>
+                  { questions[index].question }
+                </h3>
+                <Answers
+                  show={ show }
+                  question={ questions[index] }
+                  sendShowAnswers={ sendShowAnswers }
+                />
+              </div>
+              { this.btnNext() }
+            </section>
         ) : (
           <Loading />
         )}
@@ -104,9 +117,9 @@ class Game extends React.Component {
 
 Game.propTypes = {
   fetchApiGame: PropTypes.func.isRequired,
-  history: PropTypes.objectOf().isRequired, //  precisa arrumar essa props
+  history: PropTypes.objectOf().isRequired,
   isFetching: PropTypes.bool.isRequired,
-  push: PropTypes.func.isRequired, //  precisa arrumar essa props
+  push: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(
     PropTypes.shape({
       category: PropTypes.string.isRequired,

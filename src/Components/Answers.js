@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import './Answers.css';
 
 class Answers extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.shuffleArray = this.shuffleArray.bind(this);
     this.answers = this.answers.bind(this);
@@ -23,17 +23,35 @@ class Answers extends React.Component {
   answers(question, show, sendShowAnswers) {
     const answers = [...question.incorrect_answers, question.correct_answer];
     const arrayAnswers = this.shuffleArray(answers);
-
+    const { onClick } = this.props;
     let controllIncorrects = 0;
-    return arrayAnswers.map((answer, index) => {
-      if (answer === question.correct_answer) {
+    
+    return (
+      arrayAnswers.map((answer, index) => {
+        if (answer === question.correct_answer) {
+          return (
+            <button
+              key={ index }
+              type="button"
+              data-testid="correct-answer"
+              className="answer-btn"
+              name="correct-answer"
+              onClick={ (e) => onClick(e) }
+            >
+              { question.correct_answer }
+            </button>
+          );
+        }
+
+        controllIncorrects += 1;
         return (
           <button
             key={ index }
             type="button"
             onClick={ () => sendShowAnswers(true) }
             data-testid="correct-answer"
-            className={ show ? 'correct' : '' }
+            className={ show ? 'correct' : '', "answer-btn" }
+            name="wrong-answer"
           >
             {question.correct_answer}
           </button>
@@ -45,7 +63,7 @@ class Answers extends React.Component {
         <button
           key={ index }
           type="button"
-          className={ show ? 'wrong' : '' }
+          className={ show ? 'wrong' : '', "answer-btn" }
           onClick={ () => sendShowAnswers(true) }
           data-testid={ `wrong-answer-${controllIncorrects - 1}` }
         >
