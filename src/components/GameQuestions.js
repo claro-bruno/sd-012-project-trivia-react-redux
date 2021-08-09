@@ -146,7 +146,7 @@ class GameQuestions extends Component {
     return (
       <Grid>
         <div>
-          <Timer />
+          <Timer answered={ answered } />
           <Category data-testid="question-category">{htmldecode(category)}</Category>
           <Question data-testid="question-text">{htmldecode(question)}</Question>
         </div>
