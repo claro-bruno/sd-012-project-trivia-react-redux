@@ -10,13 +10,9 @@ class Game extends React.Component {
     this.state = {
       questionNumber: 0,
       questions: [],
-      corrAnsBorder: {},
-      incorrAnsBorder: {},
       loading: true,
       score: 0,
       assertions: 0,
-      name: '',
-      gravatarEmail: '',
     };
 
     this.getQuestions = this.getQuestions.bind(this);
@@ -29,15 +25,15 @@ class Game extends React.Component {
   }
 
   componentDidUpdate() {
-    const { assertions, name,
-      gravatarEmail, score } = this.state;
+    const { assertions, score } = this.state;
+    const { getUrl, getName } = this.props;
 
     const value = {
       player: {
-        name,
+        name: getName,
         assertions,
         score,
-        gravatarEmail,
+        gravatarEmail: getUrl,
       },
     };
     const myValue = JSON.stringify(value);
@@ -45,15 +41,12 @@ class Game extends React.Component {
   }
 
   getQuestions() {
-    const { getUrl, getName } = this.props;
     const token = JSON.parse(localStorage.getItem('token'));
     fetch(`https://opentdb.com/api.php?amount=5&token=${token}`)
       .then((r) => r.json())
       .then((json) => this.setState({
         questions: [...json.results],
         loading: false,
-        name: getName,
-        gravatarEmail: getUrl,
       }));
   }
 
@@ -89,17 +82,6 @@ class Game extends React.Component {
       break;
     default:
     }
-
-    /* const value = {
-      player: {
-        name,
-        assertions,
-        score,
-        gravatarEmail,
-      },
-    };
-    const myValue = JSON.stringify(value);
-    localStorage.setItem('state', myValue); */
   }
 
   changeBordersColor(click) {
@@ -111,8 +93,8 @@ class Game extends React.Component {
   }
 
   render() {
-    const { questions, score,
-      questionNumber, loading, corrAnsBorder, incorrAnsBorder } = this.state;
+    const { questions, score, questionNumber,
+      loading, corrAnsBorder, incorrAnsBorder } = this.state;
     const { getUrl, getName } = this.props;
     if (!loading) {
       return (
