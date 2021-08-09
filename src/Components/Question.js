@@ -5,12 +5,15 @@ import { shuffle, difficultyToPoints } from '../data/helpers';
 import { updateScore } from '../redux/actions';
 import Stopwatch from './Stopwatch';
 import NextButton from './NextButton';
+import '../App.css';
 
 class Question extends Component {
   constructor(props) {
     super(props);
     this.handleAnswer = this.handleAnswer.bind(this);
     this.state = {
+      correta: '',
+      errada: '',
       answers: shuffle([
         { correctAnswer: props.question.correct_answer },
         ...props.question.incorrect_answers]),
@@ -23,6 +26,10 @@ class Question extends Component {
   }
 
   handleAnswer(isCorrect) {
+    this.setState({
+      correta: 'correta',
+      errada: 'errada',
+    });
     const {
       question,
       dispatchUpdateScore,
@@ -36,6 +43,7 @@ class Question extends Component {
   }
 
   render() {
+    const { correta, errada } = this.state;
     const {
       question,
       isOutOfTime,
@@ -52,6 +60,7 @@ class Question extends Component {
           (answer.correctAnswer)
             ? (
               <button
+                className={ correta }
                 data-testid="correct-answer"
                 type="button"
                 key={ answer.correctAnswer }
@@ -63,6 +72,7 @@ class Question extends Component {
             )
             : (
               <button
+                className={ errada }
                 data-testid={ `wrong-answer-${index}` }
                 type="button"
                 key={ answer }
