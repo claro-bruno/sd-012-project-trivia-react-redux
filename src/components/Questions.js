@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Loading from './Loading';
 import { getScoreAction } from '../actions';
-import '../styles/Questions.css';
 
 class Questions extends Component {
   constructor(props) {

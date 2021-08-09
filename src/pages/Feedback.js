@@ -3,21 +3,28 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import '../styles/Feedback.css';
 
 class Feedback extends React.Component {
   render() {
     const controlNumber = 3;
     const { playerAsserts, playerScore } = this.props;
     return (
-      <div>
+      <div className="feedback">
         <Header />
-        <p data-testid="feedback-text">
-          {
-            playerAsserts < controlNumber ? 'Podia ser melhor...' : 'Mandou bem!'
-          }
-        </p>
-        <p data-testid="feedback-total-score">{playerScore}</p>
-        <p data-testid="feedback-total-question">{playerAsserts}</p>
+        <div className="div-messages">
+          <div className="div-score">
+            <p data-testid="feedback-total-score">{playerScore}</p>
+            <p data-testid="feedback-total-question">{playerAsserts}</p>
+          </div>
+          <div className="div-msg">
+            <p data-testid="feedback-text">
+              {
+                playerAsserts < controlNumber ? 'Podia ser melhor...' : 'Mandou bem!'
+              }
+            </p>
+          </div>
+        </div>
         <Link to="/ranking">
           <button
             data-testid="btn-ranking"

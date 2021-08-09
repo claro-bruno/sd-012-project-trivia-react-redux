@@ -1,0 +1,12 @@
+.feedback {
+  background-color: #82c91e;
+  width: 100%;
+}
+
+.div-messages {
+  display: flex;
+}
+
+.div-msg {
+  background-color: #228be6;
+}
