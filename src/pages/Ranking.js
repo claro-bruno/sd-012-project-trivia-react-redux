@@ -2,7 +2,9 @@ import React from 'react';
 
 class Ranking extends React.Component {
   render() {
-    return 'Tela de Ranking!';
+    return (
+      <h3 data-testid="ranking-title">Ranking</h3>
+    );
   }
 }
 

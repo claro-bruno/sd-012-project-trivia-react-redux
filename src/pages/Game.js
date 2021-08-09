@@ -1,7 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+<<<<<<< HEAD
 import md5 from 'crypto-js/md5';
+=======
+import { Redirect } from 'react-router-dom';
+>>>>>>> 349f99c8772eb4f5200c0314946369be10196a68
 import Header from '../components/Header';
 import ButtonNext from '../components/gameControlled/ButtonNext';
 import SectionQuestions from '../components/gameControlled/SectionQuestions';
@@ -33,7 +37,11 @@ class Game extends React.Component {
       color: false,
       count: 30,
       nextButtonInvisible: true,
+<<<<<<< HEAD
       gravatarEmail: '',
+=======
+      redirect: false,
+>>>>>>> 349f99c8772eb4f5200c0314946369be10196a68
     };
   }
 
@@ -124,13 +132,21 @@ class Game extends React.Component {
       setButtonQuestionStyle,
       buttonNextStatus,
       nextQuestion,
+      setStateProperties,
+      state: { questionPosition },
     } = this;
 
-    nextQuestion();
-    setButtonQuestionStyle();
-    setInicialCount();
-    startTime();
-    buttonNextStatus();
+    const numberMax = 4;
+
+    if (questionPosition === numberMax) {
+      setStateProperties('redirect', true);
+    } else {
+      nextQuestion();
+      setButtonQuestionStyle();
+      setInicialCount();
+      startTime();
+      buttonNextStatus();
+    }
   }
 
   buttonNextStatus() {
@@ -189,6 +205,7 @@ class Game extends React.Component {
         color,
         count,
         nextButtonInvisible,
+        redirect,
       },
       nextClick,
       correctClick,
@@ -197,6 +214,7 @@ class Game extends React.Component {
 
     return (
       <>
+        { redirect && <Redirect to="/feedback" /> }
         <Header />
         <ButtonNext invisible={ nextButtonInvisible } handleClick={ nextClick } />
         <SectionQuestions
