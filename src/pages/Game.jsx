@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Loading from '../components/Loading';
 import Header from '../components/Header';
-import Timer from '../components/Timer';
 import Answers from '../components/Answers';
-import { pauseTime } from '../redux/actions/actionTimer';
+import { pauseTime, noTime } from '../redux/actions/actionTimer';
 import { actionPlayer } from '../redux/actions/actionPlayer';
 import './Game.css';
 
@@ -17,6 +16,8 @@ class Game extends Component {
       data: '',
       currentQuestion: 0,
       loading: true,
+      timer: 30,
+      pauseTimer: false,
     };
 
     this.fetchApi = this.fetchApi.bind(this);
@@ -24,10 +25,30 @@ class Game extends Component {
     this.handleClickAnswer = this.handleClickAnswer.bind(this);
     this.showBtnNextQuestion = this.showBtnNextQuestion.bind(this);
     this.handleAnswers = this.handleAnswers.bind(this);
+    this.updateTimer = this.updateTimer.bind(this);
   }
 
   componentDidMount() {
     this.fetchApi();
+    this.updateTimer();
+  }
+
+  updateTimer() {
+    const ONE_SECOND = 1000;
+    this.interval = setInterval(
+      () => this.setState((previousTime) => ({ timer: previousTime.timer - 1 }), () => {
+        const { timer, pauseTimer } = this.state;
+        const { changeTimer } = this.props;
+        const maximumTime = 0;
+        let timeOff = false;
+        if (timer === maximumTime || pauseTimer) {
+          clearInterval(this.interval);
+          timeOff = true;
+        }
+        changeTimer({ timer, timeOff });
+      }),
+      ONE_SECOND,
+    );
   }
 
   handleAnswers(data) {
@@ -75,19 +96,18 @@ class Game extends Component {
   }
 
   handleClickAnswer({ target }) {
-    const { pauseTimer, player, name, gravatarEmail } = this.props;
+    const { player, name, gravatarEmail } = this.props;
     const incorrectList = document.getElementsByName('incorrect');
     const correctList = document.getElementById('correct');
     incorrectList.forEach((item) => { item.className = 'incorrect'; });
     correctList.className = 'correct';
     const scoreFunc = this.calculateTotalPoints(target);
-    const stopTimer = true;
-    pauseTimer({ stopTimer });
+    this.setState({ pauseTimer: true });
     player(name, 0, scoreFunc, gravatarEmail);
   }
 
   calculateTotalPoints({ name }) {
-    const { timer } = this.props;
+    const { timer } = this.state;
     const BASE_POINT = 10;
     if (name === 'correct') {
       return BASE_POINT + (timer * this.calculateDifficultyPoint());
@@ -123,8 +143,10 @@ class Game extends Component {
   }
 
   page() {
-    const { data,
+    const {
+      data,
       currentQuestion,
+      timer,
     } = this.state;
     const { timeOff } = this.props;
     return (
@@ -132,7 +154,7 @@ class Game extends Component {
         <Header />
         <section className="section-game">
           <fieldset className="fieldset-question">
-            <Timer />
+            { timer }
             <h1
               data-testid="question-category"
             >
@@ -179,6 +201,7 @@ const mapStateToProps = (state) => ({
   timer: state.timerReducer.time,
   timeOff: state.timerReducer.timeOff,
   score: state.player.score,
+  // pauseTimer: state.timerReducer.pauseTimer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -187,6 +210,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   player: (name, assertions, score, gravatarEmail) => (
     dispatch(actionPlayer(name, assertions, score, gravatarEmail))),
+  changeTimer: (timer) => dispatch(noTime(timer)),
 });
 
 Game.propTypes = {
