@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import Header from '../components/Header';
 
 class Game extends React.Component {
   constructor(props) {
@@ -46,6 +47,7 @@ class Game extends React.Component {
     const firstQuestion = triviaQuest[0];
     return (
       <section>
+        <Header />
         { firstQuestion ? this.renderQuestions() : <p>LOADING</p> }
       </section>
     );
