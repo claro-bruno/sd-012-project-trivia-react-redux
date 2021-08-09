@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/* import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 // import { getTriviaAPI } from '../redux/action/index';
@@ -11,8 +11,8 @@ class Game extends Component {
       alternatives: [],
       randomIndex: '',
     };
-    // this.rad = this.rad.bind(this);
     // this.result = this.result.bind(this);
+    // this.rad = this.rad.bind(this);
     // this.createQuestion = this.createQuestion.bind(this);
     // this.createOptions = this.createOptions.bind(this);
   }
@@ -25,7 +25,7 @@ class Game extends Component {
     setTimeout(() => {
       const { questions } = this.props;
       this.rad(questions);
-    }, timer); */
+    }, timer);
   }
 
   // rad(quest) {
@@ -111,4 +111,4 @@ Game.propTypes = {
   questions: PropTypes.arrayOf(Object).isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(Game); */

@@ -96,8 +96,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Login.propTypes = {
+  results: PropTypes.arrayOf(PropTypes.object).isRequired,
   dataUser: PropTypes.func.isRequired,
-  // callAPI: PropTypes.func.isRequired,
   fetchToken: PropTypes.func.isRequired,
 };
 

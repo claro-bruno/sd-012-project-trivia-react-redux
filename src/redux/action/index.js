@@ -1,7 +1,3 @@
-export const getLogin = (value) => ({
-  type: 'LOGIN',
-  ...value,
-});
 export const GET_QUESTION_SUCCESS = 'GET_QUESTION_SUCCESS';
 export const GET_TOKEN_SUCCESS = 'GET_TOKEN_SUCCESS';
 export const GET_TOKEN_ERROR = 'GET_TOKEN_ERROR';
@@ -15,19 +11,10 @@ const getTokenLoading = () => ({ type: GET_TOKEN_LOADING });
 const getTokenSuccess = (token) => ({ type: GET_TOKEN_SUCCESS, payload: token });
 const getTokenError = (erro) => ({ type: GET_TOKEN_ERROR, payload: erro });
 
-export const getToken = () => async (dispatch) => {
-  dispatch(getTokenLoading());
-  const URL = 'https://opentdb.com/api_token.php?command=request';
-  const response = await fetch(URL);
-  const token = await response.json();
-  try {
-    dispatch(getTokenSuccess(token));
-    localStorage.setItem('token', token.token);
-    dispatch(getAllQuestions(token.token));
-  } catch (err) {
-    dispatch(getTokenError(err));
-  }
-};
+export const getLogin = (value) => ({
+  type: 'LOGIN',
+  ...value,
+});
 
 const getQuestionSuccess = (question) => ({
   type: GET_QUESTION_SUCCESS,
@@ -39,10 +26,22 @@ export const getAllQuestions = (token) => async (dispatch) => {
   const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
   const responseJson = await response.json();
   try {
-    console.log('responseJson', responseJson);
     dispatch(getQuestionSuccess(responseJson.results));
   } catch (erro) {
-    console.log(erro);
     dispatch(getQuestionError(erro));
+  }
+};
+
+export const getToken = () => async (dispatch) => {
+  dispatch(getTokenLoading());
+  const URL = 'https://opentdb.com/api_token.php?command=request';
+  const response = await fetch(URL);
+  const token = await response.json();
+  try {
+    dispatch(getTokenSuccess(token));
+    localStorage.setItem('token', token.token);
+    dispatch(getAllQuestions(token.token));
+  } catch (err) {
+    dispatch(getTokenError(err));
   }
 };

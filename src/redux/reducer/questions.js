@@ -17,7 +17,7 @@ const questions = (state = STATE_INITIAL, action) => {
   case GET_QUESTION_SUCCESS:
     return {
       ...state,
-      results: action.payload,
+      results: [...action.payload],
       loading: false,
     };
 

@@ -7,9 +7,17 @@ class GameBody extends Component {
     this.state = {
       index: 0,
       disable: true,
+      alternatives: ['alt1', 'alt2', 'alt3'],
+      randomIndex: '',
     };
     this.createQuestion = this.createQuestion.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
+    this.rad = this.rad.bind(this);
+    this.createOptions = this.createOptions.bind(this);
+  }
+
+  componentDidMount() {
+    this.rad();
   }
 
   nextQuestion() {
@@ -26,16 +34,60 @@ class GameBody extends Component {
       <div>
         <h3 data-testid="question-category">{ category }</h3>
         <h2 data-testid="question-text">{ question }</h2>
-        {this.createOptions}
+        {this.createOptions ? this.createOptions() : ''}
       </div>
     );
   }
 
+  rad() {
+    const { results } = this.props;
+    const { correct_answer: correctAnswer,
+      incorrect_answers: incorrectAnswers } = results[0];
+    const randomIndex = Math.round(Math.random() * (incorrectAnswers.length - 0));
+    incorrectAnswers.splice(randomIndex, 0, correctAnswer);
+    this.setState({
+      alternatives: incorrectAnswers,
+      randomIndex,
+    });
+  }
+
+  createOptions() {
+    console.log('chamou createOptions');
+
+    const { alternatives, randomIndex } = this.state;
+    return (alternatives.map((elm, ind) => (
+      ind === randomIndex
+        ? (
+          <button
+            type="button"
+            onClick={ this.result }
+            key={ ind }
+            data-testid="correct-answer"
+          >
+            {elm}
+          </button>
+        )
+        : (
+          <button
+            type="button"
+            onClick={ this.result }
+            key={ ind }
+            data-testid={ `wrong-answer-${ind}` }
+          >
+            {elm}
+          </button>
+        )
+    )));
+  }
+
   render() {
     const { disable } = this.state;
+    const { results } = this.props;
     return (
       <div>
-        {this.createQuestion()}
+        {
+          (results.length > 0) ? this.createQuestion() : <p>LOADING</p>
+        }
         <button
           type="button"
           disable={ disable }
@@ -52,8 +104,8 @@ GameBody.propTypes = {
   results: PropTypes.string.isRequired,
 };
 
-/* const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => ({
   results: state.questions.results,
-}); */
+});
 
 export default GameBody;

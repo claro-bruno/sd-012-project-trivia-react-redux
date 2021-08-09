@@ -13,21 +13,19 @@ class Gametest extends Component {
   }
 
   render() {
-    const { loading, results } = this.props;
+    const { results } = this.props;
     return (
-
       <div>
         <HeaderGame />
         {console.log('Carregou', results)}
         <GameBody results={ results } />
       </div>
-
     );
   }
 }
 
 Gametest.propTypes = {
-  loading: PropTypes.bool.isRequired,
+
   // getquestion: PropTypes.func.isRequired,
   results: PropTypes.func.isRequired,
 };
