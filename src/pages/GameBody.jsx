@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class GameBody extends Component {
   constructor(props) {
@@ -7,7 +8,7 @@ class GameBody extends Component {
     this.state = {
       index: 0,
       disable: true,
-      alternatives: ['alt1', 'alt2', 'alt3'],
+      alternatives: [],
       randomIndex: '',
     };
     this.createQuestion = this.createQuestion.bind(this);
@@ -22,6 +23,7 @@ class GameBody extends Component {
 
   nextQuestion() {
     const { index } = this.state;
+    // index precisa ser tratado , pois ira sobresair o tamanho do array
     this.setState({ index: index + 1 });
   }
 
@@ -108,4 +110,4 @@ const mapStateToProps = (state) => ({
   results: state.questions.results,
 });
 
-export default GameBody;
+export default connect(mapStateToProps, null)(GameBody);
