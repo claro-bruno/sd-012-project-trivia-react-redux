@@ -53,3 +53,26 @@ export const fetchQuestions = (token) => (dispatch) => {
 export const nextQuestion = () => ({
   type: 'NEXT_QUESTION',
 });
+
+export const timerCallbacks = (startTimerCallback, stopTimerCallback) => ({
+  type: 'TIMER_CALLBACKS',
+  startTimerCallback,
+  stopTimerCallback,
+});
+
+export const remainingTimeAction = (remainingTime) => ({
+  type: 'REMAINING_TIME',
+  remainingTime,
+});
+
+export const isOutOfTimeAction = () => ({
+  type: 'IS_OUT_OF_TIME',
+});
+
+export const isQuestionAnsweredAction = () => ({
+  type: 'IS_QUESTION_ANSWERED',
+});
+
+export const isAnsweringAction = () => ({
+  type: 'IS_ANSWERING',
+});
