@@ -1,4 +1,4 @@
-const CHANGE_USER = 'CHANGE_USER';
+const CREATE_LOGIN = 'CREATE_LOGIN';
 const CHANGE_SCORE = 'CHANGE_SCORE';
 const CHANGE_ASSERTIONS = 'CHANGE_ASSERTIONS';
 
@@ -13,12 +13,13 @@ const initialState = {
 
 const player = (state = initialState, action) => {
   switch (action.type) {
-  case CHANGE_USER:
+  case CREATE_LOGIN:
     return { ...state,
       user: {
         name: action.payload.name,
         email: action.payload.email,
       } };
+
   case CHANGE_SCORE:
     return { ...state, score: action.payload };
   case CHANGE_ASSERTIONS:
