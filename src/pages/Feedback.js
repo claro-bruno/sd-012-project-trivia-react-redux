@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import FeedbackText from '../component/FeedbackText';
 
 class Feedback extends React.Component {
   constructor(props) {
@@ -22,27 +23,44 @@ class Feedback extends React.Component {
   }
 
   render() {
+    const { player } = JSON.parse(localStorage.getItem('state'));
+    const { score, gravatarEmail, name } = player;
     const { redirect, redirect2 } = this.state;
     return (
-      <div>
-        <h1 data-testid="feedback-text">Feedbacks</h1>
-        <button
-          type="button"
-          data-testid="btn-play-again"
-          onClick={ this.changeRoute }
-        >
-          Jogar Novamente
-        </button>
-        { redirect && (<Redirect to="/" />) }
-        <button
-          type="button"
-          data-testid="btn-ranking"
-          onClick={ this.changeRoutes }
-        >
-          Ver Ranking
-        </button>
-        { redirect2 && (<Redirect to="/ranking" />) }
-      </div>
+      <>
+        <header>
+          <h1 data-testid="feedback-text">Feedbacks</h1>
+          <img
+            data-testid="header-profile-picture"
+            src={ gravatarEmail }
+            alt="Foto do Usuario"
+          />
+          <span data-testid="header-score">{ score }</span>
+          <span data-testid="header-player-name">{ name }</span>
+        </header>
+        <div>
+          <FeedbackText />
+        </div>
+        <div>
+          <h1 data-testid="feedback-text">Feedbacks</h1>
+          <button
+            type="button"
+            data-testid="btn-play-again"
+            onClick={ this.changeRoute }
+          >
+            Jogar Novamente
+          </button>
+          { redirect && (<Redirect to="/" />) }
+          <button
+            type="button"
+            data-testid="btn-ranking"
+            onClick={ this.changeRoutes }
+          >
+            Ver Ranking
+          </button>
+          { redirect2 && (<Redirect to="/ranking" />) }
+        </div>
+      </>
     );
   }
 }
