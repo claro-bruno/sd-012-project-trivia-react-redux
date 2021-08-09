@@ -37,7 +37,7 @@ class Quest extends React.Component {
   componentDidUpdate() {
     const { click } = this.state;
     if (click === 'on') {
-      this.updateScore();
+      this.updateAssertions();
     }
   }
 
@@ -98,9 +98,22 @@ class Quest extends React.Component {
     }
   }
 
+  updateAssertions() {
+    const { player: { assertions } } = JSON.parse(localStorage.getItem('state'));
+    const { player } = JSON.parse(localStorage.getItem('state'));
+    const newAssertions = (parseInt(assertions, 10) + 1);
+    const updatedPlayer = {
+      player: { ...player, assertions: newAssertions },
+    };
+    const playerstringfy = JSON.stringify(updatedPlayer);
+    console.log(playerstringfy);
+    localStorage.setItem('state', playerstringfy);
+    this.updateScore();
+  }
+
   updateScore() {
     const { player: { score } } = JSON.parse(localStorage.getItem('state'));
-    const state = JSON.parse(localStorage.getItem('state'));
+    const { player } = JSON.parse(localStorage.getItem('state'));
     const fixNumber = 10;
     const { timer, count } = this.state;
     const { quests } = this.props;
@@ -115,8 +128,7 @@ class Quest extends React.Component {
     const newPoints = points + olderPoints;
     console.log(score, points, olderPoints, newPoints);
     const updatedPlayer = {
-      ...state,
-      player: { score: newPoints },
+      player: { ...player, score: newPoints },
     };
     const playerstringfy = JSON.stringify(updatedPlayer);
     localStorage.setItem('state', playerstringfy);

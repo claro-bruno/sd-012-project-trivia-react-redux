@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import FeedbackText from '../component/FeedbackText';
 
 class Feedback extends React.Component {
   constructor(props) {
@@ -36,6 +37,7 @@ class Feedback extends React.Component {
           Ver Ranking
         </button>
         { redirect && (<Redirect to="ranking" />) }
+        <FeedbackText />
       </div>
     );
   }
