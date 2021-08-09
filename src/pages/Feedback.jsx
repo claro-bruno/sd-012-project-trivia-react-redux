@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
+import '../css/feedback.css';
+import mandouBem from '../images/silviosantos_mandouBem.gif';
+import podiaSerMelhor from '../images/podia_ser_melhor.gif';
 
 const SCORE_NUMBER = 3;
 
@@ -56,10 +59,10 @@ class Feedback extends React.Component {
     const { score, assertions } = this.state;
     return (
       <>
+        <Header />
         <div>
           <h1>Desempenho</h1>
         </div>
-        <Header />
         <div>
           <h3>
             Pontuação final:
@@ -70,8 +73,14 @@ class Feedback extends React.Component {
             <p data-testid="feedback-total-question">{assertions}</p>
           </h3>
           {(assertions >= SCORE_NUMBER)
-            ? <p data-testid="feedback-text">Mandou bem!</p>
-            : <p data-testid="feedback-text">Podia ser melhor...</p> }
+            ? <> <img src={ mandouBem} />
+              <p data-testid="feedback-text">Mandou bem!</p>
+             </>
+            : <>
+            <img src={ podiaSerMelhor } />
+            <p data-testid="feedback-text">Podia ser melhor...</p> 
+            </>
+            }
         </div>
         <div>
           <Link to="/">

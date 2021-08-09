@@ -7,7 +7,7 @@ class PlayerLabel extends React.Component {
     const { picture, name, score } = player;
     return (
       <div className="player-label">
-        <img src={ picture } alt="Icone do Gravatar" />
+        <img src={ picture } alt="Icone do Gravatar"  className="ranking-image" />
         <p data-testid={ `player-name-${index}` }>{name}</p>
         <p data-testid={ `player-score-${index}` }>{score}</p>
       </div>

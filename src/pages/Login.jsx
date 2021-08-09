@@ -81,6 +81,7 @@ class Login extends Component {
               testid="input-player-name"
               onChange={ this.handleChange }
               placeholder="Nome do jogador"
+              required
             />
             <Input
               id="email"

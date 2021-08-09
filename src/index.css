@@ -12,11 +12,3 @@ code {
     monospace;
 }
 
-.player-label {
-  display: flex;
-  background-color: aquamarine;
-  border-radius: 10px;
-  margin: 10px 30%;
-
-  justify-content: space-around;
-}
