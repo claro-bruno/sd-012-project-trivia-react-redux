@@ -82,7 +82,7 @@ class Login extends React.Component {
           value={ name }
           onChange={ this.handleOnChange }
           data-testid="input-player-name"
-          className="ml-6 rounded-md"
+          className="ml-5 rounded-md"
         />
       </label>
     );
