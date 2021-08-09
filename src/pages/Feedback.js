@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import FinalResults from '../components/FinalResults';
+import MessageFeedback from '../components/MessageFeedback';
 import Header from '../components/Header';
 import { resetGame, resetPlayer } from '../redux/actions';
 
@@ -38,7 +39,7 @@ class Feedback extends React.Component {
       <div>
         <Header />
         <FinalResults />
-        <p data-testid="feedback-text">Texto do Feedback</p>
+        <MessageFeedback />
         {this.playAgainBtn()}
         {this.rankingBtn()}
       </div>
