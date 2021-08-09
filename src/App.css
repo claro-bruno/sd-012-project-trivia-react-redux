@@ -2,6 +2,31 @@
   text-align: center;
 }
 
+button {
+  background-color: #71b3b8;
+  border-radius: 4px;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: #4c9195;
+}
+
+.profile-image {
+  border-radius: 50%;
+  width: 150px;
+  box-shadow: 2px 2px 15px rgb(126, 120, 120);
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
