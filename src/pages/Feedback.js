@@ -1,14 +1,32 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../Components/Header';
 
-export default class Feedback extends Component {
+const minAssertions = 3;
+
+class Feedback extends Component {
   render() {
+    const { assertions } = this.props;
     return (
-      <div
-        data-testid="feedback-text"
-      >
+      <>
+        <h1
+          data-testid="feedback-text"
+        >
+          {assertions < minAssertions ? 'Podia ser melhor...' : 'Mandou bem!'}
+        </h1>
         <Header />
-      </div>
+      </>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  assertions: state.user.assertions,
+});
+
+export default connect(mapStateToProps)(Feedback);
+
+Feedback.propTypes = {
+  assertions: PropTypes.number.isRequired,
+};
