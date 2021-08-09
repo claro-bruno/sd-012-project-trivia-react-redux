@@ -42,9 +42,9 @@ class Login extends React.Component {
     const player = {
       player: {
         name,
-        assertions: '',
         score: 0,
         gravatarEmail: avatar,
+        assertions: 0,
       },
     };
     const { saveToke, saveEmailD, saveNameD } = this.props;
