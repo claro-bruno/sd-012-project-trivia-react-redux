@@ -7,16 +7,22 @@ class Feedback extends React.Component {
 
     this.state = {
       redirect: false,
+      redirect2: false,
     };
     this.changeRoute = this.changeRoute.bind(this);
+    this.changeRoutes = this.changeRoutes.bind(this);
   }
 
   changeRoute() {
     this.setState({ redirect: true });
   }
 
+  changeRoutes() {
+    this.setState({ redirect2: true });
+  }
+
   render() {
-    const { redirect } = this.state;
+    const { redirect, redirect2 } = this.state;
     return (
       <div>
         <h1 data-testid="feedback-text">Feedbacks</h1>
@@ -31,11 +37,11 @@ class Feedback extends React.Component {
         <button
           type="button"
           data-testid="btn-ranking"
-          onClick={ this.changeRoute }
+          onClick={ this.changeRoutes }
         >
           Ver Ranking
         </button>
-        { redirect && (<Redirect to="ranking" />) }
+        { redirect2 && (<Redirect to="/ranking" />) }
       </div>
     );
   }
