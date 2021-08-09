@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
 import ButtonNext from '../components/gameControlled/ButtonNext';
 import SectionQuestions from '../components/gameControlled/SectionQuestions';
-import { addAssertions } from '../redux/actions';
 import '../App.css';
 
 class Game extends React.Component {
@@ -17,20 +17,23 @@ class Game extends React.Component {
     this.nextQuestion = this.nextQuestion.bind(this);
     this.startTime = this.startTime.bind(this);
     this.stopTime = this.stopTime.bind(this);
+    this.timer = this.timer.bind(this);
     this.setButtonQuestionStyle = this.setButtonQuestionStyle.bind(this);
     this.setCorrectAnswer = this.setCorrectAnswer.bind(this);
     this.setInicialCount = this.setInicialCount.bind(this);
     this.setStateProperties = this.setStateProperties.bind(this);
-    this.timer = this.timer.bind(this);
     this.wrongClick = this.wrongClick.bind(this);
+    this.setScore = this.setScore.bind(this);
 
     this.state = {
       correctAnswers: 0,
+      score: 0,
       questionPosition: 0,
       questionsDisable: false,
       color: false,
       count: 30,
       nextButtonInvisible: true,
+      gravatarEmail: '',
     };
   }
 
@@ -38,6 +41,12 @@ class Game extends React.Component {
     const { startTime } = this;
 
     startTime();
+
+    const { setStateProperties, props: { userData: { email } } } = this;
+    const profile = md5(email).toString();
+    const SRC = `https://www.gravatar.com/avatar/${profile}`;
+
+    setStateProperties('gravatarEmail', SRC);
   }
 
   componentDidUpdate() {
@@ -78,20 +87,33 @@ class Game extends React.Component {
     }));
   }
 
-  correctClick() {
+  setScore(difficulty, count) {
+    const level = { hard: 3, medium: 2, easy: 1 }[difficulty];
+    const INITIAL_PARAMETER = 10;
+    const points = INITIAL_PARAMETER + (level * count);
+
+    const { props: { userData: { user } },
+      state: { gravatarEmail, correctAnswers, score },
+      setStateProperties } = this;
+
+    setStateProperties('score', score + points);
+    const Score = { name: user, gravatarEmail, assertions: correctAnswers, score };
+    localStorage.setItem('player', Score);
+  }
+
+  correctClick(difficulty) {
     const {
       setCorrectAnswer,
       setButtonQuestionStyle,
       buttonNextStatus,
-      props: { setAssertions },
-      state: { correctAnswers },
+      setScore,
+      state: { count },
     } = this;
 
     clearInterval(this.interval);
-
+    setScore(difficulty, count);
     setCorrectAnswer();
     setButtonQuestionStyle();
-    setAssertions(correctAnswers);
     buttonNextStatus();
   }
 
@@ -145,8 +167,8 @@ class Game extends React.Component {
   }
 
   timer() {
-    const {
-      setStateProperties, state: { count } } = this;
+    const { setStateProperties,
+      state: { count } } = this;
 
     setStateProperties('count', count - 1);
   }
@@ -190,14 +212,13 @@ class Game extends React.Component {
   }
 }
 
-const { func } = PropTypes;
+const { string, objectOf } = PropTypes;
 Game.propTypes = {
-  setAssertions: func.isRequired,
+  userData: objectOf(string).isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  setAssertions: (assertions) => dispatch(addAssertions(assertions)),
-  // setScore: (userData, assertions) => dispatch(addStorage(userData, assertions)),
+const mapStateToProps = (state) => ({
+  userData: state.addLoginReducer,
 });
 
-export default connect(null, mapDispatchToProps)(Game);
+export default connect(mapStateToProps, null)(Game);
