@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { getToken, setNameAndEmail } from '../actions';
 
 class Login extends Component {
@@ -11,7 +11,9 @@ class Login extends Component {
       name: '',
       email: '',
       canLogin: false,
-      shouldRedirect: false,
+      shouldRedirectToGame: false,
+      shouldRedirectToConf: false,
+      btnClass: 'btn btn-light',
     };
     this.handleChange = this.handleChange.bind(this);
     this.renderButton = this.renderButton.bind(this);
@@ -23,7 +25,7 @@ class Login extends Component {
     const { name, email } = this.state;
     fetchToken();
     nameAndEmail(name, email, score);
-    this.setState({ shouldRedirect: true });
+    this.setState({ shouldRedirectToGame: true });
   }
 
   handleChange({ target }) {
@@ -38,57 +40,87 @@ class Login extends Component {
     this.setState({
       canLogin: (EMAIL_REGEX.test(email) && name.length > 0),
     });
+    if ((EMAIL_REGEX.test(email) && name.length > 0)) {
+      this.setState({
+        btnClass: 'btn btn-info',
+      });
+    } else {
+      this.setState({
+        btnClass: 'btn btn-light',
+      });
+    }
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   renderButton() {
+    const { canLogin, btnClass } = this.state;
     return (
-      <Link to="/configuracoes">
-        <button type="button" data-testid="btn-settings">Configurações</button>
-      </Link>
+      <div className="buttons row">
+        <button
+          disabled={ !canLogin }
+          type="submit"
+          data-testid="btn-play"
+          className={ btnClass }
+        >
+          Jogar
+        </button>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ () => this.setState({ shouldRedirectToConf: true }) }
+          className="btn btn-dark"
+        >
+          Configurações
+        </button>
+      </div>
     );
   }
 
   render() {
-    const { name, email, canLogin, shouldRedirect } = this.state;
+    const { name, email, shouldRedirectToGame, shouldRedirectToConf } = this.state;
 
-    if (shouldRedirect) return <Redirect to="/game" />;
+    if (shouldRedirectToGame) return <Redirect to="/game" />;
+    if (shouldRedirectToConf) return <Redirect to="/configuracoes" />;
 
     return (
-      <main>
+      <main className="login-page row  align-items-center">
+        <h1>
+          TRIVIA
+          <h3>REACT REDUX</h3>
+        </h1>
         <form
+          className="container"
           action="GET"
           onSubmit={ this.onSubmit }
         >
-          <label htmlFor="name-input">
-            Nome
-            <input
-              type="text"
-              value={ name }
-              name="name"
-              id="name-input"
-              onChange={ this.handleChange }
-              data-testid="input-player-name"
-            />
-          </label>
-          <label htmlFor="email-input">
-            Email
-            <input
-              type="email"
-              value={ email }
-              name="email"
-              id="email-input"
-              onChange={ this.handleChange }
-              data-testid="input-gravatar-email"
-            />
-          </label>
-          <button
-            disabled={ !canLogin }
-            type="submit"
-            data-testid="btn-play"
-          >
-            Jogar
-          </button>
+          <div className="row">
+            <label htmlFor="name-input" className="form-label">
+              Nome
+              <input
+                type="text"
+                value={ name }
+                name="name"
+                id="name-input"
+                onChange={ this.handleChange }
+                data-testid="input-player-name"
+                className="form-control"
+              />
+            </label>
+          </div>
+          <div className="row">
+            <label htmlFor="email-input" className="form-label">
+              Email
+              <input
+                type="email"
+                value={ email }
+                name="email"
+                id="email-input"
+                onChange={ this.handleChange }
+                data-testid="input-gravatar-email"
+                className="form-control"
+              />
+            </label>
+          </div>
           { this.renderButton() }
         </form>
       </main>

@@ -1,0 +1,80 @@
+.buttons.row {
+  width: 50%;
+  justify-content: center;
+}
+
+.login-page {
+  background-image: url("./images/interstellar.png");
+  background-size: cover;
+  color: white;
+}
+
+@keyframes flickerh1 {
+  0%,
+  18%,
+  22%,
+  25%,
+  53%,
+  57%,
+  100% {
+    text-shadow: 0 0 4px #0ff, 0 0 0 #0ff, 0 0 0 #0ff, 0 0 20px #fff, 0 0 0 #fff, 0 0 0 #fff, 0 0 100px #fff,
+      0 0 150px #fff;
+  }
+
+  20%,
+  24%,
+  55% {
+    text-shadow: none;
+  }
+}
+@keyframes flickerh2 {
+  0%,
+  18%,
+  22%,
+  25%,
+  53%,
+  57%,
+  100% {
+    text-shadow: 0 0 4px #fff, 0 0 0 #fff, 0 0 0 #fff, 0 0 20px #7f00fc, 0 0 0 #7f00fc, 0 0 0 #7f00fc, 0 0 100px #7f00fc,
+      0 0 150px #7f00fc;
+  }
+
+  20%,
+  24%,
+  55% {
+    text-shadow: none;
+  }
+}
+
+@font-face {
+  font-family: EternalLogo;
+  src: url("./fonts/EternalLogo-MVO7Y.ttf");
+}
+
+.row {
+  .container {
+    width: 50%;
+
+    .row {
+      margin: auto;
+      width: 50%;
+
+      button {
+        margin: 10px;
+        width: 140px;
+      }
+    }
+  }
+
+  h1 {
+    animation: flickerh2 2.5s infinite;
+    font-size: 6rem;
+    text-align: center;
+    width: 50%;
+    font-family: EternalLogo, sans-serif;
+
+    h3 {
+      animation: flickerh1 2s infinite;
+    }
+  }
+}

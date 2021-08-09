@@ -1,5 +1,18 @@
-@import "./mixins/buttonborders";
-@import "./mixins/row";
-@import "./variables/colors";
-@import "./answers";
-@import "./rankings";
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+
+@import './mixins/buttonborders';
+
+@import './mixins/row';
+
+@import './variables/colors';
+
+@import './login';
+
+@import './answers';
+
+@import './rankings';
+
+html, body, main {
+  height: 100vh;
+  width: 100vw;
+}

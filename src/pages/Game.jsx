@@ -31,12 +31,12 @@ class Game extends Component {
           ...item.incorrect_answers.map((answer, i) => ({
             answer,
             testid: `wrong-answer-${i}`,
-            className: 'wrong-answer',
+            className: 'btn btn-danger',
             isCorrect: false,
           })), {
             answer: item.correct_answer,
             testid: 'correct-answer',
-            className: 'correct-answer',
+            className: 'btn btn-success',
             isCorrect: true,
           },
         ].sort(() => Math.random() - randomValue),

@@ -42,6 +42,7 @@ class Questions extends React.Component {
       easy: 1,
     };
     this.setState({
+      disabled: true,
       showNext: true,
       showAnswers: true,
     }, this.updateScore(diffWeight[diff], target));
@@ -110,7 +111,10 @@ class Questions extends React.Component {
             type="button"
             key={ `answer-${mapIndex}` }
             data-testid={ testid }
-            className={ showAnswers ? `${className} ${isCorrect}` : `${isCorrect}` }
+            className={
+              showAnswers ? `${className} ${isCorrect}`
+                : `${isCorrect} btn btn-outline-secondary`
+            }
             disabled={ disabled }
             onClick={ ({ target }) => (
               this.handleClick(target, atob(questions[index].difficulty))
