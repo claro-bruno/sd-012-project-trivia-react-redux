@@ -11,14 +11,18 @@ class Game extends React.Component {
       corrAnsBorder: {},
       incorrAnsBorder: {},
       loading: true,
+      seconds: 30,
     };
 
     this.getQuestions = this.getQuestions.bind(this);
     this.changeBordersColor = this.changeBordersColor.bind(this);
+    this.timer = this.timer.bind(this);
+    this.buttonColorDisabler = this.buttonColorDisabler.bind(this);
   }
 
   componentDidMount() {
     this.getQuestions();
+    this.timer();
   }
 
   getQuestions() {
@@ -31,6 +35,30 @@ class Game extends React.Component {
       }));
   }
 
+  timer() {
+    const interval = 1000;
+    const limit = 30000;
+    setInterval(() => {
+      const { seconds } = this.state;
+      if (seconds > 0) this.setState({ seconds: seconds - 1 });
+    }, interval);
+    setTimeout(() => {
+      this.buttonColorDisabler();
+    }, limit);
+  }
+
+  buttonColorDisabler() {
+    const correctAnswerButton = document.getElementsByClassName('c-answer');
+    correctAnswerButton[0].style.border = '3px solid rgb(6, 240, 15)';
+    correctAnswerButton[0].setAttribute('disabled', 'disabled');
+
+    const incorrectAnswerButton = document.querySelectorAll('.w-answer');
+    incorrectAnswerButton.forEach((button) => {
+      button.style.border = '3px solid rgb(255, 0, 0)';
+      button.setAttribute('disabled', 'disabled');
+    });
+  }
+
   changeBordersColor() {
     this.setState({
       corrAnsBorder: { border: '3px solid rgb(6, 240, 15)' },
@@ -40,7 +68,7 @@ class Game extends React.Component {
 
   render() {
     const { questions,
-      questionNumber, loading, corrAnsBorder, incorrAnsBorder } = this.state;
+      questionNumber, loading, corrAnsBorder, incorrAnsBorder, seconds } = this.state;
     if (!loading) {
       return (
         <main>
@@ -61,7 +89,8 @@ class Game extends React.Component {
                   type="button"
                   data-testid={ `wrong-answer-${index}` }
                   style={ incorrAnsBorder }
-                  onClick={ this.changeBordersColor }
+                  onClick={ this.buttonColorDisabler }
+                  className="w-answer"
                 >
                   { answer }
                 </button>
@@ -70,11 +99,13 @@ class Game extends React.Component {
               type="button"
               data-testid="correct-answer"
               style={ corrAnsBorder }
-              onClick={ this.changeBordersColor }
+              onClick={ this.buttonColorDisabler }
+              className="c-answer"
             >
               { questions[questionNumber].correct_answer }
             </button>
           </div>
+          <span>{ seconds }</span>
         </main>
       );
     }
