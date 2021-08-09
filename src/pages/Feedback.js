@@ -31,11 +31,11 @@ class Feedback extends React.Component {
         <button
           type="button"
           data-testid="btn-ranking"
-          onClick={ this.changeRoute}
+          onClick={ this.changeRoute }
         >
           Ver Ranking
-          </button> 
-          { redirect && (<Redirect to="ranking" />) }
+        </button>
+        { redirect && (<Redirect to="ranking" />) }
       </div>
     );
   }
