@@ -36,7 +36,7 @@ class Feedback extends React.Component {
         >
           Ver Ranking
         </button>
-        { redirect && (<Redirect to="ranking" />) }
+        { redirect && (<Redirect to="/ranking" />) }
         <FeedbackText />
       </div>
     );
