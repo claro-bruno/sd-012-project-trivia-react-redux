@@ -1,11 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { timeReset } from '../redux/actions';
+import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
+
 import HeaderPlayer from '../components/HeaderPlayer';
+import { timeReset } from '../redux/actions';
 
 class FeedbackPage extends Component {
+  componentDidMount() {
+    const { player: { name, score, email } } = JSON.parse(localStorage.getItem('state'));
+    const hash = md5(email).toString();
+    const picture = `https://www.gravatar.com/avatar/${hash}`;
+
+    const newRank = {
+      name,
+      score,
+      picture,
+    };
+    const prevRanking = JSON.parse(localStorage.getItem('ranking'));
+
+    if (prevRanking) {
+      localStorage.setItem('ranking', JSON.stringify([...prevRanking, newRank]));
+    } else {
+      localStorage.setItem('ranking', JSON.stringify([newRank]));
+    }
+  }
+
   render() {
     const { player: { assertions, score } } = JSON.parse(localStorage.getItem('state'));
     const { resetTimer } = this.props;
