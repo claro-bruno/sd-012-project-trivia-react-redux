@@ -9,6 +9,7 @@ class UserInputs extends React.Component {
       <label htmlFor={ id }>
         {innerHtml}
         <input
+          className="input-gen"
           data-testid={ id }
           type={ type }
           name={ name }

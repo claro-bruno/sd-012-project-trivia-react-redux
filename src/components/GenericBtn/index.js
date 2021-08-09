@@ -7,6 +7,7 @@ class GenericBtn extends React.Component {
 
     return (
       <button
+        className="gen-btn"
         type="button"
         disabled={ disabled }
         onClick={ onClick }

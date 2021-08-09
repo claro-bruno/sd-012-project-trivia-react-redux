@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
 
 body {
+  background-image: url("./images/background.jpg");
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -27,4 +29,52 @@ code {
 .logo {
   font-family: 'Love Ya Like A Sister', cursive;
   font-size: 60px;
+}
+
+.login-box {
+  background-color: rgb(195, 195, 195);
+  border-color: rgba(12,116,117,1);
+  border-radius: 15px;
+  box-shadow: inset 0 0 0 black, 0 0 0.5em darkgray,
+    0 0 0.7em grey, 0 0 1em lightgrey;
+  display: flex;
+  flex-flow: column;
+  font-family: 'Oswald', sans-serif;
+  height: 300px;
+  justify-content: center;
+  margin-left: 30%;
+  margin-top: 5%;
+  padding-top: 40px;
+  width: 40%;
+}
+
+.input-gen {
+  border-color: rgb(195, 195, 195);
+  border-radius: 10px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 18px;
+  padding: 6px;
+  margin: 6px;
+  width: 80%;
+}
+
+.input-gen:hover {
+  border-color: rgba(14,174,87,1);
+}
+
+.gen-btn {
+  background-color: rgba(14,174,87,1);
+  border-radius: 8px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 20px;
+  height: 40px;
+  margin-left: 30%;
+  width: 40%;
+}
+
+.gen-btn:hover {
+  background-color: rgba(12,116,117,1);
+  box-shadow: inset 0 0 0 black, 0 0 0.5em darkgray,
+    0 0 0.7em grey, 0 0 1em lightgrey;
+  color: white;
 }
