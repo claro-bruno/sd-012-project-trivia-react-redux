@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Header from '../Components/Header';
 import { fetchQuestions } from '../redux/actions';
 import Question from '../Components/Question';
+import Score from '../Components/Score';
 
 class Game extends Component {
   componentDidMount() {
@@ -19,6 +20,7 @@ class Game extends Component {
     return (
       <>
         <Header />
+        <Score dataTestId="header-score" />
         { questions
           .map((question, index) => (
             index === currentQuestion

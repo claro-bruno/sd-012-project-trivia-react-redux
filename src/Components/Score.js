@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 class Score extends Component {
   render() {
-    const { score } = this.props;
+    const { score, dataTestId } = this.props;
     return (
       <h1
-        data-testid="header-score"
+        data-testid={ dataTestId }
       >
         {score}
       </h1>
@@ -23,4 +23,5 @@ export default connect(mapStateToProps)(Score);
 
 Score.propTypes = {
   score: PropTypes.number.isRequired,
+  dataTestId: PropTypes.string.isRequired,
 };

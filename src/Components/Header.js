@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
-import Score from './Score';
 
 class Header extends Component {
   render() {
@@ -19,9 +18,6 @@ class Header extends Component {
         >
           { name }
         </h1>
-        <Score
-          data-testid="header-score"
-        />
       </header>
     );
   }
@@ -37,4 +33,9 @@ export default connect(mapStateToProps)(Header);
 Header.propTypes = {
   email: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
