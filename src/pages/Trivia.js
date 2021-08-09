@@ -116,11 +116,12 @@ class Trivia extends Component {
           (resolved || timeCounter === 0)
             && (
               <button
+                id="btn-next"
                 type="button"
                 data-testid="btn-next"
                 onClick={ handleNext }
               >
-                Pŕoxima
+                Próxima
               </button>)
         }
       </section>

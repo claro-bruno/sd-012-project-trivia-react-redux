@@ -17,9 +17,12 @@ class Question extends Component {
     } = this.props;
     const sortedAnswers = [...incorrectAnswers, correctAnswer].sort();
     return (
-      <>
-        <h2>{ timeCounter }</h2>
-        <h2 data-testid="question-category">{ category }</h2>
+      <section className="main-questions">
+        <h2 className="time-counter">
+          Time :
+          { timeCounter }
+        </h2>
+        <h2 className="quest-category" data-testid="question-category">{ category }</h2>
         <p data-testid="question-text">{ question }</p>
         { sortedAnswers.map((answer, index) => {
           const isCorrect = answer === correctAnswer;
@@ -42,7 +45,7 @@ class Question extends Component {
             </button>
           );
         })}
-      </>
+      </section>
     );
   }
 }

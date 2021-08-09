@@ -6,6 +6,7 @@
 }
 
 .left-side-infos {
+  background-color: aqua;
   align-items: center;
   display: flex;
   justify-content: space-between;

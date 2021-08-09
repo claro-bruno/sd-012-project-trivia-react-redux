@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { actionCreateLogin } from '../redux/actions';
 import { fetchApi } from '../services/api';
+import '../Style/login.css';
 
 class Login extends Component {
   constructor(props) {
@@ -54,7 +55,7 @@ class Login extends Component {
   render() {
     const { name, email, btnDisable, redirect } = this.state;
     return (
-      <fieldset>
+      <fieldset className="login-screen">
         {
           redirect && <Redirect to="/game/trivia" />
         }
@@ -63,6 +64,7 @@ class Login extends Component {
         >
           Nome:
           <input
+            id="input-name"
             value={ name }
             name="name"
             onChange={ this.handleChange }
@@ -75,6 +77,7 @@ class Login extends Component {
         >
           Email:
           <input
+            id="input-email"
             value={ email }
             name="email"
             onChange={ this.handleChange }
@@ -83,6 +86,7 @@ class Login extends Component {
           />
         </label>
         <button
+          id="btn-play"
           type="button"
           data-testid="btn-play"
           disabled={ btnDisable }
@@ -92,7 +96,7 @@ class Login extends Component {
         </button>
         <div>
           <Link to="/config" data-testid="btn-settings">
-            <button type="button">Configurações</button>
+            <button id="btn-config" type="button">Configurações</button>
           </Link>
         </div>
       </fieldset>
