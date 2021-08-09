@@ -3,12 +3,6 @@
   justify-content: center;
 }
 
-.login-page {
-  background-image: url("./images/interstellar.png");
-  background-size: cover;
-  color: white;
-}
-
 @keyframes flickerh1 {
   0%,
   18%,
@@ -27,6 +21,7 @@
     text-shadow: none;
   }
 }
+
 @keyframes flickerh2 {
   0%,
   18%,
@@ -51,7 +46,10 @@
   src: url("./fonts/EternalLogo-MVO7Y.ttf");
 }
 
-.row {
+.login-page {
+  background-image: url("./images/interstellar.png");
+  background-size: cover;
+  color: white;
   .container {
     width: 50%;
 

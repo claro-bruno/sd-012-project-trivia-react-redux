@@ -11957,12 +11957,6 @@ fieldset:disabled .btn {
           justify-content: center;
 }
 
-.login-page {
-  background-image: url("./images/interstellar.png");
-  background-size: cover;
-  color: white;
-}
-
 @-webkit-keyframes flickerh1 {
   0%,
   18%,
@@ -12036,21 +12030,27 @@ fieldset:disabled .btn {
   src: url("./fonts/EternalLogo-MVO7Y.ttf");
 }
 
-.row .container {
+.login-page {
+  background-image: url("./images/interstellar.png");
+  background-size: cover;
+  color: white;
+}
+
+.login-page .container {
   width: 50%;
 }
 
-.row .container .row {
+.login-page .container .row {
   margin: auto;
   width: 50%;
 }
 
-.row .container .row button {
+.login-page .container .row button {
   margin: 10px;
   width: 140px;
 }
 
-.row h1, .row .h1 {
+.login-page h1, .login-page .h1 {
   -webkit-animation: flickerh2 2.5s infinite;
           animation: flickerh2 2.5s infinite;
   font-size: 6rem;
@@ -12059,9 +12059,133 @@ fieldset:disabled .btn {
   font-family: EternalLogo, sans-serif;
 }
 
-.row h1 h3, .row .h1 h3, .row h1 .h3, .row .h1 .h3 {
+.login-page h1 h3, .login-page .h1 h3, .login-page h1 .h3, .login-page .h1 .h3 {
   -webkit-animation: flickerh1 2s infinite;
           animation: flickerh1 2s infinite;
+}
+
+@font-face {
+  font-family: EternalLogo;
+  src: url("./fonts/EternalLogo-MVO7Y.ttf");
+}
+
+header {
+  padding: 5px;
+  background-color: black;
+  color: white;
+  font-family: EternalLogo;
+}
+
+header img {
+  border-radius: 50%;
+  width: 80px !important;
+}
+
+header .header-name, header .header-score, header .header-title {
+  width: -webkit-fit-content !important;
+  width: -moz-fit-content !important;
+  width: fit-content !important;
+  margin: 0;
+}
+
+header .header-name {
+  padding: 0;
+}
+
+header .header-title {
+  font-family: EternalLogo, sans-serif;
+  -webkit-animation: flickerh2 2.5s infinite;
+          animation: flickerh2 2.5s infinite;
+  left: 20px;
+}
+
+header .header-score {
+  right: 20px;
+}
+
+.game-page {
+  background-image: url("./images/Earth-Spinning-Stars.jpg");
+  background-size: cover;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.game-container {
+  color: white;
+  position: absolute;
+  height: 80vh;
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  top: 15vh;
+  width: 70%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 5px;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: visible;
+}
+
+.game-container button {
+  width: 500px;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  margin: 5px;
+}
+
+.game-container .btn-next {
+  top: 70vh;
+  right: 5vw;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.game-container .timer {
+  top: -10px;
+  left: -10px;
+  border-radius: 50%;
+  padding: 35px;
+  background-color: #7f00fc;
+  z-index: 3;
+}
+
+.game-container .timer p {
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 50px;
+}
+
+.game-container .question {
+  width: 70%;
+  margin: 5px auto;
+  text-align: center;
+}
+
+.game-container .category {
+  width: 100%;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #7f00fc;
+  position: absolute;
+  top: 0;
+  left: 5px;
+  padding: 5px;
 }
 
 .btn-success {
@@ -12095,5 +12219,7 @@ fieldset:disabled .btn {
 html, body, main {
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
+  z-index: 1;
 }
 /*# sourceMappingURL=main.css.map */

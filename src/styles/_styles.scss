@@ -8,6 +8,10 @@
 
 @import './login';
 
+@import './header';
+
+@import './game-page';
+
 @import './answers';
 
 @import './rankings';
@@ -15,4 +19,6 @@
 html, body, main {
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
+  z-index: 1;
 }

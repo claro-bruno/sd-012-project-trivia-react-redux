@@ -66,7 +66,7 @@ class Questions extends React.Component {
         disabled: true,
         showNext: true,
         showAnswers: true,
-      });
+      }, clearInterval(this.countdown));
     }, thirySeconds);
   }
 
@@ -100,10 +100,22 @@ class Questions extends React.Component {
     if (shouldRedirect) return <Redirect to="/feedbacks" />;
     const { questions } = this.props;
     return (
-      <div>
-        <h2>{timer}</h2>
-        <h2 data-testid="question-category">{atob(questions[index].category)}</h2>
-        <h4 data-testid="question-text">{atob(questions[index].question)}</h4>
+      <main className="game-container d-flex flex-column">
+        <h2 className="position-absolute timer">
+          <p>{timer}</p>
+        </h2>
+        <h2
+          data-testid="question-category"
+          className="category"
+        >
+          {atob(questions[index].category)}
+        </h2>
+        <h4
+          data-testid="question-text"
+          className="question"
+        >
+          {atob(questions[index].question)}
+        </h4>
         {questions[index].alternatives.map(({
           answer, isCorrect, testid, className,
         }, mapIndex) => (
@@ -128,11 +140,12 @@ class Questions extends React.Component {
             data-testid="btn-next"
             type="button"
             onClick={ this.clickNext }
+            className="position-absolute btn-next btn btn-dark"
           >
             {index < this.four ? 'Próxima' : 'Finalizar'}
           </button>
         )}
-      </div>
+      </main>
     );
   }
 }

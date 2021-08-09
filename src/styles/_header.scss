@@ -1,0 +1,35 @@
+@font-face {
+  font-family: EternalLogo;
+  src: url('./fonts/EternalLogo-MVO7Y.ttf');
+}
+
+header {
+  padding: 5px;
+  background-color: black;
+  color: white;
+  font-family: EternalLogo;
+
+  img {
+    border-radius: 50%;
+    width: 80px ! important;
+  }
+
+  .header-name, .header-score, .header-title {
+    width: fit-content ! important;
+    margin: 0;
+  }
+
+  .header-name {
+    padding: 0;
+  }
+
+  .header-title {
+    font-family: EternalLogo, sans-serif;
+    animation: flickerh2 2.5s infinite;
+    left: 20px;
+  }
+
+  .header-score {
+    right: 20px;
+  }
+}

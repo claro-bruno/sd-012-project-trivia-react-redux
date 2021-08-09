@@ -49,7 +49,7 @@ class Game extends Component {
     const { questions } = this.props;
     if (!questions.length) return 'Loading';
     return (
-      <main>
+      <main className="game-page d-flex">
         <Header />
         <Questions questions={ this.randomizer(questions) } />
       </main>

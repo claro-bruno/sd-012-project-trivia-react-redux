@@ -1,0 +1,68 @@
+.game-page {
+  background-image: url('./images/Earth-Spinning-Stars.jpg');
+  background-size: cover;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-container {
+  color: white;
+  position: absolute;
+  height: 80vh;
+  max-height: fit-content;
+  top: 15vh;
+  width: 70%;
+  justify-content: center;
+  border-radius: 5px;
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: visible;
+
+  button {
+    width: 500px;
+    align-self: center;
+    margin: 5px;
+  }
+
+  .btn-next {
+    top: 70vh;
+    right: 5vw;
+    width: fit-content;
+  }
+
+  .timer {
+    top: -10px;
+    left: -10px;
+    border-radius: 50%;
+    padding: 35px;
+    background-color: $purple-bootstrap;
+    z-index: 3;
+
+    p {
+      position: absolute;
+      top: 15px;
+      left: 10px;
+      display: flex;
+      justify-content: center;
+      width: 50px;
+    }
+  }
+
+  .question {
+    width: 70%;
+    margin: 5px auto;
+    text-align: center;
+  }
+
+  .category {
+    width: 100%;
+    // margin: 0 auto;
+    text-align: center;
+    border-radius: 5px;
+    background-color: $purple-bootstrap;
+    position: absolute;
+    top: 0;
+    left: 5px;
+    padding: 5px;
+  }
+}

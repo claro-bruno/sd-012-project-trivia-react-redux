@@ -8,14 +8,18 @@ class Header extends Component {
     const { name, email, score } = this.props;
     const hashGravatar = md5(email).toString();
     return (
-      <header>
+      <header className="fixed-top row justify-content-center align-items-center">
+        <h1 className="header-title position-absolute">TRIVIA</h1>
         <img
           data-testid="header-profile-picture"
           src={ `https://www.gravatar.com/avatar/${hashGravatar}` }
           alt="avatar"
         />
-        <p data-testid="header-player-name">{ name }</p>
-        <p data-testid="header-score">{score}</p>
+        <h4 className="header-name" data-testid="header-player-name">{ name }</h4>
+        <h4 className="header-score position-absolute" data-testid="header-score">
+          Pontuação:
+          {score}
+        </h4>
       </header>
     );
   }
