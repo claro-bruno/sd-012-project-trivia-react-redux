@@ -56,7 +56,6 @@ class Login extends React.Component {
     const { play } = this.props;
     const token = await requestToken();
     const hash = md5(email).toString();
-    console.log(hash);
     const avatar = `https://www.gravatar.com/avatar/${hash}`;
     const user = {
       name: username,
