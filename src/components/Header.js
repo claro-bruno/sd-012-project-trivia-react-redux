@@ -9,6 +9,7 @@ class Header extends React.Component {
     const { userMail, userName } = this.props;
     const playerData = JSON.parse(localStorage.getItem('state'));
     const userMailHashCode = md5(userMail).toString();
+
     return (
       <header className="standard-header">
         <div className="player-info">
@@ -30,6 +31,7 @@ class Header extends React.Component {
             Pontuação:
             <span className="player-score-number" data-testid="header-score">
               {playerData ? playerData.score : 0}
+              
             </span>
           </span>
         </div>
@@ -42,6 +44,7 @@ Header.propTypes = {
   userMail: PropTypes.string,
   userName: PropTypes.string,
   userPoints: PropTypes.number,
+  score: PropTypes.number,
 }.isRequired;
 
 const mapStateToProps = (state) => ({
