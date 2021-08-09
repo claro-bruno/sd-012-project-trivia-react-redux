@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './question.css';
+import '../Style/question.css';
 
 class Question extends Component {
   render() {
@@ -34,6 +34,7 @@ class Question extends Component {
             : 'wrong';
           return (
             <button
+              id="quest-btn"
               className={ resolved ? className : '' }
               type="button"
               key={ index }

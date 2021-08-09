@@ -64,9 +64,7 @@ class Login extends Component {
     const { name, email, btnDisable, redirect } = this.state;
     return (
       <fieldset className="login-screen">
-        {
-          redirect && <Redirect to="/game/trivia" />
-        }
+        { redirect && <Redirect to="/game/trivia" /> }
         <label
           htmlFor="input-player-name"
         >
