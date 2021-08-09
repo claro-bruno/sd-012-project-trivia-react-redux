@@ -7,7 +7,7 @@ export default async function getInfo() {
     .catch((err) => console.log(err));
 
   const { token } = data;
-  localStorage.setItem('token', JSON.stringify(token));
+  JSON.stringify(localStorage.setItem('token', token));
   return data;
 }
 
@@ -16,7 +16,7 @@ export async function getQuestions() {
 
   if (!token) {
     await getInfo();
-    token = JSON.parse(localStorage.getItem('token'));
+    token = localStorage.getItem('token');
   }
   const data = await fetch(`${questionUrl}${token}`)
     .then((response) => response.json())
