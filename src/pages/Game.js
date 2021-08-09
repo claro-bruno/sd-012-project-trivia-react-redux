@@ -7,8 +7,8 @@ import Header from '../components/Header';
 
 class Game extends React.Component {
   componentDidMount() {
-    const { request } = this.props;
-    request();
+    const { request, amount, category, difficulty, type } = this.props;
+    request({ amount, category, difficulty, type });
   }
 
   render() {
@@ -23,11 +23,15 @@ class Game extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  request: () => dispatch(requestTrivia()),
+  request: (settings) => dispatch(requestTrivia(settings)),
 });
 
 const mapStateToProps = (state) => ({
   loading: state.game.loading,
+  amount: state.settings.amount,
+  category: state.settings.category,
+  difficulty: state.settings.difficulty,
+  type: state.settings.type,
 });
 
 Game.propTypes = {
@@ -35,6 +39,10 @@ Game.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   loading: PropTypes.bool.isRequired,
+  amount: PropTypes.string.isRequired,
+  difficulty: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
   request: PropTypes.func.isRequired,
 };
 
