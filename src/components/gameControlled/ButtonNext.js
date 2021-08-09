@@ -4,16 +4,15 @@ import Button from '../Button';
 
 class ButtonNext extends React.Component {
   render() {
-    const { props: { invisible, nextQuestion } } = this;
+    const { props: { invisible, handleClick } } = this;
     return (
       invisible
         ? null
         : (
           <Button
             testId="btn-next"
-            type="button"
             name="Próxima"
-            handleClick={ nextQuestion }
+            handleClick={ handleClick }
           />
         )
     );
@@ -23,7 +22,7 @@ class ButtonNext extends React.Component {
 const { bool, func } = PropTypes;
 ButtonNext.propTypes = {
   invisible: bool.isRequired,
-  nextQuestion: func.isRequired,
+  handleClick: func.isRequired,
 };
 
 export default ButtonNext;
