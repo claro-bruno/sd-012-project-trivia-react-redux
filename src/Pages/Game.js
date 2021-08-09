@@ -5,6 +5,7 @@ import { actionFetchApiGame } from '../redux/actions';
 import Loading from '../Components/Loading';
 import Answers from '../Components/Answers';
 import HeaderGame from '../Components/HeaderGame';
+import Timer from '../Components/timer';
 
 class Game extends React.Component {
   constructor() {
@@ -84,6 +85,7 @@ class Game extends React.Component {
         {
           questions.length > 0 ? (
             <section className="App">
+              <Timer />
               <div>
                 <p data-testid="question-category">
                   <strong>Categoria: </strong>
