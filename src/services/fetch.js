@@ -1,6 +1,5 @@
 const tokenEndPoint = 'https://opentdb.com/api_token.php?command=request';
-const tokenFromStorage = localStorage.getItem('token');
-const quizEndPoint = `https://opentdb.com/api.php?amount=5&token=${tokenFromStorage}`;
+const quizEndPoint = 'https://opentdb.com/api.php?amount=5&token=';
 
 export const fetchToken = async () => {
   const request = await fetch(tokenEndPoint);
@@ -9,7 +8,8 @@ export const fetchToken = async () => {
 };
 
 export const fetchQuiz = async () => {
-  const request = await fetch(quizEndPoint);
+  const token = await fetchToken();
+  const request = await fetch(`${quizEndPoint}${token}`);
   const { results } = await request.json();
   return results;
 };

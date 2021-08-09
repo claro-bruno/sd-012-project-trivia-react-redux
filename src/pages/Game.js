@@ -107,9 +107,9 @@ class Game extends React.Component {
         <Header />
         { redirect ? <Redirect to="/score" /> : null }
         { loading ? <Loading /> : this.displayQuestion() }
-        <buton onClick={ this.handleClick } type="button" className="btn btn-primary">
+        <button onClick={ this.handleClick } type="button" className="btn btn-primary">
           { index < redirectNumber ? 'Proxima' : 'Ver Pontuação' }
-        </buton>
+        </button>
       </div>
     );
   }
