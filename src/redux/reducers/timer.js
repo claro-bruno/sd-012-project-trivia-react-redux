@@ -1,6 +1,10 @@
-import { REAL_TIME } from '../actions/actionTimer';
+import { REAL_TIME, PAUSE_TIME } from '../actions/actionTimer';
 
-const INITIAL_STATE = { time: 30, timeOff: false };
+const INITIAL_STATE = {
+  time: 30,
+  timeOff: false,
+  pauseTimer: false,
+};
 
 const timerReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -9,6 +13,11 @@ const timerReducer = (state = INITIAL_STATE, action) => {
       ...state,
       time: action.state.timer,
       timeOff: action.state.timeOff,
+    };
+  case PAUSE_TIME:
+    return {
+      ...state,
+      pauseTimer: action.state.stopTimer,
     };
   default:
     return { ...state };

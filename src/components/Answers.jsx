@@ -21,7 +21,7 @@ class Answers extends Component {
                   type="button"
                   onClick={ handleClickAnswer }
                   name={ correct ? 'correct' : 'incorrect' }
-                  id={ correct && 'correct' }
+                  id={ correct ? 'correct' : 'incorrect' }
                   disabled={ timeOff }
                 >
                   { answer.text }

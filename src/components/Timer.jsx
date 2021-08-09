@@ -16,10 +16,10 @@ class Timer extends Component {
     this.interval = setInterval(
       () => this.setState((previousTime) => ({ timer: previousTime.timer - 1 }), () => {
         const { timer } = this.state;
-        const { changeTimer } = this.props;
+        const { changeTimer, pauseTimer } = this.props;
         const maximumTime = 0;
         let timeOff = false;
-        if (timer === maximumTime) {
+        if (timer === maximumTime || pauseTimer) {
           clearInterval(this.interval);
           timeOff = true;
         }
@@ -27,10 +27,6 @@ class Timer extends Component {
       }),
       ONE_SECOND,
     );
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
   }
 
   render() {
@@ -48,6 +44,7 @@ class Timer extends Component {
 
 const mapStateToProps = (state) => ({
   timer: state.timerReducer.time,
+  pauseTimer: state.timerReducer.pauseTimer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -56,10 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Timer.propTypes = {
   changeTimer: PropTypes.func,
-};
-
-Timer.defaultProps = {
-  changeTimer: () => {},
-};
+  pauseTimer: PropTypes.bool,
+}.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);

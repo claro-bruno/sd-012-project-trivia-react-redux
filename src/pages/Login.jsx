@@ -34,6 +34,9 @@ class Login extends Component {
     fetchAPItoken();
     localStorage.setItem('token', token);
     saveData(this.state);
+    localStorage
+      .setItem('state', JSON
+        .stringify({ player: { name: '', assertions: 0, score: 0, gravatarEmail: '' } }));
     Loading();
   }
 

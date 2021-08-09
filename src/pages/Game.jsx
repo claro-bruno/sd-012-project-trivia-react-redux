@@ -5,6 +5,8 @@ import Loading from '../components/Loading';
 import Header from '../components/Header';
 import Timer from '../components/Timer';
 import Answers from '../components/Answers';
+import { pauseTime } from '../redux/actions/actionTimer';
+import { actionPlayer } from '../redux/actions/actionPlayer';
 import './Game.css';
 
 class Game extends Component {
@@ -15,7 +17,6 @@ class Game extends Component {
       data: '',
       currentQuestion: 0,
       loading: true,
-      shouldShowBtn: false,
     };
 
     this.fetchApi = this.fetchApi.bind(this);
@@ -73,14 +74,40 @@ class Game extends Component {
     }
   }
 
-  handleClickAnswer() {
+  handleClickAnswer({ target }) {
+    const { pauseTimer, player, name, gravatarEmail } = this.props;
     const incorrectList = document.getElementsByName('incorrect');
     const correctList = document.getElementById('correct');
     incorrectList.forEach((item) => { item.className = 'incorrect'; });
     correctList.className = 'correct';
-    this.setState({
-      shouldShowBtn: true,
-    });
+    const scoreFunc = this.calculateTotalPoints(target);
+    const stopTimer = true;
+    pauseTimer({ stopTimer });
+    player(name, 0, scoreFunc, gravatarEmail);
+  }
+
+  calculateTotalPoints({ name }) {
+    const { timer } = this.props;
+    const BASE_POINT = 10;
+    if (name === 'correct') {
+      return BASE_POINT + (timer * this.calculateDifficultyPoint());
+    }
+    return 0;
+  }
+
+  calculateDifficultyPoint() {
+    const { currentQuestion } = this.state;
+    const { data: { results: { [currentQuestion]: { difficulty } } } } = this.state;
+    const HARD = 3;
+    const MEDIUM = 2;
+    const EASY = 1;
+    if (difficulty === 'hard') {
+      return HARD;
+    }
+    if (difficulty === 'medium') {
+      return MEDIUM;
+    }
+    return EASY;
   }
 
   showBtnNextQuestion() {
@@ -96,7 +123,6 @@ class Game extends Component {
 
   page() {
     const { data,
-      shouldShowBtn,
       currentQuestion,
     } = this.state;
     const { timeOff } = this.props;
@@ -121,7 +147,7 @@ class Game extends Component {
             timeOff={ timeOff }
             handleClickAnswer={ this.handleClickAnswer }
           />
-          { shouldShowBtn && this.showBtnNextQuestion() }
+          { timeOff && this.showBtnNextQuestion() }
         </fieldset>
       </>
     );
@@ -129,10 +155,14 @@ class Game extends Component {
 
   pageRender() {
     const { loading } = this.state;
-    return loading ? <h1>Loading...</h1> : this.page();
+    return loading ? <Loading /> : this.page();
   }
 
   render() {
+    const { name, gravatarEmail, score } = this.props;
+    localStorage
+      .setItem('state', JSON
+        .stringify({ player: { name, assertions: 0, score, gravatarEmail } }));
     const { isLoading } = this.props;
     return isLoading ? <Loading /> : this.pageRender();
   }
@@ -141,14 +171,26 @@ class Game extends Component {
 const mapStateToProps = (state) => ({
   isLoading: state.login.isLoading,
   token: state.login.token,
+  name: state.login.name,
+  gravatarEmail: state.login.hashEmail,
   timer: state.timerReducer.time,
   timeOff: state.timerReducer.timeOff,
+  score: state.player.score,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  pauseTimer: (timer) => {
+    dispatch(pauseTime(timer));
+  },
+  player: (name, assertions, score, gravatarEmail) => (
+    dispatch(actionPlayer(name, assertions, score, gravatarEmail))),
 });
 
 Game.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  token: PropTypes.string.isRequired,
-  timeOff: PropTypes.bool.isRequired,
-};
+  isLoading: PropTypes.bool,
+  token: PropTypes.string,
+  timeOff: PropTypes.bool,
+  pauseTimer: PropTypes.bool,
+}.isRequired;
 
-export default connect(mapStateToProps)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
