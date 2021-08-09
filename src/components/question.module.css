@@ -1,14 +1,14 @@
 h4 {
   display: flex;
-  justify-content: center;    
+  justify-content: center;
 }
 
 p {
   display: flex;
-  justify-content: center;     
+  justify-content: center;
 }
 
 .btnSection {
-  display: flex;   
-  justify-content: center; 
+  display: flex;
+  justify-content: center;
 }

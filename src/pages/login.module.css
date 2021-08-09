@@ -1,23 +1,21 @@
-  
 .appLogo {
-    width: 50%;
+  width: 50%;
 }
 
 .appHeader {
   display: flex;
   justify-content: center;
 }
-  
+
 .label {
   display: flex;
   justify-content: center;
   margin-top: 30px;
 }
-  
+
 .buttonLogin {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: center;
   margin-top: 30px;
 }
-  
