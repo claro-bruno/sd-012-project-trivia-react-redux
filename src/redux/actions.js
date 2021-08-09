@@ -1,5 +1,4 @@
-export const CREATE_LOGIN = 'CREATE_LOGIN';
-
+const CREATE_LOGIN = 'CREATE_LOGIN';
 export function actionCreateLogin({ email, name }) {
   return {
     type: CREATE_LOGIN,

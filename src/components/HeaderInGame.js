@@ -42,9 +42,9 @@ class HeaderInGame extends Component {
   }
 }
 
-const mapStateToProps = ({ login, player }) => ({
-  userEmail: login.email,
-  userName: login.name,
+const mapStateToProps = ({ player }) => ({
+  userEmail: player.user.email,
+  userName: player.user.name,
   userScore: player.score,
 });
 
