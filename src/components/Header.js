@@ -18,7 +18,9 @@ class Header extends React.Component {
   getProfilePicture() {
     const { email } = this.props;
     const hash = md5(email).toString();
-    this.setState({ profilePicture: `https://www.gravatar.com/avatar/${hash}` });
+    const pictureUrl = `https://www.gravatar.com/avatar/${hash}`;
+    this.setState({ profilePicture: pictureUrl });
+    localStorage.setItem('profilePicture', pictureUrl);
   }
 
   render() {

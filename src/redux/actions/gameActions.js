@@ -1,5 +1,5 @@
 import { SCORE_UPDATE } from './types';
 
-const scoreUpdate = (point) => ({ type: SCORE_UPDATE, point });
+const scoreUpdate = (point, assertion) => ({ type: SCORE_UPDATE, point, assertion });
 
 export default scoreUpdate;

@@ -74,7 +74,7 @@ class Game extends React.Component {
       break;
     }
     if (target.value === correctAnswer) {
-      getPoint(point + (timer * difficultyValue));
+      getPoint(point + (timer * difficultyValue), 1);
       saveLocalStorage();
     }
   }
@@ -214,7 +214,7 @@ class Game extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getPoint: (point) => dispatch(scoreUpdate(point)),
+  getPoint: (point, assertion) => dispatch(scoreUpdate(point, assertion)),
 });
 
 Game.propTypes = {

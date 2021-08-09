@@ -13,6 +13,7 @@ const player = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       score: state.score + action.point,
+      assertions: state.assertions + action.assertion,
     };
   case GET_USER_DATA:
     return {
