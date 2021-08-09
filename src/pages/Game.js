@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { getQuiz } from '../redux/actions';
 import Loading from '../components/Loading';
+import './Game.css';
 
 class Game extends React.Component {
   constructor() {
@@ -22,6 +23,15 @@ class Game extends React.Component {
 
   componentDidMount() {
     this.displayQuiz();
+  }
+
+  onClickAnswer() {
+    const buttons = document.querySelectorAll('.answer-buttons');
+    buttons.forEach((button) => {
+      if (button.id === 'correct-answer') {
+        button.classList.add('correct');
+      } else button.classList.add('wrong');
+    });
   }
 
   async displayQuiz() {
@@ -77,9 +87,11 @@ class Game extends React.Component {
           { sortedArray.map((item, i) => (
             <li
               key={ item }
+              className="answer-buttons"
               data-testid={ this.checkCorrect(item, correct, i) }
+              id={ this.checkCorrect(item, correct, i) }
             >
-              <button type="button">{item}</button>
+              <button type="button" onClick={ this.onClickAnswer }>{item}</button>
             </li>)) }
         </ul>
       </div>
