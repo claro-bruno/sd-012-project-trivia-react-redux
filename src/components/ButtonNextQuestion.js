@@ -6,7 +6,7 @@ class ButtonNextQuestion extends React.Component {
     const { onClick, disableButton } = this.props;
     return (
       <div>
-        <button 
+        <button
           disabled={ disableButton }
           type="button"
           onClick={ onClick }
