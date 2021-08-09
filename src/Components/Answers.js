@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Answers extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.shuffleArray = this.shuffleArray.bind(this);
     this.answers = this.answers.bind(this);
@@ -22,7 +22,7 @@ class Answers extends React.Component {
   answers(question) {
     const answers = [...question.incorrect_answers, question.correct_answer];
     const arrayAnswers = this.shuffleArray(answers);
-
+    const { onClick } = this.props;
     let controllIncorrects = 0;
     return (
       arrayAnswers.map((answer, index) => {
@@ -33,6 +33,8 @@ class Answers extends React.Component {
               type="button"
               data-testid="correct-answer"
               className="answer-btn"
+              name="correct-answer"
+              onClick={ (e) => onClick(e) }
             >
               { question.correct_answer }
             </button>
@@ -46,6 +48,8 @@ class Answers extends React.Component {
             data-testid={ `wrong-answer-${controllIncorrects - 1}` }
             type="button"
             className="answer-btn"
+            name="wrong-answer"
+            onClick={ (e) => onClick(e) }
           >
             { question.incorrect_answers[controllIncorrects - 1] }
           </button>
@@ -69,6 +73,7 @@ Answers.propTypes = {
       PropTypes.string.isRequired,
     ).isRequired,
   }).isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default Answers;
