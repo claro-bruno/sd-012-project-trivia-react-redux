@@ -2,6 +2,7 @@ import md5 from 'crypto-js/md5';
 
 const URL_TOKEN = 'https://opentdb.com/api_token.php?command=request';
 const URL_GRAVATAR = 'https://www.gravatar.com/avatar/';
+const URL_CATEGORIES = 'https://opentdb.com/api_category.php';
 
 export const requestToken = async () => {
   const fetchAPI = await fetch(URL_TOKEN);
@@ -58,4 +59,10 @@ export const classChanger = (correctAnswer, answer, click) => {
     return 'wrongAnswer';
   }
   return 'aBtn';
+};
+
+export const requestCategories = async () => {
+  const fetchAPI = await fetch(URL_CATEGORIES);
+  const jsonObj = await fetchAPI.json();
+  return jsonObj.trivia_categories;
 };

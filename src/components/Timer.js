@@ -16,7 +16,7 @@ class Timer extends React.Component {
     this.timerCd();
     const cd = 30000;
     const { disableAnswer } = this.props;
-    setTimeout(() => disableAnswer(), cd);
+    this.timeout = setTimeout(() => disableAnswer(), cd);
   }
 
   componentDidUpdate() {
@@ -27,6 +27,11 @@ class Timer extends React.Component {
       this.timerCd();
     } else sendTimer(time);
     this.shouldRestartTimer();
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+    clearTimeout(this.seconds);
   }
 
   shouldRestartTimer() {
@@ -41,7 +46,7 @@ class Timer extends React.Component {
     const { time } = this.state;
     const delay = 1000;
 
-    setTimeout(() => {
+    this.seconds = setTimeout(() => {
       this.setState({
         time: time - 1,
       });
