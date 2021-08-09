@@ -19,12 +19,12 @@ class Feedback extends React.Component {
         <p
           data-testid="feedback-total-score"
         >
-          { `Sua pontuação é ${score}` }
+          { `Sua pontuação é ${score}.` }
         </p>
         <p
           data-testid="feedback-total-question"
         >
-          { `Você acertou ${correctAnswers} perguntas` }
+          { `Você acertou ${correctAnswers} perguntas.` }
         </p>
         <Link to="/">
           <button
@@ -48,13 +48,18 @@ class Feedback extends React.Component {
 }
 
 Feedback.propTypes = {
-  score: PropTypes.number.isRequired,
-  correctAnswers: PropTypes.number.isRequired,
+  score: PropTypes.number,
+  correctAnswers: PropTypes.number,
+};
+
+Feedback.defaultProps = {
+  score: 0,
+  correctAnswers: 0,
 };
 
 const mapStateToProps = (state) => ({
-  score: state.feedback.score,
-  correctAnswers: state.feedback.correctAnswers,
+  score: state.player.score,
+  correctAnswers: state.player.assertions,
 });
 
 export default connect(mapStateToProps)(Feedback);
