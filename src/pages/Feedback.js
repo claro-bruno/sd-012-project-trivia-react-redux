@@ -8,7 +8,7 @@ const minAssertions = 3;
 
 class Feedback extends Component {
   render() {
-    const { assertions } = this.props;
+    const { assertions, history } = this.props;
     return (
       <>
         <h1
@@ -26,6 +26,13 @@ class Feedback extends Component {
         >
           {assertions}
         </h1>
+        <button
+          type="button"
+          data-testid="btn-play-again"
+          onClick={ () => history.push('/') }
+        >
+          Play Again
+        </button>
       </>
     );
   }
@@ -39,4 +46,5 @@ export default connect(mapStateToProps)(Feedback);
 
 Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
+  history: PropTypes.shape().isRequired,
 };
