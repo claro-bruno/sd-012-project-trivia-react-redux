@@ -1,6 +1,6 @@
+import { CHANGE_ASSERTIONS, CHANGE_SCORE } from '../redux/actions';
+
 const CREATE_LOGIN = 'CREATE_LOGIN';
-const CHANGE_SCORE = 'CHANGE_SCORE';
-const CHANGE_ASSERTIONS = 'CHANGE_ASSERTIONS';
 
 const initialState = {
   user: {

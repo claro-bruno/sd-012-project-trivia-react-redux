@@ -31,6 +31,7 @@ class Login extends Component {
 
   async handlePlayBtn(state) {
     // utilizacao do LocalStorage talvez?
+    const { email, name } = this.state;
     const url = 'https://opentdb.com/api_token.php?command=request';
     const DATA = await fetchApi(url);
     const TOKEN = DATA.token;
@@ -38,6 +39,13 @@ class Login extends Component {
     const { createLogin } = this.props;
     createLogin(state);
     this.setState({ redirect: true });
+    localStorage.setItem('state', JSON.stringify({ player: {
+      name,
+      assertions: 0,
+      score: 0,
+      gravatarEmail: email,
+    },
+    }));
   }
 
   btnDisable() {
