@@ -16,17 +16,17 @@ class Feedback extends React.Component {
     const avgScore = 3;
     switch (assertions) {
     case assertions < avgScore:
-      return {
+      return ({
         msg: 'Podia ser melhor...',
         score,
         assertions,
-      };
+      });
     case assertions >= avgScore:
-      return {
+      return ({
         msg: 'Mandou bem!',
         score,
         assertions,
-      };
+      });
     default:
       return '';
     }

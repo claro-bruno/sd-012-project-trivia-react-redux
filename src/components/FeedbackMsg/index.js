@@ -7,7 +7,11 @@ class FeedbackMsg extends React.Component {
     return (
       <div>
         <p data-testid="feedback-text">{msg}</p>
-        <p data-testid="feedback-total-question">{`Você acertou: ${assertions} questões!`}</p>
+        <p
+          data-testid="feedback-total-question"
+        >
+          {`Você acertou: ${assertions} questões!`}
+        </p>
         <p data-testid="feedback-total-score">{`Seu score foi de: ${score} pontos!`}</p>
       </div>
     );
