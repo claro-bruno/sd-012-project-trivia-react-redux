@@ -54,7 +54,7 @@ class Login extends React.Component {
     const { email } = this.state;
 
     return (
-      <label htmlFor="email-input">
+      <label htmlFor="email-input" className="text-white">
         Email
         <input
           id="email-input"
@@ -63,6 +63,7 @@ class Login extends React.Component {
           value={ email }
           onChange={ this.handleOnChange }
           data-testid="input-gravatar-email"
+          className="ml-6 rounded-md"
         />
       </label>
     );
@@ -72,7 +73,7 @@ class Login extends React.Component {
     const { name } = this.state;
 
     return (
-      <label htmlFor="name-input">
+      <label htmlFor="name-input" className="text-white">
         Nome
         <input
           id="name-input"
@@ -81,6 +82,7 @@ class Login extends React.Component {
           value={ name }
           onChange={ this.handleOnChange }
           data-testid="input-player-name"
+          className="ml-6 rounded-md"
         />
       </label>
     );
@@ -93,10 +95,13 @@ class Login extends React.Component {
         <img
           src={ logo }
           alt="Logo Trivia"
-          className="w-1/3 my-20"
+          className="w-1/2 my-20"
         />
-        <div className="flex flex-col">
-          <Link to="/settings">
+        <div
+          className="flex flex-col
+          bg-header w-1/3 justify-evenly items-center h-40 rounded-md shadow-2xl"
+        >
+          <Link to="/settings" className="self-end mr-6 mt-2 text-xl text-white">
             <button
               type="button"
               data-testid="btn-settings"
@@ -113,7 +118,7 @@ class Login extends React.Component {
                 type="button"
                 data-testid="btn-play"
                 onClick={ this.handleSubmit }
-                className="bg-green-400 rounded-md py-1 px-3"
+                className="btn-green rounded-md py-1 px-3 my-3 shadow-xl"
               >
                 Jogar!
               </button>
