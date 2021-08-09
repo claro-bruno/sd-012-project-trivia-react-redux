@@ -1,36 +1,17 @@
-import { GET_TOKEN, GET_TOKEN_SUCCESS, GET_TOKEN_ERROR } from '../redux/actions';
+import { CREATE_LOGIN } from '../redux/actions';
 
 const INITIAL_STATE = {
   user: {
     email: '',
-    token: '',
+    name: '',
   },
 };
 
-/* export default function login(state = INITIAL_STATE) {
-  return state;
-} */
-
-const login = (state = INITIAL_STATE, action) => {
+export default function login(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case GET_TOKEN:
-    return {
-      ...state,
-    };
-
-  case GET_TOKEN_SUCCESS:
-    return {
-      ...state,
-      token: action.payload,
-    };
-
-  case GET_TOKEN_ERROR:
-    return {
-      ...state, error: action.error,
-    };
-
+  case CREATE_LOGIN:
+    return { email: action.payload.email, name: action.payload.name };
   default:
-    return { ...state };
+    return state;
   }
-};
-export default login;
+}

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { fetchAPI } from '../redux/actions';
+import PropTypes from 'prop-types';
+import { Link, Redirect } from 'react-router-dom';
+import { actionCreateLogin } from '../redux/actions';
+import { fetchApi } from '../services/api';
 
 class Login extends Component {
   constructor(props) {
@@ -11,28 +12,37 @@ class Login extends Component {
       btnDisable: true,
       email: '',
       name: '',
+      redirect: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.btnDisable = this.btnDisable.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handlePlayBtn = this.handlePlayBtn.bind(this);
   }
 
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({
       [name]: value,
+    }, () => {
+      this.btnDisable();
     });
-    this.btnDisable();
+  }
+
+  async handlePlayBtn(state) {
+    // utilizacao do LocalStorage talvez?
+    const url = 'https://opentdb.com/api_token.php?command=request';
+    const DATA = await fetchApi(url);
+    const TOKEN = DATA.token;
+    localStorage.setItem('token', JSON.stringify(TOKEN));
+    const { createLogin } = this.props;
+    createLogin(state);
+    this.setState({ redirect: true });
   }
 
   btnDisable() {
     const { name, email } = this.state;
-    const validator = name.length > 0 && email.length > 0;
-    if (validator) {
-      this.setState({
-        btnDisable: false,
-      });
-    }
+    const validator = name !== '' && email !== '';
+    this.setState({ btnDisable: !validator });
   }
 
   handleClick() {
@@ -42,9 +52,12 @@ class Login extends Component {
   }
 
   render() {
-    const { name, email, btnDisable } = this.state;
+    const { name, email, btnDisable, redirect } = this.state;
     return (
       <fieldset>
+        {
+          redirect && <Redirect to="/game/trivia" />
+        }
         <label
           htmlFor="input-player-name"
         >
@@ -69,33 +82,30 @@ class Login extends Component {
             data-testid="input-gravatar-email"
           />
         </label>
-        <Link to="/game">
-          <button
-            disabled={ btnDisable }
-            type="button"
-            data-testid="btn-play"
-            onClick={ () => this.handleClick() }
-          >
-            Jogar
-          </button>
-        </Link>
+        <button
+          type="button"
+          data-testid="btn-play"
+          disabled={ btnDisable }
+          onClick={ () => this.handlePlayBtn(this.state) }
+        >
+          Jogar
+        </button>
+        <div>
+          <Link to="/config" data-testid="btn-settings">
+            <button type="button">Configurações</button>
+          </Link>
+        </div>
       </fieldset>
     );
   }
 }
 
-Login.propTypes = {
-  fetchAPItoken: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  token: state.login.token,
-});
-
 const mapDispatchToProps = (dispatch) => ({
-  fetchAPItoken: () => dispatch(fetchAPI()),
+  createLogin: (state) => dispatch(actionCreateLogin(state)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
-// export default Login;
+Login.propTypes = {
+  createLogin: PropTypes.func,
+}.isRequired;
+
+export default connect(null, mapDispatchToProps)(Login);
