@@ -2,7 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { BsGear } from 'react-icons/bs';
 import { actionUserInfo, getTokenThunk } from '../redux/actions';
+import logo from '../images/logo.svg';
 
 class Login extends React.Component {
   constructor(props) {
@@ -48,51 +50,80 @@ class Login extends React.Component {
     changingInfo(name, email);
   }
 
-  render() {
-    const { name, email, notValid } = this.state;
+  renderEmailInput() {
+    const { email } = this.state;
+
     return (
-      <div>
-        <label htmlFor="email-input">
-          Email
-          <input
-            id="email-input"
-            type="text"
-            name="email"
-            value={ email }
-            onChange={ this.handleOnChange }
-            data-testid="input-gravatar-email"
-          />
-        </label>
-        <label htmlFor="name-input">
-          Nome
-          <input
-            id="name-input"
-            type="text"
-            name="name"
-            value={ name }
-            onChange={ this.handleOnChange }
-            data-testid="input-player-name"
-          />
-        </label>
-        <div className="button-container">
-          <Link to="/quiz">
-            <button
-              disabled={ notValid }
-              type="button"
-              data-testid="btn-play"
-              onClick={ this.handleSubmit }
-            >
-              Jogar!
-            </button>
-          </Link>
-          <Link to="/settings">
+      <label htmlFor="email-input" className="text-white">
+        Email
+        <input
+          id="email-input"
+          type="text"
+          name="email"
+          value={ email }
+          onChange={ this.handleOnChange }
+          data-testid="input-gravatar-email"
+          className="ml-6 rounded-md text-black px-2"
+        />
+      </label>
+    );
+  }
+
+  renderNameInput() {
+    const { name } = this.state;
+
+    return (
+      <label htmlFor="name-input" className="text-white">
+        Nome
+        <input
+          id="name-input"
+          type="text"
+          name="name"
+          value={ name }
+          onChange={ this.handleOnChange }
+          data-testid="input-player-name"
+          className="ml-5 rounded-md text-black px-2"
+        />
+      </label>
+    );
+  }
+
+  render() {
+    const { notValid } = this.state;
+    return (
+      <div className="container flex flex-col items-center">
+        <img
+          src={ logo }
+          alt="Logo Trivia"
+          className="w-1/2 my-20"
+        />
+        <div
+          className="flex flex-col
+          bg-header w-1/3 justify-evenly items-center h-40 rounded-md shadow-2xl"
+        >
+          <Link to="/settings" className="self-end mr-6 mt-2 text-xl text-white">
             <button
               type="button"
               data-testid="btn-settings"
             >
-              Configurações
+              <BsGear />
             </button>
           </Link>
+          { this.renderEmailInput() }
+          { this.renderNameInput() }
+          <div className="button-container">
+            <Link to="/quiz">
+              <button
+                disabled={ notValid }
+                type="button"
+                data-testid="btn-play"
+                onClick={ this.handleSubmit }
+                className="btn-green rounded-md py-1 px-3 my-3 shadow-xl"
+              >
+                Jogar!
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     );
