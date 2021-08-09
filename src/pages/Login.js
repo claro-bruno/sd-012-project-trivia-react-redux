@@ -42,6 +42,7 @@ class Login extends React.Component {
     } = this;
 
     localStorage.setItem('token', JSON.stringify(getToken));
+
     this.setState((state) => ({
       ...state,
       redirectGame: true,

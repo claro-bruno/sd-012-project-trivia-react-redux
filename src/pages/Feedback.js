@@ -1,42 +1,70 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
 const ASSERTION_AVERAGE = 3;
 
 class Feedback extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleUser = this.handleUser.bind(this);
+    this.handleRanking = this.handleRanking.bind(this);
+  }
+
+  componentDidMount() {
+    this.handleRanking();
+  }
+
+  handleUser() {
+    const userInfo = localStorage.getItem('player');
+
+    const { name, assertions, score, gravatarEmail } = userInfo;
+
+    return (name, assertions, score, gravatarEmail);
+  }
+
+  handleRanking() {
+    const storedRank = localStorage.getItem('ranking');
+    const ranking = JSON.parse(storedRank);
+    const { name, score, gravatarEmail } = this.handleUser();
+    const updateRank = [...ranking, {
+      name,
+      score,
+      picture: gravatarEmail,
+    }];
+
+    localStorage.setItem('ranking', JSON.stringify(updateRank));
+  }
+
   render() {
-    const { props: { getAssertions } } = this;
+    const {
+      handleUser: {
+        assertions,
+        score,
+      },
+    } = this;
     return (
       <>
         <Header />
         <h2 data-testid="feedback-text">
           {
-            (getAssertions < ASSERTION_AVERAGE ? 'Podia ser melhor...' : 'Mandou bem!')
+            (assertions < ASSERTION_AVERAGE ? 'Podia ser melhor...' : 'Mandou bem!')
           }
         </h2>
+        <p data-testid="feedback-total-score">
+          `Sua pontuação final foi: $
+          { score }
+          `
+        </p>
+        <p data-testid="feedback-total-question">
+          `Você acertou $
+          { assertions }
+          questões
+          `
+        </p>
       </>
     );
   }
 }
 
-const { number } = PropTypes;
-// Feedback.propTypes = {
-//   player: PropTypes.shape({
-//     name: string.isRequired,
-//     assertions: number.isRequired,
-//     score: number.isRequired,
-//     gravatarEmail: string.isRequired,
-//   }).isRequired,
-// };
-
-Feedback.propTypes = {
-  getAssertions: number.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  getAssertions: state.addAssertionsReducer.player.assertions,
-});
-
-export default connect(mapStateToProps)(Feedback);
+export default Feedback;
