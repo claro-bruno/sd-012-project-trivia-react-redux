@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 class HeaderGame extends React.Component {
   render() {
-    const { name, email } = this.props;
+    const { name, email, score } = this.props;
     const hash = md5(email).toString();
     const img = `https://www.gravatar.com/avatar/${hash}`;
 
@@ -17,7 +17,10 @@ class HeaderGame extends React.Component {
           data-testid="header-profile-picture"
         />
         <p data-testid="header-player-name">{ name }</p>
-        <p data-testid="header-score">0</p>
+        <p data-testid="header-score">
+          Pontos:
+          { Number(score) }
+        </p>
       </header>
     );
   }
@@ -26,11 +29,13 @@ class HeaderGame extends React.Component {
 HeaderGame.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   name: state.player.name,
   email: state.player.gravatarEmail,
+  score: state.gameReducer.score,
 });
 
 export default connect(mapStateToProps, null)(HeaderGame);
