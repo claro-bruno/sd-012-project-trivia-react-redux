@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import { questionsFetchAPI, addAssertions } from '../redux/actions';
 import ButtonNext from '../components/gameControlled/ButtonNext';
 import SectionQuestions from '../components/gameControlled/SectionQuestions';
+import { addAssertions } from '../redux/actions';
 import '../App.css';
 
 class Game extends React.Component {
@@ -35,11 +35,8 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    const {
-      startTime, props: { setQuestions, getToken },
-    } = this;
+    const { startTime } = this;
 
-    setQuestions(getToken);
     startTime();
   }
 
@@ -193,21 +190,13 @@ class Game extends React.Component {
   }
 }
 
-const { string, func } = PropTypes;
+const { func } = PropTypes;
 Game.propTypes = {
-  getToken: string.isRequired,
-  setQuestions: func.isRequired,
   setAssertions: func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  getToken: state.tokenTriviaReducer.token,
-  getQuestions: state.questionsTriviaReducer.questions,
-});
-
 const mapDispatchToProps = (dispatch) => ({
-  setQuestions: (token) => dispatch(questionsFetchAPI(token)),
   setAssertions: (assertions) => dispatch(addAssertions(assertions)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default connect(null, mapDispatchToProps)(Game);
