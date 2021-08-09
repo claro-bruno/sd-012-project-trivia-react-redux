@@ -12,12 +12,12 @@ class Game extends React.Component {
       questions: [],
       corrAnsBorder: {},
       incorrAnsBorder: {},
+      next: false,
       loading: true,
       seconds: 30,
     };
 
     this.getQuestions = this.getQuestions.bind(this);
-    this.changeBordersColor = this.changeBordersColor.bind(this);
     this.timer = this.timer.bind(this);
     this.buttonColorDisabler = this.buttonColorDisabler.bind(this);
   }
@@ -59,18 +59,15 @@ class Game extends React.Component {
       button.style.border = '3px solid rgb(255, 0, 0)';
       button.setAttribute('disabled', 'disabled');
     });
-  }
-
-  changeBordersColor() {
     this.setState({
-      corrAnsBorder: { border: '3px solid rgb(6, 240, 15)' },
-      incorrAnsBorder: { border: '3px solid rgb(255, 0, 0)' },
+      next: true,
     });
   }
 
   render() {
     const { questions,
-      questionNumber, loading, incorrAnsBorder, corrAnsBorder, seconds } = this.state;
+      questionNumber, loading,
+      incorrAnsBorder, corrAnsBorder, seconds, next } = this.state;
     if (!loading) {
       return (
         <main>
@@ -82,30 +79,32 @@ class Game extends React.Component {
             <p data-testid="question-text">
               { questions[questionNumber].question }
             </p>
-          <div>
-            { questions[questionNumber]
-              .incorrect_answers.map((answer, index) => (
-                <button
-                  key={ index }
-                  type="button"
-                  data-testid={ `wrong-answer-${index}` }
-                  style={ incorrAnsBorder }
-                  onClick={ this.buttonColorDisabler }
-                  className="w-answer"
-                >
-                  { answer }
-                </button>
-              )) }
-            <button
-              type="button"
-              data-testid="correct-answer"
-              style={ corrAnsBorder }
-              onClick={ this.buttonColorDisabler }
-              className="c-answer"
-            >
-              { questions[questionNumber].correct_answer }
-            </button>
-          </div>
+            <div>
+              { questions[questionNumber]
+                .incorrect_answers.map((answer, index) => (
+                  <button
+                    key={ index }
+                    type="button"
+                    data-testid={ `wrong-answer-${index}` }
+                    style={ incorrAnsBorder }
+                    onClick={ this.buttonColorDisabler }
+                    className="w-answer"
+                  >
+                    { answer }
+                  </button>
+                )) }
+              <button
+                type="button"
+                data-testid="correct-answer"
+                style={ corrAnsBorder }
+                onClick={ this.buttonColorDisabler }
+                className="c-answer"
+              >
+                { questions[questionNumber].correct_answer }
+              </button>
+            </div>
+            {next ? <button type="button" data-testid="btn-next">Próxima</button> : null}
+          </Paper>
           <span>{ seconds }</span>
         </main>
       );
