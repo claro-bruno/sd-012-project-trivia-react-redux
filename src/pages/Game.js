@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
@@ -10,14 +12,15 @@ class Game extends React.Component {
     this.state = {
       questionNumber: 0,
       questions: [],
-      corrAnsBorder: {},
-      incorrAnsBorder: {},
-      next: false,
       loading: true,
+      score: 0,
+      assertions: 0,
+      next: false,
       seconds: 30,
     };
 
     this.getQuestions = this.getQuestions.bind(this);
+    this.getScore = this.getScore.bind(this);
     this.timer = this.timer.bind(this);
     this.buttonColorDisabler = this.buttonColorDisabler.bind(this);
   }
@@ -27,14 +30,65 @@ class Game extends React.Component {
     this.timer();
   }
 
+  componentDidUpdate() {
+    const { assertions, score } = this.state;
+    const { getUrl, getName } = this.props;
+
+    const value = {
+      player: {
+        name: getName,
+        assertions,
+        score,
+        gravatarEmail: getUrl,
+      },
+    };
+    const myValue = JSON.stringify(value);
+    localStorage.setItem('state', myValue);
+  }
+
   getQuestions() {
     const token = JSON.parse(localStorage.getItem('token'));
-    console.log(token);
     fetch(`https://opentdb.com/api.php?amount=5&token=${token}`)
       .then((r) => r.json())
       .then((json) => this.setState({
-        questions: [...json.results], loading: false,
+        questions: [...json.results],
+        loading: false,
       }));
+  }
+
+  getScore(target) {
+    const { id, name } = target;
+    const { assertions, score } = this.state;
+    const right = 10;
+    const notas = {
+      hard: 3,
+      medium: 2,
+      easy: 1,
+    };
+
+    switch (name) {
+    case 'correct': switch (id) {
+    case 'hard': this.setState({
+      score: (score + right + notas.hard),
+      assertions: (assertions + 1),
+    });
+      break;
+    case 'medium': this.setState({
+      score: (score + right + notas.medium),
+      assertions: (assertions + 1),
+    });
+      break;
+    case 'easy': this.setState({
+      score: (score + right + notas.easy),
+      assertions: (assertions + 1),
+    });
+      break;
+    default:
+    }
+      break;
+    default:
+    }
+    this.buttonColorDisabler();
   }
 
   timer() {
@@ -65,13 +119,12 @@ class Game extends React.Component {
   }
 
   render() {
-    const { questions,
-      questionNumber, loading,
-      incorrAnsBorder, corrAnsBorder, seconds, next } = this.state;
+    const { questions, questionNumber, loading, score, seconds, next } = this.state;
+    const { getUrl, getName } = this.props;
     if (!loading) {
       return (
         <main>
-          <Header />
+          <Header getUrl={ getUrl } getName={ getName } score={ score } />
           <Paper elevation={ 3 }>
             <p data-testid="question-category">
               { questions[questionNumber].category }
@@ -86,18 +139,18 @@ class Game extends React.Component {
                     key={ index }
                     type="button"
                     data-testid={ `wrong-answer-${index}` }
-                    style={ incorrAnsBorder }
-                    onClick={ this.buttonColorDisabler }
+                    onClick={ ({ target }) => this.getScore(target) }
                     className="w-answer"
                   >
                     { answer }
                   </button>
                 )) }
               <button
+                id={ questions[questionNumber].difficulty }
+                name="correct"
                 type="button"
                 data-testid="correct-answer"
-                style={ corrAnsBorder }
-                onClick={ this.buttonColorDisabler }
+                onClick={ ({ target }) => this.getScore(target) }
                 className="c-answer"
               >
                 { questions[questionNumber].correct_answer }
@@ -115,4 +168,14 @@ class Game extends React.Component {
   }
 }
 
-export default Game;
+const mapStateToProps = (state) => ({
+  getUrl: state.gravatar.url,
+  getName: state.gravatar.name,
+});
+
+Game.propTypes = {
+  getUrl: PropTypes.string.isRequired,
+  getName: PropTypes.string.isRequired,
+};
+
+export default connect(mapStateToProps, null)(Game);
