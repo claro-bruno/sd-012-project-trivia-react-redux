@@ -20,7 +20,7 @@ class ButtonNext extends React.Component {
       questionNumber,
     } = this.props;
     clearInterval(timerIntervalID);
-    if (questionNumber < questions.length - 1) {
+    if (questionNumber < questions.length) {
       nextQuestions();
       getQuestion();
       setTimer();
@@ -29,7 +29,7 @@ class ButtonNext extends React.Component {
 
   renderButton() {
     const { questionNumber, questions } = this.props;
-    if (questionNumber >= questions.length - 1) {
+    if (questionNumber >= questions.length) {
       return (
         <Link to="/feedback">
           <button

@@ -9,16 +9,6 @@ class GameQuestions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
-      question: {
-        category: 'Entertainment: Video Games',
-        type: 'multiple',
-        difficulty: 'easy',
-        question: 'What is the first weapon you acquire in Half-Life?',
-        correct_answer: 'A crowbar',
-        incorrect_answers: ['A pistol', 'The H.E.V suit', 'Your fists'],
-      },
-
       sortedAnswers: [],
       timer: 30,
       timerIntervalID: 0,
@@ -36,7 +26,7 @@ class GameQuestions extends React.Component {
   }
 
   componentDidMount() {
-    this.getQuestion();
+    this.setAnswers();
     this.setTimer();
   }
 
@@ -49,15 +39,11 @@ class GameQuestions extends React.Component {
   }
 
   getQuestion() {
-    const { questions, questionNumber } = this.props;
-    const question = questions[questionNumber];
-    this.setState({
-      question,
-    }, () => this.setAnswers());
+    this.setState({}, () => this.setAnswers());
   }
 
   setAnswers() {
-    const { question } = this.state;
+    const { question } = this.props;
     const incorrectAnswers = question.incorrect_answers.map((answer) => ({
       answer,
       isCorrect: false,
@@ -151,8 +137,8 @@ class GameQuestions extends React.Component {
   }
 
   renderQuestions() {
-    const { question, disableAnswers, sortedAnswers, difficulty, timer } = this.state;
-    const { cBtnClass, wBtnClass } = this.props;
+    const { disableAnswers, sortedAnswers, difficulty, timer } = this.state;
+    const { cBtnClass, wBtnClass, question } = this.props;
     const answers = sortedAnswers;
     return (
       <div className="questions-card">
@@ -223,6 +209,7 @@ const mapStateToProps = (state) => ({
   questionNumber: state.game.questionNumber,
   cBtnClass: state.game.cBtnClass,
   wBtnClass: state.game.wBtnClass,
+  question: state.game.question,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -231,12 +218,16 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 GameQuestions.propTypes = {
-  questions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  questionNumber: PropTypes.number.isRequired,
   showAnswer: PropTypes.func.isRequired,
   cBtnClass: PropTypes.string.isRequired,
   wBtnClass: PropTypes.string.isRequired,
   updateScore: PropTypes.func.isRequired,
+  question: PropTypes.shape({
+    category: PropTypes.string.isRequired,
+    question: PropTypes.string.isRequired,
+    incorrect_answers: PropTypes.arrayOf(PropTypes.string).isRequired,
+    correct_answer: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameQuestions);
