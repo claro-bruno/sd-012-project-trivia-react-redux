@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { MD5 } from 'crypto-js';
 import { getQuestions } from '../services/api';
 import ButtonNextQuestion from '../components/ButtonNextQuestion';
@@ -104,6 +105,9 @@ class Game extends Component {
           // colocar o buttonEnable após o return da modificação das bordas tanto para resetar
           // a borda, quanto para habilitar o botao para pergunta seguinte.
         />
+        <Link to="/feedback">
+          <button data-testid="feedbackButton" type="button">Feedback</button>
+        </Link>
       </div>
     );
   }
