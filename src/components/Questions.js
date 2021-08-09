@@ -61,6 +61,7 @@ class Questions extends React.Component {
           disabled={ globalKey }
           value="right"
           onClick={ this.handleClick }
+          className="answer-button"
         >
           { window.atob(answer.answer) }
         </button>
@@ -75,6 +76,7 @@ class Questions extends React.Component {
         disabled={ globalKey }
         value="wrong"
         onClick={ this.handleClick }
+        className="answer-button"
       >
         { window.atob(answer.answer) }
       </button>
@@ -97,7 +99,7 @@ class Questions extends React.Component {
     const answerButtons = document.querySelectorAll('#answerButton');
 
     answerButtons.forEach(({ style }) => {
-      style.border = '1px solid black';
+      style.border = 'none';
     });
   }
 
@@ -129,7 +131,7 @@ class Questions extends React.Component {
   }
 
   render() {
-    const { globalKey, question, answers } = this.props;
+    const { globalKey, question, answers, numQuestion } = this.props;
     const { shouldRedirect } = this.state;
     if (shouldRedirect) return <Redirect to="/feedback" />;
     return (
@@ -137,11 +139,29 @@ class Questions extends React.Component {
         { !globalKey ? <Timer /> : <img src={ timerZero } alt="Timer Zerado" /> }
         {/* uso do atob() usado conforme a dica do colega Thalles Carneiro e esse link:
         https://developer.mozilla.org/pt-BR/docs/Web/API/WindowOrWorkerGlobalScope/atob */}
-        <div data-testid="question-category">{ window.atob(question.category) }</div>
-        <div>{ window.atob(question.difficulty) }</div>
-        <div data-testid="question-text">{ window.atob(question.question) }</div>
-
-        { answers.map((answer, index) => this.optionsAnswers(answer, index))}
+        <div
+          className="category"
+          data-testid="question-category"
+        >
+          { window.atob(question.category) }
+        </div>
+        <div className="question">
+          <div className="num-question">
+            { `${numQuestion + 1}/5` }
+          </div>
+          <div
+            className="question-text"
+            data-testid="question-text"
+          >
+            { window.atob(question.question) }
+          </div>
+          <div className="dif-question">
+            { window.atob(question.difficulty) }
+          </div>
+        </div>
+        <div className="div-answers">
+          { answers.map((answer, index) => this.optionsAnswers(answer, index))}
+        </div>
         <br />
         { globalKey && (
           <button
@@ -162,7 +182,7 @@ const mapStateToProps = (state) => ({
   email: state.login.email,
   assertions: state.questions.assertions,
   score: state.questions.score,
-  numQuestion: state.questions.numQuestion,
+  numQuestion: state.questions.nextQuestion,
 });
 
 const mapDispatchToProps = (dispatch) => ({

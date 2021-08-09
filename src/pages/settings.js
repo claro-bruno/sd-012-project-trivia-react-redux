@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { applySettings } from '../redux/actions/settings';
+import '../styles/settings.css';
+import arrow from '../images/arrow.jpg';
 
 class Settings extends React.Component {
   constructor() {
@@ -77,7 +79,7 @@ class Settings extends React.Component {
     if (shouldRedirectLogin) return <Redirect to="/" />;
     if (!categories) return <span>Loading...</span>;
     return (
-      <div>
+      <div className="settings-screen">
         <h1 data-testid="settings-title">Configurações</h1>
         <form>
           <select name="category" onChange={ this.handleChange }>
@@ -95,8 +97,10 @@ class Settings extends React.Component {
             <option value="multiple">Multiple Choice</option>
             <option value="boolean">True / False</option>
           </select>
-          <button type="button" onClick={ this.onClick }>Apply</button>
-          <button type="button" onClick={ this.redirectLogin }>Back</button>
+          <button className="apply" type="button" onClick={ this.onClick }>Apply</button>
+          <button className="back-button" type="button" onClick={ this.redirectLogin }>
+            <img className="arrow" src={ arrow } alt="arrow" />
+          </button>
         </form>
       </div>
     );

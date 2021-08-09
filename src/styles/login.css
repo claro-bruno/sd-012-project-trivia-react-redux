@@ -1,0 +1,132 @@
+.login-screen {
+  align-items: center;
+  background-image: url('../images/bg.jpg');
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+}
+
+.login-box {
+  align-items: center;
+  background-color: #d00000;
+  border: 8px solid #e85d04;
+  border-radius: 20px;
+  border-bottom-left-radius: 70px;
+  border-top-right-radius: 70px;
+  box-shadow: 1px 5px 4px #03071e;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  padding: 0 50px 10px;
+}
+
+.brain {
+  margin: 20px;
+  width: 200px;
+}
+
+form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputs-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-input {
+  background-color: #ffefd3;
+  border: none;
+  border-radius: 30px;
+  color: #03071e;
+  font-family: Varela Round , sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  height: 30px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  text-align: center;
+  width: 250px;
+}
+
+.login-input::placeholder {
+  color: #adb6c4;
+  font-family: Varela Round , sans-serif;
+  font-weight: 600;
+}
+
+.login-input:focus {
+  background-color: #ffefd3;
+  border: none;
+  border-radius: 30px;
+  color: #03071e;
+  font-family: Varela Round , sans-serif;
+  font-weight: 600;
+  height: 30px;
+  margin-bottom: 8px;
+  outline: none;
+  text-align: center;
+  width: 250px;
+}
+
+/* Codigo retirado de:
+
+https://pt.stackoverflow.com/questions/256541/alterar-o-background-
+do-input-preenchido-pelo-autocomplete-do-chrome */
+
+input:-webkit-autofill {
+
+  /* -webkit-box-shadow: 0 0 0 30px #ffefd3 inset; */
+  -webkit-text-fill-color: #03071e;
+}
+
+.login-button {
+  background-color: #03071e;
+  border: none;
+  border-radius: 30px;
+  color: #ffefd3;
+  cursor: pointer;
+  font-family: Varela Round , sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  height: 40px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  text-align: center;
+  width: 150px;
+}
+
+.login-button:disabled {
+  background-color: #03071e;
+  border: none;
+  border-radius: 30px;
+  color: #ffefd3;
+  font-family: Varela Round , sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  height: 40px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  text-align: center;
+  text-decoration: line-through 3px #d00000;
+  width: 150px;
+}
+
+.settings-button {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  cursor: pointer;
+  left: 5px;
+  position: absolute;
+  top: 10px;
+  width: 50px;
+}
+
+.gear {
+  width: 50px;
+}
+
