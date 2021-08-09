@@ -14,7 +14,7 @@ class Trivia extends Component {
       questionNumber: 0,
       loading: true,
       resolved: false,
-      seconds: 30,
+      timeCounter: 30,
     };
     this.setQuestions = this.setQuestions.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
@@ -34,11 +34,11 @@ class Trivia extends Component {
     this.setQuestions(questions);
 
     // this.timer = setInterval(() => {
-    //   const { seconds } = this.state;
-    //   const remainingTime = seconds - 1;
+    //   const { timeCounter } = this.state;
+    //   const remainingTime = timeCounter - 1;
     //   if (remainingTime >= 0) {
     //     this.setState({
-    //       seconds: remainingTime,
+    //       timeCounter: remainingTime,
     //     });
     //   } else {
     //     // this.setState({ resolved: false });
@@ -54,11 +54,11 @@ class Trivia extends Component {
 
   countDown() {
     this.timer = setInterval(() => {
-      const { seconds } = this.state;
-      const remainingTime = seconds - 1;
+      const { timeCounter } = this.state;
+      const remainingTime = timeCounter - 1;
       if (remainingTime >= 0) {
         this.setState({
-          seconds: remainingTime,
+          timeCounter: remainingTime,
         });
       } else {
         this.stopTimer();
@@ -75,7 +75,7 @@ class Trivia extends Component {
       {
         resolved: false,
         questionNumber: prevState.questionNumber + 1,
-        seconds: 30,
+        timeCounter: 30,
       }));
     this.countDown();
   }
@@ -87,7 +87,7 @@ class Trivia extends Component {
 
   renderQuestionOrRedirect() {
     const { handleAnswer } = this;
-    const { questionNumber, resolved, questions, seconds } = this.state;
+    const { questionNumber, resolved, questions, timeCounter } = this.state;
 
     const maxQuestionsNumber = 4;
     const currentQuestion = questions[questionNumber];
@@ -95,7 +95,7 @@ class Trivia extends Component {
       ? <Redirect to="/game/feedback" />
       : (
         <Question
-          seconds={ seconds }
+          timeCounter={ timeCounter }
           handleAnswer={ handleAnswer }
           resolved={ resolved }
           question={ currentQuestion }
@@ -103,7 +103,7 @@ class Trivia extends Component {
   }
 
   render() {
-    const { loading, resolved, seconds } = this.state;
+    const { loading, resolved, timeCounter } = this.state;
     const { handleNext, renderQuestionOrRedirect } = this;
     return (
       <section>
@@ -113,7 +113,7 @@ class Trivia extends Component {
             : renderQuestionOrRedirect()
         }
         {
-          (resolved || seconds === 0)
+          (resolved || timeCounter === 0)
             && (
               <button
                 type="button"

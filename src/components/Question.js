@@ -13,12 +13,12 @@ class Question extends Component {
       },
       resolved,
       handleAnswer,
-      seconds,
+      timeCounter,
     } = this.props;
     const sortedAnswers = [...incorrectAnswers, correctAnswer].sort();
     return (
       <>
-        <h2>{ seconds }</h2>
+        <h2>{ timeCounter }</h2>
         <h2 data-testid="question-category">{ category }</h2>
         <p data-testid="question-text">{ question }</p>
         { sortedAnswers.map((answer, index) => {
@@ -58,7 +58,7 @@ Question.propTypes = {
   }).isRequired,
   resolved: PropTypes.bool.isRequired,
   handleAnswer: PropTypes.func.isRequired,
-  seconds: PropTypes.number.isRequired,
+  timeCounter: PropTypes.number.isRequired,
 };
 
 export default Question;
