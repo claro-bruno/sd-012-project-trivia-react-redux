@@ -148,7 +148,6 @@ class Questions extends Component {
       clearInterval(this.myInterval);
     }
     if (index === questions.length) { return <Redirect to="/feedback" />; }
-
     return (
       <>
         <div>
