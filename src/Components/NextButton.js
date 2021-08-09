@@ -5,7 +5,7 @@ import { nextQuestion } from '../redux/actions';
 
 class NextButton extends Component {
   render() {
-    const { dispatchNextQuestion, isLastQuestion, history } = this.props;
+    const { dispatchNextQuestion, isLastQuestion, isAnswering, history } = this.props;
     return (
       <button
         data-testid="btn-next"
@@ -13,6 +13,7 @@ class NextButton extends Component {
         onClick={ isLastQuestion
           ? () => history.push('/feedback')
           : dispatchNextQuestion }
+        style={ isAnswering ? { display: 'none' } : { display: 'inline' } }
       >
         Next
       </button>
@@ -22,6 +23,7 @@ class NextButton extends Component {
 
 const mapStateToProps = (state) => ({
   isLastQuestion: state.game.isLastQuestion,
+  isAnswering: state.timer.isAnswering,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -36,4 +38,5 @@ NextButton.propTypes = {
   }).isRequired,
   dispatchNextQuestion: PropTypes.func.isRequired,
   isLastQuestion: PropTypes.bool.isRequired,
+  isAnswering: PropTypes.bool.isRequired,
 };

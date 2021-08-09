@@ -40,7 +40,6 @@ class Question extends Component {
       question,
       isOutOfTime,
       isQuestionAnswered,
-      isAnswering,
       history,
     } = this.props;
     const { answers } = this.state;
@@ -74,7 +73,7 @@ class Question extends Component {
               </button>
             )
         ))}
-        { !isAnswering && <NextButton history={ history } /> }
+        <NextButton history={ history } />
       </>
     );
   }
@@ -84,7 +83,6 @@ const mapStateToProps = (state) => ({
   remainingTime: state.timer.remainingTime,
   stopTimer: state.timer.stopTimerCallback,
   isOutOfTime: state.timer.isOutOfTime,
-  isAnswering: state.timer.isAnswering,
   isQuestionAnswered: state.timer.isQuestionAnswered,
 });
 const mapDispatchToProps = (dispatch) => ({
@@ -104,6 +102,5 @@ Question.propTypes = {
   stopTimer: PropTypes.func.isRequired,
   isOutOfTime: PropTypes.bool.isRequired,
   isQuestionAnswered: PropTypes.bool.isRequired,
-  isAnswering: PropTypes.bool.isRequired,
   remainingTime: PropTypes.number.isRequired,
 };
