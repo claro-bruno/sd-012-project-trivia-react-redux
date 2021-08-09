@@ -5,17 +5,20 @@ class Input extends Component {
   render() {
     const { value, id, onChange, dataTestId, text } = this.props;
     return (
-      <label htmlFor={ id }>
-        { text }
-        <input
-          type="text"
-          value={ value }
-          id={ id }
-          name={ id }
-          onChange={ onChange }
-          data-testid={ `input-${dataTestId}` }
-        />
-      </label>
+      <div>
+        <label htmlFor={ id }>
+          <input
+            placeholder={ text }
+            className="form-control margin"
+            type="text"
+            value={ value }
+            id={ id }
+            name={ id }
+            onChange={ onChange }
+            data-testid={ `input-${dataTestId}` }
+          />
+        </label>
+      </div>
     );
   }
 }

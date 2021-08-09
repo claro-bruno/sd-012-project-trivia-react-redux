@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { func, number, string, objectOf, oneOfType, object } from 'prop-types';
 import Input from '../components/Input';
 import fetchToken from '../APIs/fetchToken';
+import '../CSS/Login.css';
 
 class Login extends Component {
   constructor() {
@@ -61,36 +62,42 @@ class Login extends Component {
   render() {
     const { email, name } = this.state;
     return (
-      <div>
-        <Input
-          text="Nome: "
-          value={ name }
-          onChange={ this.handleChange }
-          dataTestId="player-name"
-          id="name"
-        />
-        <Input
-          text="Email: "
-          value={ email }
-          onChange={ this.handleChange }
-          dataTestId="gravatar-email"
-          id="email"
-        />
-        <button
-          type="button"
-          data-testid="btn-play"
-          disabled={ this.validation() }
-          onClick={ this.handleClick }
-        >
-          Jogar
-        </button>
-        <button
-          type="button"
-          data-testid="btn-settings"
-          onClick={ this.handleClickConfig }
-        >
-          Config
-        </button>
+      <div className="text-center login">
+        <div className="form-signin">
+          <Input
+            text="Nome"
+            value={ name }
+            onChange={ this.handleChange }
+            dataTestId="player-name"
+            id="name"
+          />
+          <Input
+            text="Email"
+            value={ email }
+            onChange={ this.handleChange }
+            dataTestId="gravatar-email"
+            id="email"
+          />
+          <div>
+            <button
+              className="btn btn-lg btn-primary margin"
+              type="button"
+              data-testid="btn-play"
+              disabled={ this.validation() }
+              onClick={ this.handleClick }
+            >
+              Jogar
+            </button>
+            <button
+              className="btn btn-lg btn-primary margin"
+              type="button"
+              data-testid="btn-settings"
+              onClick={ this.handleClickConfig }
+            >
+              Config
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
