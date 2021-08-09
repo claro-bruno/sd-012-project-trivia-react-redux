@@ -1,53 +1,53 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import md5 from 'crypto-js/md5';
 
 class Header extends Component {
   constructor() {
     super();
     this.state = {
-      userName: '',
+      player: [],
     };
-    this.handleGravatar = this.handleGravatar.bind(this);
-    this.handleGetItem = this.handleGetItem.bind(this);
+    this.handlePlayer = this.handlePlayer.bind(this);
   }
 
-  componentDidMount() {
-    this.handleGetItem();
-  }
+  handlePlayer() {
+    const state = JSON.parse(localStorage.getItem('state'));
+    const player = {
+      name: state.name,
+      assertions: state.assertions,
+      score: state.score,
+      gravatarEmail: state.gravatarEmail,
+    };
 
-  handleGetItem() {
-    const userName = localStorage.getItem('userName');
-    this.setState({ userName });
-  }
-
-  handleGravatar() {
-    const { userEmail } = this.props;
-    return md5(userEmail).toString();
+    this.setState({ player });
   }
 
   render() {
-    const { userName } = this.state;
+    const { player } = this.state;
+    const { score } = this.props;
+    if (player.length === 0) {
+      this.handlePlayer();
+    }
+
     return (
       <header>
         <img
-          src={ `https://www.gravatar.com/avatar/${this.handleGravatar()}` }
-          alt={ userName }
+          src={ `https://www.gravatar.com/avatar/${player.gravatarEmail}` }
+          alt={ player.name }
           data-testid="header-profile-picture"
         />
-        <span data-testid="header-player-name">{ `${userName}` }</span>
-        <span data-testid="header-score">0</span>
+        <span data-testid="header-player-name">{ `${player.name}` }</span>
+        <span data-testid="header-score">
+          Score:
+          {score}
+        </span>
       </header>
     );
   }
 }
 
 Header.propTypes = {
-  userEmail: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  userEmail: state.trivia.email,
-});
-export default connect(mapStateToProps)(Header);
+export default Header;

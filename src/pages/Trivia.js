@@ -11,12 +11,16 @@ class Trivia extends Component {
     this.state = {
       currentQuestion: 0,
       timer: 30,
+      assertions: 0,
+      score: 0,
     };
     this.shuffle = this.shuffle.bind(this);
     this.shuffledAnswers = this.shuffledAnswers.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.updateTimer = this.updateTimer.bind(this);
+    this.handleStorage = this.handleStorage.bind(this);
+    this.handleScore = this.handleScore.bind(this);
   }
 
   componentDidMount() {
@@ -109,7 +113,7 @@ class Trivia extends Component {
     );
   }
 
-  handleClick() {
+  handleClick({ target }) {
     const correct = document.querySelector('.correct-answer');
     const incorrects = document.querySelectorAll('.wrong-answer');
     correct.style.border = '3px solid rgb(6, 240, 15)';
@@ -118,6 +122,47 @@ class Trivia extends Component {
     }
     const next = document.querySelector('.btn-next');
     next.style.display = 'block';
+    this.handleAssertions(target);
+    this.handleScore(target);
+    this.handleStorage(target);
+  }
+
+  handleScore(target) {
+    const { timer, currentQuestion, score } = this.state;
+    const { questions } = this.props;
+    const { className } = target;
+    const DEZ = 10; const hard = 3; const
+      medium = 2;
+
+    const rate = questions[currentQuestion].difficulty;
+    let result = 0;
+    if (className === 'correct-answer') {
+      if (rate === 'easy') result = DEZ + timer;
+      if (rate === 'medium') result = DEZ + (timer * medium);
+      if (rate === 'hard') result = DEZ + (timer * hard);
+    }
+    this.setState({ score: score + result });
+  }
+
+  handleAssertions(target) {
+    const { assertions } = this.state;
+    const { className } = target;
+    return (className === 'correct-answer')
+      ? this.setState({ assertions: assertions + 1 })
+      : assertions;
+  }
+
+  handleStorage() {
+    const state = JSON.parse(localStorage.getItem('state'));
+    const { assertions, score } = this.state;
+
+    const player = {
+      name: state.name,
+      assertion: assertions,
+      score,
+      gravatarEmail: state.gravatarEmail,
+    };
+    localStorage.setItem('state', JSON.stringify(player));
   }
 
   nextQuestion() {
@@ -132,12 +177,12 @@ class Trivia extends Component {
   }
 
   render() {
-    const { currentQuestion, timer } = this.state;
+    const { currentQuestion, timer, score } = this.state;
     const { questions } = this.props;
     if (questions.length === 0) {
       return (
         <div>
-          <Header />
+          <Header score={ score } />
           <span>{ timer }</span>
           <StaticTrivia
             handleClick={ this.handleClick }
@@ -148,7 +193,7 @@ class Trivia extends Component {
     }
     return (
       <div>
-        <Header />
+        <Header score={ score } />
         <span>{ timer }</span>
         <span data-testid="question-category">
           { questions[currentQuestion].category }

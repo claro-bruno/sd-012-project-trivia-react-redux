@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { fetchQuestions, getName } from '../actions';
+import md5 from 'crypto-js/md5';
+import { fetchQuestions } from '../actions';
 import Nome from '../components/Nome';
 import Email from '../components/Email';
 
@@ -22,13 +23,11 @@ class Login extends React.Component {
     this.fetchToken = this.fetchToken.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleStorage = this.handleStorage.bind(this);
   }
 
   componentDidMount() {
     this.fetchToken();
-    const { getQuestions } = this.props;
-    const storage = localStorage.getItem('token');
-    getQuestions(storage);
   }
 
   handleChange({ target }) {
@@ -62,11 +61,25 @@ class Login extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { name } = this.state;
-    const { userName } = this.props;
+    const { getQuestions } = this.props;
+    const storage = localStorage.getItem('token');
+    getQuestions(storage);
     this.setState({ redirect: 'trivia' });
-    userName(this.state);
-    localStorage.setItem('userName', name);
+    this.handleStorage();
+  }
+
+  handleStorage() {
+    const { name, email } = this.state;
+    const userEmail = md5(email).toString();
+
+    const player = {
+      name,
+      assertions: 0,
+      score: 0,
+      gravatarEmail: userEmail,
+    };
+
+    localStorage.setItem('state', JSON.stringify(player));
   }
 
   handleClick() {
@@ -120,20 +133,17 @@ class Login extends React.Component {
 function mapStateToProps(state) {
   return {
     questions: state.trivia.questions,
-    userName: state.trivia.userName,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getQuestions: (token) => dispatch(fetchQuestions(token)),
-    userName: (state) => dispatch(getName(state)),
   };
 }
 
 Login.propTypes = {
   getQuestions: PropTypes.func.isRequired,
-  userName: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
