@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '../Input';
+import Button from '../Button';
 
 class ButtonsLogin extends React.Component {
   render() {
@@ -34,12 +34,16 @@ class ButtonsLogin extends React.Component {
   }
 }
 
-const { func } = PropTypes;
+const { func, bool } = PropTypes;
 ButtonsLogin.propTypes = {
-  disabled: func.isRequired,
+  disabled: bool,
   handleClick1: func.isRequired,
   handleClick2: func.isRequired,
   handleClick3: func.isRequired,
+};
+
+ButtonsLogin.defaultProps = {
+  disabled: false,
 };
 
 export default ButtonsLogin;

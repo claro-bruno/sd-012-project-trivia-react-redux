@@ -39,10 +39,17 @@ const {
 
 Input.propTypes = {
   name: string.isRequired,
-  className: string.isRequired,
-  label: string.isRequired,
-  value: string.isRequired,
+  className: string,
+  label: string,
+  value: string,
   onChange: func.isRequired,
-  testId: string.isRequired,
+  testId: string,
   type: string.isRequired,
+};
+
+Input.defaultProps = {
+  testId: '',
+  className: '',
+  label: '',
+  value: '',
 };

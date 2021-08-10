@@ -33,7 +33,7 @@ Button.propTypes = {
   testId: string,
   name: string.isRequired,
   handleClick: func.isRequired,
-  className: bool,
+  className: string,
 };
 
 Button.defaultProps = {
