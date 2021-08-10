@@ -1,12 +1,10 @@
-import { GET_QUESTIONS, GET_QUESTIONS_SUCCESS, GET_NAME } from './actionsType';
+import { GET_QUESTIONS, GET_QUESTIONS_SUCCESS } from './actionsType';
 
 export const getQuestions = () => ({ type: GET_QUESTIONS });
 
 export function getQuestionsSuccess(questions) {
   return { type: GET_QUESTIONS_SUCCESS, payload: questions };
 }
-
-export const getName = (state) => ({ type: GET_NAME, ...state });
 
 export const fetchQuestions = (token) => async (dispatch) => {
   dispatch(getQuestions());
