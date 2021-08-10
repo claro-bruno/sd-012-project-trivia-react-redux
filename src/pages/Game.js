@@ -27,7 +27,7 @@ class Game extends Component {
     this.fetchTokenQuestions();
   }
 
-  fetchTokenQuestions() { // pegar o token;
+  fetchTokenQuestions() {
     const { tokenStore } = this.props;
     const token = localStorage.getItem('token') || tokenStore;
     try {
