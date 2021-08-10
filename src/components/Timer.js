@@ -5,7 +5,6 @@ const Timer = ({ timer, answered }) => {
   const [counter, setCounter] = useState(timer);
   const interval = 1000;
   const timeout = 5000;
-  console.log(answered);
 
   useEffect(() => {
     if (counter > 0 && !answered) {
@@ -14,7 +13,7 @@ const Timer = ({ timer, answered }) => {
     if (answered) {
       clearTimeout();
     }
-  }, [counter, answered]);
+  }, [counter]);
 
   useEffect(() => {
     const correctAnswer = document.querySelector('.correct-answer-btn');
@@ -30,13 +29,15 @@ const Timer = ({ timer, answered }) => {
         correctAnswer.disabled = false;
       }, timeout);
     }
-  }, [counter]);
+  });
 
   return (
     <div>
       Tempo:
       {' '}
-      {counter}
+      <span id="timer">
+        {counter}
+      </span>
     </div>
   );
 };

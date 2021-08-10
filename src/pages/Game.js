@@ -18,6 +18,7 @@ class Game extends Component {
 
     this.getQuestions1 = this.getQuestions1.bind(this);
     this.renderQuestions = this.renderQuestions.bind(this);
+    this.score = this.score.bind(this);
   }
 
   componentDidMount() {
@@ -35,6 +36,27 @@ class Game extends Component {
     this.setState({
       disableButton: bool,
     });
+  }
+
+  score(question) {
+    const timer = document.getElementById('timer').innerHTML;
+    const ptsInicial = 10;
+    const dificuldade = () => {
+      const saida = 3;
+      switch (question.difficulty) {
+      case 'easy':
+        return 1;
+      case 'medium':
+        return 2;
+      case 'hard':
+        return saida;
+      default:
+        return null;
+      }
+    };
+    const pontuacao = ptsInicial + (timer * dificuldade());
+    localStorage.setItem('state', JSON.stringify({ player: { score: pontuacao } }));
+    this.setState({ answered: true });
   }
 
   // handleInplementButton() {
@@ -65,7 +87,7 @@ class Game extends Component {
             data-testid="correct-answer"
             className="correct-answer-btn"
             id="correct-btn"
-            onClick={ () => this.setState({ answered: true }) }
+            onClick={ () => this.score(quest) }
           >
             {quest.correct_answer}
           </button>
