@@ -62,12 +62,7 @@ class Login extends React.Component {
       email,
       avatar,
     };
-<<<<<<< HEAD
 
-=======
-    console.log(user);
-    localStorage.setItem('token', token);
->>>>>>> main-group-8
     play(user);
   }
 
@@ -110,7 +105,7 @@ class Login extends React.Component {
         <header className="main-header">
           <h1 className="logo">BRAINTEST</h1>
         </header>
-        <div className="login-box">
+        <div>
           <UserInputs { ...userInputProps } />
           <UserInputs { ...emailInputProps } />
           <GenericBtn { ...loginBtnProps } />

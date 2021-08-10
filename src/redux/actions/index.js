@@ -14,9 +14,17 @@ export const playerInfo = ({ name, email, avatar }) => ({
   avatar,
 });
 
+export const nextQuestion = () => ({
+  type: NEXT_QUESTION,
+});
+
 export const currentScore = (score) => ({
   type: CURRENT_SCORE,
   payload: score,
+});
+
+export const addAssertion = () => ({
+  type: PLAYER_ASSERTIONS,
 });
 
 const APISucess = (questions) => ({
