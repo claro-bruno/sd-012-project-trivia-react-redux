@@ -61,44 +61,51 @@ class Login extends React.Component {
     history.push('/game');
   }
 
+  renderSettingsBtn() {
+    return (
+      <Link
+        className="settings-btn"
+        data-testid="btn-settings"
+        to="/settings"
+      >
+        <i className="bi bi-gear-fill" />
+        {' Configurações'}
+      </Link>
+    );
+  }
+
   render() {
     const { buttonDisabled, name, email } = this.state;
     return (
       <div className="login-content">
-        <div className="settings-login">
-          <Link
-            className="settings-btn"
-            data-testid="btn-settings"
-            to="/settings"
-          >
-            <i className="bi bi-gear-fill" />
-            {' Configurações'}
-          </Link>
-        </div>
-        <h1 className="logo-trivia">Trivia</h1>
-        <section className="login-field">
-          <fieldset>
+        <fieldset className="login-field">
+          {this.renderSettingsBtn()}
+          <div className="title-content">
+            <h1 className="logo-trivia">Trivia</h1>
+            <h3 className="group-name">Grupo Lorem Ipsum</h3>
+          </div>
+          <div className="inpts-login">
             <label htmlFor="name">
-              Nome:
               <input
                 value={ name }
                 onChange={ this.handleChange }
                 data-testid="input-player-name"
                 id="name"
                 type="text"
+                placeholder="Nome"
               />
             </label>
             <label htmlFor="email">
-              E-mail:
               <input
                 value={ email }
                 onChange={ this.handleChange }
                 data-testid="input-gravatar-email"
                 id="email"
                 type="email"
+                placeholder="Email"
               />
             </label>
-          </fieldset>
+          </div>
           <button
             data-testid="btn-play"
             type="button"
@@ -107,7 +114,7 @@ class Login extends React.Component {
           >
             Jogar!
           </button>
-        </section>
+        </fieldset>
       </div>
     );
   }

@@ -1,38 +1,38 @@
 .login-content {
+  align-items: center;
   background-color: rgb(51, 51, 102);
-  display: grid;
-  grid-template-areas: 'set' 'logo' 'login';
-  grid-template-rows: 5vh 35vh 60vh;
+  display: flex;
   height: 100vh;
+  justify-content: center;
   width: 100vw;
 }
 
-.settings-login {
-  align-items: center;
-  display: flex;
-  grid-area: set;
-  justify-content: flex-end;
-}
-
-.settings-login a {
-  color: white;
+.settings-btn {
+  align-self: flex-end;
+  color: rgb(51, 51, 102);
   margin-right: 10px;
   opacity: 0.8;
   text-decoration: none;
 }
 
-.settings-login a:hover {
+.settings-btn:hover {
   opacity: 1;
 }
 
 .logo-trivia {
-  animation: fade-logo 1s ease , shake-logo 0.3s 0.9s ease , fade-in-login 2.5s ease;
-  color: rgb(204, 204, 204);
+  animation: fade-logo 1s ease;
+  color: rgb(51, 51, 102);
   font-family: 'Press Start 2P' , cursive;
-  font-size: 85px;
-  grid-area: logo;
-  margin: auto;
-  text-shadow: 5px 10px 5px black;
+  font-size: 40px;
+  margin-top: 70px;
+  text-shadow: 5px 5px 5px gray;
+}
+
+.group-name {
+  animation: fade-logo 1s ease;
+  color: rgb(51, 51, 102);
+  font-family: Fredericka the Great , cursive;
+  font-size: 20px;
 }
 
 @keyframes fade-logo {
@@ -43,29 +43,25 @@
 
 }
 
-@keyframes shake-logo {
-
-  0% {
-    margin-right: 31.5%;
-  }
-
-  25% {
-    margin: auto;
-  }
-
-  50% {
-    margin-right: 31.5%;
-  }
-
-  100% {
-    margin: auto;
-  }
+.login-field {
+  align-items: center;
+  animation: fade-in-login 2.5s ease-in-out;
+  background-color: rgb(204, 204, 204);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 85%;
+  justify-content: space-between;
+  width: 350px;
 }
 
-.login-field {
-  animation: fade-in-login 2.5s ease-in-out;
-  grid-area: login;
-  margin: 0 auto;
+.inpts-login {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 35%;
+  justify-content: center;
+  width: 95%;
 }
 
 @keyframes fade-in-login {
@@ -75,23 +71,8 @@
   }
 }
 
-.login-field fieldset {
-  align-items: center;
-  background-color: rgb(204, 204, 204);
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  height: 100px;
-  justify-content: space-around;
-  margin-bottom: 10px;
-  padding: 35px 15px;
-  width: 300px;
-}
-
 .login-field label {
-  display: flex;
-  font-family: Source Code Pro , monospace;
-  justify-content: space-between;
+  margin-bottom: 20px;
   width: 95%;
 }
 
@@ -99,7 +80,8 @@
   border: 1px solid gray;
   border-radius: 10px;
   outline: none;
-  padding: 5px 10px;
+  padding: 10px 15px;
+  width: 100%;
 }
 
 .login-field input:focus {
@@ -120,9 +102,11 @@
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
+  margin-bottom: 40px;
   opacity: 0.9;
   outline: none;
-  padding: 10px 30px;
+  padding: 10px 0;
+  width: 95%;
 }
 
 .login-content button:hover {
