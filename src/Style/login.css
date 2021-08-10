@@ -1,6 +1,6 @@
 .login-screen {
   color: white;
-  border-color: rgb(61, 157, 179);
+  border-color: rgb(81,86,255);;
   border-radius: 30px;
   border-style: solid;
   margin-left: 500px;
@@ -44,7 +44,7 @@
 }
 
 #btn-play {
-  background: rgb(61, 157, 179);
+  background: rgb(81,86,255);;
   cursor: pointer;
   width: 100% ! important;
   color: black;
@@ -62,7 +62,7 @@
 
 #btn-config {
   color: black;
-  background: rgb(61, 157, 179);
+  background: rgb(81,86,255);
   border-radius: 30px;
   margin-left: 297px;
   margin-top: 50px;

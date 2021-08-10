@@ -1,5 +1,5 @@
 .ranking-screen {
-  color: #fff;
+  color: white;
   text-align: center;
   width: 600px;
   min-height: 260px;   
@@ -8,12 +8,12 @@
   margin-bottom: 10px;
   border-style: solid;
   border-radius: 30px;
-  border-color: rgb(61, 157, 179);
+  border-color: rgb(81,86,255);
   position: relative; 
 }
 
 #ranking-player {
-  border-bottom: rgb(61, 157, 179);
+  border-bottom: rgb(81,86,255);
   border-bottom-style: solid;
 }
 
@@ -24,18 +24,26 @@
 
 #ranking-name {
   display: flex;
-  align-items: center;
+  border-radius: 30px;
+  margin-bottom: 20px;
+  margin-left: 200px;
+  width: 200px;
 }
 
 #ranking-score {
   display: flex;
+  border-radius: 30px;
+  margin-bottom: 20px;
+  margin-left: 200px;
+  width: 200px;
 }
 
 #btn-go-home {
+  margin-top: 5px;
   margin-left: 0px;
-  width: 500px!important;
+  width: 500px ! important;
   cursor: pointer;  
-  background: rgb(61, 157, 179);
+  background: rgb(81,86,255);
   padding: 8px 5px;
   color: #fff;
   font-size: 20px;  

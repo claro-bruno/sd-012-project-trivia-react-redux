@@ -1,7 +1,7 @@
 .feedback-screen {
   color: white;
   text-align: center;
-  border-color: rgb(61, 157, 179);
+  border-color: rgb(81,86,255);
   border-radius: 30px;
   border-style: solid;
   margin-bottom: 10px;
@@ -17,7 +17,7 @@
 }
 
 .btn-feedBack {
-  background: rgb(61, 157, 179);
+  background: rgb(81,86,255);
   cursor: pointer;
   margin-left: 5px;
   margin-top: 40px;
