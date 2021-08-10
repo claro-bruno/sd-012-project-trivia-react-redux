@@ -1,31 +1,23 @@
-import { GET_QUESTION, GET_QUESTION_SUCCESS, GET_QUESTION_ERROR } from '../action';
-
 const STATE_INITIAL = ({
-  results: [],
-  loading: false,
-  error: null,
+  response_code: 0,
+  results: [
+    {
+      category: '',
+      type: '',
+      difficulty: '',
+      question: '',
+      correctAnswer: '',
+      incorrectAnswers: [],
+    },
+  ],
 });
 
 const questions = (state = STATE_INITIAL, action) => {
   switch (action.type) {
-  case GET_QUESTION:
+  case 'QUESTION':
     return {
       ...state,
-      loading: true,
-    };
-
-  case GET_QUESTION_SUCCESS:
-    return {
-      ...state,
-      results: [...action.payload],
-      loading: false,
-    };
-
-  case GET_QUESTION_ERROR:
-    return {
-      ...state,
-      error: action.payload.erro,
-      loading: false,
+      results: [...action.value.results],
     };
   default:
     return state;

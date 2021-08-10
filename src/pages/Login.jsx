@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getLogin, getToken } from '../redux/action/index';
+import { getLogin, getAPI } from '../redux/action/index';
 import logo from '../trivia.png';
 
 const regEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/i;
@@ -14,10 +14,9 @@ class Login extends Component {
     this.state = {
       email: '',
       name: '',
-      redirect: false,
     };
     this.handle = this.handle.bind(this);
-    this.handleClickToken = this.handleClickToken.bind(this);
+    this.func = this.func.bind(this);
   }
 
   handle({ target: { name, value } }) {
@@ -26,16 +25,14 @@ class Login extends Component {
     });
   }
 
-  async handleClickToken() {
-    const { fetchToken, dataUser } = this.props;
-    await fetchToken();
+  func() {
+    const { dataUser, callAPI } = this.props;
     dataUser(this.state);
+    callAPI();
   }
 
   render() {
     const { email, name } = this.state;
-    const { results } = this.props;
-    if (results.length > 0) return <Redirect to="/game" />;
     return (
       <div className="App">
         <header className="App-header">
@@ -59,16 +56,16 @@ class Login extends Component {
             value={ email }
             onChange={ this.handle }
           />
-          {/* <Link to="/game"> */}
-          <button
-            disabled={ !(regEmail.test(email) && name.length > nameSize) }
-            data-testid="btn-play"
-            type="button"
-            onClick={ this.handleClickToken }
-          >
-            Jogar
-          </button>
-          {/* </Link> */}
+          <Link to="/game">
+            <button
+              disabled={ !(regEmail.test(email) && name.length > nameSize) }
+              data-testid="btn-play"
+              type="button"
+              onClick={ this.func }
+            >
+              Jogar
+            </button>
+          </Link>
           <Link to="/settings">
             <button
               data-testid="btn-settings"
@@ -83,22 +80,14 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  token: state.token.token,
-  results: state.questions.results,
-
-});
-
 const mapDispatchToProps = (dispatch) => ({
-  dataUser: (userLogin) => dispatch(getLogin(userLogin)),
-  fetchToken: () => dispatch(getToken()),
-  // getQuestions: (token) => dispatch(getAllQuestions(token)),
+  dataUser: (value) => dispatch(getLogin(value)),
+  callAPI: () => dispatch(getAPI()),
 });
 
 Login.propTypes = {
-  results: PropTypes.arrayOf(PropTypes.object).isRequired,
   dataUser: PropTypes.func.isRequired,
-  fetchToken: PropTypes.func.isRequired,
+  callAPI: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);
