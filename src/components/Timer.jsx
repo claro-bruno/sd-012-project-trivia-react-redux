@@ -47,8 +47,8 @@ class Timer extends Component {
   render() {
     const { time } = this.state;
     return (
-      <section>
-        <span>{ time }</span>
+      <section className="timer-section">
+        <span className="timer-value">{ time }</span>
       </section>
     );
   }
