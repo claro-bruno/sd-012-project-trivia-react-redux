@@ -9,7 +9,7 @@ import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import SettingsIcon from '@material-ui/icons/Settings';
 import logo from '../trivia.png';
 import { actionGetGravatarImg } from '../redux/action';
-import '../styles/Login.css';
+import './Login.css';
 
 class Login extends Component {
   constructor() {
