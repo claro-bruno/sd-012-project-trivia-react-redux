@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { BORDER_BLACK } from '../data';
 import StaticTrivia from '../components/StaticTrivia';
 import Header from '../components/Header';
 
 class Trivia extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       currentQuestion: 0,
       timer: 30,
@@ -89,7 +90,7 @@ class Trivia extends Component {
         if (answer === question.correct_answer) {
           return (
             <button
-              className="correct_answer"
+              className="correct-answer"
               key={ index }
               data-testid="correct-answer"
               type="button"
@@ -103,7 +104,7 @@ class Trivia extends Component {
         controllIncorrects += 1;
         return (
           <button
-            className="wrong_answer"
+            className="wrong-answer"
             key={ index }
             data-testid={ `wrong-answer-${controllIncorrects - 1}` }
             type="button"
@@ -129,19 +130,29 @@ class Trivia extends Component {
   }
 
   nextQuestion() {
+    const { currentQuestion } = this.state;
     const maxQuestions = 5;
     this.setState((state) => {
       if (state.currentQuestion < maxQuestions - 1) {
+        console.log(state.currentQuestion);
         return {
           currentQuestion: state.currentQuestion + 1,
         };
       }
+      return {
+        currentQuestion,
+      };
     });
   }
 
   render() {
     const { currentQuestion, timer } = this.state;
     const { questions } = this.props;
+    const maxQuestions = 5;
+    if (currentQuestion === maxQuestions - 1) {
+      console.log('redirect');
+      return <Redirect to="/feedback" />;
+    }
     if (questions.length === 0) {
       return (
         <div>
