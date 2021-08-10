@@ -32,7 +32,6 @@ class Ranking extends React.Component {
   render() {
     this.handleRanking();
     const infos = JSON.parse(localStorage.getItem('ranking'));
-    console.log(infos);
     return (
       <div>
         <h1 data-testid="ranking-title">Ranking</h1>

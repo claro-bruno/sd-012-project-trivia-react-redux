@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string } from 'prop-types';
+import { string, number } from 'prop-types';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import Span from './Span';
@@ -74,7 +74,7 @@ Span.propTypes = {
 
 FeedBackHeader.propTypes = {
   email: string.isRequired,
-  score: string.isRequired,
+  score: number.isRequired,
   user: string.isRequired,
   assertions: string.isRequired,
 };
