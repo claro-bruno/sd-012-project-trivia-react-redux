@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getLogin } from '../redux/action/index';
 import getToken from '../Services/getToken';
@@ -31,17 +31,19 @@ class Login extends Component {
   async redirect() {
     const token = await getToken();
     localStorage.setItem('token', token);
+    this.setState({
+      redirect: true,
+    });
   }
 
   handleClickToken() {
-    const { dataUser, history } = this.props;
+    const { dataUser } = this.props;
     dataUser(this.state);
     this.redirect();
-    history.push('/game');
   }
 
   render() {
-    const { email, name } = this.state;
+    const { email, name, redirect } = this.state;
     const inputNameProps = {
       'data-testid': 'input-player-name',
       type: 'text',
@@ -61,12 +63,17 @@ class Login extends Component {
     const buttonJogar = {
       disabled: !(regEmail.test(email) && name.length > nameSize),
       'data-testid': 'btn-play',
+      name: 'game',
       onClick: this.handleClickToken,
     };
     const buttonSettings = {
       'data-testid': 'btn-settings',
-    };
+      name: 'settings',
 
+    };
+    if (redirect) {
+      return <Redirect to="/game" />;
+    }
     return (
       <div className="App">
         <header className="App-header">

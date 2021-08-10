@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getAllQuestions } from '../redux/action/index';
+import Questions from '../components/Questions';
 
 class Game extends Component {
   constructor(props) {
@@ -9,9 +10,14 @@ class Game extends Component {
       loading: true,
     };
     this.handleLoading = this.handleLoading.bind(this);
+    this.mount = this.mount.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.mount();
+  }
+
+  async mount() {
     const { getQuest } = this.props;
     await getQuest();
     this.handleLoading();
@@ -24,12 +30,12 @@ class Game extends Component {
   }
 
   render() {
-    const { results } = this.props;
+    // const { results } = this.props;
     const { loading } = this.state;
     return (
       <>
-        <div>Loading</div>
-        { loading ? <h1>LOADING...</h1> : <div>{results[0].type}</div>}
+        <div>Game</div>
+        { loading ? <h1>LOADING...</h1> : <Questions />}
       </>
     );
   }
