@@ -1,7 +1,11 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
+import ReplayIcon from '@material-ui/icons/Replay';
 import Header from '../components/Header';
 import Results from '../components/Results';
+import './Feedback.css';
 
 class Feedback extends React.Component {
   constructor() {
@@ -57,24 +61,34 @@ class Feedback extends React.Component {
       return <Redirect to="/" />;
     }
     return (
-      <section>
+      <section className="feedback-content">
         <Results />
         <Header score={ score } />
         <p data-testid="feedback-text">{message || 'Loading'}</p>
-        <button
-          type="button"
-          data-testid="btn-play-again"
-          onClick={ this.redirectLogin }
-        >
-          Jogar Novamente
-        </button>
-        <button
-          type="button"
-          data-testid="btn-ranking"
-          onClick={ this.redirectRanking }
-        >
-          Ver Ranking
-        </button>
+        <div className="button-play-again">
+          <Button
+            type="button"
+            data-testid="btn-play-again"
+            onClick={ this.redirectLogin }
+            variant="contained"
+            color="primary"
+          >
+            <ReplayIcon />
+            Jogar Novamente
+          </Button>
+        </div>
+        <div className="button-ranking">
+          <Button
+            type="button"
+            data-testid="btn-ranking"
+            onClick={ this.redirectRanking }
+            variant="contained"
+            color="secondary"
+          >
+            <FormatListNumberedIcon />
+            Ver Ranking
+          </Button>
+        </div>
       </section>
     );
   }
