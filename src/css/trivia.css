@@ -3,13 +3,13 @@
 }
 
 .time-counter {
-  font-size: 30px;
   color: #246669;
+  font-size: 30px;
 }
 
 .category-questions {
-  font-size: 30px;
   color: #246669;
+  font-size: 30px;
 }
 
 .questions {
@@ -18,7 +18,7 @@
 }
 
 .bicicleta {
+  border-radius: 5px;
   margin-top: 15px;
-  border-radius:5px;
   width: 500px;
 }

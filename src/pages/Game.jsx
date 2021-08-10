@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import Trivia from '../components/Trivia';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Trivia from '../components/Trivia';
 import '../css/game.css';
 
 class Game extends React.Component {
@@ -25,8 +25,7 @@ class Game extends React.Component {
   }
 
   fetchQuestions() {
-    const numeroQuestoes = 5;
-    const { token } = this.props;
+    const { token, numeroQuestoes } = this.props;
     const API = `https://opentdb.com/api.php?amount=${numeroQuestoes}&token=${token}`;
     fetch(API)
       .then((resolve) => resolve.json())
@@ -59,10 +58,14 @@ class Game extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({ token: state.buttonReducer.token });
+const mapStateToProps = (state) => ({
+  token: state.buttonReducer.token,
+  numeroQuestoes: state.buttonReducer.numeroQuestoes,
+});
 
 Game.propTypes = {
   token: PropTypes.string.isRequired,
+  numeroQuestoes: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Game);

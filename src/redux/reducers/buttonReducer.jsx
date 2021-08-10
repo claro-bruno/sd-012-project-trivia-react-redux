@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   token: '',
   error: null,
   isLoading: false,
+  numeroQuestoes: 5,
 };
 
 const buttonReducer = (state = INITIAL_STATE, action) => {
@@ -15,6 +16,7 @@ const buttonReducer = (state = INITIAL_STATE, action) => {
     };
   case GET_TOKEN_SUCCESS:
     return {
+      ...state,
       error: null,
       isLoading: false,
       token: action.payload,
@@ -25,7 +27,11 @@ const buttonReducer = (state = INITIAL_STATE, action) => {
       error: action.error,
       isLoading: false,
     };
-
+  case 'SET_AMOUNT':
+    return {
+      ...state,
+      numeroQuestoes: action.value,
+    };
   default:
     return state;
   }
