@@ -2,7 +2,8 @@ import React from 'react';
 // import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Game from './Game';
+//  import Game from './Game';
+import Header from '../components/Header';
 
 class Feedback extends React.Component {
   // constructor(){
@@ -24,7 +25,7 @@ class Feedback extends React.Component {
     console.log(typeof (correctAnswers));
     return (
       <>
-        <Game />
+        <Header />
         <p>
           Acertos:
           <span data-testid="feedback-total-question">
