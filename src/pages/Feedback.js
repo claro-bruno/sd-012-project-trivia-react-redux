@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import PlayAgainButton from '../components/PlayAgainButton';
 import RankingButton from '../components/RankingButton';
-import UserProfile from '../components/UserProfile';
 
-export default class extends Component {
+class Feedback extends Component {
   constructor() {
     super();
     this.alertScore = this.alertScore.bind(this);
@@ -24,10 +25,20 @@ export default class extends Component {
   render() {
     const getAssertion = JSON.parse(localStorage.getItem('state'));
     const { player } = getAssertion;
+    const { userFeedback } = this.props;
 
     return (
-      <div>
-        <UserProfile />
+      <section>
+        <section>
+          <img
+            className="player-img"
+            data-testid="header-profile-picture"
+            src={ userFeedback.hash }
+            alt={ `${userFeedback.name}` }
+          />
+          <span data-testid="header-player-name">{ userFeedback.name }</span>
+          <span data-testid="header-score">{ userFeedback.score }</span>
+        </section>
         <h1 data-testid="feedback-text">{ this.alertScore() }</h1>
         <h2 data-testid="feedback-total-score">
           { player.score }
@@ -41,7 +52,20 @@ export default class extends Component {
         </h3>
         <PlayAgainButton />
         <RankingButton />
-      </div>
+      </section>
     );
   }
 }
+
+Feedback.propTypes = {
+  userFeedback: PropTypes.objectOf(
+    PropTypes.string.isRequired,
+    PropTypes.number.isRequired,
+  ).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  userFeedback: state.user,
+});
+
+export default connect(mapStateToProps)(Feedback);
