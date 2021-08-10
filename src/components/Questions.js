@@ -47,13 +47,14 @@ class Questions extends Component {
     answers.sort();
     let index = MINUS_ONE;
     return (
-      <>
-        <h1 data-testid="question-category">
-          {question.category}
-        </h1>
-        <p data-testid="question-text">
+      <div className="bg-violet rounded-md w-2/3">
+        <h1 data-testid="question-text" className="">
           {question.question}
+        </h1>
+        <p data-testid="question-category">
+          {question.category}
         </p>
+
         {answers.map((answer) => {
           if (answer === question.correct_answer) {
             return (
@@ -85,7 +86,7 @@ class Questions extends Component {
             </button>
           );
         })}
-      </>
+      </div>
     );
   }
 
@@ -110,8 +111,8 @@ class Questions extends Component {
   render() {
     const { questions, next, time } = this.state;
     return (
-      <main>
-        <div className="timer">
+      <main className="flex flex-col items-center">
+        <div className="aliceblue-color bg-header w-24 text-center text-2xl mt-6">
           {time}
         </div>
         {questions[0] && this.answersRender()}
