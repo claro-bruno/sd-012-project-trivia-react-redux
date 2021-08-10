@@ -7,7 +7,6 @@
 }
 
 .correct-answer.selected {
-  background-color: #9c9797;
   background-color: rgb(6, 240, 15);
   font-size: 20px;
   margin: 15px 35px;
