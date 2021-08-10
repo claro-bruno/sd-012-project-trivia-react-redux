@@ -25,7 +25,7 @@ class Feedback extends React.Component {
         <FeedBackHeader />
         <h3
           className="feedback-score"
-          data-testid="feedback-total-score"
+          data-testid="header-score"
         >
           {score}
         </h3>
@@ -40,7 +40,7 @@ class Feedback extends React.Component {
           className="feedback-btn"
           itemName="Ver Ranking"
           testId="btn-ranking"
-          onClick={ this.rankingBtn }
+          onClick={ () => history.push('/ranking') }
         />
         <button
           className="feedback-btn"

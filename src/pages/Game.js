@@ -29,7 +29,8 @@ class Game extends Component {
   }
 
   fetchTokenQuestions() { // pegar o token;
-    const { token } = this.props;
+    const { tokenStore } = this.props;
+    const token = localStorage.getItem('token') || tokenStore;
     try {
       const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
       fetch(url)
@@ -72,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Game.propTypes = {
-  token: PropTypes.string.isRequired,
+  tokenStore: PropTypes.string.isRequired,
   getToken: PropTypes.func.isRequired,
 };
 

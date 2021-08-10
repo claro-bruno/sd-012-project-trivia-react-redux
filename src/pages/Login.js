@@ -6,6 +6,7 @@ import Button from '../components/Button';
 import { actionEmail, actionName } from '../redux/actions';
 import ButtonConfig from '../components/ButtonConfig';
 import '../App.css';
+import fetchToken from '../services/fetchToken';
 
 class Login extends React.Component {
   constructor() {
@@ -20,6 +21,10 @@ class Login extends React.Component {
     this.configBtn = this.configBtn.bind(this);
   }
 
+  componentDidMount() {
+    fetchToken();
+  }
+
   validade() {
     const { user, email } = this.state;
     const rgeex = /(.*)@(.*).com/;
@@ -30,7 +35,7 @@ class Login extends React.Component {
     }
   }
 
-  submitBtn() {
+  async submitBtn() {
     const { email: gravatarEmail, user: name } = this.state;
     const { getEmail, getName, history } = this.props;
     getEmail(gravatarEmail);

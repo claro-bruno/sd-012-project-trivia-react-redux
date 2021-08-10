@@ -31,6 +31,7 @@ class Ranking extends React.Component {
 
   render() {
     this.handleRanking();
+    const { history } = this.props;
     const infos = JSON.parse(localStorage.getItem('ranking'));
     return (
       <div>
@@ -47,9 +48,9 @@ class Ranking extends React.Component {
         <button
           type="button"
           data-testid="btn-go-home"
-          onClick={ this.rankingBtn }
+          onClick={ () => history.push('/') }
         >
-          Jogar novamentes
+          Jogar novamente
         </button>
       </div>
     );

@@ -42,10 +42,10 @@ class Header extends React.Component {
           />
         </div>
         <p />
-        <p className="user" testId="header-player-name">{user}</p>
+        <p className="user" data-testid="header-player-name">{user}</p>
         <span
           className="score"
-          data-testId="header-score"
+          data-testid="header-score"
         >
           Score:
           {' '}
