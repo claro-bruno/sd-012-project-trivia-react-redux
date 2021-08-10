@@ -15,6 +15,7 @@ class GameBody extends Component {
       className2: '',
       wrong: 'wrong',
       correct: 'correct',
+      disableAnswers: false,
     };
     this.createQuestion = this.createQuestion.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
@@ -30,7 +31,10 @@ class GameBody extends Component {
   nextQuestion() {
     const { index } = this.state;
     // index precisa ser tratado , pois ira sobresair o tamanho do array
-    this.setState({ index: index + 1 });
+    this.setState({
+      index: index + 1,
+      disableAnswers: false,
+    });
   }
 
   createQuestion() {
@@ -63,11 +67,15 @@ class GameBody extends Component {
     const { alternatives, randomIndex, className, wrong,
       correct, className2 } = this.state;
     return ((alternatives).map((elm, ind) => (
+
+    const { alternatives, randomIndex, disableAnswers } = this.state;
+    return (alternatives.map((elm, ind) => (
       ind === randomIndex
         ? (
           <button
             type="button"
             onClick={ this.buttonAnswer }
+            disabled={ disableAnswers }
             key={ ind }
             data-testid="correct-answer"
             id={ correct }
@@ -80,6 +88,7 @@ class GameBody extends Component {
           <button
             type="button"
             onClick={ this.buttonAnswer }
+            disabled={ disableAnswers }
             key={ ind }
             data-testid={ `wrong-answer-${ind}` }
             id={ wrong }
@@ -93,6 +102,7 @@ class GameBody extends Component {
 
   buttonAnswer() {
     this.setState({
+      disableAnswers: true,
       className: 'correctAnswer',
       className2: 'incorrectAnswer',
     });
