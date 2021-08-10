@@ -7,7 +7,7 @@ import disabledReducer from './disabledReducer';
 import timerReducer from './timerReducer';
 import scoreReducer from './scoreReducer';
 import assertionsReducer from './assertionsReducer';
-import rankingReducer from './rankingReducer';
+import hashReducer from './hashReducer';
 
 const rootReducer = combineReducers(
   {
@@ -19,7 +19,7 @@ const rootReducer = combineReducers(
     timerReducer,
     scoreReducer,
     assertionsReducer,
-    rankingReducer,
+    hashReducer,
   },
 );
 

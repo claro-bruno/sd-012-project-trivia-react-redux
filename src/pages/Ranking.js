@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class Ranking extends React.Component {
   constructor(props) {
@@ -15,17 +16,17 @@ class Ranking extends React.Component {
   }
 
   handleRanking() {
+    const { hash } = this.props;
     const list = JSON.parse(localStorage.getItem('state'));
-    const hashList = localStorage.getItem('hash');
+    // const hashList = localStorage.getItem('hash');
     const ranking = JSON.parse(localStorage.getItem('ranking')) || [];
     const player = {
-      image: hashList,
+      image: hash,
       name: list.player.name,
       score: list.player.score,
     };
     ranking.push(player);
     localStorage.setItem('ranking', JSON.stringify(ranking));
-    // console.log(ranking);
   }
 
   render() {
@@ -56,8 +57,13 @@ class Ranking extends React.Component {
   }
 }
 
-export default Ranking;
+const mapStateToProps = (state) => ({
+  hash: state.hashReducer.hash,
+});
+
+export default connect(mapStateToProps)(Ranking);
 
 Ranking.propTypes = {
   history: PropTypes.objectOf('string').isRequired,
+  hash: PropTypes.string.isRequired,
 };
