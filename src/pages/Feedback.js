@@ -10,6 +10,27 @@ class FeedBack extends React.Component {
     this.goToRanking = this.goToRanking.bind(this);
   }
 
+  componentDidMount() {
+    const { player: { name, email, score } } = JSON.parse(localStorage.getItem('state'));
+    const playerImage = `https://www.gravatar.com/avatar/${md5(email).toString()}`;
+
+    const newRanking = {
+      playerImage,
+      score,
+      name,
+    };
+
+    const ranking = JSON.parse(localStorage.getItem('ranking'));
+
+    if (ranking) {
+      localStorage
+        .setItem('ranking',
+          JSON.stringify([...ranking, newRanking]));
+    } else {
+      localStorage.setItem('ranking', JSON.stringify([newRanking]));
+    }
+  }
+
   playAgain() {
     const { history } = this.props;
     history.push('/');
