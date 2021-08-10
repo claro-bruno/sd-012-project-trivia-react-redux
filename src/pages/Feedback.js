@@ -26,7 +26,7 @@ class Feedback extends React.Component {
 
   handleRanking() {
     const storedRank = localStorage.getItem('ranking');
-    if (storedRank.length === 0) {
+    if (!storedRank) {
       const { name, score, gravatarEmail } = this.handleUser();
       const updateRank = [{
         name,

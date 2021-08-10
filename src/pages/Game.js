@@ -95,12 +95,14 @@ class Game extends React.Component {
     const points = INITIAL_PARAMETER + (level * count);
 
     const { props: { userData: { user } },
-      state: { gravatarEmail, correctAnswers, score },
+      state: { gravatarEmail, correctAnswers, score, redirect },
       setStateProperties } = this;
-
     setStateProperties('score', score + points);
-    const player = { name: user, gravatarEmail, assertions: correctAnswers, score };
-    localStorage.setItem('player', JSON.stringify(player));
+
+    if (redirect === true) {
+      const player = { name: user, gravatarEmail, assertions: correctAnswers, score };
+      localStorage.setItem('player', JSON.stringify(player));
+    }
   }
 
   correctClick(difficulty) {
