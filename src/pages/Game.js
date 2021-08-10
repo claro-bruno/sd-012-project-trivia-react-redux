@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { getQuiz } from '../redux/actions';
 import Loading from '../components/Loading';
+import Timer from '../components/Timer';
 import './Game.css';
 
 class Game extends React.Component {
@@ -77,7 +78,6 @@ class Game extends React.Component {
 
     const sortedArray = [correct, ...incorrect];
     this.shuffleArray(sortedArray);
-    console.log(sortedArray);
     return (
       <div>
         <p data-testid="question-category">{ category }</p>
@@ -88,10 +88,17 @@ class Game extends React.Component {
             <li
               key={ item }
               className="answer-buttons"
-              data-testid={ this.checkCorrect(item, correct, i) }
-              id={ this.checkCorrect(item, correct, i) }
             >
-              <button type="button" onClick={ this.onClickAnswer }>{item}</button>
+              <button
+                id={ this.checkCorrect(item, correct, i) }
+                data-testid={ this.checkCorrect(item, correct, i) }
+                className="answer-buttons"
+                type="button"
+                onClick={ this.onClickAnswer }
+              >
+                {item}
+
+              </button>
             </li>)) }
         </ul>
       </div>
@@ -101,6 +108,7 @@ class Game extends React.Component {
   handleClick() {
     const { index } = this.state;
     const arrLength = 4;
+    console.log('fui clicado');
     if (index < arrLength) {
       return this.setState((prevState) => ({
         index: prevState.index + 1,
@@ -117,9 +125,15 @@ class Game extends React.Component {
     return (
       <div>
         <Header />
+        <Timer />
         { redirect ? <Redirect to="/score" /> : null }
         { loading ? <Loading /> : this.displayQuestion() }
-        <button onClick={ this.handleClick } type="button" className="btn btn-primary">
+        <button
+          onClick={ this.handleClick }
+          type="button"
+          className="btn btn-primary"
+          id="next-button"
+        >
           { index < redirectNumber ? 'Proxima' : 'Ver Pontuação' }
         </button>
       </div>
