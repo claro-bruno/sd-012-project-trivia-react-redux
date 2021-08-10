@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import '../styles/Questions.css';
 
 const MINUS_ONE = -1;
+const NUMBER_THREE = 3;
+const NUMBER_TEN = 10;
 
 class Questions extends Component {
   constructor() {
@@ -36,32 +38,39 @@ class Questions extends Component {
     }));
   }
 
-  handleClick({ target }) {
-    this.setState({ disabled: true, next: true }, () => target.classList.add('selected'));
-    clearInterval(this.interval);
-    this.calculateScore(target);
-  }
-
   getDifficultyPoints() {
     const { questions } = this.state;
     switch (questions[0].difficulty) {
-      case 'easy':
-        return 1;
-      case 'medium':
-        return 2;
-      case 'hard':
-        return 3;
-      default:
-        return 1;
+    case 'easy':
+      return 1;
+    case 'medium':
+      return 2;
+    case 'hard':
+      return NUMBER_THREE;
+    default:
+      return 1;
     }
+  }
+
+  handleClick({ target }) {
+    this.setState({ disabled: true, next: true }, () => target.classList.add('selected'));
+    clearInterval(this.interval);
+    console.log(this.calculateScore(target));
   }
 
   calculateScore(target) {
     const { time } = this.state;
-    const difficulty = 
-    if (target.id === 'correct-answer') {
+    const difficulty = this.getDifficultyPoints();
 
+    if (target.id === 'correct-answer') {
+      return NUMBER_TEN * (time * difficulty);
     }
+
+    return 0;
+  }
+
+  saveScore() {
+
   }
 
   answersRender() {

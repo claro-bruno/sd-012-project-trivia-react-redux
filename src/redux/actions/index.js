@@ -2,6 +2,7 @@ export const USER_INFO = 'USER_INFO';
 export const GET_TOKEN = 'GET_TOKEN';
 export const GET_TOKEN_SUCCESS = 'GET_TOKEN_SUCCESS';
 export const GET_TOKEN_FAILED = 'GET_TOKEN_FAILED';
+export const CORRECT_ANSWER = 'CORRECT_ANSWER';
 
 export const actionUserInfo = (name, email) => ({
   type: USER_INFO,
@@ -33,3 +34,8 @@ export const getTokenThunk = () => async (dispatch) => {
     dispatch(getTokenFailed(error));
   }
 };
+
+export const actionCorrectAnswer = (payload) => ({
+  type: CORRECT_ANSWER,
+  payload,
+});
