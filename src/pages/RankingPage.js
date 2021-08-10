@@ -7,7 +7,7 @@ const Rank = styled.div`
   align-items: center;
   padding: 0.5rem;
   background-color: hsl(216, 53%, 9%);
-  opacity: 0.875;
+  opacity: 0.75;
 
   &:nth-of-type(2n) {
     background-color: hsl(217, 28%, 15%);
@@ -27,8 +27,6 @@ const Container = styled.div`
   max-width: 40rem;
   margin-left: auto;
   margin-right: auto;
-  border-radius: 0.125rem;
-  overflow: hidden;
   padding: 1rem;
 `;
 

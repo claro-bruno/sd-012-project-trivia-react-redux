@@ -12,6 +12,7 @@ const Play = styled.button`
   border: none;
   background: linear-gradient(to right, hsl(198, 60%, 50%), hsl(176, 68%, 64%));
   color: hsl(0, 0%, 100%);
+  font-size: 1.125rem;
   font-weight: 600;
   cursor: pointer;
   padding: 0.75rem;
@@ -28,9 +29,17 @@ const Input = styled.input`
   background-color: transparent;
   border: none;
   padding: 1em 0.5rem;
-  border-bottom: 1px solid hsl(0, 0%, 65%);
+  border-bottom: 1px solid hsla(0, 0%, 100%, 62.5%);
   color: hsl(0, 0%, 100%);
   border-radius: 0.125rem;
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover, 
+  &:-webkit-autofill:focus, 
+  &:-webkit-autofill:active {
+    transition: background-color 5000s;
+    -webkit-text-fill-color: hsl(0, 0%, 100%);
+  }
 
   &:focus {
     outline: none;
