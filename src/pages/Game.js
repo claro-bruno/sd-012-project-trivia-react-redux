@@ -114,7 +114,7 @@ class Game extends Component {
   render() {
     const { /* index */ disableButton, answered } = this.state;
     // o index acima, implementar após a lógica das respostas corretas
-    // para mudar de acordo com o numero da questão;
+    // para mudar de acordo com o numero da questão ;
 
     return (
       <div>
