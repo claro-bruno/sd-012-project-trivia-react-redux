@@ -1,4 +1,4 @@
-import { CHANGE_SETTINGS } from "../actions";
+import { CHANGE_SETTINGS, RESET_SETTINGS } from "../actions";
 
 const INITIAL_STATE = {
   difficulty: '',
@@ -15,6 +15,8 @@ const settingsReducer = (state = INITIAL_STATE, action) => {
       type: action.tipo,
       category: action.category,
     };
+  case RESET_SETTINGS:
+    return { ...INITIAL_STATE }; 
   default:
     return state;
   }
