@@ -11,7 +11,6 @@ import './Game.css';
 class Game extends Component {
   constructor() {
     super();
-
     this.state = {
       data: '',
       currentQuestion: 0,
@@ -19,13 +18,13 @@ class Game extends Component {
       timer: 30,
       pauseTimer: false,
     };
-
     this.fetchApi = this.fetchApi.bind(this);
     this.page = this.page.bind(this);
     this.handleClickAnswer = this.handleClickAnswer.bind(this);
     this.showBtnNextQuestion = this.showBtnNextQuestion.bind(this);
     this.handleAnswers = this.handleAnswers.bind(this);
     this.updateTimer = this.updateTimer.bind(this);
+    this.handleNextQuestion = this.handleNextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -90,13 +89,11 @@ class Game extends Component {
         },
       });
       return data;
-    } catch (error) {
-      return error;
-    }
+    } catch (error) { return error; }
   }
 
   handleClickAnswer({ target }) {
-    const { player, name, gravatarEmail } = this.props;
+    const { player, name, gravatarEmail, changeTimer } = this.props;
     const incorrectList = document.getElementsByName('incorrect');
     const correctList = document.getElementById('correct');
     incorrectList.forEach((item) => { item.className = 'incorrect'; });
@@ -104,14 +101,15 @@ class Game extends Component {
     const scoreFunc = this.calculateTotalPoints(target);
     this.setState({ pauseTimer: true });
     player(name, 0, scoreFunc, gravatarEmail);
+    const timeOff = true;
+    changeTimer({ timeOff });
   }
 
   calculateTotalPoints({ name }) {
     const { timer } = this.state;
     const BASE_POINT = 10;
-    if (name === 'correct') {
-      return BASE_POINT + (timer * this.calculateDifficultyPoint());
-    }
+    if (name === 'correct') return BASE_POINT + (timer * this.calculateDifficultyPoint());
+
     return 0;
   }
 
@@ -130,12 +128,37 @@ class Game extends Component {
     return EASY;
   }
 
+  handleNextQuestion() {
+    const { changeTimer } = this.props;
+    const incorrectList = document.getElementsByName('incorrect');
+    const correctList = document.getElementById('correct');
+    incorrectList.forEach((item) => { item.classList.remove('incorrect'); });
+    correctList.classList.remove('correct');
+    const timeOff = false;
+    changeTimer({ timeOff });
+    const { currentQuestion } = this.state;
+    const lastQuestion = 4;
+    const MAX_TIME = 30;
+    if (currentQuestion < lastQuestion) {
+      this.setState({
+        timer: MAX_TIME,
+        currentQuestion: currentQuestion + 1,
+        pauseTimer: false,
+      });
+      this.updateTimer();
+    }
+    if (currentQuestion === lastQuestion) {
+      window.location.href = '/feedback';
+    }
+  }
+
   showBtnNextQuestion() {
     return (
       <button
         className="button-nextQuestion"
         type="button"
         data-testid="btn-next"
+        onClick={ () => this.handleNextQuestion() }
       >
         Next Question
       </button>
@@ -201,7 +224,6 @@ const mapStateToProps = (state) => ({
   timer: state.timerReducer.time,
   timeOff: state.timerReducer.timeOff,
   score: state.player.score,
-  // pauseTimer: state.timerReducer.pauseTimer,
 });
 
 const mapDispatchToProps = (dispatch) => ({

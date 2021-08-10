@@ -9,7 +9,6 @@ const INITIAL_STATE = {
 const timerReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case REAL_TIME:
-    console.log(action);
     return {
       ...state,
       time: action.state.timer,

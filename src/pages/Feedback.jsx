@@ -12,7 +12,7 @@ class Feedback extends React.Component {
       <>
         <Header />
         <h2
-          data-test-id="feedback-text"
+          data-testid="feedback-text"
         >
           { score < avarage ? 'Podia ser melhor...' : 'Mandou bem!' }
         </h2>
