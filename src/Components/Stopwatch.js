@@ -21,15 +21,15 @@ class Stopwatch extends Component {
     };
     this.updateCounter = this.updateCounter.bind(this);
     this.resetCounter = this.resetCounter.bind(this);
-    this.startInterval = this.startInterval.bind(this);
-    this.stopInterval = this.stopInterval.bind(this);
-    this.endInterval = this.endInterval.bind(this);
+    this.startTimer = this.startTimer.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
+    this.endTimer = this.endTimer.bind(this);
   }
 
   componentDidMount() {
     const { dispatchCallbacks } = this.props;
-    dispatchCallbacks(this.startInterval, this.stopInterval);
-    this.startInterval();
+    dispatchCallbacks(this.startTimer, this.stopTimer);
+    this.startTimer();
   }
 
   componentDidUpdate() {
@@ -47,33 +47,30 @@ class Stopwatch extends Component {
     this.setState({ counter: millisecondsPerQuestion / oneSecond });
   }
 
-  startInterval() {
+  startTimer() {
     this.resetCounter();
-    this.resetInterval();
+    this.resetTimer();
     const { dispatchIsAnswering } = this.props;
     dispatchIsAnswering();
     this.interval = setInterval(this.updateCounter, oneSecond);
-    this.timeout = setTimeout(this.endInterval, millisecondsPerQuestion);
-    // Aqui vai o que acontece quando o timer começa.
+    this.timeout = setTimeout(this.endTimer, millisecondsPerQuestion);
   }
 
-  stopInterval() {
+  stopTimer() {
     const { dispatchIsQuestionAnswered } = this.props;
     dispatchIsQuestionAnswered();
-    this.resetInterval();
-    // Aqui vai o que acontece quando o timer é interrompido por uma resposta.
+    this.resetTimer();
   }
 
-  endInterval() {
+  endTimer() {
     const { dispatchIsOutOfTime } = this.props;
     dispatchIsOutOfTime();
-    clearInterval(this.interval);
-    // Aqui vai o que acontece quando o tempo termina sem resposta.
+    this.resetTimer();
   }
 
-  resetInterval() {
+  resetTimer() {
     clearInterval(this.interval);
-    clearInterval(this.timeout);
+    clearTimeout(this.timeout);
   }
 
   render() {

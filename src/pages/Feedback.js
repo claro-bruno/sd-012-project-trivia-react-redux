@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../Components/Header';
 import Score from '../Components/Score';
-import Ranking from '../Components/Ranking';
 
-const minAssertions = 3;
+const minAssertionsForPositiveFeedback = 3;
 
 class Feedback extends Component {
   render() {
@@ -16,13 +15,15 @@ class Feedback extends Component {
         <h1
           data-testid="feedback-text"
         >
-          {assertions < minAssertions ? 'Podia ser melhor...' : 'Mandou bem!'}
+          {assertions < minAssertionsForPositiveFeedback
+            ? 'Podia ser melhor...'
+            : 'Mandou bem!'}
         </h1>
         <Header />
         <Score dataTestId="header-score" />
-        {/* No requisito 12 o teste procura este Id */}
+        {/* O requisito 12 o teste procura por este Id */}
         <Score dataTestId="feedback-total-score" />
-        {/* No requisito 14 o teste procura por este Id */}
+        {/* O requisito 14 o teste procura por este Id */}
         <h1
           data-testid="feedback-total-question"
         >
@@ -35,7 +36,7 @@ class Feedback extends Component {
         >
           Play Again
         </button>
-        <Link data-testid="btn-ranking" to="/ranking/"><Ranking /></Link>
+        <Link data-testid="btn-ranking" to="/ranking/">Ranking</Link>
       </>
     );
   }
@@ -49,5 +50,7 @@ export default connect(mapStateToProps)(Feedback);
 
 Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
-  history: PropTypes.shape().isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };

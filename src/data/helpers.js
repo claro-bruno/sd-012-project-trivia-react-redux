@@ -1,7 +1,6 @@
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 export function shuffle(array) {
-  let currentIndex = array.length; let
-    randomIndex;
+  let currentIndex = array.length; let randomIndex;
 
   // While there remain elements to shuffle...
   while (currentIndex !== 0) {
@@ -54,7 +53,12 @@ export const setScore = (state, action) => ({
     : state.score,
 });
 
-export const isLastQuestion = (state) => {
+export const isSecondLastQuestion = (state) => {
   const { questions, currentQuestion } = state;
   return questions.length - 2 === currentQuestion;
+};
+
+export const isLastQuestion = (state) => {
+  const { questions, currentQuestion } = state;
+  return questions.length - 1 === currentQuestion;
 };

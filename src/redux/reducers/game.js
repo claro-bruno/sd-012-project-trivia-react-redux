@@ -1,4 +1,4 @@
-import { isLastQuestion } from '../../data/helpers';
+import { isSecondLastQuestion, isLastQuestion } from '../../data/helpers';
 
 const INITIAL_STATE = {
   questions: [],
@@ -29,7 +29,8 @@ function game(state = INITIAL_STATE, action) {
       isFetchingQuestions: false,
     };
   case 'NEXT_QUESTION':
-    if (isLastQuestion(state)) {
+    if (isLastQuestion(state)) { return { ...state, currentQuestion: 0 }; }
+    if (isSecondLastQuestion(state)) {
       return {
         ...state,
         currentQuestion: state.questions.length - 1,
