@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 
 class ButtonConfig extends React.Component {
   render() {
-    const { onClick, itemName, testId } = this.props;
+    const { onClick, itemName, testId, className } = this.props;
     return (
       <button
+        className={ className }
         type="button"
-        className="config-btn"
+        // className="config-btn"
         data-testid={ testId }
         onClick={ onClick }
       >

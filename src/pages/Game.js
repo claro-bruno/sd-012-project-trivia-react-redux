@@ -6,6 +6,7 @@ import Questions from '../components/Questions';
 import { loadingToken, actionToken } from '../redux/actions';
 import fetchToken from '../services/fetchToken';
 // import ButtonNext from '../components/ButtonNext';
+import '../App.css';
 
 class Game extends Component {
   constructor() {
@@ -49,7 +50,7 @@ class Game extends Component {
 
     return (
       <div>
-        <Header />
+        <Header className="header" />
         <div>
           {
             loading

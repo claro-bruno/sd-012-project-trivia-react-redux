@@ -30,6 +30,7 @@
   flex-direction: column;
   font-size: calc(10px + 2vmin);
   justify-content: center;
+  margin-bottom: 5vh;
   min-height: 5%;
 }
 
@@ -58,8 +59,273 @@
 
 .correct-answer {
   border: 3px solid rgb(6, 240, 15);
+  border-radius: 3px;
+  height: 40px;
+  margin: 6px 0;
+  width: 120px;
+
 }
 
 .wrong-answer {
   border: 3px solid red;
+  border-radius: 3px;
+  height: 40px;
+  margin: 6px 0;
+  width: 120px;
+
+}
+
+.display-Inputs {
+  display: inline-block;
+  height: 25px;
+  margin: 0.9vh 0;
+  max-width: 300px;
+  width: 100%;
+}
+
+.form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 50%;
+}
+
+.btn-play {
+  background-color: rgb(63, 57, 145);
+  box-shadow: 1px 1px 3px #282c34;
+  color: aliceblue;
+}
+
+.btn-play:disabled {
+  background-color: gray;
+  box-shadow: none;
+  color: aliceblue;
+}
+
+
+.btn-play:active {
+  box-shadow: none;
+  transform: scale(0.9);
+  transition: 0.5s linear;
+}
+
+.btn-login {
+  border: none;
+  border-radius: 0.3em;
+  box-shadow: 1px 1px 3px #282c34;
+  font-size: 13px;
+  height: 30px;
+  margin: 1.5vh 0;
+  max-width: 150px;
+  text-align: center;
+  width: 70%;
+}
+
+.btn-login:active {
+  box-shadow: none;
+  transform: scale(0.9);
+  transition: 0.5s linear;
+}
+
+.header {
+  background-color: #3c4c70;
+  border-radius: 9px;
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+  min-width: 250px;
+  padding: 0 5px;
+  width: 62%;
+}
+
+.containerLogo {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+.logoAvatar {
+  border-radius: 50%;
+
+  /* margin-top: 10px; */
+}
+
+.score {
+  color: aliceblue;
+  font-size: 1.3em;
+  margin-top: 40px;
+}
+
+.category {
+  background-color: #545fa1;
+  border-radius: 100%;
+  bottom: 35px;
+  color: aliceblue;
+  height: 80px;
+  margin: 20px auto;
+  padding: 40px 5px 0;
+  position: relative;
+  width: 120px;
+}
+
+.container-btn {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-question {
+  border: none;
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px #282c34;
+  height: 40px;
+  margin: 6px 0;
+  width: 120px;
+}
+
+.container-feedback {
+  background-color: #545fa1;
+  border-radius: 9px;
+  margin: 30px auto;
+  min-width: 230px;
+  text-align: center;
+  width: 40%;
+}
+
+.feedback-title {
+  color: aliceblue;
+  padding-top: 20px;
+}
+
+.feedback-btn {
+  border: none;
+  border-radius: 0.3em;
+  box-shadow: 1px 1px 3px #282c34;
+  font-size: 13px;
+  height: 30px;
+  margin: 1.5vh 2px;
+  max-width: 150px;
+  text-align: center;
+  width: 70%;
+
+}
+
+.feedback-btn:active {
+  box-shadow: none;
+  transform: scale(0.9);
+  transition: 0.5s linear;
+}
+
+.feedback-score, .feedback-assertions, .user-feedback, .review-feedback {
+  color: aliceblue;
+}
+
+
+.img-feedback {
+  border-radius: 50%;
+}
+
+.btn-question:active {
+  box-shadow: none;
+  transform: scale(0.9);
+  transition: 0.5s linear;
+}
+
+.body {
+  background-image: url('https://i.pinimg.com/originals/5b/4c/d2/5b4cd292f6f382ab8d8a51b9fcaad5ed.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+}
+
+.container-question {
+  background-color: #3c4c70;
+  border-radius: 9px;
+  margin: 30px auto;
+  min-width: 230px;
+  padding: 15px;
+  text-align: center;
+  width: 60%;
+
+}
+
+.btn-next {
+  border: none;
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px black;
+  color: #3c4c70;
+  height: 40px;
+  margin: 6px 0;
+  width: 80px;
+}
+
+.btn-next:active {
+  box-shadow: none;
+  transform: scale(0.9);
+  transition: 0.5s linear;
+}
+
+.question {
+  color: aliceblue;
+}
+
+.timer {
+  color: aliceblue;
+  font-size: 22px;
+  position: relative;
+  text-align: right;
+}
+
+.lastTimer:after, .timer:after {
+  background-color: white;
+  color: white;
+  content: '';
+  display: block;
+  height: 0.5px;
+  margin: 20px 0;
+  opacity: 30%;
+  width: 100%;
+}
+
+.lastTimer {
+  color: red;
+  font-size: 22px;
+  position: relative;
+  text-align: right;
+}
+
+
+.user {
+  color: aliceblue;
+  font-size: 32px;
+  position: fixed;
+}
+
+@media ( max-width : 600px ) {
+
+  .header {
+    flex-wrap: wrap;
+  }
+
+  .user {
+    color: aliceblue;
+    font-size: 32px;
+    margin-right: 20px;
+    position: static;
+  }
+}
+
+@media ( max-width : 450px ) {
+
+  .header {
+    flex-wrap: wrap;
+  }
+
+  .score {
+    margin-bottom: 10px;
+    margin-top: 0;
+  }
+
 }

@@ -3,9 +3,10 @@ import { func, string, bool } from 'prop-types';
 
 class Button extends React.Component {
   render() {
-    const { onClick, itemName, disabled, testId } = this.props;
+    const { onClick, itemName, disabled, testId, className } = this.props;
     return (
       <button
+        className={ className }
         type="button"
         data-testid={ testId }
         disabled={ disabled }
@@ -22,6 +23,7 @@ Button.propTypes = {
   itemName: string.isRequired,
   disabled: bool.isRequired,
   testId: string.isRequired,
+  className: string.isRequired,
 };
 
 export default Button;

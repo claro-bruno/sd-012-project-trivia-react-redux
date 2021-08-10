@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 class ButtonRanking extends React.Component {
   render() {
-    const { onClick, itemName, testId } = this.props;
+    const { onClick, itemName, testId, className } = this.props;
     return (
       <button
         type="button"
-        className="btn-ranking"
+        className={ className }
         data-testid={ testId }
         onClick={ onClick }
       >

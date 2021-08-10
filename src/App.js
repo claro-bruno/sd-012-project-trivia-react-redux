@@ -14,14 +14,14 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={ logo } className="App-logo" alt="logo" />
-          <Switch>
-            <Route exact path="/" component={ Login } />
-            <Route path="/game" component={ Game } />
-            <Route path="/config" component={ Config } />
-            <Route path="/feedback" component={ Feedback } />
-            <Route path="/ranking" component={ Ranking } />
-          </Switch>
         </header>
+        <Switch>
+          <Route exact path="/" component={ Login } />
+          <Route path="/game" component={ Game } />
+          <Route path="/config" component={ Config } />
+          <Route path="/feedback" component={ Feedback } />
+          <Route path="/ranking" component={ Ranking } />
+        </Switch>
       </div>
     );
   }

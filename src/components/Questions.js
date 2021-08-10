@@ -6,7 +6,6 @@ import {
   actionAssertions, actionDisabled, actionScore, actionTimer } from '../redux/actions';
 import ButtonNext from './ButtonNext';
 import '../App.css';
-import Span from './Span';
 
 class Questions extends Component {
   constructor() {
@@ -145,21 +144,21 @@ class Questions extends Component {
       clearInterval(this.myInterval);
     }
     if (index === questions.length) { return <Redirect to="/feedback" />; }
-
+    const minSec = 10;
     return (
-      <>
+      <div className="container-question">
         <div>
-          <p data-testid="question-category">{questions[index].category}</p>
-          <p data-testid="question-text">
+          <p className="category" data-testid="question-category">
+            {questions[index].category}
+          </p>
+          <p testId="header-timer" className={ timer <= minSec ? 'lastTimer' : 'timer' }>
+            { timer }
+          </p>
+          <p className="question" data-testid="question-text">
             {this.replaceSpecialChars(questions[index].question)}
           </p>
-
-          <Span
-            textContent={ timer }
-            testId="header-timer"
-          />
         </div>
-        <div>
+        <div className="container-btn">
           {
             this.createQuestions().map((question) => (
               <button
@@ -173,7 +172,7 @@ class Questions extends Component {
                 onClick={ this.verifyAns }
                 className={ btnClicked || timer === 0
                   ? question.ifCorrect
-                  : '' }
+                  : 'btn-question' }
               >
                 {question.answer}
               </button>
@@ -182,8 +181,7 @@ class Questions extends Component {
         </div>
         { nextQuestion || timer === 0
           ? <ButtonNext testId="btn-next" changeQuestion={ this.changeQuestion } /> : ''}
-
-      </>
+      </div>
     );
   }
 }
