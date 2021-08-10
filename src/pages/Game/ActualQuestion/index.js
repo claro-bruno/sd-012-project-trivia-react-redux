@@ -152,7 +152,7 @@ class ActualQuestion extends Component {
 
     const answers = [...incorrectAnswers, correctAnswer];
     answers.sort();
-    const maxLength = 4;
+    const maxIndex = 4;
 
     return (
       <section>
@@ -161,7 +161,7 @@ class ActualQuestion extends Component {
         <p data-testid="question-text">{ question }</p>
         <div>
           { this.renderAnswers(answers, correctAnswer, answered) }
-          { answered && (questionIndex < maxLength ? (
+          { answered && (questionIndex < maxIndex ? (
             <button
               type="button"
               onClick={ () => { nextQuestion(); this.handleReset(); } }

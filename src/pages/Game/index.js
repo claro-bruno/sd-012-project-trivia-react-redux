@@ -22,8 +22,9 @@ class Game extends Component {
   }
 
   getQuestions() {
+    const numberOfQuestions = 5;
     const token = localStorage.getItem('token');
-    const endpoind = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    const endpoind = `https://opentdb.com/api.php?amount=${numberOfQuestions}&token=${token}`;
     fetch(endpoind)
       .then((response) => response.json())
       .then(({ results }) => this.setState({ questions: results, loaded: true }));
@@ -31,8 +32,8 @@ class Game extends Component {
 
   nextQuestion() {
     const { questionIndex: actualIndex } = this.state;
-    const maxLength = 4;
-    if (actualIndex < maxLength) {
+    const maxIndex = 4;
+    if (actualIndex < maxIndex) {
       this.setState(({ questionIndex }) => ({
         questionIndex: questionIndex + 1,
       }));
