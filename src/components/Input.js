@@ -11,6 +11,7 @@ export default class Input extends React.Component {
         onChange,
         testId,
         type,
+        className,
       },
     } = this;
     return (
@@ -23,6 +24,7 @@ export default class Input extends React.Component {
           type={ type }
           value={ value }
           onChange={ onChange }
+          className={ className }
           required
         />
       </label>
@@ -37,6 +39,7 @@ const {
 
 Input.propTypes = {
   name: string.isRequired,
+  className: string.isRequired,
   label: string.isRequired,
   value: string.isRequired,
   onChange: func.isRequired,

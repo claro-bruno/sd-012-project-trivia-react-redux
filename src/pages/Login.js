@@ -2,10 +2,11 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Input from '../components/Input';
+import LoginInputs from '../components/loginControlled/LoginInputs';
 import Button from '../components/Button';
 import logo from '../trivia.png';
 import { tokenFetchAPI, addLoginAction } from '../redux/actions';
+import '../css/Login.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -83,22 +84,12 @@ class Login extends React.Component {
         { redirectConfig && <Redirect to="/config" /> }
         { redirectRank && <Redirect to="/ranking" /> }
         <img src={ logo } className="App-logo" alt="logo" />
-        <form>
-          <Input
-            name="user"
-            testId="input-player-name"
-            label="Usuário"
-            onChange={ handleChange }
-            value={ user }
-            type="text"
-          />
-          <Input
-            name="email"
-            testId="input-gravatar-email"
-            label="E-mail"
-            onChange={ handleChange }
-            value={ email }
-            type="email"
+        <form className="login-form">
+          <LoginInputs
+            onChange1={ handleChange }
+            value1={ user }
+            onChange2={ handleChange }
+            value2={ email }
           />
           <Button
             testId="btn-play"
