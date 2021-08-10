@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import Game from './pages/Game';
 import Ranking from './pages/Ranking';
-import Result from './pages/Result';
+import Result from './pages/Feedback';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
 
@@ -16,7 +16,7 @@ class App extends React.Component {
             <Route exact path="/" component={ Login } />
             <Route path="/game" component={ Game } />
             <Route path="/ranking" component={ Ranking } />
-            <Route path="/result" component={ Result } />
+            <Route path="/feedback" component={ Feedback } />
             <Route path="/settings" component={ Settings } />
           </Switch>
         </header>
