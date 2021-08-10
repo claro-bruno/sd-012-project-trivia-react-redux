@@ -192,9 +192,7 @@ class Trivia extends React.Component {
     return (
       <div>
         <div className="time-counter">{`Time remaining: ${time}`}</div>
-        <h4 data-testid="question-category">{category}</h4>
         <h4>{ `Difficulty: ${difficulty}` }</h4>
-        <h3 data-testid="question-text">{`Pergunta:${this.verficaString(question)}`}</h3>
         <h4 className="category-questions" data-testid="question-category">{category}</h4>
         <h3
           className="questions"

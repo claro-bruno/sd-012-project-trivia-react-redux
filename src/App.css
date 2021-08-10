@@ -4,16 +4,16 @@
 
 button {
   background-color: #71b3b8;
-  border-radius: 4px;
   border: none;
+  border-radius: 4px;
   color: white;
-  padding: 10px 22px;
-  text-align: center;
-  text-decoration: none;
+  cursor: pointer;
   display: inline-block;
   font-size: 16px;
   margin: 4px 20px;
-  cursor: pointer;
+  padding: 10px 22px;
+  text-align: center;
+  text-decoration: none;
   transition: 0.2s;
 }
 
@@ -23,8 +23,8 @@ button:hover {
 
 .profile-image {
   border-radius: 50%;
-  width: 150px;
   box-shadow: 2px 2px 15px rgb(126, 120, 120);
+  width: 150px;
 }
 
 .App-logo {
