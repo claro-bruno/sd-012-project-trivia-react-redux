@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import ConnectFeedback from '../pages/Feedback';
 import { questionTest } from '../data';
 
 class StaticTrivia extends Component {
@@ -62,43 +61,38 @@ class StaticTrivia extends Component {
   }
 
   render() {
-    const { nextQuestion, currentQuestion } = this.props;
-    const maxQuestions = 5;
-    if (currentQuestion < maxQuestions) {
-      return (
-        <div>
-          <span data-testid="question-category">
-            { questionTest[currentQuestion].category }
-          </span>
-          <p data-testid="question-text">
-            { questionTest[currentQuestion].question }
-          </p>
-          { this.shuffledAnswers(questionTest[currentQuestion]) }
-          <button
-            className="btn-next"
-            data-testid="btn-next"
-            type="button"
-            onClick={ nextQuestion }
-          >
-            Próxima
-          </button>
-          <button type="button" data-testid="btn-play-again">
-            <Link to="/">Jogar novamente</Link>
-          </button>
-          <button type="button" data-testid="btn-ranking">
-            <Link to="/ranking">Ver Ranking</Link>
-          </button>
-        </div>
-      );
-    }
-    return <ConnectFeedback />;
+    const { nextQuestion } = this.props;
+    return (
+      <div>
+        <span data-testid="question-category">
+          { questionTest.category }
+        </span>
+        <p data-testid="question-text">
+          { questionTest.question }
+        </p>
+        { this.shuffledAnswers(questionTest) }
+        <button
+          className="btn-next"
+          data-testid="btn-next"
+          type="button"
+          onClick={ nextQuestion }
+        >
+          Próxima
+        </button>
+        <button type="button" data-testid="btn-play-again">
+          <Link to="/">Jogar novamente</Link>
+        </button>
+        <button type="button" data-testid="btn-ranking">
+          <Link to="/ranking">Ver Ranking</Link>
+        </button>
+      </div>
+    );
   }
 }
 
 StaticTrivia.propTypes = {
   handleClick: PropTypes.func.isRequired,
   nextQuestion: PropTypes.func.isRequired,
-  currentQuestion: PropTypes.number.isRequired,
 };
 
 export default StaticTrivia;

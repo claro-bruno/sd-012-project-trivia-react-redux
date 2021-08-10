@@ -18,8 +18,8 @@ class Header extends Component {
   }
 
   handleGetItem() {
-    const userName = JSON.parse(localStorage.getItem('state'));
-    this.setState({ userName: userName.player.name });
+    const userName = localStorage.getItem('userName');
+    this.setState({ userName });
   }
 
   handleGravatar() {
