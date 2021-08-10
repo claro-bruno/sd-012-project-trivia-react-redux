@@ -35,8 +35,7 @@ class Questions extends Component {
   }
 
   handleClick({ target }) {
-    this.setState({ disabled: true, next: true });
-    target.classList.add('selected');
+    this.setState({ disabled: true, next: true }, () => target.classList.add('selected'));
     clearInterval(this.interval);
   }
 
