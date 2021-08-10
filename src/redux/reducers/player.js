@@ -15,7 +15,6 @@ const player = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       score: state.score + action.point,
-      assertions: state.assertions + action.assertion,
     };
   case GET_USER_DATA:
     return {
@@ -24,14 +23,17 @@ const player = (state = INITIAL_STATE, action) => {
       gravatarEmail: action.email,
       score: 0,
       assertions: 0,
+      profilePicture: '',
     };
   case GUESS_UPDATE:
     return {
-      ...state, assertions: action.payload,
+      ...state,
+      assertions: state.assertions + action.payload,
     };
   case PROFILE_PICTURE:
     return {
-      ...state, profilePicture: action.payload,
+      ...state,
+      profilePicture: action.payload,
     };
   default:
     return state;
