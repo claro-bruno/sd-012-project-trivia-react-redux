@@ -27,8 +27,10 @@ class Settings extends Component {
   }
 
   handleChange({ target: { name, value } }) {
+    const { parameters } = this.state;
     this.setState({
       parameters: {
+        ...parameters,
         [name]: value,
       },
     });
@@ -90,10 +92,10 @@ class Settings extends Component {
               <button
                 type="button"
                 onClick={ () => {
+                  setParams(parameters);
                   this.setState({
                     redirect: true,
                   });
-                  setParams(parameters);
                 } }
                 className="btn btn-dark"
               >
