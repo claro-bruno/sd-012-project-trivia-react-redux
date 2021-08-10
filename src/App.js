@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Trivia from './pages/Trivia';
 import './App.css';
 import Settings from './pages/Settings';
+import Ranking from './pages/Ranking';
 
 class App extends Component {
   render() {
@@ -32,6 +33,10 @@ class App extends Component {
         <Route
           path="/settings"
           component={ Settings }
+        />
+        <Route
+          path="/ranking"
+          component={ Ranking }
         />
       </Switch>
     );

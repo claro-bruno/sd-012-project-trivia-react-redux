@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { BORDER_BLACK } from '../data';
 import StaticTrivia from '../components/StaticTrivia';
@@ -47,9 +48,10 @@ class Trivia extends Component {
   }
 
   updateTimer(prevState) {
-    if (prevState.timer === 0) {
+    if (prevState.timer <= 0) {
       this.setState({
         currentQuestion: prevState.currentQuestion + 1,
+        timer: 30,
       });
     }
   }
@@ -165,6 +167,9 @@ class Trivia extends Component {
           style={ { display: 'none' } }
         >
           Próxima
+        </button>
+        <button type="button" data-testid="btn-ranking">
+          <Link to="/ranking">Ver Ranking</Link>
         </button>
       </div>
     );
