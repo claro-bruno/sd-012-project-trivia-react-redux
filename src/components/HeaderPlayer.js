@@ -4,11 +4,11 @@ import md5 from 'crypto-js/md5';
 import styled from 'styled-components';
 
 const Header = styled.header`
-  background-color: hsl(217, 28%, 15%);
-  margin-bottom: 2rem;
+  background-color: hsl(218, 28%, 13%);
+  margin-bottom: 1rem;
 
   @media (min-width: 60rem) {
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
   }
 `;
 

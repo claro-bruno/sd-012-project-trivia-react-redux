@@ -18,6 +18,10 @@ const GlobalStyle = createGlobalStyle`
   h1, h2, h3 {
     font-weight: 600;
   }
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 export default function App() {

@@ -51,7 +51,7 @@ const Answer = styled.button`
   font-size: 0.875rem;
   color: hsl(0, 0%, 100%);
   width: 100%;
-  max-width: 30rem;
+  max-width: 27.5rem;
   margin-bottom: 1rem;
   margin-left: auto;
   margin-right: auto;
@@ -85,12 +85,14 @@ const Grid = styled.main`
   max-width: 40rem;
   margin-left:auto;
   margin-right:auto;
+  margin-top: 2rem;
   padding-left: 1rem;
   padding-right: 1rem;
   display: grid;
   gap: 2rem;
 
   @media screen and (min-width: 60rem) {
+    margin-top: 4rem;
     max-width: 60rem;
     padding-left: 2rem;
     padding-right: 2rem;
