@@ -19,7 +19,7 @@ class Feedback extends React.Component {
     const userInfo = localStorage.getItem('player');
     const playerInfo = JSON.parse(userInfo);
 
-    const { name, assertions, score, gravatarEmail } = playerInfo;
+    const { player: { name, assertions, score, gravatarEmail } } = playerInfo;
 
     return (name, assertions, score, gravatarEmail);
   }
