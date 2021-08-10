@@ -73,11 +73,13 @@ class Login extends React.Component {
     const userEmail = md5(email).toString();
 
     const player = {
+      player: {
       name,
       assertions: 0,
       score: 0,
       gravatarEmail: userEmail,
-    };
+    }
+  };
 
     localStorage.setItem('state', JSON.stringify(player));
   }

@@ -113,7 +113,13 @@ class Trivia extends Component {
     );
   }
 
-  handleClick({ target }) {
+  async handleClick({ target }) {
+    this.handleColor();
+    await this.handleScore(target);
+    this.handleStorage(target);
+  }
+
+  handleColor() {
     const correct = document.querySelector('.correct-answer');
     const incorrects = document.querySelectorAll('.wrong-answer');
     correct.style.border = '3px solid rgb(6, 240, 15)';
@@ -122,17 +128,15 @@ class Trivia extends Component {
     }
     const next = document.querySelector('.btn-next');
     next.style.display = 'block';
-    this.handleAssertions(target);
-    this.handleScore(target);
-    this.handleStorage(target);
   }
 
   handleScore(target) {
-    const { timer, currentQuestion, score } = this.state;
+    const { timer, currentQuestion } = this.state;
     const { questions } = this.props;
     const { className } = target;
-    const DEZ = 10; const hard = 3; const
-      medium = 2;
+    const DEZ = 10; 
+    const hard = 3;
+    const medium = 2;
 
     const rate = questions[currentQuestion].difficulty;
     let result = 0;
@@ -140,16 +144,12 @@ class Trivia extends Component {
       if (rate === 'easy') result = DEZ + timer;
       if (rate === 'medium') result = DEZ + (timer * medium);
       if (rate === 'hard') result = DEZ + (timer * hard);
-    }
-    this.setState({ score: score + result });
-  }
 
-  handleAssertions(target) {
-    const { assertions } = this.state;
-    const { className } = target;
-    return (className === 'correct-answer')
-      ? this.setState({ assertions: assertions + 1 })
-      : assertions;
+      this.setState((prevstate) => ({
+        score: prevstate.score + result,
+        assertions: prevstate.assertions + 1,
+      }));
+    }
   }
 
   handleStorage() {
@@ -157,10 +157,12 @@ class Trivia extends Component {
     const { assertions, score } = this.state;
 
     const player = {
-      name: state.name,
-      assertion: assertions,
-      score,
-      gravatarEmail: state.gravatarEmail,
+      player: {
+        name: state.player.name,
+        assertions,
+        score,
+        gravatarEmail: state.player.gravatarEmail,
+      } 
     };
     localStorage.setItem('state', JSON.stringify(player));
   }
@@ -182,7 +184,7 @@ class Trivia extends Component {
     if (questions.length === 0) {
       return (
         <div>
-          <Header score={ score } />
+          <Header />
           <span>{ timer }</span>
           <StaticTrivia
             handleClick={ this.handleClick }
@@ -193,7 +195,7 @@ class Trivia extends Component {
     }
     return (
       <div>
-        <Header score={ score } />
+        <Header />
         <span>{ timer }</span>
         <span data-testid="question-category">
           { questions[currentQuestion].category }
