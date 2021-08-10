@@ -6,7 +6,8 @@ import Header from '../components/Header';
 
 class Feedback extends Component {
   render() {
-    const { assertions, score } = this.props;
+    const { player: { assertions } } = JSON.parse(localStorage.getItem('state'));
+    const { score } = JSON.parse(localStorage.getItem('state'));
     const minAssertions = 3;
     return (
       <div>
@@ -35,9 +36,9 @@ class Feedback extends Component {
   }
 }
 
-Feedback.propTypes = {
+Feedback.state = {
   assertions: PropTypes.number.isRequired,
-  score: PropTypes.number.isRequired,
+  score: localStorage.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
