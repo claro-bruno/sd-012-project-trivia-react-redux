@@ -8,9 +8,15 @@ class Timer extends React.Component {
     };
     this.changeCurrentTime = this.changeCurrentTime.bind(this);
     this.disableBtn = this.disableBtn.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
   }
 
   componentDidMount() {
+    this.changeCurrentTime();
+  }
+
+  handleUpdate() {
+    this.setState({ currentTime: 30 });
     this.changeCurrentTime();
   }
 
@@ -38,7 +44,9 @@ class Timer extends React.Component {
   render() {
     const { currentTime } = this.state;
     return (
-      <div>{ currentTime }</div>
+      <div>
+        { currentTime }
+      </div>
     );
   }
 }
