@@ -79,6 +79,7 @@ class Game extends React.Component {
       return (
         <button
           type="button"
+          data-testid="btn-next"
           onClick={ () => push('/feedback') } // fazer push para a tela de feedback
         >
           Ver Resultado
