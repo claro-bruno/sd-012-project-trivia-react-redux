@@ -20,7 +20,7 @@ class Answers extends React.Component {
     return array;
   }
 
-  answers(question, show, sendShowAnswers) {
+  answers(question, show) {
     const answers = [...question.incorrect_answers, question.correct_answer];
     const arrayAnswers = this.shuffleArray(answers);
     const { onClick } = this.props;
@@ -61,8 +61,8 @@ class Answers extends React.Component {
   }
 
   render() {
-    const { question, show, sendShowAnswers } = this.props;
-    return this.answers(question, show, sendShowAnswers);
+    const { question, show } = this.props;
+    return this.answers(question, show);
   }
 }
 
@@ -72,7 +72,7 @@ Answers.propTypes = {
     incorrect_answers: PropTypes.arrayOf(PropTypes.string.isRequired)
       .isRequired,
   }).isRequired,
-  sendShowAnswers: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
 };
 
