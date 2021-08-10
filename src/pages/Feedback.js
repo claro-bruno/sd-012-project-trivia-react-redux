@@ -49,10 +49,10 @@ class Feedback extends React.Component {
           }
         </h2>
         <p data-testid="feedback-total-score">
-          { `Sua pontuação final foi: ${score}` }
+          {score}
         </p>
         <p data-testid="feedback-total-question">
-          { `Você acertou ${assertions} questões` }
+          {assertions}
         </p>
       </>
     );
