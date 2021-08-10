@@ -16,6 +16,8 @@ class Questions extends Component {
     this.answersRender = this.answersRender.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.countdown = this.countdown.bind(this);
+    this.calculateScore = this.calculateScore.bind(this);
+    this.getDifficultyPoints = this.getDifficultyPoints.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +39,29 @@ class Questions extends Component {
   handleClick({ target }) {
     this.setState({ disabled: true, next: true }, () => target.classList.add('selected'));
     clearInterval(this.interval);
+    this.calculateScore(target);
+  }
+
+  getDifficultyPoints() {
+    const { questions } = this.state;
+    switch (questions[0].difficulty) {
+      case 'easy':
+        return 1;
+      case 'medium':
+        return 2;
+      case 'hard':
+        return 3;
+      default:
+        return 1;
+    }
+  }
+
+  calculateScore(target) {
+    const { time } = this.state;
+    const difficulty = 
+    if (target.id === 'correct-answer') {
+
+    }
   }
 
   answersRender() {
