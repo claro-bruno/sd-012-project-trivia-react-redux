@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { actionSettings } from '../redux/actions';
 
 const URL = 'https://opentdb.com/api_category.php';
@@ -14,16 +15,16 @@ class Settings extends React.Component {
       category: '0',
       difficulty: '0',
       type: '0',
-    }
+    };
 
     this.changeHandle = this.changeHandle.bind(this);
   }
 
   componentDidMount() {
     fetch(URL)
-    .then((response) => response.json())
-    .then((data) => this.setState({ categories: data.trivia_categories }))
-    .catch((error) => error);
+      .then((response) => response.json())
+      .then((data) => this.setState({ categories: data.trivia_categories }))
+      .catch((error) => error);
   }
 
   changeHandle({ target }) {
@@ -38,7 +39,6 @@ class Settings extends React.Component {
       };
       getSettings(obj);
     });
-    
   }
 
   render() {
@@ -48,7 +48,7 @@ class Settings extends React.Component {
         <h1 data-testid="settings-title">Configurações</h1>
         <select onChange={ this.changeHandle } id="category">
           <option value="0">Qualquer Categoria</option>
-          {categories.map((category) => ( 
+          {categories.map((category) => (
             <option key={ category.id } value={ category.id }>
               { category.name }
             </option>
@@ -76,3 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(Settings);
+
+Settings.propTypes = {
+  getSettings: PropTypes.func.isRequired,
+};

@@ -210,5 +210,5 @@ Questions.propTypes = {
   score: PropTypes.number.isRequired,
   difficulty: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
-  type:PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
