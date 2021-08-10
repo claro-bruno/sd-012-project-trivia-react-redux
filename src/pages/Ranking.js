@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import RankingList from '../component/RankingList';
 
 export default class Game extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ export default class Game extends Component {
     return (
       <div data-testid="ranking-title">
         Ranking
+        <RankingList />
         <button
           type="button"
           data-testid="btn-go-home"

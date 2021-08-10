@@ -16,12 +16,34 @@ class Feedback extends React.Component {
     this.changeRoutes = this.changeRoutes.bind(this);
   }
 
+  componentDidMount() {
+    this.localStorageRankingArray();
+  }
+
   changeRoute() {
     this.setState({ redirect: true });
   }
 
   changeRoutes() {
     this.setState({ redirect2: true });
+  }
+
+  localStorageRankingArray() {
+    const history = JSON.parse(localStorage.getItem('history'));
+    const { player } = JSON
+      .parse(localStorage.getItem('state'));
+    if (history === null) {
+      const hist = [
+        player,
+      ];
+      const stringifyHistory = JSON.stringify(hist);
+      localStorage.setItem('history', stringifyHistory);
+    } else {
+      history.push(player);
+      history.sort((a, b) => b.score - a.score);
+      const stringifyHistory = JSON.stringify(history);
+      localStorage.setItem('history', stringifyHistory);
+    }
   }
 
   render() {
