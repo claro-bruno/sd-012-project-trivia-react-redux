@@ -34,7 +34,7 @@ class Game extends React.Component {
         button.classList.add('correct');
       } else button.classList.add('wrong');
     });
-    nextButton.classList.remove('isVisible')
+    nextButton.classList.remove('isVisible');
   }
 
   async displayQuiz() {
@@ -110,14 +110,13 @@ class Game extends React.Component {
   handleClick() {
     const { index } = this.state;
     const arrLength = 4;
-    const nextButton = document.getElementById('next-button')
+    const nextButton = document.getElementById('next-button');
     console.log('fui clicado');
     if (index < arrLength) {
       this.setState((prevState) => ({
         index: prevState.index + 1,
-      })
-      )
-      return nextButton.classList.add('isVisible')
+      }));
+      return nextButton.classList.add('isVisible');
     }
     return this.setState({
       redirect: true,
@@ -133,8 +132,6 @@ class Game extends React.Component {
         <Timer />
         { redirect ? <Redirect to="/score" /> : null }
         { loading ? <Loading /> : this.displayQuestion() }
-        {/* <button onClick={ this.handleClick } data-testid="btn-next" type="button" 
-        className='isVisible btn btn-primary'/> */}
         <button
           onClick={ this.handleClick }
           type="button"
