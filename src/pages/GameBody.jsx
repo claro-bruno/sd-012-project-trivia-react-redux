@@ -91,20 +91,11 @@ class GameBody extends Component {
     )));
   }
 
-  buttonAnswer(event) {
-    const { correct } = this.state;
-    if (event.target.id === correct) {
-      console.log('acertou');
-      this.setState({
-        className: 'correctAnswer',
-        className2: 'incorrectAnswer',
-      });
-    } else {
-      this.setState({
-        className: 'correctAnswer',
-        className2: 'incorrectAnswer',
-      });
-    }
+  buttonAnswer() {
+    this.setState({
+      className: 'correctAnswer',
+      className2: 'incorrectAnswer',
+    });
   }
 
   render() {
