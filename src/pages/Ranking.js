@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 class Ranking extends React.Component {
   render() {
@@ -20,7 +22,15 @@ class Ranking extends React.Component {
           ))}
         </ul>
         <Link to="/">
-          <button data-testid="btn-go-home" type="button">Início</button>
+          <Button
+            type="button"
+            data-testid="btn-go-home"
+            variant="contained"
+            color="primary"
+          >
+            <ArrowBackIcon />
+            Início
+          </Button>
         </Link>
       </section>
     );
