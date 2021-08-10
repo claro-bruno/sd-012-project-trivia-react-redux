@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 
 class Feedback extends Component {
   render() {
-    const { player: { assertions } } = JSON.parse(localStorage.getItem('state'));
-    const { score } = JSON.parse(localStorage.getItem('state'));
+    const { player } = JSON.parse(localStorage.getItem('state'));
+    const { assertions, score } = player;
     const minAssertions = 3;
     return (
       <div>
@@ -36,10 +36,6 @@ class Feedback extends Component {
   }
 }
 
-Feedback.state = {
-  assertions: PropTypes.number.isRequired,
-  score: localStorage.number.isRequired,
-};
 
 const mapStateToProps = (state) => ({
   assertions: state.user.assertions,
