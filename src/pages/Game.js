@@ -76,7 +76,7 @@ class Game extends React.Component {
       break;
     }
     if (target.value === correctAnswer) {
-      getPoint(point + (timer * difficultyValue));
+      getPoint(point + (timer * difficultyValue), 1);
       saveLocalStorage();
     }
   }

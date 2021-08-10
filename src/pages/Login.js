@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getUserData } from '../redux/actions';
-import saveLocalStorage from '../helper/saveLocalStorage';
+// import saveLocalStorage from '../helper/saveLocalStorage';
 import getUserInfo from '../services/api';
 
 class Login extends React.Component {
@@ -42,11 +42,21 @@ class Login extends React.Component {
 
   async handleLogin() {
     const { name, email } = this.state;
+    const { score, assertions, gravatarEmail } = this.props;
     const userInfo = await getUserInfo();
     localStorage.setItem('token', userInfo.token);
     const { getUser, history } = this.props;
     getUser(name, email);
-    saveLocalStorage();
+    const obj = {
+      player: {
+        name,
+        assertions,
+        score,
+        gravatarEmail,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(obj));
+    // saveLocalStorage();
     history.push('/game');
   }
 
@@ -88,6 +98,12 @@ class Login extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  score: state.player.score,
+  assertions: state.player.assertions,
+  gravatarEmail: state.player.gravatarEmail,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   getUser: (name, email) => dispatch(getUserData(name, email)),
 });
@@ -97,6 +113,9 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  score: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
