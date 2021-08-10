@@ -55,6 +55,24 @@ class Feedback extends React.Component {
     return (`https://www.gravatar.com/avatar/${criptedEmail}`);
   }
 
+  mandouBem() {
+    return (
+      <div>
+        <img className="mandou_bem" src={ mandouBem } alt="Silvio mandando beijo" />
+        <p data-testid="feedback-text">Mandou bem!</p>
+      </div>
+    );
+  }
+
+  podiaSerMelhor() {
+    return (
+      <div>
+        <img className="podiaMelhor" src={ podiaSerMelhor } alt="Silvio caindo" />
+        <p data-testid="feedback-text">Podia ser melhor...</p>
+      </div>
+    );
+  }
+
   render() {
     const { score, assertions } = this.state;
     return (
@@ -73,14 +91,8 @@ class Feedback extends React.Component {
             <p data-testid="feedback-total-question">{assertions}</p>
           </h3>
           {(assertions >= SCORE_NUMBER)
-            ? <> <img className="mandou_bem" src={ mandouBem } />
-              <p data-testid="feedback-text">Mandou bem!</p>
-             </>
-            : <>
-            <img className="podiaMelhor" src={ podiaSerMelhor } />
-            <p data-testid="feedback-text">Podia ser melhor...</p> 
-            </>
-            }
+            ? this.mandouBem()
+            : this.podiaSerMelhor() }
         </div>
         <div>
           <Link to="/">
