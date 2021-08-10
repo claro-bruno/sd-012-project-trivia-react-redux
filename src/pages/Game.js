@@ -26,7 +26,7 @@ class Game extends React.Component {
     this.buttonColorDisabler = this.buttonColorDisabler.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.enableButton = this.enableButton.bind(this);
-    this.setToRedux = this.setToRedux.bind(this);
+    this.setToLocal = this.setToLocal.bind(this);
   }
 
   componentDidMount() {
@@ -51,7 +51,7 @@ class Game extends React.Component {
     localStorage.setItem('state', myValue);
   }
 
-  setToRedux() {
+  setToLocal() {
     const player = JSON.parse(localStorage.getItem('state'));
     const defineObj = {
       name: player.player.name,
@@ -181,7 +181,7 @@ class Game extends React.Component {
     if (questionNumber > max) {
       return (
         <>
-          { this.setToRedux() }
+          { this.setToLocal() }
         </>
       );
     }
