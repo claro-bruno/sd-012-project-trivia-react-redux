@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { getQuiz } from '../redux/actions';
 import Loading from '../components/Loading';
+import Timer from '../components/Timer';
 import './Game.css';
 
 class Game extends React.Component {
@@ -14,7 +15,6 @@ class Game extends React.Component {
       loading: true,
       index: 0,
       redirect: false,
-      isVisible: false,
     };
     this.displayQuiz = this.displayQuiz.bind(this);
     this.displayQuestion = this.displayQuestion.bind(this);
@@ -24,10 +24,6 @@ class Game extends React.Component {
 
   componentDidMount() {
     this.displayQuiz();
-  }
-
-  addClass() {
-    const nextButton = document.querySelector('#select-button')
   }
 
   onClickAnswer() {
@@ -84,7 +80,6 @@ class Game extends React.Component {
 
     const sortedArray = [correct, ...incorrect];
     this.shuffleArray(sortedArray);
-    console.log(sortedArray);
     return (
       <div>
         <p data-testid="question-category">{ category }</p>
@@ -95,10 +90,17 @@ class Game extends React.Component {
             <li
               key={ item }
               className="answer-buttons"
-              data-testid={ this.checkCorrect(item, correct, i) }
-              id={ this.checkCorrect(item, correct, i) }
-            >  
-              <button type="button" onClick={ this.onClickAnswer }>{item}</button>
+            >
+              <button
+                id={ this.checkCorrect(item, correct, i) }
+                data-testid={ this.checkCorrect(item, correct, i) }
+                className="answer-buttons"
+                type="button"
+                onClick={ this.onClickAnswer }
+              >
+                {item}
+
+              </button>
             </li>)) }
         </ul>
       </div>
@@ -108,10 +110,14 @@ class Game extends React.Component {
   handleClick() {
     const { index } = this.state;
     const arrLength = 4;
+    const nextButton = document.getElementById('next-button')
+    console.log('fui clicado');
     if (index < arrLength) {
-      return this.setState((prevState) => ({
+      this.setState((prevState) => ({
         index: prevState.index + 1,
-      }));
+      })
+      )
+      return nextButton.classList.add('isVisible')
     }
     return this.setState({
       redirect: true,
@@ -120,15 +126,22 @@ class Game extends React.Component {
 
   render() {
     const { loading, redirect, index } = this.state;
-    const { isVisible } = this.state
     const redirectNumber = 4;
     return (
       <div>
         <Header />
+        <Timer />
         { redirect ? <Redirect to="/score" /> : null }
         { loading ? <Loading /> : this.displayQuestion() }
-        <button onClick={ this.handleClick } data-testid="btn-next" type="button" 
-        className='isVisible btn btn-primary'>
+        {/* <button onClick={ this.handleClick } data-testid="btn-next" type="button" 
+        className='isVisible btn btn-primary'/> */}
+        <button
+          onClick={ this.handleClick }
+          type="button"
+          className="isVisible btn btn-primary"
+          id="next-button"
+          data-testid="btn-next"
+        >
           { index < redirectNumber ? 'Proxima' : 'Ver Pontuação' }
         </button>
       </div>
