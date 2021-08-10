@@ -33,22 +33,24 @@ class Game extends React.Component {
 
   // requisito 10
   btnNext() {
-    const { questions, history: { push } } = this.props;
+    const { history: { push } } = this.props;
     const { index } = this.state;
     const numberQuestions = 4;
+    const { show } = this.props;
 
-    if (index !== 0 && index < numberQuestions) {
+    if (show && index < numberQuestions) {
       return (
         <button
           type="button"
           data-testid="btn-next"
-          onClick={ () => this.showNextQuestion(questions) }
+          onClick={ () => this.showNextQuestion() }
         >
           Próxima
         </button>
       );
     }
-    if (index !== 0 && index > numberQuestions) {
+
+    if (show && index === numberQuestions) {
       return (
         <button
           type="button"
@@ -60,57 +62,46 @@ class Game extends React.Component {
     }
   }
 
-  page(params) {
-    const { show, questions, sendShowAnswers, index } = params;
-    return (
-      <>
-        <HeaderGame />
-        { questions.length > 0 ? (
-          <section className="App">
-            <Timer />
-            <div>
-              <p data-testid="question-category">
-                <strong>Categoria: </strong>
-                { questions[index].category }
-              </p>
-              <h3 data-testid="question-text">
-                <strong>Pergunta: </strong>
-                { questions[index].question }
-              </h3>
-              <Answers
-                show={ show }
-                question={ questions[index] }
-                sendShowAnswers={ sendShowAnswers }
-              />
-            </div>
-            { this.btnNext() }
-          </section>
-        ) : (
-          <Loading />
-        )}
-      </>
-    );
+  incorrectAndCorrectQuestion() {
+    const { sendShowAnswers } = this.props;
+    sendShowAnswers(true);
+    this.btnNext();
   }
 
   render() {
-    const {
-      show,
-      questions,
-      isFetching,
-      sendShowAnswers,
-      history: { push },
-    } = this.props;
+    const { questions, isFetching, show } = this.props;
     const { index } = this.state;
-    const numberQuestions = 4;
     if (isFetching) return <Loading />;
-    return this.page({
-      show,
-      questions,
-      sendShowAnswers,
-      push,
-      index,
-      numberQuestions,
-    });
+
+    return (
+      <>
+        <HeaderGame />
+        {
+          questions.length > 0 ? (
+            <section className="App">
+              <Timer />
+              <div>
+                <p data-testid="question-category">
+                  <strong>Categoria: </strong>
+                  { questions[index].category }
+                </p>
+                <h3 data-testid="question-text">
+                  <strong>Pergunta: </strong>
+                  { questions[index].question }
+                </h3>
+                <Answers
+                  show={ show }
+                  question={ questions[index] }
+                  onClick={ () => this.incorrectAndCorrectQuestion() }
+                />
+              </div>
+              { this.btnNext() }
+            </section>
+          )
+            : <Loading />
+        }
+      </>
+    );
   }
 }
 

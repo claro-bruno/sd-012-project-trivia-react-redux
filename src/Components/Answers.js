@@ -23,6 +23,7 @@ class Answers extends React.Component {
   answers(question, show, sendShowAnswers) {
     const answers = [...question.incorrect_answers, question.correct_answer];
     const arrayAnswers = this.shuffleArray(answers);
+    const { onClick } = this.props;
     let controllIncorrects = 0;
     return (
       arrayAnswers.map((answer, index) => {
@@ -31,7 +32,8 @@ class Answers extends React.Component {
             <button
               key={ index }
               type="button"
-              onClick={ () => sendShowAnswers(true) }
+              // onClick={ () => sendShowAnswers(true) }
+              onClick={ () => onClick() }
               data-testid="correct-answer"
               className={ show ? 'correct answer-btn' : 'answer-btn' }
               name="wrong-answer"
@@ -47,7 +49,8 @@ class Answers extends React.Component {
             key={ index }
             type="button"
             className={ show ? 'wrong answer-btn' : 'answer-btn' }
-            onClick={ () => sendShowAnswers(true) }
+            // onClick={ () => sendShowAnswers(true) }
+            onClick={ () => onClick() }
             data-testid={ `wrong-answer-${controllIncorrects - 1}` }
           >
             {question.incorrect_answers[controllIncorrects - 1]}
