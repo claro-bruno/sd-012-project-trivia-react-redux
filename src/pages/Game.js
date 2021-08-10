@@ -4,6 +4,7 @@ import { getQuestions } from '../services/api';
 import ButtonNextQuestion from '../components/ButtonNextQuestion';
 import Timer from '../components/Timer';
 import Header from '../components/Header';
+import '../App.css';
 
 class Game extends Component {
   constructor(props) {
@@ -20,6 +21,8 @@ class Game extends Component {
     this.renderQuestions = this.renderQuestions.bind(this);
     this.score = this.score.bind(this);
   }
+
+  // refactor: e possivel colocar o timer dentro do componentDidMount
 
   componentDidMount() {
     this.getQuestions1();
@@ -85,7 +88,7 @@ class Game extends Component {
           <button
             type="button"
             data-testid="correct-answer"
-            className="correct-answer-btn"
+            className={ answered ? 'correct-answer-btn' : '' }
             id="correct-btn"
             onClick={ () => this.score(quest) }
           >
@@ -96,7 +99,8 @@ class Game extends Component {
               data-testid={ `wrong-answer-${index1}` }
               key={ index1 }
               type="button"
-              className="incorrect-answer-btn"
+              id="incorrect-btn"
+              className={ answered ? 'incorrect-answer-btn' : '' }
               onClick={ () => this.setState({ answered: true }) }
             >
               {wrong}
@@ -119,7 +123,7 @@ class Game extends Component {
         <ButtonNextQuestion
           disableButton={ disableButton }
           answered={ answered }
-          /*  buttonEnable={ this.buttonEnable } */
+          // buttonEnable={ this.buttonEnable }
           // colocar o buttonEnable após o return da modificação das bordas tanto para resetar
           // a borda, quanto para habilitar o botao para pergunta seguinte.
         />
