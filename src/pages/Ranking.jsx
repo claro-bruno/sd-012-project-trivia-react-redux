@@ -13,7 +13,7 @@ class Ranking extends Component {
   render() {
     const ranks = this.getListRanking();
     return (
-      <div>
+      <div className="ranking-body">
         <h1>PLACAR</h1>
         <div className="FixedHeightContainer">
           <h1 data-testid="ranking-title">Ranking</h1>
