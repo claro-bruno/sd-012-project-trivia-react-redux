@@ -33,10 +33,10 @@ class Answers extends React.Component {
               key={ index }
               type="button"
               // onClick={ () => sendShowAnswers(true) }
-              onClick={ () => onClick() }
+              onClick={ (event) => onClick(event) }
               data-testid="correct-answer"
               className={ show ? 'correct answer-btn' : 'answer-btn' }
-              name="wrong-answer"
+              name="correct"
             >
               {question.correct_answer}
             </button>
@@ -48,9 +48,10 @@ class Answers extends React.Component {
           <button
             key={ index }
             type="button"
+            name="wrong"
             className={ show ? 'wrong answer-btn' : 'answer-btn' }
             // onClick={ () => sendShowAnswers(true) }
-            onClick={ () => onClick() }
+            onClick={ (event) => onClick(event) }
             data-testid={ `wrong-answer-${controllIncorrects - 1}` }
           >
             {question.incorrect_answers[controllIncorrects - 1]}

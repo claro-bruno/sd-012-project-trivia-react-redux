@@ -12,12 +12,24 @@ class Game extends React.Component {
     this.state = {
       index: 0,
       currentTime: 30,
+      isAnswered: false,
+      timer: 30,
+      result: 0,
+      player: {
+        name: '',
+        assertions: 0,
+        score: 0,
+        gravatarEmail: '',
+      },
+
     };
     this.showNextQuestion = this.showNextQuestion.bind(this);
     this.btnNext = this.btnNext.bind(this);
     this.incorrectAndCorrectQuestion = this.incorrectAndCorrectQuestion.bind(this);
     this.changeCurrentTime = this.changeCurrentTime.bind(this);
     this.disableBtn = this.disableBtn.bind(this);
+    this.setLocalStorage = this.setLocalStorage.bind(this);
+    this.savingPoints = this.savingPoints.bind(this);
   }
 
   componentDidMount() {
@@ -45,6 +57,62 @@ class Game extends React.Component {
     answerBtn.forEach((button) => {
       button.setAttribute('disabled', 'disabled');
     });
+  }
+
+  setLocalStorage() {
+    const { player: jogador } = this.state;
+    localStorage.setItem('state', JSON.stringify({ player: jogador }));
+  }
+
+  savingPoints(correct) {
+    console.log(correct);
+    const { timer, index } = this.state;
+    const { questions } = this.props;
+    // console.log(this.props.questions);
+    const { difficulty } = questions[index];
+    console.log(difficulty);
+    const ten = 10;
+    let result = 0;
+    switch (difficulty) {
+    case 'easy':
+      result = ten + (timer * 1);
+      break;
+    case 'medium':
+      result = ten + (timer * 2);
+      break;
+    case 'hard':
+      result = ten + (timer * Number('3'));
+      break;
+    default:
+      console.log('erro no switch');
+      break;
+    }
+    this.setState((prevState) => ({
+      player: {
+        ...prevState.player,
+        assertions: prevState.player.assertions + 1,
+      },
+    }));
+    return result;
+  }
+
+  handleClick(correct) {
+    if (correct === 'correct') {
+      const resultado = this.savingPoints(correct);
+      this.setState((prevState) => ({
+        isAnswered: true,
+        timer: 0,
+        result: prevState.result + resultado,
+        player: {
+          ...prevState.player,
+          score: prevState.result + resultado,
+          assertions: prevState.player.assertions,
+        },
+      }), () => {
+        this.setLocalStorage();
+      });
+    }
+    console.log(this.state);
   }
 
   showNextQuestion() {
@@ -88,10 +156,12 @@ class Game extends React.Component {
     }
   }
 
-  incorrectAndCorrectQuestion() {
+  incorrectAndCorrectQuestion(answer) {
     const { sendShowAnswers } = this.props;
     sendShowAnswers(true);
+    // console.log(answer[0]);
     this.btnNext();
+    this.handleClick(answer);
   }
 
   render() {
@@ -118,7 +188,9 @@ class Game extends React.Component {
                 <Answers
                   show={ show }
                   question={ questions[index] }
-                  onClick={ () => this.incorrectAndCorrectQuestion() }
+                  onClick={ (
+                    { target: { name } },
+                  ) => this.incorrectAndCorrectQuestion(name) }
                 />
               </div>
               { this.btnNext() }
@@ -133,13 +205,15 @@ class Game extends React.Component {
 
 Game.propTypes = {
   fetchApiGame: PropTypes.func.isRequired,
-  history: PropTypes.objectOf().isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   isFetching: PropTypes.bool.isRequired,
-  push: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(
     PropTypes.shape({
       category: PropTypes.string.isRequired,
       question: PropTypes.string.isRequired,
+      difficulty: PropTypes.string.isRequired,
     }).isRequired,
   ).isRequired,
   sendShowAnswers: PropTypes.func.isRequired,
