@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import '../styles/Questions.css';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { actionCorrectAnswer } from '../redux/actions';
-import { Redirect } from 'react-router-dom';
 
 const MINUS_ONE = -1;
 const NUMBER_THREE = 3;
@@ -48,7 +48,6 @@ class Questions extends Component {
         gravatarEmail,
       },
     };
-
     localStorage.setItem('state', JSON.stringify(storedInfo));
   }
 
@@ -57,7 +56,6 @@ class Questions extends Component {
     const API_URL = `https://opentdb.com/api.php?amount=5&token${token}`;
     const response = await fetch(API_URL);
     const questions = await response.json();
-
     this.setState(() => ({
       questions: questions.results,
     }));
@@ -86,11 +84,9 @@ class Questions extends Component {
   calculateScore(target) {
     const { time } = this.state;
     const difficulty = this.getDifficultyPoints();
-
     if (target.id === 'correct-answer') {
       return NUMBER_TEN * (time * difficulty);
     }
-
     return 0;
   }
 
@@ -111,7 +107,6 @@ class Questions extends Component {
         gravatarEmail,
       },
     };
-
     localStorage.setItem('state', JSON.stringify(storedInfo));
   }
 
@@ -167,7 +162,6 @@ class Questions extends Component {
   countdown() {
     const ONE_SECOND = 1000;
     const THIRTY_SECONDS = 30000;
-
     this.interval = setInterval(() => {
       this.setState((prevState) => ({
         time: prevState.time - 1,
@@ -185,7 +179,6 @@ class Questions extends Component {
   removeFirstQuestion() {
     const { questions } = this.state;
     const meuArray = [...questions];
-
     if (meuArray.length > 1) {
       meuArray.shift();
       this.setState({
