@@ -38,6 +38,18 @@ class Game extends React.Component {
     this.changeCurrentTime();
   }
 
+  setLocalStorage() {
+    const { player: jogador } = this.state;
+    localStorage.setItem('state', JSON.stringify({ player: jogador }));
+  }
+
+  disableBtn() {
+    const answerBtn = document.querySelectorAll('.answer-btn');
+    answerBtn.forEach((button) => {
+      button.setAttribute('disabled', 'disabled');
+    });
+  }
+
   changeCurrentTime() {
     const updateTime = 1000;
     const limitTime = 30000;
@@ -50,18 +62,6 @@ class Game extends React.Component {
     setTimeout(() => {
       this.disableBtn();
     }, limitTime);
-  }
-
-  disableBtn() {
-    const answerBtn = document.querySelectorAll('.answer-btn');
-    answerBtn.forEach((button) => {
-      button.setAttribute('disabled', 'disabled');
-    });
-  }
-
-  setLocalStorage() {
-    const { player: jogador } = this.state;
-    localStorage.setItem('state', JSON.stringify({ player: jogador }));
   }
 
   savingPoints(correct) {
@@ -175,7 +175,7 @@ class Game extends React.Component {
         {
           questions.length > 0 ? (
             <section className="App">
-              {currentTime }
+              { currentTime }
               <div>
                 <p data-testid="question-category">
                   <strong>Categoria: </strong>
