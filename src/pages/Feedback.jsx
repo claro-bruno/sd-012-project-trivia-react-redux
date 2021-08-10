@@ -73,11 +73,11 @@ class Feedback extends React.Component {
             <p data-testid="feedback-total-question">{assertions}</p>
           </h3>
           {(assertions >= SCORE_NUMBER)
-            ? <> <img src={ mandouBem} />
+            ? <> <img className="mandou_bem" src={ mandouBem } />
               <p data-testid="feedback-text">Mandou bem!</p>
              </>
             : <>
-            <img src={ podiaSerMelhor } />
+            <img className="podiaMelhor" src={ podiaSerMelhor } />
             <p data-testid="feedback-text">Podia ser melhor...</p> 
             </>
             }

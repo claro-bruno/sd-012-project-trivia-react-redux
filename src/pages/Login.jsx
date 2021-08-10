@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import logo from '../trivia.png';
+import logo from '../trivia_silvio2.png';
 import Input from '../components/Input';
+import '../css/login.css';
 import { ADD_NEW_PLAYER, fetchClick } from '../redux/action';
 
 class Login extends Component {

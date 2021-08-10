@@ -11,5 +11,16 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 50px;
+}
 
+.mandou_bem {
+  margin-top: 15px;
+  border-radius:5px;
+  width: 400px;
+}
+
+.podiaMelhor {
+  margin-top: 15px;
+  border-radius:5px;
+  width: 400px;
 }
