@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
+import Button from '../components/Button';
 
 const ASSERTION_AVERAGE = 3;
 
@@ -10,14 +11,23 @@ class Feedback extends React.Component {
 
     this.handleRanking = this.handleRanking.bind(this);
     this.redirectToLogin = this.redirectToLogin.bind(this);
+    this.handleClickRanking = this.handleClickRanking.bind(this);
 
     this.state = {
       stateRedirect: false,
+      redirectRanking: false,
     };
   }
 
   componentDidMount() {
     this.handleRanking();
+  }
+
+  handleClickRanking() {
+    this.setState((state) => ({
+      ...state,
+      redirectRanking: true,
+    }));
   }
 
   handleRanking() {
@@ -49,10 +59,12 @@ class Feedback extends React.Component {
   render() {
     const stateLocalStorage = JSON.parse(localStorage.getItem('state'));
     const { player: { score, assertions } } = stateLocalStorage;
-    const { redirectToLogin, state: { stateRedirect } } = this;
+    const { redirectToLogin, handleClickRanking, state: { stateRedirect, redirectRanking } } = this;
 
     return (
       <>
+        { redirectRanking && <Redirect to="/ranking" />}
+        { stateRedirect && <Redirect to="/" /> }
         <Header score={ score } />
         <button
           data-testid="btn-play-again"
@@ -61,7 +73,11 @@ class Feedback extends React.Component {
         >
           Jogar novamente
         </button>
-        { stateRedirect && <Redirect to="/" /> }
+        <Button
+          name="Ver Ranking"
+          testId="btn-ranking"
+          handleClick={ handleClickRanking }
+        />
         <h2 data-testid="feedback-text">
           {
             (assertions < ASSERTION_AVERAGE ? 'Podia ser melhor...' : 'Mandou bem!')
