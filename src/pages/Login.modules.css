@@ -1,0 +1,42 @@
+main {
+  background-color: #1d2551;
+  height: 800px;
+  width: 100%;
+}
+
+.appLogo {
+  margin-top: 30px;
+  width: 50%;
+}
+
+.appHeader {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+form {
+  display: block;
+  justify-content: center;
+  width: 100%;
+}
+
+.labelHeader {
+  color: white;
+  display: flex;
+  font-size: 17px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.buttonLogin {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #7ea8df;
+  color: white;
+  padding: 10px;
+}
