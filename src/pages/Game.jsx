@@ -82,6 +82,69 @@ class Game extends Component {
   //     return buttons;
   //   }
 
+  componentDidMount() {
+    const { getAPI } = this.props;
+    const token = JSON.parse(localStorage.getItem('token'));
+    getAPI(token);
+  }
+
+  // random() {
+  //     const { questions } = this.props;
+  //     const { results: { correctAnswer, incorrectAnswers } } = questions;
+  //     const randomIndex = Math.round(Math.random() * (incorrectAnswers.length - 0));
+  //     incorrectAnswers.slice(randomIndex, 1, correctAnswer);
+  //     this.setState({
+  //       alternatives: incorrectAnswers,
+  //       randomIndex: { randomIndex },
+  //     });
+  //   }
+
+  //   result() {
+  //     return <p>por enquanto isso</p>;
+  //   }
+
+  //   render() {
+  //     console.log(this.props.questions)
+  //     const { alternatives, randomIndex } = this.state;
+  //     return (
+  //       <div>
+  //           {
+  //             this.props.questions.map((alternativa, index) => {
+  //               const { category, question } = alternativa;
+  //               return (
+  //               <div>
+  //               <h3 data-testid="question-category">{ category }</h3>
+  //               <h2 data-testid="question-text">{ question }</h2>
+  //               { if (index === randomIndex) {
+  //                 return (
+  //                   <button
+  //                     type="button"
+  //                     onClick={ this.result }
+  //                     key={ index }
+  //                     data-testid="correct-answer"
+  //                   >
+  //                     {alternativa}
+  //                   </button>);
+  //               } else {
+  //               return (
+  //                 <button
+  //                   type="button"
+  //                   onClick={ this.result }
+  //                   key={ index }
+  //                   data-testid={ `wrong-answer-${index}` }
+  //                 >
+  //                   {alternativa}
+  //                 </button>
+  //               )}};
+  //             </div>
+  //             )
+  //             })
+  //           }
+  //         </div>
+  //     );
+  //   }
+  // }
+
   render() {
     //     const { token } = this.props;
     return (

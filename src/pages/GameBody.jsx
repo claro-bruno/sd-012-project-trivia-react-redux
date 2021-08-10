@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setScore } from '../redux/action';
+import './Answers.css';
 
 class GameBody extends Component {
   constructor(props) {
@@ -11,9 +12,14 @@ class GameBody extends Component {
       disable: true,
       alternatives: [],
       randomIndex: '',
+      className: '',
+      className2: '',
+      wrong: 'wrong',
+      correct: 'correct',
       disableAnswers: false,
       timer: 2,
       score: 0,
+      hidden: true,
     };
     this.createQuestion = this.createQuestion.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
@@ -21,6 +27,7 @@ class GameBody extends Component {
     this.createOptions = this.createOptions.bind(this);
     this.buttonsAsnswer = this.buttonsAsnswer.bind(this);
     this.handleClickScore = this.handleClickScore.bind(this);
+    this.buttonAnswer = this.buttonAnswer.bind(this);
   }
 
   componentDidMount() {
@@ -50,12 +57,11 @@ class GameBody extends Component {
     this.setState({
       index: index + 1,
       disableAnswers: false,
+      hidden: true,
+      className: '',
+      className2: '',
     });
     this.rad();
-  }
-
-  buttonsAsnswer() {
-    this.setState({ disableAnswers: true });
   }
 
   createQuestion() {
@@ -93,14 +99,27 @@ class GameBody extends Component {
 
     const { alternatives, randomIndex, disableAnswers } = this.state;
     return (alternatives.map((elm, ind) => (
+    const {
+      alternatives,
+      randomIndex,
+      className,
+      wrong,
+      correct,
+      className2,
+      disableAnswers,
+    } = this.state;
+    return ((alternatives).map((elm, ind) => (
       ind === randomIndex
         ? (
           <button
             type="button"
+            onClick={ this.buttonAnswer }
             disabled={ disableAnswers }
             onClick={ () => (this.handleClickScore(difficulty)) }
             key={ ind }
             data-testid="correct-answer"
+            id={ correct }
+            className={ className }
           >
             {elm}
           </button>
@@ -108,10 +127,12 @@ class GameBody extends Component {
         : (
           <button
             type="button"
+            onClick={ this.buttonAnswer }
             disabled={ disableAnswers }
-            onClick={ this.buttonsAsnswer }
             key={ ind }
             data-testid={ `wrong-answer-${ind}` }
+            id={ wrong }
+            className={ className2 }
           >
             {elm}
           </button>
@@ -119,8 +140,17 @@ class GameBody extends Component {
     )));
   }
 
+  buttonAnswer() {
+    this.setState({
+      disableAnswers: true,
+      className: 'correctAnswer',
+      className2: 'incorrectAnswer',
+      hidden: false,
+    });
+  }
+
   render() {
-    const { disable } = this.state;
+    const { disable, hidden } = this.state;
     const { results } = this.props;
     return (
       <div>
@@ -131,6 +161,8 @@ class GameBody extends Component {
           type="button"
           disable={ disable }
           onClick={ this.nextQuestion }
+          data-testid="btn-next"
+          hidden={ hidden }
         >
           Next
         </button>
