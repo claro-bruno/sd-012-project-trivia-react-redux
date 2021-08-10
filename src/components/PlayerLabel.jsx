@@ -19,7 +19,7 @@ PlayerLabel.propTypes = {
   player: PropTypes.shape({
     picture: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    score: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
   }).isRequired,
   index: PropTypes.number.isRequired,
 };

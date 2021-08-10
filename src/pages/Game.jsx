@@ -14,6 +14,7 @@ class Game extends React.Component {
     this.state = {
       questions: [],
       indexQuestion: 0,
+      error: false,
     };
 
     this.fetchQuestions = this.fetchQuestions.bind(this);
@@ -25,13 +26,23 @@ class Game extends React.Component {
   }
 
   fetchQuestions() {
-    const { token, numeroQuestoes } = this.props;
-    const API = `https://opentdb.com/api.php?amount=${numeroQuestoes}&token=${token}`;
+    const { token, numeroQuestoes, difficulty, type, category } = this.props;
+    const API = `https://opentdb.com/api.php?amount=${numeroQuestoes}&token=${token}&difficulty=${difficulty || 0}&type=${type || 0}&category=${category || 0}`;
     fetch(API)
       .then((resolve) => resolve.json())
-      .then((resolve) => this.setState({
-        questions: resolve.results,
-      }));
+      .then((resolve) => {
+        console.log(resolve);
+        if (resolve.response_code === 0) {
+          this.setState({
+            questions: resolve.results,
+            error: null,
+          });
+        } else {
+          this.setState({
+            error: true,
+          });
+        }
+      });
   }
 
   nextQuestion() {
@@ -41,8 +52,12 @@ class Game extends React.Component {
   }
 
   render() {
-    const { questions, indexQuestion } = this.state;
-    if (questions.length < 1) return <div>Carregando...</div>;
+    const { questions, indexQuestion, error } = this.state;
+    if (error === false) return <div>Carregando...</div>;
+    if (error === true) {
+      const errorMessage = 'Não existe questões suficientes com essas especificações';
+      return (<h2>{ errorMessage }</h2>);
+    }
     if (questions.length === indexQuestion) return <Redirect to="/feedback" />;
     return (
       <div className="Game">
@@ -61,11 +76,23 @@ class Game extends React.Component {
 const mapStateToProps = (state) => ({
   token: state.buttonReducer.token,
   numeroQuestoes: state.buttonReducer.numeroQuestoes,
+  difficulty: state.buttonReducer.difficulty,
+  type: state.buttonReducer.type,
+  category: state.buttonReducer.category,
 });
+
+Game.defaultProps = {
+  difficulty: null,
+  type: undefined,
+  category: undefined,
+};
 
 Game.propTypes = {
   token: PropTypes.string.isRequired,
   numeroQuestoes: PropTypes.number.isRequired,
+  difficulty: PropTypes.number,
+  type: PropTypes.number,
+  category: PropTypes.number,
 };
 
 export default connect(mapStateToProps)(Game);
