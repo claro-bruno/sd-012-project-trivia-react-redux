@@ -5,28 +5,53 @@ import Loading from '../Components/Loading';
 import Answers from '../Components/Answers';
 import HeaderGame from '../Components/HeaderGame';
 import { actionFetchApiGame, showAnswers } from '../redux/actions';
-import Timer from '../Components/timer';
 
 class Game extends React.Component {
   constructor() {
     super();
     this.state = {
       index: 0,
+      currentTime: 30,
     };
     this.showNextQuestion = this.showNextQuestion.bind(this);
     this.btnNext = this.btnNext.bind(this);
     this.incorrectAndCorrectQuestion = this.incorrectAndCorrectQuestion.bind(this);
+    this.changeCurrentTime = this.changeCurrentTime.bind(this);
+    this.disableBtn = this.disableBtn.bind(this);
   }
 
   componentDidMount() {
     const { fetchApiGame, token } = this.props;
     fetchApiGame(token);
+    this.changeCurrentTime();
+  }
+
+  changeCurrentTime() {
+    const updateTime = 1000;
+    const limitTime = 30000;
+
+    setInterval(() => {
+      const { currentTime } = this.state;
+      if (currentTime > 0) this.setState({ currentTime: currentTime - 1 });
+    }, updateTime);
+
+    setTimeout(() => {
+      this.disableBtn();
+    }, limitTime);
+  }
+
+  disableBtn() {
+    const answerBtn = document.querySelectorAll('.answer-btn');
+    answerBtn.forEach((button) => {
+      button.setAttribute('disabled', 'disabled');
+    });
   }
 
   showNextQuestion() {
     const { sendShowAnswers } = this.props;
     this.setState((state) => ({
       index: state.index + 1,
+      currentTime: 30,
     }));
     sendShowAnswers(false);
   }
@@ -54,7 +79,7 @@ class Game extends React.Component {
       return (
         <button
           type="button"
-          onClick={ () => push('/') } // fazer push para a tela de feedback
+          onClick={ () => push('/feedback') } // fazer push para a tela de feedback
         >
           Ver Resultado
         </button>
@@ -70,7 +95,7 @@ class Game extends React.Component {
 
   render() {
     const { questions, isFetching, show } = this.props;
-    const { index } = this.state;
+    const { index, currentTime } = this.state;
     if (isFetching) return <Loading />;
 
     return (
@@ -79,7 +104,7 @@ class Game extends React.Component {
         {
           questions.length > 0 ? (
             <section className="App">
-              <Timer />
+              {currentTime }
               <div>
                 <p data-testid="question-category">
                   <strong>Categoria: </strong>
