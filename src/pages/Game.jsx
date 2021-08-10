@@ -14,6 +14,7 @@ class Game extends Component {
     this.state = {
       data: '',
       currentQuestion: 0,
+      rightQuestions: 0,
       loading: true,
       timer: 30,
       pauseTimer: false,
@@ -53,11 +54,10 @@ class Game extends Component {
   handleAnswers(data) {
     const splitNumber = 0.5;
     const answers = data.results.map((question) => {
-      const wrongAnswers = question.incorrect_answers
-        .map((option) => ({
-          text: option,
-          correct: false,
-        }));
+      const wrongAnswers = question.incorrect_answers.map((option) => ({
+        text: option,
+        correct: false,
+      }));
       const allAnswers = [
         ...wrongAnswers,
         {
@@ -65,8 +65,7 @@ class Game extends Component {
           correct: true,
         },
       ];
-      return allAnswers
-        .sort(() => Math.random() - splitNumber); // código retirado de https://flaviocopes.com/
+      return allAnswers.sort(() => Math.random() - splitNumber); // código retirado de https://flaviocopes.com/
     });
     return answers;
   }
@@ -93,6 +92,8 @@ class Game extends Component {
   }
 
   handleClickAnswer({ target }) {
+    const { rightQuestions } = this.state;
+    let assertions = rightQuestions;
     const { player, name, gravatarEmail, changeTimer } = this.props;
     const incorrectList = document.getElementsByName('incorrect');
     const correctList = document.getElementById('correct');
@@ -100,16 +101,19 @@ class Game extends Component {
     correctList.className = 'correct';
     const scoreFunc = this.calculateTotalPoints(target);
     this.setState({ pauseTimer: true });
-    player(name, 0, scoreFunc, gravatarEmail);
     const timeOff = true;
     changeTimer({ timeOff });
+    if (target.id === 'correct') {
+      assertions += 1;
+      this.setState({ rightQuestions: rightQuestions + 1 });
+    }
+    player(name, assertions, scoreFunc, gravatarEmail);
   }
 
   calculateTotalPoints({ name }) {
     const { timer } = this.state;
     const BASE_POINT = 10;
     if (name === 'correct') return BASE_POINT + (timer * this.calculateDifficultyPoint());
-
     return 0;
   }
 
@@ -119,24 +123,20 @@ class Game extends Component {
     const HARD = 3;
     const MEDIUM = 2;
     const EASY = 1;
-    if (difficulty === 'hard') {
-      return HARD;
-    }
-    if (difficulty === 'medium') {
-      return MEDIUM;
-    }
+    if (difficulty === 'hard') return HARD;
+    if (difficulty === 'medium') return MEDIUM;
     return EASY;
   }
 
   handleNextQuestion() {
     const { changeTimer } = this.props;
+    const { currentQuestion } = this.state;
     const incorrectList = document.getElementsByName('incorrect');
     const correctList = document.getElementById('correct');
     incorrectList.forEach((item) => { item.classList.remove('incorrect'); });
     correctList.classList.remove('correct');
     const timeOff = false;
     changeTimer({ timeOff });
-    const { currentQuestion } = this.state;
     const lastQuestion = 4;
     const MAX_TIME = 30;
     if (currentQuestion < lastQuestion) {
@@ -147,9 +147,7 @@ class Game extends Component {
       });
       this.updateTimer();
     }
-    if (currentQuestion === lastQuestion) {
-      window.location.href = '/feedback';
-    }
+    if (currentQuestion === lastQuestion) window.location.href = '/feedback';
   }
 
   showBtnNextQuestion() {
@@ -208,9 +206,8 @@ class Game extends Component {
 
   render() {
     const { name, gravatarEmail, score } = this.props;
-    localStorage
-      .setItem('state', JSON
-        .stringify({ player: { name, assertions: 0, score, gravatarEmail } }));
+    localStorage.setItem('state', JSON
+      .stringify({ player: { name, assertions: 0, score, gravatarEmail } }));
     const { isLoading } = this.props;
     return isLoading ? <Loading /> : this.pageRender();
   }
