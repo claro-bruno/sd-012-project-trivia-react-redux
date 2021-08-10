@@ -1,7 +1,5 @@
 import React from 'react';
-import md5 from 'crypto-js/md5';
 import { Redirect } from 'react-router-dom';
-import arquivoTesteRanking from '../arquivoTesteRanking';
 import Button from '../components/Button';
 
 class Ranking extends React.Component {
@@ -27,8 +25,10 @@ class Ranking extends React.Component {
       state: { redirect },
       handleClick,
     } = this;
-    const TESTEsort = arquivoTesteRanking.sort((a, b) => b.score - a.score);
-    console.log(TESTEsort);
+
+    const state = JSON.parse(localStorage.getItem('ranking'));
+
+    const stateSort = state.sort((a, b) => b.score - a.score);
 
     return (
       <>
@@ -41,20 +41,14 @@ class Ranking extends React.Component {
         />
         <ol>
           {
-            TESTEsort.map((posicao, index) => {
-              const { name, assertions, score, gravatarEmail } = posicao;
-              const profile = md5(gravatarEmail).toString();
-              const SRC = `https://www.gravatar.com/avatar/${profile}`;
-
+            stateSort.map((posicao, index) => {
+              const { name, score, picture } = posicao;
               return (
                 <li key={ `${score}.${name}.${score}` }>
-                  <img src={ SRC } alt={ `Player avatar ${index}` } />
+                  <img src={ picture } alt={ `Player avatar ${index}` } />
                   <h3 data-testid={ `player-name-${index}` }>
                     { `NOME: ${name}` }
                   </h3>
-                  <h4>
-                    { `ACERTOS: ${assertions}` }
-                  </h4>
                   <h4 data-testid={ `player-score-${index}` }>
                     { `PONTUAÇÃO: ${score}` }
                   </h4>

@@ -1,63 +1,173 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
+import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
-import { questionsFetchAPI, addAssertions } from '../redux/actions';
-import questions from '../questions';
-import Button from '../components/Button';
+import ButtonNext from '../components/gameControlled/ButtonNext';
+import SectionQuestions from '../components/gameControlled/SectionQuestions';
 import '../App.css';
 
 class Game extends React.Component {
   constructor() {
     super();
 
+    this.buttonNextStatus = this.buttonNextStatus.bind(this);
     this.correctClick = this.correctClick.bind(this);
-    this.wrongClick = this.wrongClick.bind(this);
-    this.timer = this.timer.bind(this);
+    this.nextClick = this.nextClick.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
     this.startTime = this.startTime.bind(this);
     this.stopTime = this.stopTime.bind(this);
+    this.timer = this.timer.bind(this);
+    this.setButtonQuestionStyle = this.setButtonQuestionStyle.bind(this);
+    this.setCorrectAnswer = this.setCorrectAnswer.bind(this);
+    this.setInicialCount = this.setInicialCount.bind(this);
+    this.setStateProperties = this.setStateProperties.bind(this);
+    this.wrongClick = this.wrongClick.bind(this);
+    this.setScore = this.setScore.bind(this);
 
     this.state = {
-      correctAnswers: 0,
-      questionPosition: 3,
+      assertions: 0,
+      score: 0,
+      questionPosition: 0,
       questionsDisable: false,
       color: false,
       count: 30,
+      nextButtonInvisible: true,
+      gravatarEmail: '',
+      redirect: false,
     };
   }
 
   componentDidMount() {
     const {
       startTime,
-      props: { setQuestions, getToken },
+      setStateProperties,
+      props: { userData: { user, email } },
+      state: { gravatarEmail, assertions, score },
     } = this;
 
-    setQuestions(getToken);
+    const profile = md5(email).toString();
+    const SRC = `https://www.gravatar.com/avatar/${profile}`;
+
+    setStateProperties('gravatarEmail', SRC);
+
+    const state = { player: { name: user, gravatarEmail, assertions, score } };
+    localStorage.setItem('state', JSON.stringify(state));
+
     startTime();
   }
 
   componentDidUpdate() {
-    const { stopTime } = this;
+    const {
+      stopTime,
+      props: { userData: { user } },
+      state: { gravatarEmail, assertions, score },
+    } = this;
 
     stopTime();
+    const state = { player: { name: user, gravatarEmail, assertions, score } };
+    localStorage.setItem('state', JSON.stringify(state));
   }
 
-  correctClick() {
+  setCorrectAnswer() {
     const {
-      props: { setAssertions },
-      state: { correctAnswers },
+      setStateProperties, buttonNextStatus, state: { assertions },
+    } = this;
+
+    setStateProperties('assertions', assertions + 1);
+    buttonNextStatus();
+  }
+
+  setButtonQuestionStyle() {
+    const {
+      setStateProperties, state: { questionsDisable, color },
+    } = this;
+
+    setStateProperties('questionsDisable', !questionsDisable);
+    setStateProperties('color', !color);
+  }
+
+  setInicialCount() {
+    const { setStateProperties } = this;
+    const VALUE_COUNT = 30;
+
+    setStateProperties('count', VALUE_COUNT);
+  }
+
+  setStateProperties(key, value) {
+    this.setState((state) => ({
+      ...state,
+      [key]: value,
+    }));
+  }
+
+  setScore(difficulty, count) {
+    const level = { hard: 3, medium: 2, easy: 1 }[difficulty];
+    const INITIAL_PARAMETER = 10;
+    const points = INITIAL_PARAMETER + (level * count);
+
+    const {
+      state: { score },
+      setStateProperties } = this;
+
+    setStateProperties('score', score + points);
+  }
+
+  correctClick(difficulty) {
+    const {
+      setCorrectAnswer,
+      setButtonQuestionStyle,
+      buttonNextStatus,
+      setScore,
+      state: { count },
     } = this;
 
     clearInterval(this.interval);
+    setScore(difficulty, count);
+    setCorrectAnswer();
+    setButtonQuestionStyle();
+    buttonNextStatus();
+  }
 
-    this.setState((state) => ({
-      ...state,
-      correctAnswers: correctAnswers + 1,
-      questionsDisable: true,
-      color: true,
-      count: 30,
-    }));
-    setAssertions(correctAnswers);
+  nextClick() {
+    const {
+      startTime,
+      setInicialCount,
+      setButtonQuestionStyle,
+      buttonNextStatus,
+      nextQuestion,
+      setStateProperties,
+      state: { questionPosition },
+    } = this;
+
+    const numberMax = 4;
+
+    if (questionPosition === numberMax) {
+      setStateProperties('redirect', true);
+    } else {
+      nextQuestion();
+      setButtonQuestionStyle();
+      setInicialCount();
+      startTime();
+      buttonNextStatus();
+    }
+  }
+
+  buttonNextStatus() {
+    const {
+      setStateProperties, state: { nextButtonInvisible },
+    } = this;
+
+    setStateProperties('nextButtonInvisible', !nextButtonInvisible);
+  }
+
+  nextQuestion() {
+    const {
+      setStateProperties, state: { questionPosition },
+    } = this;
+
+    setStateProperties('questionPosition', questionPosition + 1);
   }
 
   startTime() {
@@ -68,101 +178,71 @@ class Game extends React.Component {
   }
 
   stopTime() {
-    const {
-      wrongClick,
-      state: { count },
-    } = this;
+    const { wrongClick, setInicialCount, state: { count } } = this;
 
     if (count === 0) {
       clearInterval(this.interval);
       wrongClick();
+      setInicialCount();
     }
   }
 
   timer() {
-    const {
-      state: { count },
-    } = this;
+    const { setStateProperties,
+      state: { count } } = this;
 
-    this.setState((state) => ({
-      ...state,
-      count: count - 1,
-    }));
+    setStateProperties('count', count - 1);
   }
 
   wrongClick() {
+    const { setButtonQuestionStyle, buttonNextStatus } = this;
+
     clearInterval(this.interval);
-    this.setState((state) => ({
-      ...state,
-      questionsDisable: true,
-      color: true,
-      count: 30,
-    }));
+
+    setButtonQuestionStyle();
+    buttonNextStatus();
   }
 
   render() {
     const {
-      state: { questionPosition, questionsDisable, color, count },
+      state: { questionPosition,
+        questionsDisable,
+        color,
+        count,
+        nextButtonInvisible,
+        redirect,
+        score,
+      },
+      nextClick,
       correctClick,
       wrongClick,
     } = this;
 
-    const {
-      category,
-      question,
-      correct_answer: correctAnswer,
-      incorrect_answers: incorrectAnswers,
-    } = questions[questionPosition];
-
     return (
       <>
-        <Header />
-        <section>
-          <h2>{ count }</h2>
-          <h2 data-testid="question-category">{ category }</h2>
-          <h3 data-testid="question-text">{ question }</h3>
-          <section>
-            {
-              incorrectAnswers.map((answers, index) => (
-                <Button
-                  testId={ `wrong-answer-${index}` }
-                  key={ answers }
-                  name={ answers }
-                  handleClick={ wrongClick }
-                  disabled={ questionsDisable }
-                  className={ color ? 'wrongColor' : null }
-                />
-              ))
-            }
-            <Button
-              testId="correct-answer"
-              name={ correctAnswer }
-              handleClick={ correctClick }
-              disabled={ questionsDisable }
-              className={ color ? 'correctColor' : null }
-            />
-          </section>
-        </section>
+        { redirect && <Redirect to="/feedback" /> }
+        <Header score={ score } />
+        <ButtonNext invisible={ nextButtonInvisible } handleClick={ nextClick } />
+        <SectionQuestions
+          questionPosition={ questionPosition }
+          correctClick={ correctClick }
+          wrongClick={ wrongClick }
+          questionsDisable={ questionsDisable }
+          color={ color }
+          count={ count }
+        />
       </>
     );
   }
 }
 
-const { string, func } = PropTypes;
+const { string, objectOf } = PropTypes;
 Game.propTypes = {
-  getToken: string.isRequired,
-  setQuestions: func.isRequired,
-  setAssertions: func.isRequired,
+  userData: objectOf(string).isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  getToken: state.tokenTriviaReducer.token,
-  getQuestions: state.questionsTriviaReducer.questions,
+  userData: state.addLoginReducer,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setQuestions: (token) => dispatch(questionsFetchAPI(token)),
-  setAssertions: (assertions) => dispatch(addAssertions(assertions)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default connect(mapStateToProps, null)(Game);
