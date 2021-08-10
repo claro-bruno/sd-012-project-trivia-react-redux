@@ -1,5 +1,7 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 import Header from '../components/Header';
+import Button from '../components/Button';
 
 const ASSERTION_AVERAGE = 3;
 
@@ -8,10 +10,22 @@ class Feedback extends React.Component {
     super(props);
 
     this.handleRanking = this.handleRanking.bind(this);
+    this.handleClickRanking = this.handleClickRanking.bind(this);
+
+    this.state = {
+      redirectRanking: false,
+    };
   }
 
   componentDidMount() {
     this.handleRanking();
+  }
+
+  handleClickRanking() {
+    this.setState((state) => ({
+      ...state,
+      redirectRanking: true,
+    }));
   }
 
   handleRanking() {
@@ -37,22 +51,29 @@ class Feedback extends React.Component {
   }
 
   render() {
-    const state = JSON.parse(localStorage.getItem('state'));
-    const { player: { score, assertions } } = state;
+    const { handleClickRanking, state: { redirectRanking } } = this;
+    const stateLocalStorage = JSON.parse(localStorage.getItem('state'));
+    const { player: { score, assertions } } = stateLocalStorage;
 
     return (
       <>
+        { redirectRanking && <Redirect to="/ranking" />}
         <Header score={ score } />
+        <Button
+          name="Ver Ranking"
+          testId="btn-ranking"
+          handleClick={ handleClickRanking }
+        />
         <h2 data-testid="feedback-text">
           {
             (assertions < ASSERTION_AVERAGE ? 'Podia ser melhor...' : 'Mandou bem!')
           }
         </h2>
         <p data-testid="feedback-total-score">
-          { `Sua pontuação final foi: ${score}` }
+          {score}
         </p>
         <p data-testid="feedback-total-question">
-          { `Você acertou ${assertions} questões` }
+          {assertions}
         </p>
       </>
     );
