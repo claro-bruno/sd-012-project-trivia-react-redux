@@ -4,9 +4,13 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { actionCorrectAnswer } from '../redux/actions';
+import {
+  getDifficultyPoints,
+  saveScoreLocalStorage,
+  setInitialLocalStorage,
+} from '../helpers';
 
 const MINUS_ONE = -1;
-const NUMBER_THREE = 3;
 const NUMBER_TEN = 10;
 
 class Questions extends Component {
@@ -24,9 +28,6 @@ class Questions extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.countdown = this.countdown.bind(this);
     this.calculateScore = this.calculateScore.bind(this);
-    this.getDifficultyPoints = this.getDifficultyPoints.bind(this);
-    this.setInitialLocalStorage = this.setInitialLocalStorage.bind(this);
-    this.saveScoreLocalStorage = this.saveScoreLocalStorage.bind(this);
     this.buttonFunction = this.buttonFunction.bind(this);
     this.removeFirstQuestion = this.removeFirstQuestion.bind(this);
   }
@@ -34,20 +35,7 @@ class Questions extends Component {
   componentDidMount() {
     this.getUnities();
     this.countdown();
-    this.setInitialLocalStorage();
-  }
-
-  setInitialLocalStorage() {
-    const { score, assertions, name, gravatarEmail } = this.props;
-    const storedInfo = {
-      player: {
-        name,
-        assertions,
-        score,
-        gravatarEmail,
-      },
-    };
-    localStorage.setItem('state', JSON.stringify(storedInfo));
+    setInitialLocalStorage(this.props);
   }
 
   async getUnities() {
@@ -60,20 +48,6 @@ class Questions extends Component {
     }));
   }
 
-  getDifficultyPoints() {
-    const { questions } = this.state;
-    switch (questions[0].difficulty) {
-    case 'easy':
-      return 1;
-    case 'medium':
-      return 2;
-    case 'hard':
-      return NUMBER_THREE;
-    default:
-      return 1;
-    }
-  }
-
   handleClick({ target }) {
     this.setState({ disabled: true, next: true }, () => target.classList.add('selected'));
     clearInterval(this.interval);
@@ -81,27 +55,14 @@ class Questions extends Component {
   }
 
   calculateScore(target) {
-    const { time } = this.state;
+    const { time, questions } = this.state;
     const { correctAnswer } = this.props;
-    const difficulty = this.getDifficultyPoints();
+    const difficulty = getDifficultyPoints(questions);
     if (target.id === 'correct-answer') {
       const score = NUMBER_TEN * (time * difficulty);
       correctAnswer(score);
-      this.saveScoreLocalStorage(score);
+      saveScoreLocalStorage(score, this.props);
     }
-  }
-
-  saveScoreLocalStorage(points) {
-    const { score, assertions, name, gravatarEmail } = this.props;
-    const state = {
-      player: {
-        name,
-        assertions: assertions + 1,
-        score: score + points,
-        gravatarEmail,
-      },
-    };
-    localStorage.setItem('state', JSON.stringify(state));
   }
 
   saveRankingLocalStorage() {
@@ -233,7 +194,6 @@ const mapStateToProps = (state) => ({
   score: state.gameReducer.score,
   assertions: state.gameReducer.assertions,
   name: state.loginReducer.name,
-  gravatarEmail: state.loginReducer.email,
   picture: state.loginReducer.pictureUrl,
 });
 
@@ -243,7 +203,5 @@ Questions.propTypes = {
   correctAnswer: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
-  gravatarEmail: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
-  assertions: PropTypes.number.isRequired,
 };
