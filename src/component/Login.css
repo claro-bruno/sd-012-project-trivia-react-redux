@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.login-input {
+  display: flex;
+  flex-flow: column;
+}
+
+.input-stylization {
+  border: none;
+  font-size: 15px;
+  margin: 5px;
+  padding: 7px;
+  transition: 300ms;
+}
+
+.btn-play:hover {
+  background-color: orange;
+}
+
+.fas {
+  padding: 5px;
+}
+
+.btn-settings:hover {
+  background-color: orange;
+}
