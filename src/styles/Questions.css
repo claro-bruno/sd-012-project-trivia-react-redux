@@ -1,15 +1,47 @@
 .correct-answer {
   border: 3px solid rgb(6, 240, 15);
+  padding: 7px;
+  margin: 15px 35px;
+  background-color: #9c9797;
+  font-size: 20px;
 }
 
 .correct-answer.selected {
   background-color: rgb(6, 240, 15);
+  padding: 7px;
+  margin: 15px 35px;
+  background-color: #9c9797;
+  font-size: 20px;
 }
 
 .wrong-answer {
   border: 3px solid red;
+  padding: 7px;
+  margin: 15px 35px;
+  background-color: #9c9797;
+  font-size: 20px;
 }
 
 .wrong-answer.selected {
   background-color: red;
+  padding: 7px;
+  margin: 15px 35px;
+  background-color: #9c9797;
+  font-size: 20px;
+}
+
+.btn-generic {
+  border: 1px black solid;
+  padding: 7px;
+  margin: 15px 35px;
+  background-color: #9c9797;
+  font-size: 20px;
+}
+
+.btn-generic:hover {
+  transform: scale(1.06);
+}
+
+.btn-generic:active {
+  transform: scale(0.99);
 }

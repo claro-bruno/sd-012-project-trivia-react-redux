@@ -51,7 +51,7 @@ class Questions extends Component {
         type="button"
         onClick={ this.handleClick }
         disabled={ disabled }
-        className={ next ? 'wrong-answer' : 'btn-general' }
+        className={ next ? 'wrong-answer' : 'btn-generic' }
       >
         { answer }
       </button>
@@ -76,7 +76,7 @@ class Questions extends Component {
     return (
       <>
         <div className="bg-grey rounded-md w-7/12 flex mt-12 p-2 flex-row">
-          <div className="bg-header flex flex-col items-center p-2">
+          <div className="bg-header flex flex-col items-center p-2 stopwatch">
             <p data-testid="question-category">
               {question.category}
             </p>
@@ -89,7 +89,7 @@ class Questions extends Component {
             {question.question}
           </h1>
         </div>
-        <div className="mt-8 flex flex-wrap">
+        <div className="mt-8 grid grid-cols-2">
           {answers.map((answer) => {
             if (answer === question.correct_answer) {
               return (
@@ -100,7 +100,7 @@ class Questions extends Component {
                   key={ answer }
                   onClick={ this.handleClick }
                   disabled={ disabled }
-                  className={ next ? 'correct-answer' : 'btn-general' }
+                  className={ next ? 'correct-answer' : 'btn-generic' }
                 >
                   { answer }
                 </button>
