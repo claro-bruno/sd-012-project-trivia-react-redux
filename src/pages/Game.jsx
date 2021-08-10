@@ -138,16 +138,14 @@ class Game extends Component {
     correctList.classList.remove('correct');
     const timeOff = false;
     changeTimer({ timeOff });
-    const lastQuestion = 4;
+    // const lastQuestion = 4;
     const MAX_TIME = 30;
-    if (currentQuestion < lastQuestion) {
-      this.setState({
-        timer: MAX_TIME,
-        currentQuestion: currentQuestion + 1,
-        pauseTimer: false,
-      });
-      this.updateTimer();
-    }
+    this.setState({
+      timer: MAX_TIME,
+      currentQuestion: currentQuestion + 1,
+      pauseTimer: false,
+    });
+    this.updateTimer();
   }
 
   showBtnNextQuestion() {
@@ -170,8 +168,8 @@ class Game extends Component {
       timer,
     } = this.state;
     const { timeOff } = this.props;
-    const lastQuestion = 4;
-    if (currentQuestion === lastQuestion) {
+    const shouldRedirect = 5;
+    if (currentQuestion === shouldRedirect) {
       return <Redirect to="/feedback" />;
     }
     return (
@@ -209,9 +207,9 @@ class Game extends Component {
   }
 
   render() {
-    const { name, gravatarEmail, score } = this.props;
+    const { name, gravatarEmail, score, assertions } = this.props;
     localStorage.setItem('state', JSON
-      .stringify({ player: { name, assertions: 0, score, gravatarEmail } }));
+      .stringify({ player: { name, assertions, score, gravatarEmail } }));
     const { isLoading } = this.props;
     return isLoading ? <Loading /> : this.pageRender();
   }
@@ -225,6 +223,7 @@ const mapStateToProps = (state) => ({
   timer: state.timerReducer.time,
   timeOff: state.timerReducer.timeOff,
   score: state.player.score,
+  assertions: state.player.assertions,
 });
 
 const mapDispatchToProps = (dispatch) => ({
