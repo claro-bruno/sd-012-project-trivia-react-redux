@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Header from '../Components/Header';
 import Score from '../Components/Score';
+import Ranking from '../Components/Ranking';
 
 const minAssertions = 3;
 
@@ -33,6 +35,7 @@ class Feedback extends Component {
         >
           Play Again
         </button>
+        <Link data-testid="btn-ranking" to="/ranking/"><Ranking /></Link>
       </>
     );
   }

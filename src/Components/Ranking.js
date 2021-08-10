@@ -4,7 +4,7 @@ export default class Ranking extends Component {
   render() {
     return (
       <div>
-        Ranking
+        <h1 data-testid="ranking-title">Trivia Rank</h1>
       </div>
     );
   }
