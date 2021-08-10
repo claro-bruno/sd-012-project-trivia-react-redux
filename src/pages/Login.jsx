@@ -35,47 +35,38 @@ class Login extends Component {
   render() {
     const { email, name } = this.state;
     const { results } = this.props;
+    const inputNameProps = {
+      'data-testid': 'input-player-name',
+      type: 'text',
+      name: 'name',
+      placeholder: 'Name',
+      value: name,
+      onChange: this.handle,
+    };
+    const inputEmailProps = {
+      'data-testid': 'input-gravatar-email',
+      name: 'email',
+      type: 'email',
+      placeholder: 'Email',
+      value: email,
+      onChange: this.handle,
+    };
+    const buttonJogar = {
+      disabled: !(regEmail.test(email) && name.length > nameSize),
+      'data-testid': 'btn-play',
+      onClick: this.handleClickToken,
+    };
     if (results.length > 0) return <Redirect to="/game" />;
     return (
       <div className="App">
         <header className="App-header">
           <img src={ logo } className="App-logo" alt="logo" />
-          <p>
-            SUA VEZ
-          </p>
-          <input
-            data-testid="input-player-name"
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={ name }
-            onChange={ this.handle }
-          />
-          <input
-            data-testid="input-gravatar-email"
-            name="email"
-            type="email"
-            placeholder="Email"
-            value={ email }
-            onChange={ this.handle }
-          />
-          {/* <Link to="/game"> */}
-          <button
-            disabled={ !(regEmail.test(email) && name.length > nameSize) }
-            data-testid="btn-play"
-            type="button"
-            onClick={ this.handleClickToken }
-          >
-            Jogar
-          </button>
-          {/* </Link> */}
+          <p>SUA VEZ</p>
+          <input { ...inputNameProps } />
+          <input { ...inputEmailProps } />
+          <button type="button" { ...buttonJogar }>Jogar</button>
           <Link to="/settings">
-            <button
-              data-testid="btn-settings"
-              type="button"
-            >
-              Configurações
-            </button>
+            <button data-testid="btn-settings" type="button">Configurações</button>
           </Link>
         </header>
       </div>
