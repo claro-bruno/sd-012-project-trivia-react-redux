@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
 import Questions from '../components/Questions';
+import '../styles/Trivia.css';
 
 class Trivia extends Component {
   render() {
     return (
-      <div>
+      <div className="trivia-page">
         <Header />
         <Questions />
       </div>);

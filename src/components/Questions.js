@@ -136,7 +136,6 @@ class Questions extends Component {
     const three = 3;
     const baseValue = 10;
     const questionDificulty = trivias[indexQuestion].difficulty;
-
     switch (questionDificulty) {
     case easy:
       this.setState({
@@ -170,49 +169,53 @@ class Questions extends Component {
     }
   }
 
-  // Renderiza Perguntas da Trivia.
-  makeTrivias() {
+  makeTrivias() { // Renderiza Perguntas da Trivia.
     const { trivias, indexQuestion, disabled, arrayOfQuestions, time } = this.state;
     const randomizator = 0.5;
     let allQuestions = [trivias[indexQuestion].correct_answer,
       ...trivias[indexQuestion].incorrect_answers];
     const correctAnswer = trivias[indexQuestion].correct_answer;
-
     const buttons = arrayOfQuestions.length > 0
       ? arrayOfQuestions
       : allQuestions = allQuestions.sort(() => Math.random() - randomizator);
-
     if (arrayOfQuestions.length === 0) {
       this.setState({
         arrayOfQuestions: buttons,
       });
     }
-
     return (
-      <>
-        <span>{ time }</span>
+      <div>
+        <span className="timer">{ time }</span>
         <h1 data-testid="question-category">{ trivias[indexQuestion].category }</h1>
-        <h2 data-testid="question-text">{ trivias[indexQuestion].question }</h2>
-        <ol>
-          { buttons.map(((answer, index) => (
-            <li key={ index }>
-              <button
-                name="incorrect"
-                type="button"
-                className={ this.teste(answer) }
-                onClick={ answer === correctAnswer
-                  ? this.calculateScore : this.showButtonNext }
-                disabled={ disabled }
-                data-testid={ answer === correctAnswer
-                  ? 'correct-answer' : `wrong-answer-${index}` }
-              >
-                { answer }
-              </button>
-            </li>
-          ))) }
-        </ol>
-        { this.activeButtonNext() }
-      </>
+        <div className="question-box">
+          <div className="left-questions">
+            <h2 data-testid="question-text">{ trivias[indexQuestion].question }</h2>
+          </div>
+          <div className="right-questions">
+            <ol>
+              { buttons.map(((answer, index) => (
+                <li key={ index }>
+                  <button
+                    name="incorrect"
+                    type="button"
+                    className={ `${this.teste(answer)} answers` }
+                    onClick={ answer === correctAnswer
+                      ? this.calculateScore : this.showButtonNext }
+                    disabled={ disabled }
+                    data-testid={ answer === correctAnswer
+                      ? 'correct-answer' : `wrong-answer-${index}` }
+                  >
+                    { answer }
+                  </button>
+                </li>
+              ))) }
+            </ol>
+            <div className="btn-next-div">
+              { this.activeButtonNext() }
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 
