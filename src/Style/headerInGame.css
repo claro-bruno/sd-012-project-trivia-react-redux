@@ -6,12 +6,12 @@
 }
 
 .left-side-infos {
-  color: #fff;
-  margin-top: 10px;
-  border-style: solid;
-  border-radius: 30px;
-  border-color: rgb(61, 157, 179);
+  color: white;
   align-items: center;
+  border-color: rgb(61, 157, 179);
+  border-radius: 30px;
+  border-style: solid;
+  margin-top: 10px;
   display: flex;
   justify-content: left;
   margin-left: 10px;

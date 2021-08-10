@@ -1,0 +1,50 @@
+.ranking-screen {
+  color: #fff;
+  text-align: center;
+  width: 600px;
+  min-height: 260px;   
+  margin-top: 70px;
+  margin-left: 400px;
+  margin-bottom: 10px;
+  border-style: solid;
+  border-radius: 30px;
+  border-color: rgb(61, 157, 179);
+  position: relative; 
+}
+
+#ranking-player {
+  border-bottom: rgb(61, 157, 179);
+  border-bottom-style: solid;
+}
+
+#ranking-img {
+  display: flex;
+  padding-left: 50px;
+}
+
+#ranking-name {
+  display: flex;
+  align-items: center;
+}
+
+#ranking-score {
+  display: flex;
+}
+
+#btn-go-home {
+  margin-left: 0px;
+  width: 500px!important;
+  cursor: pointer;  
+  background: rgb(61, 157, 179);
+  padding: 8px 5px;
+  color: #fff;
+  font-size: 20px;  
+  border: 1px solid #fff;   
+  margin-bottom: 10px;  
+  text-shadow: 0 1px 1px #333;
+ 
+  -webkit-border-radius: 5px;
+  border-radius: 30px;
+ 
+  transition: all 0.2s linear;
+}
