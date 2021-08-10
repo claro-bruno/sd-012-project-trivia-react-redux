@@ -26,6 +26,7 @@ class Game extends React.Component {
     this.buttonColorDisabler = this.buttonColorDisabler.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.enableButton = this.enableButton.bind(this);
+    this.setToRedux = this.setToRedux.bind(this);
   }
 
   componentDidMount() {
@@ -48,6 +49,24 @@ class Game extends React.Component {
     };
     const myValue = JSON.stringify(value);
     localStorage.setItem('state', myValue);
+  }
+
+  setToRedux() {
+    const player = JSON.parse(localStorage.getItem('state'));
+    const defineObj = {
+      name: player.player.name,
+      score: player.player.score,
+      picture: player.player.gravatarEmail,
+    };
+    if (localStorage.getItem('ranking')) {
+      const ranking = JSON.parse(localStorage.getItem('ranking'));
+      localStorage.setItem('ranking', JSON.stringify([...ranking, defineObj]));
+    } else {
+      localStorage.setItem('ranking', JSON.stringify([defineObj]));
+    }
+    return (
+      <Redirect to="/feedback" />
+    );
   }
 
   getQuestions() {
@@ -159,7 +178,13 @@ class Game extends React.Component {
     const { questions, questionNumber, loading, score, seconds, next } = this.state;
     const { getUrl, getName } = this.props;
     const max = 4;
-    if (questionNumber > max) return <Redirect to="/feedback" />;
+    if (questionNumber > max) {
+      return (
+        <>
+          { this.setToRedux() }
+        </>
+      );
+    }
     if (!loading) {
       return (
         <main>
