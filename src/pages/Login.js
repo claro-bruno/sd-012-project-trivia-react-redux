@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
-import { actionCreateLogin } from '../redux/actions';
+import { actionCreateLogin, resetState } from '../redux/actions';
 import { fetchApi } from '../services/api';
 
 class Login extends Component {
@@ -35,7 +35,8 @@ class Login extends Component {
     const DATA = await fetchApi(url);
     const TOKEN = DATA.token;
     localStorage.setItem('token', JSON.stringify(TOKEN));
-    const { createLogin } = this.props;
+    const { createLogin, resetUser } = this.props;
+    resetUser();
     createLogin(state);
     this.setState({ redirect: true });
     localStorage.setItem('state', JSON.stringify({ player: {
@@ -104,10 +105,12 @@ class Login extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   createLogin: (state) => dispatch(actionCreateLogin(state)),
+  resetUser: () => dispatch(resetState()),
 });
 
 Login.propTypes = {
-  createLogin: PropTypes.func,
-}.isRequired;
+  createLogin: PropTypes.func.isRequired,
+  resetUser: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);
