@@ -189,6 +189,7 @@ class Questions extends Component {
         data-testid="btn-next"
         type="button"
         onClick={ () => this.removeFirstQuestion() }
+        className="btn-next"
       >
         Proxima Pergunta
       </button>);
