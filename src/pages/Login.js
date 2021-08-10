@@ -31,7 +31,7 @@ class Login extends React.Component {
 
   submitBtn() {
     const { email: gravatarEmail, user: name } = this.state;
-    const { history, getEmail, getName } = this.props;
+    const { getEmail, getName, history } = this.props;
     getEmail(gravatarEmail);
     getName(name);
     const newUser = { player: {
