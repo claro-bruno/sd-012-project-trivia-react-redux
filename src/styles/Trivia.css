@@ -14,18 +14,18 @@ header {
 
 [ data-testid = 'header-profile-picture' ] {
   border-radius: 50%;
-  margin: 30px auto;
+  margin: 20px auto;
 }
 
 [ data-testid = 'header-player-name' ] {
-  color: #228be6;
+  color: #511f52;
   font-family: Quantico , sans-serif;
   font-size: 200%;
   margin: auto;
 }
 
 [ data-testid = 'header-score' ] {
-  color: #511f52;
+  color: #228be6;
   font-family: Black Ops One , sans-serif;
   font-size: 50px;
   margin: auto;
@@ -51,9 +51,10 @@ header {
   align-items: center;
   border-radius: 10px;
   display: flex;
+  flex-direction: column;
+  height: 20%;
   justify-content: space-between;
   margin: auto;
-  padding: 10px;
   width: 80%;
 }
 
@@ -64,20 +65,25 @@ header {
 }
 
 .left-questions {
-  background-color: #c92a2a;
+  background-color: #fa5252;
   border-radius: 5px;
+  width: 88%;
 }
 
 .right-questions {
   background-color: #ffc02d;
   border: solid 2px #511f52;
   border-radius: 5px;
+  margin: 5px;
   padding: 5px;
+  width: 90%;
 }
 
 [ data-testid = 'question-category' ] {
   color: #511f52;
   font-family: Quantico , sans-serif;
+  font-size: 150%;
+  margin: 5px 0 0;
   text-align: center;
 }
 
@@ -99,7 +105,7 @@ li {
   justify-content: center;
   margin: 2% auto;
   text-decoration: none;
-  width: 250px;
+  width: 70%;
 }
 
 .answers {

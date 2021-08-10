@@ -62,15 +62,19 @@ class Feedback extends React.Component {
     return (
       <div className="feedback">
         <div className="main">
+          <div>
+            {this.renderPlayerSpecs(this.getPlayerSpecs())}
+          </div>
           <div className="div-messages">
-            <div className="div-score">
-              <p data-testid="feedback-total-question">{ playerAsserts }</p>
-              <p data-testid="feedback-total-score">{ playerScore }</p>
-            </div>
             <div className="div-msg">
-              {this.renderPlayerSpecs(this.getPlayerSpecs())}
+              <p data-testid="feedback-total-question">
+                {playerAsserts}
+              </p>
               <p data-testid="feedback-text">
                 { playerAsserts < controlNumber ? 'Podia ser melhor...' : 'Mandou bem!' }
+              </p>
+              <p data-testid="feedback-total-score">
+                {playerScore}
               </p>
             </div>
           </div>
