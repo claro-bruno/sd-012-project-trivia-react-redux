@@ -50,7 +50,7 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  height: 85%;
+  height: 70%;
   justify-content: space-between;
   width: 350px;
 }
@@ -96,6 +96,7 @@
 
 .login-content button {
   background-color: rgb(204, 153, 153);
+  border: none;
   border-radius: 10px;
   box-shadow: 0 0 5px 2px rgb(80, 56, 56);
   color: rgb(51, 51, 102);
@@ -114,11 +115,20 @@
 }
 
 .login-content button:disabled {
+  background-color: silver;
   box-shadow: none;
   cursor: auto;
-  opacity: 0.7;
+  opacity: 0.5;
 }
 
 .login-content button:active {
+  background-color: rgb(189, 104, 104);
   box-shadow: none;
+}
+
+@media screen and ( max-width : 380px ) {
+
+  .login-field {
+    height: 50%;
+  }
 }
