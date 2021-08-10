@@ -134,6 +134,7 @@ class GameBody extends Component {
 
 GameBody.propTypes = {
   results: PropTypes.string.isRequired,
+  getQuest: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
