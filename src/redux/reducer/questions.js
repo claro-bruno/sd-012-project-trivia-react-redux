@@ -1,9 +1,10 @@
-import { GET_QUESTION, GET_QUESTION_SUCCESS, GET_QUESTION_ERROR } from '../action';
+import { GET_QUESTION, GET_QUESTION_SUCCESS, GET_QUESTION_ERROR, SET_SCORE } from '../action';
 
 const STATE_INITIAL = ({
   results: [],
   loading: false,
   error: null,
+  score: 0,
 });
 
 const questions = (state = STATE_INITIAL, action) => {
@@ -27,6 +28,13 @@ const questions = (state = STATE_INITIAL, action) => {
       error: action.payload.erro,
       loading: false,
     };
+
+  case SET_SCORE:
+    return {
+      ...state,
+      score: action.payload,
+    };
+
   default:
     return state;
   }
