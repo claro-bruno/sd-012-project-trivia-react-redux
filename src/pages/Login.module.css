@@ -9,6 +9,13 @@
   width: 50%;
 }
 
+.g4Logo {
+  justify-content: end;
+  margin-top: 30px;
+  position: fixed;
+  width: 100px;
+}
+
 .appHeader {
   display: flex;
   justify-content: center;

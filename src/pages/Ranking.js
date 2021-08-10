@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../components/Button';
+import styles from './Ranking.module.css';
+import G4Logo from '../G4.gif';
 
 class Ranking extends React.Component {
   handleClick(route) {
@@ -13,22 +15,27 @@ class Ranking extends React.Component {
     const ranking = playerRanking.sort((a, b) => b.score - a.score);
     return (
       <div>
-        <h1 data-testid="ranking-title">
-          Ranking
-        </h1>
-        <ol>
-          { ranking.map((user, index) => (
-            <li key={ index }>
-              <img src={ user.picture } alt="Foto" />
-              <p data-testid={ `player-name-${index}` }>{ user.name }</p>
-              <p data-testid={ `player-score-${index}` }>{ user.score }</p>
-            </li>))}
-        </ol>
-        <Button
-          testId="btn-go-home"
-          onClick={ () => this.handleClick('/') }
-          buttonText="Tela de preenchimento dos dados"
-        />
+        <img src={ G4Logo } className={ styles.g4Logo } alt="logo" />
+        <div className={ styles.rankBack }>
+          <div className={ styles.rankHeader }>
+            <h1 data-testid="ranking-title">
+              Ranking
+            </h1>
+            <ol>
+              { ranking.map((user, index) => (
+                <li key={ index }>
+                  <img src={ user.picture } alt="Foto" />
+                  <p data-testid={ `player-name-${index}` }>{ user.name }</p>
+                  <p data-testid={ `player-score-${index}` }>{ user.score }</p>
+                </li>))}
+            </ol>
+            <Button
+              testId="btn-go-home"
+              onClick={ () => this.handleClick('/') }
+              buttonText="Tela de preenchimento dos dados"
+            />
+          </div>
+        </div>
       </div>
     );
   }

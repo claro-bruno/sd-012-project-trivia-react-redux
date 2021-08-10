@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import logo from '../trivia.png';
+import G4Logo from '../G4.gif';
 import { sendUserInfo } from '../redux/action';
 import Button from '../components/Button';
 import {
@@ -79,6 +80,7 @@ class Login extends React.Component {
     const btnCheck = !(emailCheck === true && nameCheck === true);
     return (
       <main className={ styles.mainLogin }>
+        <img src={ G4Logo } className={ styles.g4Logo } alt="logo" />
         <header className={ styles.appHeader }>
           <img src={ logo } className={ styles.appLogo } alt="logo" />
         </header>
