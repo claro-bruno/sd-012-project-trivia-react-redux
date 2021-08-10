@@ -15,6 +15,7 @@ class ActualQuestion extends Component {
     this.handleChangeStyle = this.handleChangeStyle.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.handleRedirect = this.handleRedirect.bind(this);
+    this.addToRanking = this.addToRanking.bind(this);
 
     this.state = {
       answered: false,
@@ -87,6 +88,20 @@ class ActualQuestion extends Component {
     this.setState({ redirect: true });
   }
 
+  addToRanking() {
+    const { picture, name, score } = this.props;
+    const saveRanking = JSON.parse(localStorage.getItem('ranking'));
+    if (saveRanking) {
+      localStorage.setItem('ranking', JSON.stringify(
+        [...saveRanking, { picture, name, score }],
+      ));
+    } else {
+      localStorage.setItem('ranking', JSON.stringify(
+        [{ picture, name, score }],
+      ));
+    }
+  }
+
   // Renderiza as respostas;
   renderAnswers(answers, correctAnswer, answered) {
     let count = 0;
@@ -123,12 +138,16 @@ class ActualQuestion extends Component {
   }
 
   render() {
-    const { question: {
-      category,
-      question,
-      correct_answer: correctAnswer,
-      incorrect_answers: incorrectAnswers,
-    }, nextQuestion, questionIndex } = this.props;
+    const {
+      question: {
+        category,
+        question,
+        correct_answer: correctAnswer,
+        incorrect_answers: incorrectAnswers,
+      },
+      nextQuestion,
+      questionIndex,
+    } = this.props;
     const { answered, timer, redirect } = this.state;
 
     const answers = [...incorrectAnswers, correctAnswer];
@@ -153,7 +172,7 @@ class ActualQuestion extends Component {
           ) : (
             <button
               type="button"
-              onClick={ this.handleRedirect }
+              onClick={ () => { this.handleRedirect(); this.addToRanking(); } }
               data-testid="btn-next"
             >
               Próxima
@@ -178,6 +197,9 @@ ActualQuestion.propTypes = {
   pointsToScore: PropTypes.func.isRequired,
   nextQuestion: PropTypes.func.isRequired,
   questionIndex: PropTypes.number.isRequired,
+  picture: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

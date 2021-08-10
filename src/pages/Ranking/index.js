@@ -30,7 +30,7 @@ class Ranking extends Component {
             type="button"
             data-testid="btn-go-home"
           >
-            home
+            Home
           </button>
         </Link>
       </div>
