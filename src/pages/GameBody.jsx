@@ -36,6 +36,8 @@ class GameBody extends Component {
       index: index + 1,
       disableAnswers: false,
       hidden: true,
+      className: '',
+      className2: '',
     });
   }
 
