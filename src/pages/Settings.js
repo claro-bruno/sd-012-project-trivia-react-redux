@@ -41,12 +41,16 @@ class Settings extends React.Component {
     });
   }
 
-  render() {
+  renderCategorySelect() {
     const { categories } = this.state;
     return (
-      <div>
-        <h1 data-testid="settings-title">Configurações</h1>
-        <select onChange={ this.changeHandle } id="category">
+      <label htmlFor="category" className="flex flex-col w-1/3 mb-5">
+        Categoria:
+        <select
+          onChange={ this.changeHandle }
+          id="category"
+          className="rounded-md text-black px-2 p-2 bg-white"
+        >
           <option value="0">Qualquer Categoria</option>
           {categories.map((category) => (
             <option key={ category.id } value={ category.id }>
@@ -54,18 +58,58 @@ class Settings extends React.Component {
             </option>
           ))}
         </select>
-        <select onChange={ this.changeHandle } id="difficulty">
+      </label>
+    );
+  }
+
+  renderDifficultySelect() {
+    return (
+      <label htmlFor="difficulty" className="flex flex-col w-1/3 mb-5">
+        Dificuldade:
+        <select
+          onChange={ this.changeHandle }
+          id="difficulty"
+          className="rounded-md text-black px-2 p-2 bg-white"
+        >
           <option value="0">Qualquer Dificuldade</option>
           <option value="easy">Fácil</option>
           <option value="medium">Médio</option>
           <option value="hard">Difícil</option>
         </select>
-        <select onChange={ this.changeHandle } id="type">
+      </label>
+    );
+  }
+
+  renderTypeSelect() {
+    return (
+      <label htmlFor="type" className="flex flex-col w-1/3 mb-5">
+        Tipo de Pergunta:
+        <select
+          onChange={ this.changeHandle }
+          id="type"
+          className="rounded-md text-black px-2 p-2 bg-white"
+        >
           <option value="0">Qualquer Tipo</option>
           <option value="multiple">Multipla Escolha</option>
           <option value="boolean">Verdadeiro ou Falso</option>
         </select>
-        <Link to="/">Salvar</Link>
+      </label>
+    );
+  }
+
+  render() {
+    return (
+      <div className="flex flex-col items-center m-0">
+        <h1 data-testid="settings-title" className="text-2xl  mb-5">Configurações</h1>
+        { this.renderCategorySelect() }
+        { this.renderDifficultySelect() }
+        { this.renderTypeSelect() }
+        <Link
+          className="btn-green rounded-md py-1 px-3 my-3 shadow-xl"
+          to="/"
+        >
+          Salvar
+        </Link>
       </div>
     );
   }
