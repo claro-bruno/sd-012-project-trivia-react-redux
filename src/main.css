@@ -12373,6 +12373,54 @@ header .header-score {
   width: fit-content;
 }
 
+.settings-screen {
+  background-image: url("./images/settings.png");
+  background-size: cover;
+}
+
+.settings-screen .outter-container {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  width: 100%;
+}
+
+.settings-container {
+  width: 40%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
+  color: white;
+  margin-right: 80px;
+}
+
+.settings-container label {
+  width: 80%;
+}
+
+.settings-container button {
+  width: 150px;
+  margin: 20px;
+}
+
+.settings-title {
+  background-color: #7f00fc;
+  width: 100%;
+  border-radius: 5px;
+  text-align: center;
+}
+
 html, body, main {
   height: 100vh;
   overflow: hidden;

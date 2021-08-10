@@ -1,17 +1,22 @@
+/* eslint-disable max-len */
+/* eslint-disable react/jsx-max-depth */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Button from '../components/Button';
-import { fetchCategories, setParameters } from '../actions/settings';
+import { Redirect } from 'react-router-dom';
+import { fetchCategories, setParameters } from '../actions';
 import Loading from '../components/Loading';
 
 class Settings extends Component {
   constructor() {
     super();
     this.state = {
-      type: '',
-      difficulty: '',
-      categoryId: 0,
+      parameters: {
+        type: '',
+        difficulty: '',
+        categoryId: 0,
+      },
+      redirect: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -23,46 +28,80 @@ class Settings extends Component {
 
   handleChange({ target: { name, value } }) {
     this.setState({
-      [name]: value,
+      parameters: {
+        [name]: value,
+      },
     });
   }
 
+  // eslint-disable-next-line max-lines-per-function
   render() {
     const { setParams, categories, loading } = this.props;
+    const { parameters, redirect } = this.state;
     if (loading) return <Loading />;
+    if (redirect) return <Redirect to="/" />;
     return (
-      <main className="settings-screen">
-        <h1 data-testid="settings-title">Configurações</h1>
-        <label htmlFor="category-select">
-          Categoria
-          <select name="categoryId" id="category-select" onChange={ this.handleChange }>
-            <option value="">Todas</option>
-            {categories.map(({ id, name }) => (
-              <option value={ id } key={ id }>{name}</option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="diff-select">
-          Dificuldade
-          <select name="difficulty" id="difficulty-select" onChange={ this.handleChange }>
-            <option value="">Todas</option>
-            <option value="easy">Fácil</option>
-            <option value="medium">Média</option>
-            <option value="hard">Difícil</option>
-          </select>
-        </label>
-        <label htmlFor="type-select">
-          Tipo
-          <select name="type" id="type-select" onChange={ this.handleChange }>
-            <option value="">Todas</option>
-            <option value="multiple">Múltipla escolha</option>
-            <option value="boolean">Verdadeiro / Falso</option>
-          </select>
-        </label>
-        <button type="button" onClick={ () => setParams(this.state) }>
-          Configurar
-        </button>
-        <Button to="/" inner="Voltar" />
+      <main className="settings-screen d-flex">
+        <div className="outter-container d-flex">
+          <div className="settings-container d-flex flex-column">
+            <h1 data-testid="settings-title" className="settings-title">Configurações</h1>
+            <label htmlFor="category-select" className="form-label">
+              Categoria
+              <select
+                name="categoryId"
+                id="category-select"
+                onChange={ this.handleChange }
+                className="form-select"
+              >
+                <option value="">Todas</option>
+                {categories.map(({ id, name }) => (
+                  <option value={ id } key={ id }>{name}</option>
+                ))}
+              </select>
+            </label>
+            <label htmlFor="diff-select" className="form-label">
+              Dificuldade
+              <select
+                name="difficulty"
+                id="difficulty-select"
+                onChange={ this.handleChange }
+                className="form-select"
+              >
+                <option value="">Todas</option>
+                <option value="easy">Fácil</option>
+                <option value="medium">Média</option>
+                <option value="hard">Difícil</option>
+              </select>
+            </label>
+            <label htmlFor="type-select" className="form-label">
+              Tipo
+              <select
+                name="type"
+                id="type-select"
+                onChange={ this.handleChange }
+                className="form-select"
+              >
+                <option value="">Todas</option>
+                <option value="multiple">Múltipla escolha</option>
+                <option value="boolean">Verdadeiro / Falso</option>
+              </select>
+            </label>
+            <div>
+              <button
+                type="button"
+                onClick={ () => {
+                  this.setState({
+                    redirect: true,
+                  });
+                  setParams(parameters);
+                } }
+                className="btn btn-dark"
+              >
+                Configurar
+              </button>
+            </div>
+          </div>
+        </div>
       </main>
     );
   }
@@ -83,6 +122,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Settings);
 Settings.propTypes = {
   setParams: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
   getCategories: PropTypes.func.isRequired,
 };

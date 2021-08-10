@@ -29,4 +29,6 @@ export {
   RECEIVE_CATEGORIES,
   RECEIVE_CATEGORIES_ERROR,
   SET_PARAMETERS,
+  setParameters,
+  fetchCategories,
 } from './settings';
