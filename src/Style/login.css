@@ -1,25 +1,23 @@
 .login-screen {
-  color: white;
-  border-color: rgb(81,86,255);;
+  border-color: rgb(81, 86, 255);
   border-radius: 30px;
   border-style: solid;
+  color: white;
   margin-left: 500px;
   margin-top: 70px;
   min-height: 260px;
-  width: 400px;
   position: relative;
+  width: 400px;
 }
 
 #input-name {
-  width: 95%;
-  margin-top: 4px;
   border: 1px solid #b2b2b2;
-  padding: 10px;
-
+  margin-top: 4px;
   -webkit-border-radius: 3px;
-  border-radius: 3px;
-
+  padding: 10px;
+  width: 95%;
   -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
+  border-radius: 3px;
   box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
 
   -webkit-transition: all 0.2s linear;
@@ -27,15 +25,13 @@
 }
 
 #input-email {
+  border: 1px solid #b2b2b2;
   margin-bottom: 10px;
   margin-top: 4px;
-  width: 95%;
-  border: 1px solid #b2b2b2;
-  padding: 10px;
-
   -webkit-border-radius: 3px;
+  padding: 10px;
+  width: 95%;
   border-radius: 3px;
-
   -webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
   box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
 
@@ -44,25 +40,24 @@
 }
 
 #btn-play {
-  background: rgb(81,86,255);;
-  cursor: pointer;
-  width: 100% ! important;
-  color: black;
-  padding: 8px 5px;
+  background: rgb(81, 86, 255);
   border: 1px solid white;
+  color: black;
+  cursor: pointer;
+  padding: 8px 5px;
   font-size: 20px;
-  margin-bottom: 10px;
   -webkit-border-radius: 5px;
-  text-shadow: 0 1px 1px #333;
-
+  margin-bottom: 10px;
   border-radius: 5px;
+  text-shadow: 0 1px 1px #333;
+  width: 100% ! important;
 
   transition: all 0.2s linear;
 }
 
 #btn-config {
   color: black;
-  background: rgb(81,86,255);
+  background: rgb(81, 86, 255);
   border-radius: 30px;
   margin-left: 297px;
   margin-top: 50px;
