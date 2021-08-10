@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { getUserData } from '../redux/actions';
 // import saveLocalStorage from '../helper/saveLocalStorage';
 import getUserInfo from '../services/api';
+import './login.css';
 
 class Login extends React.Component {
   constructor() {
@@ -63,36 +64,50 @@ class Login extends React.Component {
   render() {
     const { buttonDisabled, name, email } = this.state;
     return (
-      <div>
-        <label htmlFor="name">
-          Nome:
-          <input
-            value={ name }
-            onChange={ this.handleChange }
-            data-testid="input-player-name"
-            id="name"
-            type="text"
-          />
-        </label>
-        <label htmlFor="email">
-          E-mail:
-          <input
-            value={ email }
-            onChange={ this.handleChange }
-            data-testid="input-gravatar-email"
-            id="email"
-            type="email"
-          />
-        </label>
-        <button
-          data-testid="btn-play"
-          type="button"
-          disabled={ buttonDisabled }
-          onClick={ this.handleLogin }
-        >
-          Jogar!
-        </button>
-        <Link data-testid="btn-settings" to="/settings">Configurações</Link>
+      <div className="login-content">
+        <div className="settings-login">
+          <Link
+            className="settings-btn"
+            data-testid="btn-settings"
+            to="/settings"
+          >
+            <i className="bi bi-gear-fill" />
+            {' Configurações'}
+          </Link>
+        </div>
+        <h1 className="logo-trivia">Trivia</h1>
+        <section className="login-field">
+          <fieldset>
+            <label htmlFor="name">
+              Nome:
+              <input
+                value={ name }
+                onChange={ this.handleChange }
+                data-testid="input-player-name"
+                id="name"
+                type="text"
+              />
+            </label>
+            <label htmlFor="email">
+              E-mail:
+              <input
+                value={ email }
+                onChange={ this.handleChange }
+                data-testid="input-gravatar-email"
+                id="email"
+                type="email"
+              />
+            </label>
+          </fieldset>
+          <button
+            data-testid="btn-play"
+            type="button"
+            disabled={ buttonDisabled }
+            onClick={ this.handleLogin }
+          >
+            Jogar!
+          </button>
+        </section>
       </div>
     );
   }

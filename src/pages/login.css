@@ -1,0 +1,140 @@
+.login-content {
+  background-color: rgb(51, 51, 102);
+  display: grid;
+  grid-template-areas: 'set' 'logo' 'login';
+  grid-template-rows: 5vh 35vh 60vh;
+  height: 100vh;
+  width: 100vw;
+}
+
+.settings-login {
+  align-items: center;
+  display: flex;
+  grid-area: set;
+  justify-content: flex-end;
+}
+
+.settings-login a {
+  color: white;
+  margin-right: 10px;
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+.settings-login a:hover {
+  opacity: 1;
+}
+
+.logo-trivia {
+  animation: fade-logo 1s ease , shake-logo 0.3s 0.9s ease , fade-in-login 2.5s ease;
+  color: rgb(204, 204, 204);
+  font-family: 'Press Start 2P' , cursive;
+  font-size: 85px;
+  grid-area: logo;
+  margin: auto;
+  text-shadow: 5px 10px 5px black;
+}
+
+@keyframes fade-logo {
+
+  from {
+    font-size: 10px;
+  }
+
+}
+
+@keyframes shake-logo {
+
+  0% {
+    margin-right: 31.5%;
+  }
+
+  25% {
+    margin: auto;
+  }
+
+  50% {
+    margin-right: 31.5%;
+  }
+
+  100% {
+    margin: auto;
+  }
+}
+
+.login-field {
+  animation: fade-in-login 2.5s ease-in-out;
+  grid-area: login;
+  margin: 0 auto;
+}
+
+@keyframes fade-in-login {
+
+  from {
+    opacity: 0;
+  }
+}
+
+.login-field fieldset {
+  align-items: center;
+  background-color: rgb(204, 204, 204);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  padding: 35px 15px;
+  width: 300px;
+}
+
+.login-field label {
+  display: flex;
+  font-family: Source Code Pro , monospace;
+  justify-content: space-between;
+  width: 95%;
+}
+
+.login-field input {
+  border: 1px solid gray;
+  border-radius: 10px;
+  outline: none;
+  padding: 5px 10px;
+}
+
+.login-field input:focus {
+  border: 1px solid rgb(204, 153, 153);
+  box-shadow: 0 0 2px 3px rgb(204, 153, 153);
+}
+
+.login-field input:hover {
+  border: 1px solid rgb(204, 153, 153);
+  box-shadow: 0 0 2px 3px rgb(204, 153, 153);
+}
+
+.login-content button {
+  background-color: rgb(204, 153, 153);
+  border-radius: 10px;
+  box-shadow: 0 0 5px 2px rgb(80, 56, 56);
+  color: rgb(51, 51, 102);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0.9;
+  outline: none;
+  padding: 10px 30px;
+}
+
+.login-content button:hover {
+  opacity: 1;
+}
+
+.login-content button:disabled {
+  box-shadow: none;
+  cursor: auto;
+  opacity: 0.7;
+}
+
+.login-content button:active {
+  box-shadow: none;
+}
