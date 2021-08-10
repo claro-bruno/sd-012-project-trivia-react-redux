@@ -91,7 +91,7 @@ class Login extends React.Component {
   render() {
     const { notValid } = this.state;
     return (
-      <div className="container flex flex-col items-center">
+      <div className="flex flex-col items-center">
         <img
           src={ logo }
           alt="Logo Trivia"
