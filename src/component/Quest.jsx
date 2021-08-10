@@ -11,6 +11,7 @@ import './Quest.css';
 const count4 = 4;
 const count5 = 5;
 const correctAnswerId = 'correct-answer';
+const wrongAnswerId = 'wrong-answer';
 
 class Quest extends React.Component {
   constructor(props) {
@@ -49,13 +50,13 @@ class Quest extends React.Component {
   resetStyles() {
     const { count } = this.state;
     if (count <= count4) {
-      const wrongButtons = document.getElementsByName('wrong-answer');
+      const wrongButtons = document.getElementsByName(wrongAnswerId);
       const correctButton = document.getElementById(correctAnswerId);
       const nextButton = document.getElementById('btn-next');
       wrongButtons.forEach((button) => {
-        button.className = '';
+        button.className = wrongAnswerId;
       });
-      correctButton.className = '';
+      correctButton.className = correctAnswerId;
       nextButton.className = 'hide';
     }
   }
@@ -86,14 +87,14 @@ class Quest extends React.Component {
   endTimerFunction(boolean) {
     const { count } = this.state;
     if (count <= count4) {
-      const wrongButtons = document.getElementsByName('wrong-answer');
+      const wrongButtons = document.getElementsByName(wrongAnswerId);
       const correctButton = document.getElementById(correctAnswerId);
       wrongButtons.forEach((button) => {
-        button.className = 'wrong-answer-clicked';
+        button.className = 'wrong-answer-clicked wrong-answer';
         button.disabled = boolean;
       });
 
-      correctButton.className = 'correct-answer-clicked';
+      correctButton.className = 'correct-answer-clicked correct-answer';
       correctButton.disabled = boolean;
     }
   }
@@ -158,32 +159,33 @@ class Quest extends React.Component {
       question, category, correct_answer: correctAnswer,
       incorrect_answers: incorret } = quests[count];
     return (
-      <div>
+      <div className="game">
         <Header name={ name } avatar={ avatar } />
         <h2>{timer}</h2>
-        <p data-testid="question-category">{ category }</p>
-        <p data-testid="question-text">{ question }</p>
-        <button
-          type="button"
-          data-testid="correct-answer"
-          id="correct-answer"
-          onClick={ this.handleClick }
-        >
-          { correctAnswer }
-        </button>
-        { incorret.map((wrong, index) => (
+        <h4 data-testid="question-category">{ category }</h4>
+        <h3 data-testid="question-text">{ question }</h3>
+        <div className="answers-option">
           <button
-            data-testid={ `wrong-answer-${index}` }
             type="button"
-            Name="wrong-answer"
-            className="wrong-answer"
-            id="wrong-answer"
+            data-testid="correct-answer"
+            id="correct-answer"
             onClick={ this.handleClick }
-            key={ index }
+            className="correct-answer"
           >
-            { wrong }
-          </button>)) }
-        <div>
+            { correctAnswer }
+          </button>
+          { incorret.map((wrong, index) => (
+            <button
+              data-testid={ `wrong-answer-${index}` }
+              type="button"
+              Name="wrong-answer"
+              className="wrong-answer"
+              id="wrong-answer"
+              onClick={ this.handleClick }
+              key={ index }
+            >
+              { wrong }
+            </button>)) }
           <button
             onClick={ this.nextQuestion }
             data-testid="btn-next"

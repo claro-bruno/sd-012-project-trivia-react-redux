@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import logo from '../trivia.png';
 import * as fetchAPI from '../helpers/fetchAPI';
 import { questAction, saveToken, saveEmail, saveName } from '../actions';
+import './Login.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -61,12 +62,11 @@ class Login extends React.Component {
     const { name, email, redirect, redirectToQuest } = this.state;
     if (redirect) return <Redirect to="/config/" />;
     if (redirectToQuest) return <Redirect to="/quest/" />;
-
     return (
       <div className="App">
         <header className="App-header">
           <img src={ logo } className="App-logo" alt="logo" />
-          <div>
+          <div className="login-input">
             <input
               name="name"
               onChange={ this.handleChange }
@@ -74,6 +74,7 @@ class Login extends React.Component {
               type="text"
               placeholder="Nome"
               data-testid="input-player-name"
+              className="input-stylization"
             />
             <input
               name="email"
@@ -82,23 +83,27 @@ class Login extends React.Component {
               type="email"
               placeholder="Email"
               data-testid="input-gravatar-email"
+              className="input-stylization"
             />
+            <button
+              data-testid="btn-play"
+              onClick={ () => { this.toQuestions(); } }
+              type="button"
+              disabled={ name.length === 0 || email.length === 0 }
+              className="input-stylization btn-play"
+            >
+              Jogar
+            </button>
+            <button
+              className="input-stylization btn-settings"
+              type="button"
+              data-testid="btn-settings"
+              onClick={ () => this.config() }
+            >
+              <i className="fas fa-cog" aria-label="btn-config" />
+              Settings
+            </button>
           </div>
-          <button
-            data-testid="btn-play"
-            onClick={ () => { this.toQuestions(); } }
-            type="button"
-            disabled={ name.length === 0 || email.length === 0 }
-          >
-            Jogar
-          </button>
-          <button
-            type="button"
-            data-testid="btn-settings"
-            onClick={ () => this.config() }
-          >
-            Configurações
-          </button>
         </header>
       </div>
     );

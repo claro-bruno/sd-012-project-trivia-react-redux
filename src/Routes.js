@@ -9,10 +9,10 @@ import Ranking from './pages/Ranking';
 function Routes() {
   return (
     <Switch>
-      <Route path="/ranking" component={ Ranking } />
       <Route path="/quest" component={ Quest } />
       <Route path="/config" component={ Config } />
       <Route path="/feedback" component={ Feedback } />
+      <Route path="/ranking" component={ Ranking } />
       <Route path="/" component={ Login } />
     </Switch>
   );

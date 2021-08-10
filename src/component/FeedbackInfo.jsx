@@ -15,7 +15,7 @@ class FeedbackInfo extends React.Component {
   render() {
     const { assertions, score } = this.state;
     return (
-      <div>
+      <div className="feedbackInfo">
         <h3 data-testid="feedback-total-score">{ score }</h3>
         <h3 data-testid="feedback-total-question">{ assertions }</h3>
       </div>

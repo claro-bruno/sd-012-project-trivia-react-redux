@@ -15,10 +15,16 @@ class FeedbackMessage extends React.Component {
     const cases = 3;
     if (assertions < cases) {
       return (
-        <h1 data-testid="feedback-text">Podia ser melhor...</h1>
+        <>
+          <span><i className="fas fa-sad-tear" /></span>
+          <h1 data-testid="feedback-text" className="bad-message">Podia ser melhor...</h1>
+        </>
       );
     } return (
-      <h1 data-testid="feedback-text">Mandou bem!</h1>
+      <>
+        <i className="fas fa-laugh-beam" />
+        <h1 data-testid="feedback-text" className="good-message">Mandou bem!</h1>
+      </>
     );
   }
 }

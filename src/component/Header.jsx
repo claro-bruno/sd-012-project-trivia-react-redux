@@ -6,16 +6,16 @@ class Header extends React.Component {
     const { player: { score } } = JSON.parse(localStorage.getItem('state'));
     const { name, avatar } = this.props;
     return (
-      <header>
+      <header className="header-game">
         <img
           data-testid="header-profile-picture"
           src={ avatar }
           alt="Avatar do Jogador"
         />
-        <span data-testid="header-player-name">
-          { name }
-        </span>
-        <span data-testid="header-score">{ score }</span>
+        <h3 data-testid="header-player-name">
+          { `Player: ${name}` }
+        </h3>
+        <h3 data-testid="header-score">{ `Score: ${score}` }</h3>
       </header>
     );
   }
