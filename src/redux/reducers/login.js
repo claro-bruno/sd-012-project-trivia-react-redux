@@ -1,4 +1,4 @@
-import { CREATE_LOGIN } from '../actions/index';
+import { CREATE_LOGIN, GET_SCORE } from '../actions/index';
 
 const INITIAL_STATE = {
   player: {
@@ -17,6 +17,14 @@ export default function player(state = INITIAL_STATE, action) {
       player: {
         name: action.name,
         gravatarEmail: action.gravatarEmail,
+      },
+    };
+  case GET_SCORE:
+    return {
+      ...state,
+      player: {
+        assertions: action.assertions,
+        score: action.score,
       },
     };
   default:
