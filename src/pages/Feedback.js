@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
+import { actionResetGame } from '../redux/actions';
 
 class Feedback extends Component {
   render() {
-    const { assertions, score } = this.props;
+    const { assertions, score, resetGame } = this.props;
     const NUMBER_THREE = 3;
 
     return (
@@ -27,12 +28,12 @@ class Feedback extends Component {
           {' '}
           <span data-testid="feedback-total-question">{ assertions }</span>
         </p>
-        <Link to="/">
+        <Link to="/" onClick={ () => resetGame() }>
           <button type="button" data-testid="btn-play-again">
             Jogar novamente
           </button>
         </Link>
-        <Link to="/ranking">
+        <Link to="/ranking" onClick={ () => resetGame() }>
           <button type="button" data-testid="btn-ranking">
             Ver Ranking
           </button>
@@ -43,13 +44,18 @@ class Feedback extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  assertions: state.gameReducer.assertions, // nome provisório aguardando a criação do reducer do jogo
-  score: state.gameReducer.score, // nome provisório aguardando a criação do reducer do jogo
+  assertions: state.gameReducer.assertions,
+  score: state.gameReducer.score,
 });
 
-export default connect(mapStateToProps)(Feedback);
+const mapDispatchToProps = (dispatch) => ({
+  resetGame: () => dispatch(actionResetGame()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
 
 Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
+  resetGame: PropTypes.func.isRequired,
 };

@@ -93,7 +93,7 @@ class Questions extends Component {
 
   saveScoreLocalStorage(points) {
     const { score, assertions, name, gravatarEmail } = this.props;
-    const storedInfo = {
+    const state = {
       player: {
         name,
         assertions: assertions + 1,
@@ -101,7 +101,15 @@ class Questions extends Component {
         gravatarEmail,
       },
     };
-    localStorage.setItem('state', JSON.stringify(storedInfo));
+    localStorage.setItem('state', JSON.stringify(state));
+  }
+
+  saveRankingLocalStorage() {
+    const { name, score, picture } = this.props;
+    const storedRanking = localStorage.getItem('ranking')
+      ? JSON.parse(localStorage.getItem('ranking')) : [];
+    localStorage
+      .setItem('ranking', JSON.stringify([...storedRanking, { name, score, picture }]));
   }
 
   answersRender() {
@@ -185,6 +193,7 @@ class Questions extends Component {
       });
     } else {
       this.setState({ redirect: true });
+      this.saveRankingLocalStorage();
     }
   }
 
@@ -225,6 +234,7 @@ const mapStateToProps = (state) => ({
   assertions: state.gameReducer.assertions,
   name: state.loginReducer.name,
   gravatarEmail: state.loginReducer.email,
+  picture: state.loginReducer.pictureUrl,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
@@ -232,6 +242,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Questions);
 Questions.propTypes = {
   correctAnswer: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
   gravatarEmail: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
   assertions: PropTypes.number.isRequired,

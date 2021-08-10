@@ -3,17 +3,42 @@ import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import '../styles/Header.css';
+import { actionGetPictureUrl } from '../redux/actions';
 
 class Header extends React.Component {
-  render() {
-    const { userMail, userName, score } = this.props;
+  constructor() {
+    super();
+
+    this.state = {
+      pictureUrl: '',
+    };
+
+    this.savePictureUrl = this.savePictureUrl.bind(this);
+  }
+
+  componentDidMount() {
+    this.savePictureUrl();
+  }
+
+  savePictureUrl() {
+    const { saveUrl, userMail } = this.props;
     const userMailHashCode = md5(userMail).toString();
+    const pictureUrl = `https://www.gravatar.com/avatar/${userMailHashCode}`;
+
+    this.setState({ pictureUrl });
+    saveUrl(pictureUrl);
+  }
+
+  render() {
+    const { userName, score } = this.props;
+    const { pictureUrl } = this.state;
+
     return (
       <header className="standard-header">
         <div className="player-info">
           <img
             data-testid="header-profile-picture"
-            src={ `https://www.gravatar.com/avatar/${userMailHashCode}` }
+            src={ pictureUrl }
             alt="avatar do jogador"
             className="player-image"
           />
@@ -41,6 +66,7 @@ Header.propTypes = {
   userMail: PropTypes.string,
   userName: PropTypes.string,
   userPoints: PropTypes.number,
+  saveUrl: PropTypes.func,
 }.isRequired;
 
 const mapStateToProps = (state) => ({
@@ -49,4 +75,8 @@ const mapStateToProps = (state) => ({
   score: state.gameReducer.score,
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch) => ({
+  saveUrl: (url) => dispatch(actionGetPictureUrl(url)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

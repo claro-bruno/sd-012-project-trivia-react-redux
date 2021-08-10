@@ -35,14 +35,14 @@ class Ranking extends React.Component {
   render() {
     const localStorageData = JSON.parse(localStorage.getItem('ranking'));
 
-    // Colocando o elemento do ranking em uma variável pra usar renderização condicional.
-    // Caso o localStorageData não tenha nenhum dado, ele recebe null então retorna um erro ao fazer o map
-
     return (
       <div className="ranking-page">
         <h1 data-testid="ranking-title">Ranking</h1>
         {localStorageData ? this.scoreBoard() : this.noStorageData()}
-        <Link className="ranking-button-container" to="/">
+        <Link
+          className="ranking-button-container"
+          to="/"
+        >
           <button data-testid="btn-go-home" className="ranking-button" type="button">
             Página de Login
           </button>
