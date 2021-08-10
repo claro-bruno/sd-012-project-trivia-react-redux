@@ -7,7 +7,9 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import SettingsIcon from '@material-ui/icons/Settings';
+import logo from '../trivia.png';
 import { actionGetGravatarImg } from '../redux/action';
+import '../styles/Login.css';
 
 class Login extends Component {
   constructor() {
@@ -103,7 +105,8 @@ class Login extends Component {
       return <Redirect to="/configs" />;
     }
     return (
-      <section>
+      <section className="login-content">
+        <img src={ logo } className="App-logo" alt="logo" />
         {this.setInput()}
         <Button
           type="button"
