@@ -3,6 +3,7 @@ import '../styles/Questions.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { actionCorrectAnswer } from '../redux/actions';
+import { Redirect } from 'react-router-dom';
 
 const MINUS_ONE = -1;
 const NUMBER_THREE = 3;
@@ -16,6 +17,7 @@ class Questions extends Component {
       disabled: false,
       next: false,
       time: 30,
+      redirect: false,
     };
     this.getUnities = this.getUnities.bind(this);
     this.answersRender = this.answersRender.bind(this);
@@ -26,6 +28,8 @@ class Questions extends Component {
     this.setInitialLocalStorage = this.setInitialLocalStorage.bind(this);
     this.saveScoreRedux = this.saveScoreRedux.bind(this);
     this.saveScoreLocalStorage = this.saveScoreLocalStorage.bind(this);
+    this.buttonFunction = this.buttonFunction.bind(this);
+    this.removeFirstQuestion = this.removeFirstQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -178,15 +182,48 @@ class Questions extends Component {
     }, THIRTY_SECONDS);
   }
 
+  removeFirstQuestion() {
+    const { questions } = this.state;
+    const meuArray = [...questions];
+
+    if (meuArray.length > 1) {
+      meuArray.shift();
+      this.setState({
+        next: false,
+        questions: meuArray,
+        disabled: false,
+        time: 30,
+      }, () => {
+        this.countdown();
+      });
+    } else {
+      this.setState({ redirect: true });
+    }
+  }
+
+  buttonFunction() {
+    return (
+      <button
+        data-testid="btn-next"
+        type="button"
+        onClick={ () => this.removeFirstQuestion() }
+      >
+        Proxima Pergunta
+      </button>);
+  }
+
   render() {
-    const { questions, next, time } = this.state;
+    const { questions, next, time, redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/feedback" />;
+    }
     return (
       <main>
         <div className="timer">
           {time}
         </div>
         {questions[0] && this.answersRender()}
-        {next && <button data-testid="btn-next" type="button">Proxima Pergunta</button>}
+        {next ? this.buttonFunction() : null}
       </main>
     );
   }
