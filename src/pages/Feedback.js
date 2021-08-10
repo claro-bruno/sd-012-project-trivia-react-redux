@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import Button from '../components/Button';
 
@@ -10,9 +10,11 @@ class Feedback extends React.Component {
     super(props);
 
     this.handleRanking = this.handleRanking.bind(this);
+    this.redirectToLogin = this.redirectToLogin.bind(this);
     this.handleClickRanking = this.handleClickRanking.bind(this);
 
     this.state = {
+      stateRedirect: false,
       redirectRanking: false,
     };
   }
@@ -50,15 +52,27 @@ class Feedback extends React.Component {
     }
   }
 
+  redirectToLogin() {
+    this.setState({ stateRedirect: true });
+  }
+
   render() {
-    const { handleClickRanking, state: { redirectRanking } } = this;
     const stateLocalStorage = JSON.parse(localStorage.getItem('state'));
     const { player: { score, assertions } } = stateLocalStorage;
+    const { redirectToLogin, handleClickRanking, state: { stateRedirect, redirectRanking } } = this;
 
     return (
       <>
         { redirectRanking && <Redirect to="/ranking" />}
+        { stateRedirect && <Redirect to="/" /> }
         <Header score={ score } />
+        <button
+          data-testid="btn-play-again"
+          type="button"
+          onClick={ redirectToLogin }
+        >
+          Jogar novamente
+        </button>
         <Button
           name="Ver Ranking"
           testId="btn-ranking"

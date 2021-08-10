@@ -3,10 +3,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import { Redirect } from 'react-router-dom';
-import Header from '../components/Header';
 import ButtonNext from '../components/gameControlled/ButtonNext';
 import SectionQuestions from '../components/gameControlled/SectionQuestions';
 import '../App.css';
+import Header from '../components/Header';
 
 class Game extends React.Component {
   constructor() {
