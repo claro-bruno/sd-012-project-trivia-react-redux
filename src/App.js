@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
-import styled, { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 import LoginPage from './pages/LoginPage';
 import ConfigPage from './pages/ConfigPage';
@@ -20,29 +20,16 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const Container = styled.div`
-  max-width: 70rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 1rem;
-
-  @media (min-width: 60rem) {
-    padding: 2rem;
-  }
-`;
-
 export default function App() {
   return (
     <>
       <GlobalStyle />
       <Switch>
-        <Container>
-          <Route exact path="/" component={ LoginPage } />
-          <Route path="/settings" component={ ConfigPage } />
-          <Route path="/questions" component={ GamePage } />
-          <Route path="/feedback" component={ FeedbackPage } />
-          <Route path="/ranking" component={ RankingPage } />
-        </Container>
+        <Route exact path="/" component={ LoginPage } />
+        <Route path="/settings" component={ ConfigPage } />
+        <Route path="/questions" component={ GamePage } />
+        <Route path="/feedback" component={ FeedbackPage } />
+        <Route path="/ranking" component={ RankingPage } />
       </Switch>
     </>
   );

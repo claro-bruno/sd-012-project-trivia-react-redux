@@ -51,7 +51,7 @@ const Answer = styled.button`
   font-size: 0.875rem;
   color: hsl(0, 0%, 100%);
   width: 100%;
-  max-width: 27.5rem;
+  max-width: 30rem;
   margin-bottom: 1rem;
   margin-left: auto;
   margin-right: auto;
@@ -82,15 +82,19 @@ const NextBtn = styled.button`
 `;
 
 const Grid = styled.main`
-  max-width: 30rem;
+  max-width: 40rem;
   margin-left:auto;
   margin-right:auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
   display: grid;
   gap: 2rem;
 
   @media screen and (min-width: 60rem) {
-    max-width: none;
-    grid-template-columns: 2fr 3fr;
+    max-width: 60rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    grid-template-columns: 4fr 5fr;
     gap: 4rem;
   }
 `;
