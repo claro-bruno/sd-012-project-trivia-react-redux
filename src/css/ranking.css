@@ -1,0 +1,30 @@
+.FixedHeightContainer
+{
+  margin: 80px auto;
+  /* height: 400px; */
+  width:60%; 
+  padding:1px; 
+  background:rgb(144, 177, 182);
+}
+
+.ranking-body {
+  background-color: #282c34;
+}
+
+.Content
+{
+  height:400px;
+   overflow:auto;
+    background:#fff;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(211, 223, 219);
+}
+::-webkit-scrollbar {
+  width: 20px;
+  background: #F4F4F4;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(134, 163, 190);
+}

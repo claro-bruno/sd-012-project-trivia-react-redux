@@ -1,0 +1,30 @@
+header {
+  background-color: #282c34;
+  border: 3px solid whitesmoke;
+  display: flex;
+  height: 100px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  width: auto;
+}
+
+.picture {
+  border: 6px solid white;
+  border-radius: 50%;
+  height: auto;
+  margin-left: 5%;
+  width: 90px;
+}
+
+.score {
+  color: white;
+  margin-right: 5%;
+}
+
+.name {
+  color: white;
+  font-family: cursive;
+  font-size: 35px;
+  font-style: oblique;
+}

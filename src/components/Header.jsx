@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
+import '../css/header.css';
 
 class Header extends React.Component {
   criptEmail(email) {
@@ -14,14 +15,15 @@ class Header extends React.Component {
     return (
       <header>
         <img
+          className="picture"
           data-testid="header-profile-picture"
           src={ this.criptEmail(email) }
           alt="Foto do jogador"
         />
-        <h2 data-testid="header-player-name">
-          { name }
+        <h2 className="name" data-testid="header-player-name">
+          { name || 'default name'}
         </h2>
-        <h2 data-testid="header-score">{ score }</h2>
+        <h2 className="score" data-testid="header-score">{ `Score: ${score}` }</h2>
       </header>
     );
   }
