@@ -1,35 +1,29 @@
 import React from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 //  import Game from './Game';
 import Header from '../components/Header';
 
 class Feedback extends React.Component {
-  // constructor(){
-  //  super();
-  //  this.feedbackText = this.feedbackText.bind(this);
-  // }
-
   feedbackText() {
-    const { correctAnswers } = this.props;
+    const { assertions } = this.props;
     const parametroResposta = 3;
-    if (correctAnswers < parametroResposta) {
+    if (assertions < parametroResposta) {
       return 'Podia ser melhor...';
     }
     return 'Mandou bem!';
   }
 
   render() {
-    const { correctAnswers, score } = this.props;
-    console.log(typeof (correctAnswers));
+    const { assertions, score } = this.props;
     return (
       <>
         <Header />
         <p>
           Acertos:
           <span data-testid="feedback-total-question">
-            { correctAnswers }
+            { assertions }
           </span>
         </p>
         <p>
@@ -61,15 +55,13 @@ class Feedback extends React.Component {
 }
 
 Feedback.propTypes = {
-  correctAnswers: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
 };
 
-/*  const mapStateToProps = (state) => ({
-  correctAnswers: state.-(ver onde estará no redux)-.assertions,
-  score: state.(ver onde estará no redux).score,
-}); */
+const mapStateToProps = (state) => ({
+  assertions: state.login.player.assertions,
+  score: state.login.player.score,
+});
 
-export default Feedback;
-
-// export default connect(mapStateToProps)(Feedback);
+export default connect(mapStateToProps)(Feedback);

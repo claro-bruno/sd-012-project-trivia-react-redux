@@ -5,7 +5,7 @@ import { MD5 } from 'crypto-js';
 
 class Header extends React.Component {
   render() {
-    const { name, gravatarEmail } = this.props;
+    const { name, gravatarEmail, score } = this.props;
     const hash = MD5(gravatarEmail).toString();
     const getImg = `https://www.gravatar.com/avatar/${hash}`;
 
@@ -17,7 +17,7 @@ class Header extends React.Component {
           <img data-testid="header-profile-picture" src={ getImg } alt="user avatar" />
           <p data-testid="input-gravatar-email">{ gravatarEmail }</p>
           <p data-testid="header-player-name">{name}</p>
-          <p data-testid="header-score">0</p>
+          <p data-testid="header-score">{score}</p>
         </header>
       </div>
     );
@@ -34,9 +34,11 @@ export default connect(mapStateToProps)(Header);
 Header.propTypes = {
   name: PropTypes.string,
   gravatarEmail: PropTypes.string,
+  score: PropTypes.number,
 };
 
 Header.defaultProps = {
   name: '',
   gravatarEmail: '',
+  score: 0,
 };
