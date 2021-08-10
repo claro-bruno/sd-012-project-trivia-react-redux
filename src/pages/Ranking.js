@@ -18,11 +18,17 @@ class Ranking extends React.Component {
   buildsPlayerResults({ name, picture, score }, index) {
     return (
       <ul className="player-specs">
-        <li>
-          <img src={ picture } alt={ name } />
+        <li className="ranking-img">
+          <img src={ picture } alt={ name } className="img-render-ranking" />
         </li>
-        <li data-testid={ `player-name-${index}` }>{ name }</li>
-        <li data-testid={ `player-score-${index}` }>{ score }</li>
+        <li className="ranking-name" data-testid={ `player-name-${index}` }>{ name }</li>
+        <li
+          className="ranking-score"
+          data-testid={ `player-score-${index}` }
+        >
+          { score }
+
+        </li>
       </ul>
     );
   }
