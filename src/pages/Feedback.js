@@ -7,7 +7,6 @@ class Feedback extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleUser = this.handleUser.bind(this);
     this.handleRanking = this.handleRanking.bind(this);
   }
 
@@ -15,60 +14,45 @@ class Feedback extends React.Component {
     this.handleRanking();
   }
 
-  handleUser() {
-    const userInfo = localStorage.getItem('player');
-    const playerInfo = JSON.parse(userInfo);
-
-    const { player: { name, assertions, score, gravatarEmail } } = playerInfo;
-
-    return (name, assertions, score, gravatarEmail);
-  }
-
   handleRanking() {
     const storedRank = localStorage.getItem('ranking');
+    const state = JSON.parse(localStorage.getItem('state'));
+    const { player: { name, score, gravatarEmail } } = state;
     if (!storedRank) {
-      const { name, score, gravatarEmail } = this.handleUser();
       const updateRank = [{
         name,
         score,
         picture: gravatarEmail,
       }];
       localStorage.setItem('ranking', JSON.stringify(updateRank));
+    } else {
+      const ranking = JSON.parse(storedRank);
+      const updateRank = [...ranking, {
+        name,
+        score,
+        picture: gravatarEmail,
+      }];
+      localStorage.setItem('ranking', JSON.stringify(updateRank));
     }
-    const ranking = JSON.parse(storedRank);
-    const { name, score, gravatarEmail } = this.handleUser();
-    const updateRank = [...ranking, {
-      name,
-      score,
-      picture: gravatarEmail,
-    }];
-
-    localStorage.setItem('ranking', JSON.stringify(updateRank));
   }
 
   render() {
-    const {
-      handleUser: {
-        assertions,
-        score,
-      },
-    } = this;
+    const state = JSON.parse(localStorage.getItem('state'));
+    const { player: { score, assertions } } = state;
+
     return (
       <>
-        <Header />
+        <Header score={ score } />
         <h2 data-testid="feedback-text">
           {
             (assertions < ASSERTION_AVERAGE ? 'Podia ser melhor...' : 'Mandou bem!')
           }
         </h2>
         <p data-testid="feedback-total-score">
-          Sua pontuação final foi:
-          { score }
+          { `Sua pontuação final foi: ${score}` }
         </p>
         <p data-testid="feedback-total-question">
-          Você acertou
-          { assertions }
-          questões
+          { `Você acertou ${assertions} questões` }
         </p>
       </>
     );
