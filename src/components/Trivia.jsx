@@ -193,12 +193,14 @@ class Trivia extends React.Component {
       <div>
         <div className="time-counter">{time}</div>
         <h4 className="category-questions" data-testid="question-category">{category}</h4>
-        <h3 className="questions" data-testid="question-text">{`Pergunta:${this.verficaString(question)}`}</h3>
+        <h3 className="questions" data-testid="question-text">
+          {`Pergunta:${this.verficaString(question)}`}
+        </h3>
         { buttons }
         <div className="next-button">
           { this.button() }
         </div>
-          <img className="bicicleta" src={ bicicleta } />
+        <img className="bicicleta" alt="silvio bike" src={ bicicleta } />
         { (time === 0) ? this.changeStyles() : null }
       </div>
     );

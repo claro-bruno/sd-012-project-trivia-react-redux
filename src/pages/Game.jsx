@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import Trivia from '../components/Trivia';
 import '../css/game.css';
 
@@ -52,6 +53,7 @@ class Game extends React.Component {
           trivia={ questions[indexQuestion] }
           onClick={ this.nextQuestion }
         />
+        <Footer />
       </div>
     );
   }

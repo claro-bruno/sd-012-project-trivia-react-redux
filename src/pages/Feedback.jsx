@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import '../css/feedback.css';
 import mandouBem from '../images/silviosantos_mandouBem.gif';
 import podiaSerMelhor from '../images/podia_ser_melhor.gif';
@@ -52,7 +53,7 @@ class Feedback extends React.Component {
 
   criptEmail(email) {
     const criptedEmail = md5(email).toString();
-    return (`https://www.gravatar.com/avatar/${criptedEmail}`);
+    return `https://www.gravatar.com/avatar/${criptedEmail}`;
   }
 
   render() {
@@ -72,33 +73,30 @@ class Feedback extends React.Component {
             Número de acertos:
             <p data-testid="feedback-total-question">{assertions}</p>
           </h3>
-          {(assertions >= SCORE_NUMBER)
-            ? <> <img className="mandou_bem" src={ mandouBem } />
+          {assertions >= SCORE_NUMBER ? (
+            <>
+              <img className="mandou_bem" alt="silvio beijo" src={ mandouBem } />
               <p data-testid="feedback-text">Mandou bem!</p>
-             </>
-            : <>
-            <img className="podiaMelhor" src={ podiaSerMelhor } />
-            <p data-testid="feedback-text">Podia ser melhor...</p> 
             </>
-            }
+          ) : (
+            <>
+              <img className="podiaMelhor" alt="silvio cai" src={ podiaSerMelhor } />
+              <p data-testid="feedback-text">Podia ser melhor...</p>
+            </>
+          )}
         </div>
         <div>
           <Link to="/">
-            <button
-              type="button"
-              data-testid="btn-play-again"
-            >
+            <button type="button" data-testid="btn-play-again">
               Jogar novamente
             </button>
           </Link>
           <Link to="/ranking">
-            <button
-              type="button"
-              data-testid="btn-ranking"
-            >
+            <button type="button" data-testid="btn-ranking">
               Ver Ranking
             </button>
           </Link>
+          <Footer />
         </div>
       </>
     );
