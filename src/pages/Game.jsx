@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import HeaderGame from '../components/HeaderGame';
 import { getAllQuestions } from '../redux/action/index';
 import Questions from '../components/Questions';
 
@@ -7,9 +9,7 @@ class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
     };
-    this.handleLoading = this.handleLoading.bind(this);
     this.mount = this.mount.bind(this);
   }
 
@@ -20,22 +20,13 @@ class Game extends Component {
   async mount() {
     const { getQuest } = this.props;
     await getQuest();
-    this.handleLoading();
-  }
-
-  handleLoading() {
-    this.setState({
-      loading: false,
-    });
   }
 
   render() {
-    // const { results } = this.props;
-    const { loading } = this.state;
     return (
       <>
-        <div>Game</div>
-        { loading ? <h1>LOADING...</h1> : <Questions />}
+        <HeaderGame />
+        <Questions />
       </>
     );
   }
@@ -47,5 +38,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getQuest: () => dispatch(getAllQuestions()),
 });
+
+Game.propTypes = {
+  getQuest: PropTypes.func.isRequired,
+
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

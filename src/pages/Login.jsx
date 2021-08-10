@@ -99,8 +99,6 @@ Login.propTypes = {
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
   dataUser: PropTypes.func.isRequired,
   fetchToken: PropTypes.func.isRequired,
-  history: PropTypes.func.isRequired,
-  getQuest: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
