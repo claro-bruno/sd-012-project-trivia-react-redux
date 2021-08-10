@@ -1,6 +1,7 @@
 export const GET_EMAIL = 'GET_EMAIL';
 export const GET_NAME = 'GET_NAME';
 export const GET_TOKEN = 'GET_TOKEN';
+export const REQUEST_TOKEN = 'REQUEST_TOKEN';
 export const GET_LOADING = 'GET_LOADING';
 export const ISDISABLED = 'IS_DISABLED';
 export const TIMER = 'TIMER';

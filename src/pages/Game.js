@@ -27,8 +27,8 @@ class Game extends Component {
   }
 
   fetchTokenQuestions() { // pegar o token;
-    // const { token } = this.props;
-    const token = localStorage.getItem('token');
+    const { tokenStore } = this.props;
+    const token = localStorage.getItem('token') || tokenStore;
     try {
       const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
       fetch(url)
@@ -61,7 +61,7 @@ class Game extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  token: state.tokenReducer.token,
+  tokenStore: state.tokenReducer.token,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -71,6 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Game.propTypes = {
   getToken: PropTypes.func.isRequired,
+  tokenStore: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
