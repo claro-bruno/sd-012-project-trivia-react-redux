@@ -4,7 +4,7 @@ import Login from './pages/Login';
 import GameScreen from './pages/GameScreen';
 // import Ranking from './pages/Ranking';
 import Settings from './pages/Settings';
-import FeedBack from './pages/Feedback';
+import FeedBack from './pages/FeedBack';
 
 export default function App() {
   return (

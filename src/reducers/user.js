@@ -2,7 +2,8 @@ import {
   GET_TOKEN,
   GET_TOKEN_SUCCESS,
   GET_TOKEN_ERROR,
-  GET_PLAYER_USER_INFO } from '../actions';
+  GET_PLAYER_USER_INFO,
+} from '../actions/actionsTypes';
 
 const INITIAL_STATE = {
   token: '',

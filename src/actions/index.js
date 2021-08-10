@@ -1,7 +1,15 @@
-export const GET_TOKEN = 'GET_TOKEN';
-export const GET_TOKEN_SUCCESS = 'GET_TOKEN_SUCCESS';
-export const GET_TOKEN_ERROR = 'GET_TOKEN_ERROR';
-export const GET_PLAYER_USER_INFO = 'GET_PLAYER_USER_INFO';
+import {
+  USER_PLAYER,
+  GET_TOKEN,
+  GET_TOKEN_SUCCESS,
+  GET_TOKEN_ERROR,
+  GET_PLAYER_USER_INFO,
+} from './actionsTypes';
+
+// => Req = 12 <===
+export const addPlayerInfo = (loginData) => ({
+  type: USER_PLAYER,
+  loginData });
 
 export const playerUserInfo = (payload) => ({ type: GET_PLAYER_USER_INFO, payload });
 

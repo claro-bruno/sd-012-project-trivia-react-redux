@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Header from '../components/Header';
 import '../App.css';
 
 class GameScreen extends Component {
@@ -19,7 +20,6 @@ class GameScreen extends Component {
       gravatarEmail: '',
     };
 
-    this.renderHeader = this.renderHeader.bind(this);
     this.renderNextButton = this.renderNextButton.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.renderQuestionsApi = this.renderQuestionsApi.bind(this);
@@ -146,22 +146,6 @@ class GameScreen extends Component {
     );
   }
 
-  renderHeader() {
-    const { userPlayer: { name, gravatarEmail } } = this.props;
-    const { score } = this.state;
-    return (
-      <header>
-        <img
-          src={ `https://www.gravatar.com/avatar/${gravatarEmail}` }
-          alt="Imagem Avatar"
-          data-testid="header-profile-picture"
-        />
-        <h2 data-testid="header-player-name">{name}</h2>
-        <h3 data-testid="header-score">{score}</h3>
-      </header>
-    );
-  }
-
   renderQuestionsApi() {
     const { requestGameApi } = this.props;
     const { count, borderGreen, borderRed, isDisable } = this.state;
@@ -209,12 +193,12 @@ class GameScreen extends Component {
     return (
       <div>
         <h1>Tela Jogo</h1>
-        {this.renderHeader()}
+        <Header />
+        { this.renderQuestionsApi() }
         <p>
           {' '}
           {timeCount}
         </p>
-        {this.renderQuestionsApi()}
         {this.createLocalStorage()}
       </div>
     );
