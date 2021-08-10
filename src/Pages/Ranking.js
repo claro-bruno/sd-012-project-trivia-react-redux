@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Ranking extends Component {
   render() {
     const toKeys = Object.keys;
     const local = localStorage;
+    const { history: { push } } = this.props;
 
     const names = toKeys(local).filter((key) => /player-name-\d+/.test(key)).sort();
     const scores = toKeys(local).filter((key) => /player-score-\d+/.test(key)).sort();
@@ -24,9 +26,21 @@ class Ranking extends Component {
               <span data-testid={ `player-score-${i}` }>{`${score} Pontos`}</span>
             </div>
           ))}
+        <button
+          type="button"
+          data-testid="btn-go-home"
+          onClick={ () => push('/') }
+        >
+          Início
+        </button>
       </fieldset>
     );
   }
 }
+
+Ranking.propTypes = {
+  history: PropTypes.arrayOf().isRequired,
+  push: PropTypes.func.isRequired,
+};
 
 export default Ranking;
