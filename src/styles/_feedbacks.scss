@@ -1,34 +1,10 @@
-.feedback-page {
-  background-image: url("./images/Earth-Spinning-Stars.jpg");
-  background-size: cover;
-  justify-content: center;
-  align-items: center;
-}
-
 .feedback-container {
-  color: white;
-  top: 15vh;
-  height: 80vh;
-  justify-content: center;
-  border-radius: 5px;
-  backdrop-filter: blur(10px);
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 50vw;
   align-items: center;
-
-  .feedback-text {
-    top: 0;
-    left: 0;
-    padding: 5px;
-    width: 100%;
-    text-align: center;
-    border-radius: 5px;
-    background-color: $purple-bootstrap;
-  }
+  width: 50vw;
 
   button {
-    width: 200px;
     margin: 10px;
+    width: 200px;
   }
 
   .low-assertions {

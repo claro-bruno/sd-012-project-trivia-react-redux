@@ -22,7 +22,49 @@
 
 html, body, main {
   height: 100vh;
-  width: 100vw;
   overflow: hidden;
+  width: 100vw;
   z-index: 1;
+}
+
+.game-page, .feedback-page, .ranking-page {
+  align-items: center;
+  background-image: url('./images/Earth-Spinning-Stars.jpg');
+  background-size: cover;
+  justify-content: center;
+}
+
+.game-container, .feedback-container, .ranking-container {
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  color: white;
+  height: 80vh;
+  justify-content: center;
+  max-height: fit-content;
+  top: 15vh;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: $purple-bootstrap;
+  border-radius: 10px;
+}
+
+.ranking-title, .feedback-text, .category {
+  position: absolute;
+  background-color: $purple-bootstrap;
+  border-radius: 5px;
+  left: 0;
+  padding: 5px;
+  text-align: center;
+  top: 0;
+  width: 100%;
 }

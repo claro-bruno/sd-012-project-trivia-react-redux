@@ -70,4 +70,5 @@ Button.propTypes = {
   score: PropTypes.number.isRequired,
   email: PropTypes.string.isRequired,
   reset: PropTypes.func.isRequired,
+  className: PropTypes.string.isRequired,
 };

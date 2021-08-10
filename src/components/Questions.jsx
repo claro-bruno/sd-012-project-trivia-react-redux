@@ -99,7 +99,7 @@ class Questions extends React.Component {
     if (shouldRedirect) return <Redirect to="/feedbacks" />;
     const { questions } = this.props;
     return (
-      <main className="game-container d-flex flex-column">
+      <main className="game-container position-absolute d-flex flex-column">
         <h2 className="position-absolute timer">
           <p>{timer}</p>
         </h2>

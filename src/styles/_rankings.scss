@@ -1,7 +1,43 @@
-.row {
-  @include row();
+.ranking-container {
+  width: 60%;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    position: absolute;
+    bottom: 20px;
+  }
 }
 
-.ranking * {
+.ranking {
   padding: 10px;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+
+  img {
+    border-radius: 50%;
+    width: 80px !important;
+  }
+
 }
+
+.ranking-list {
+  position: absolute;
+  top: 50px;
+  max-height: 65%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 70%;
+  margin: 20px auto;
+
+  .row {
+    max-width: 100% !important;
+    justify-content: space-between;
+    align-items: center;
+
+    * {
+      width: fit-content;
+    }
+  }
+}
+

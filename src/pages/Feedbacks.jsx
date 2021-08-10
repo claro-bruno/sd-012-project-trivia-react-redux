@@ -33,7 +33,7 @@ class Feedbacks extends Component {
     const minAssertions = 3;
     return (
       <main className="feedback-page d-flex">
-        <Header />
+        <Header location="feedback" />
         <div className="feedback-container position-absolute d-flex flex-column">
           <h1
             data-testid="feedback-text"

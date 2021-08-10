@@ -51,7 +51,7 @@ class Game extends Component {
     if (!questions.length) return <Loading />;
     return (
       <main className="game-page d-flex">
-        <Header />
+        <Header location="game" />
         <Questions questions={ this.randomizer(questions) } />
       </main>
     );
