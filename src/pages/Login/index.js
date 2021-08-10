@@ -3,9 +3,15 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import logo from '../../trivia.png';
+import mapa from '../../assets/images/mapa.png';
 
 // Componentes estilizados;
-import LoginFormS from './styles';
+import {
+  LoginPageS,
+  LoginHeaderS,
+  LoginMainS,
+  LoginFormS,
+} from './styles';
 
 // Iportando action "getInfo"
 import getInfo from '../../Redux/reducers/player/actions/getEmail';
@@ -63,11 +69,13 @@ class Login extends Component {
   render() {
     const { name, email, redirect, redirectConfig } = this.state;
     return (
-      <div className="App">
-        <header>
+      <LoginPageS>
+        <LoginHeaderS>
+          <img alt="efeito" src={ mapa } />
+          <h1>PROJECT TRÍVIA REACT REDUX</h1>
+        </LoginHeaderS>
+        <LoginMainS>
           <img src={ logo } className="App-logo" alt="logo" />
-        </header>
-        <main>
           <LoginFormS>
             <InputSection
               name={ name }
@@ -83,8 +91,8 @@ class Login extends Component {
             { redirect && <Redirect to="/game" /> }
             { redirectConfig && <Redirect to="/config" /> }
           </LoginFormS>
-        </main>
-      </div>
+        </LoginMainS>
+      </LoginPageS>
     );
   }
 }

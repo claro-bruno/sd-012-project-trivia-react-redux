@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { ButtonSectionS, ConfigButtonS, PlayButtonS } from './styles';
+import { Config } from '../../../assets/icons';
+
 class ButtonSection extends Component {
   render() {
     const {
@@ -10,23 +13,23 @@ class ButtonSection extends Component {
       handleRedirectConfig,
     } = this.props;
     return (
-      <section>
-        <button
+      <ButtonSectionS>
+        <ConfigButtonS
+          type="button"
+          data-testid="btn-settings"
+          onClick={ handleRedirectConfig }
+        >
+          <Config />
+        </ConfigButtonS>
+        <PlayButtonS
           type="button"
           data-testid="btn-play"
           onClick={ () => { handleFetch(); handleSendUserInfo(); } }
           disabled={ isValid() }
         >
-          Jogar
-        </button>
-        <button
-          type="button"
-          data-testid="btn-settings"
-          onClick={ handleRedirectConfig }
-        >
-          Configurar
-        </button>
-      </section>
+          JOGAR
+        </PlayButtonS>
+      </ButtonSectionS>
     );
   }
 }

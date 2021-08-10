@@ -9,7 +9,7 @@ class InputSection extends Component {
       <section>
         <input
           type="text"
-          placeholder="nome"
+          placeholder="Nome"
           name="name"
           value={ name }
           onChange={ handleChange }
@@ -17,7 +17,7 @@ class InputSection extends Component {
         />
         <input
           type="text"
-          placeholder="email"
+          placeholder="E-mail"
           name="email"
           value={ email }
           onChange={ handleChange }
