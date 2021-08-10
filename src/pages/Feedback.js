@@ -6,6 +6,7 @@ import FinalResults from '../components/FinalResults';
 import MessageFeedback from '../components/MessageFeedback';
 import Header from '../components/Header';
 import { resetGame, resetPlayer } from '../redux/actions';
+import './feedback.css';
 
 class Feedback extends React.Component {
   reset() {
@@ -17,7 +18,12 @@ class Feedback extends React.Component {
   rankingBtn() {
     return (
       <Link to="/Ranking">
-        <button type="button" data-testid="btn-ranking" onClick={ () => this.reset() }>
+        <button
+          className="btn-ranking"
+          type="button"
+          data-testid="btn-ranking"
+          onClick={ () => this.reset() }
+        >
           Ranking
         </button>
       </Link>
@@ -27,7 +33,12 @@ class Feedback extends React.Component {
   playAgainBtn() {
     return (
       <Link to="/">
-        <button type="button" data-testid="btn-play-again" onClick={ () => this.reset() }>
+        <button
+          className="btn-play"
+          type="button"
+          data-testid="btn-play-again"
+          onClick={ () => this.reset() }
+        >
           Jogar novamente
         </button>
       </Link>
@@ -38,10 +49,12 @@ class Feedback extends React.Component {
     return (
       <div>
         <Header />
-        <FinalResults />
-        <MessageFeedback />
-        {this.playAgainBtn()}
-        {this.rankingBtn()}
+        <section className="container-feedback">
+          <FinalResults />
+          <MessageFeedback />
+          {this.playAgainBtn()}
+          {this.rankingBtn()}
+        </section>
       </div>
     );
   }

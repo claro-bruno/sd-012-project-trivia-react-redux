@@ -205,7 +205,7 @@ class GameQuestions extends React.Component {
       <div className="questions-container">
         { this.renderQuestions()}
         <div>
-          <p>{ `Tempo: ${timer}` }</p>
+          <p>{ `⌛ ${timer} s` }</p>
           {nextButton && <ButtonNext
             getQuestion={ this.getQuestion }
             setTimer={ this.setTimer }

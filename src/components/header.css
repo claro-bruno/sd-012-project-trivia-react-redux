@@ -1,16 +1,16 @@
 .header-section {
+  color: white;
   align-items: center;
-  background-color: rgb(201, 201, 201);
+  background-color: #7C838A;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin-bottom: 50px;
   padding: 10px;
 }
 
 .profile-section {
   display: flex;
-  justify-content: space-around;
-  width: 25%;
+  justify-content: space-evenly;
 }
 
 .profile-section img {

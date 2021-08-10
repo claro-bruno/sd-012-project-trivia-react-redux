@@ -33,6 +33,7 @@ class ButtonNext extends React.Component {
       return (
         <Link to="/feedback">
           <button
+            className="btn-next"
             onClick={ this.handleClick }
             data-testid="btn-next"
             type="button"
@@ -44,6 +45,7 @@ class ButtonNext extends React.Component {
     }
     return (
       <button
+        className="btn-next"
         onClick={ this.handleClick }
         data-testid="btn-next"
         type="button"

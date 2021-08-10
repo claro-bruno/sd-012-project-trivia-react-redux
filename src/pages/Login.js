@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { addPlayerInfo } from '../redux/actions';
+import './login.css';
+import logoTrivia from '../trivia.png';
 
 class Login extends React.Component {
   constructor() {
@@ -77,43 +79,48 @@ class Login extends React.Component {
     const { email, name, emailIsValid, nameIsValid, shouldRedirect } = this.state;
     this.stateUser();
     return (
-      <form onSubmit={ this.handleSubmit }>
-        <input
-          data-testid="input-player-name"
-          type="text"
-          name="name"
-          placeholder="Nome"
-          value={ name }
-          onChange={ this.handleChange }
-        />
+      <section className="container-login">
+        <img className="img-logo" src={ logoTrivia } alt="logo trivia" />
+        <form className="container-form" onSubmit={ this.handleSubmit }>
+          <input
+            data-testid="input-player-name"
+            type="text"
+            name="name"
+            placeholder="Nome"
+            value={ name }
+            onChange={ this.handleChange }
+          />
 
-        <input
-          data-testid="input-gravatar-email"
-          type="text"
-          name="email"
-          placeholder="Email"
-          value={ email }
-          onChange={ this.handleChange }
-        />
+          <input
+            data-testid="input-gravatar-email"
+            type="text"
+            name="email"
+            placeholder="Email"
+            value={ email }
+            onChange={ this.handleChange }
+          />
 
-        <button
-          type="submit"
-          data-testid="btn-play"
-          disabled={ !(emailIsValid && nameIsValid) }
-          onClick={ this.handleRedirect }
-        >
-          Jogar
-        </button>
-        <Link to="/Settings">
           <button
-            data-testid="btn-settings"
-            type="button"
+            className="btn-play"
+            type="submit"
+            data-testid="btn-play"
+            disabled={ !(emailIsValid && nameIsValid) }
+            onClick={ this.handleRedirect }
           >
-            Settings
+            Jogar
           </button>
-        </Link>
-        { shouldRedirect && <Redirect to="/game" /> }
-      </form>
+          <Link className="container-link" to="/Settings">
+            <button
+              className="btn-setting"
+              data-testid="btn-settings"
+              type="button"
+            >
+              Settings
+            </button>
+          </Link>
+          { shouldRedirect && <Redirect to="/game" /> }
+        </form>
+      </section>
     );
   }
 }
