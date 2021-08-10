@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { saveConfigs } from '../redux/actions/settingsActions';
 
 class Settings extends React.Component {
@@ -64,6 +65,7 @@ class Settings extends React.Component {
           <br />
           <button type="button" onClick={ this.handleClick }>Salvar</button>
         </form>
+        <Link to="/">Home</Link>
       </fieldset>
     );
   }
