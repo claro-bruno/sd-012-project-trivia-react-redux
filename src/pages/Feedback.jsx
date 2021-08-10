@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
+import '../css/feedback.css';
+import mandouBem from '../images/silviosantos_mandouBem.gif';
+import podiaSerMelhor from '../images/podia_ser_melhor.gif';
 
 const SCORE_NUMBER = 3;
 
@@ -49,47 +53,64 @@ class Feedback extends React.Component {
 
   criptEmail(email) {
     const criptedEmail = md5(email).toString();
-    return (`https://www.gravatar.com/avatar/${criptedEmail}`);
+    return `https://www.gravatar.com/avatar/${criptedEmail}`;
+  }
+
+  mandouBem() {
+    return (
+      <div>
+        <img className="mandou_bem" src={ mandouBem } alt="Silvio mandando beijo" />
+        <p data-testid="feedback-text">Mandou bem!</p>
+      </div>
+    );
+  }
+
+  podiaSerMelhor() {
+    return (
+      <div>
+        <img className="podiaMelhor" src={ podiaSerMelhor } alt="Silvio caindo" />
+        <p data-testid="feedback-text">Podia ser melhor...</p>
+      </div>
+    );
   }
 
   render() {
     const { score, assertions } = this.state;
     return (
       <>
+        <Header />
         <div>
           <h1>Desempenho</h1>
         </div>
-        <Header />
-        <div>
-          <h3>
-            Pontuação final:
-            <p data-testid="feedback-total-score">{score}</p>
-          </h3>
-          <h3>
-            Número de acertos:
-            <p data-testid="feedback-total-question">{assertions}</p>
-          </h3>
-          {(assertions >= SCORE_NUMBER)
-            ? <p data-testid="feedback-text">Mandou bem!</p>
-            : <p data-testid="feedback-text">Podia ser melhor...</p> }
+        <div className="main-content">
+          <div>
+            <h3>
+              Pontuação final:
+              <p data-testid="feedback-total-score">{score}</p>
+            </h3>
+            <h3>
+              Número de acertos:
+              <p data-testid="feedback-total-question">{assertions}</p>
+            </h3>
+          </div>
+          <div>
+            {(assertions >= SCORE_NUMBER)
+              ? this.mandouBem()
+              : this.podiaSerMelhor() }
+          </div>
         </div>
         <div>
           <Link to="/">
-            <button
-              type="button"
-              data-testid="btn-play-again"
-            >
+            <button type="button" data-testid="btn-play-again">
               Jogar novamente
             </button>
           </Link>
           <Link to="/ranking">
-            <button
-              type="button"
-              data-testid="btn-ranking"
-            >
+            <button type="button" data-testid="btn-ranking">
               Ver Ranking
             </button>
           </Link>
+          <Footer />
         </div>
       </>
     );

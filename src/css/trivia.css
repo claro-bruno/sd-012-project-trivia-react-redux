@@ -1,0 +1,24 @@
+.next-button {
+  margin-top: 15px;
+}
+
+.time-counter {
+  font-size: 30px;
+  color: #246669;
+}
+
+.category-questions {
+  font-size: 30px;
+  color: #246669;
+}
+
+.questions {
+  color: #246669;
+  font-size: 22px;
+}
+
+.bicicleta {
+  margin-top: 15px;
+  border-radius:5px;
+  width: 500px;
+}
