@@ -13,3 +13,15 @@
 [ data-testid = 'wrong-answer-1' ] {
   border: 3px solid red;
 }
+
+/* .no-awnser {
+  border: 3px solid white;
+}
+
+.correct-awnser {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.wrong-awnser {
+  border: 3px solid red;
+} */

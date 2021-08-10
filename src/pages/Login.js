@@ -21,7 +21,8 @@ class Login extends React.Component {
 
   setLocalStorage() {
     const { name, email } = this.state;
-    const objeto = JSON.stringify({ player: { name, gravatarEmail: email } });
+    const objeto = JSON
+      .stringify({ player: { name, gravatarEmail: email, assertation: 0, score: 0 } });
     localStorage.setItem('state', objeto);
   }
 
