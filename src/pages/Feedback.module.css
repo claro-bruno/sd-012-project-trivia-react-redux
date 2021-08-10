@@ -1,0 +1,22 @@
+.sectionFeed {
+  background-color: #1d2551;
+  height: 800px;
+  width: 100%;
+}
+
+.feedBack {
+  background-color: #fea418;
+  border-radius: 10px;
+  box-shadow: 3px 3px 5px #7ea8df;
+  color: aliceblue;
+  height: 200px;
+  margin-left: 38%;
+  margin-top: 50px;
+  width: 350px;
+}
+
+.g4Logo {
+  margin-top: 30px;
+  position: fixed;
+  width: 100px;
+}

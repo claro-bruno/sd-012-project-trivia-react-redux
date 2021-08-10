@@ -1,0 +1,23 @@
+.rankBack {
+  background-color: #1d2551;
+  display: flex;
+  height: 800px;
+  justify-content: center;
+  width: 100%;
+}
+
+.rankHeader {
+  background-color: #fea418;
+  border-radius: 10px;
+  box-shadow: 3px 3px 5px #7ea8df;
+  color: aliceblue;
+  height: 500px;
+  margin-top: 50px;
+  width: 350px;
+}
+
+.g4Logo {
+  margin-top: 30px;
+  position: fixed;
+  width: 100px;
+}

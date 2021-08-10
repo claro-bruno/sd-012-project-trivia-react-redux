@@ -7,6 +7,7 @@ import Question from '../components/Question';
 import Header from '../components/Header';
 import Show from '../Sonoplastia/ShowdoMilhão .mp3';
 import styles from './Game.module.css';
+import G4Logo from '../G4.gif';
 
 class Game extends React.Component {
   componentDidMount() {
@@ -20,6 +21,7 @@ class Game extends React.Component {
       <main className={ styles.mainGame }>
         <ReactAudioPlayer autoPlay loop src={ Show } volume={ 0.1 } />
         <Header />
+        <img src={ G4Logo } className={ styles.g4Logo } alt="logo" />
         { (loading) ? <h1>Loading</h1> : <Question history={ history } /> }
       </main>
     );

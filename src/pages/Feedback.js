@@ -6,6 +6,8 @@ import FeedbackMessage from '../components/FeedbackMessage';
 import ResultsInfo from '../components/ResultsInfo';
 import Button from '../components/Button';
 import { restoreStore } from '../redux/action';
+import styles from './Feedback.module.css';
+import G4Logo from '../G4.gif';
 
 class Feedback extends React.Component {
   componentWillUnmount() {
@@ -21,19 +23,24 @@ class Feedback extends React.Component {
   render() {
     return (
       <section>
-        <Header />
-        <FeedbackMessage />
-        <ResultsInfo />
-        <Button
-          buttonText="Jogar novamente"
-          testId="btn-play-again"
-          onClick={ () => this.handleClick('/') }
-        />
-        <Button
-          buttonText="Ver Ranking"
-          testId="btn-ranking"
-          onClick={ () => this.handleClick('/ranking') }
-        />
+        <div className={ styles.sectionFeed }>
+          <Header />
+          <img src={ G4Logo } className={ styles.g4Logo } alt="logo" />
+          <div className={ styles.feedBack }>
+            <FeedbackMessage />
+            <ResultsInfo />
+            <Button
+              buttonText="Jogar novamente"
+              testId="btn-play-again"
+              onClick={ () => this.handleClick('/') }
+            />
+            <Button
+              buttonText="Ver Ranking"
+              testId="btn-ranking"
+              onClick={ () => this.handleClick('/ranking') }
+            />
+          </div>
+        </div>
       </section>
     );
   }
