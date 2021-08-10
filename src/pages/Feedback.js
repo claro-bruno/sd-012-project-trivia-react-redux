@@ -14,10 +14,12 @@ class Feedback extends React.Component {
       score: finalScore,
       assertions,
       message: '',
-      redirect: false,
+      redirectLogin: false,
+      redirectRanking: false,
     };
     this.setMessage = this.setMessage.bind(this);
     this.redirectLogin = this.redirectLogin.bind(this);
+    this.redirectRanking = this.redirectRanking.bind(this);
   }
 
   componentDidMount() {
@@ -39,12 +41,19 @@ class Feedback extends React.Component {
   }
 
   redirectLogin() {
-    this.setState({ redirect: true });
+    this.setState({ redirectLogin: true });
+  }
+
+  redirectRanking() {
+    this.setState({ redirectRanking: true });
   }
 
   render() {
-    const { score, message, redirect } = this.state;
-    if (redirect) {
+    const { score, message, redirectLogin, redirectRanking } = this.state;
+    if (redirectRanking) {
+      return <Redirect to="/ranking" />;
+    }
+    if (redirectLogin) {
       return <Redirect to="/" />;
     }
     return (
@@ -58,6 +67,13 @@ class Feedback extends React.Component {
           onClick={ this.redirectLogin }
         >
           Jogar Novamente
+        </button>
+        <button
+          type="button"
+          data-testid="btn-ranking"
+          onClick={ this.redirectRanking }
+        >
+          Ver Ranking
         </button>
       </section>
     );
