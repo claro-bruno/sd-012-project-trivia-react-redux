@@ -48,7 +48,9 @@ class Game extends React.Component {
       localStorage.setItem('token', userInfo.token);
       tokenTeste = localStorage.getItem('token');
     }
-    const apiRequest = `https://opentdb.com/api.php?amount=5&token=${tokenTeste}`;
+    const { category, difficulty, type } = this.props;
+    const linkApi = `https://opentdb.com/api.php?amount=5&token=${tokenTeste}`;
+    const apiRequest = `${linkApi}&${category}&${difficulty}&${type}`;
     const res = await fetch(apiRequest);
     const data = await res.json();
     this.setState({
@@ -105,8 +107,7 @@ class Game extends React.Component {
     });
   }
 
-  /* https://flaviocopes.com/how-to-shuffle-array-javascript/
-  Shuffle array, peguei desse link */
+  /* https://flaviocopes.com/how-to-shuffle-array-javascript/ Shuffle array, peguei desse link */
 
   multiple(question) {
     const { actualQuestion } = this.state;
@@ -223,6 +224,12 @@ class Game extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  category: state.settings.category,
+  difficulty: state.settings.difficulty,
+  type: state.settings.type,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   getPoint: (point) => dispatch(scoreUpdate(point)),
   getScore: (state) => dispatch(guessUpdate(state)),
@@ -234,6 +241,9 @@ Game.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   getScore: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
+  difficulty: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
