@@ -26,7 +26,6 @@ class Questions extends Component {
     this.calculateScore = this.calculateScore.bind(this);
     this.getDifficultyPoints = this.getDifficultyPoints.bind(this);
     this.setInitialLocalStorage = this.setInitialLocalStorage.bind(this);
-    this.saveScoreRedux = this.saveScoreRedux.bind(this);
     this.saveScoreLocalStorage = this.saveScoreLocalStorage.bind(this);
     this.buttonFunction = this.buttonFunction.bind(this);
     this.removeFirstQuestion = this.removeFirstQuestion.bind(this);
@@ -78,23 +77,18 @@ class Questions extends Component {
   handleClick({ target }) {
     this.setState({ disabled: true, next: true }, () => target.classList.add('selected'));
     clearInterval(this.interval);
-    this.saveScoreRedux(target);
+    this.calculateScore(target);
   }
 
   calculateScore(target) {
     const { time } = this.state;
+    const { correctAnswer } = this.props;
     const difficulty = this.getDifficultyPoints();
     if (target.id === 'correct-answer') {
-      return NUMBER_TEN * (time * difficulty);
+      const score = NUMBER_TEN * (time * difficulty);
+      correctAnswer(score);
+      this.saveScoreLocalStorage(score);
     }
-    return 0;
-  }
-
-  saveScoreRedux(target) {
-    const { correctAnswer } = this.props;
-    const score = this.calculateScore(target);
-    correctAnswer(score);
-    this.saveScoreLocalStorage(score);
   }
 
   saveScoreLocalStorage(points) {

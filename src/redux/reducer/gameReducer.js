@@ -17,7 +17,7 @@ const gameReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       score: state.score + action.payload,
-      assertions: state.score + 1,
+      assertions: state.assertions + 1,
     };
   default:
     return state;
