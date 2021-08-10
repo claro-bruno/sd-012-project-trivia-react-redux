@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import Loading from '../components/Loading';
 import Header from '../components/Header';
 import Answers from '../components/Answers';
@@ -147,7 +148,6 @@ class Game extends Component {
       });
       this.updateTimer();
     }
-    if (currentQuestion === lastQuestion) window.location.href = '/feedback';
   }
 
   showBtnNextQuestion() {
@@ -170,6 +170,10 @@ class Game extends Component {
       timer,
     } = this.state;
     const { timeOff } = this.props;
+    const lastQuestion = 4;
+    if (currentQuestion === lastQuestion) {
+      return <Redirect to="/feedback" />;
+    }
     return (
       <section>
         <Header />
