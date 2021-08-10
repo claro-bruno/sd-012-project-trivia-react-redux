@@ -2,3 +2,4 @@ export const GET_USER_DATA = 'GET_USER_DATA';
 export const IS_FETCHING = 'IS_FETCHING';
 export const SCORE_UPDATE = 'SCORE_UPDATE';
 export const GUESS_UPDATE = 'GUESS_UPDATE';
+export const PROFILE_PICTURE = 'PROFILE_PICTURE';

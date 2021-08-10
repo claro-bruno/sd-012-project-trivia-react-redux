@@ -2,6 +2,7 @@ import React from 'react';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { pictureUpdate } from '../redux/actions/gameActions';
 
 class Header extends React.Component {
   constructor(props) {
@@ -9,6 +10,8 @@ class Header extends React.Component {
     this.state = {
       profilePicture: 'https://www.gravatar.com/avatar/',
     };
+
+    this.getProfilePicture = this.getProfilePicture.bind(this);
   }
 
   componentDidMount() {
@@ -16,11 +19,11 @@ class Header extends React.Component {
   }
 
   getProfilePicture() {
-    const { email } = this.props;
+    const { email, savePicture } = this.props;
     const hash = md5(email).toString();
     const pictureUrl = `https://www.gravatar.com/avatar/${hash}`;
     this.setState({ profilePicture: pictureUrl });
-    localStorage.setItem('profilePicture', pictureUrl);
+    savePicture(pictureUrl);
   }
 
   render() {
@@ -46,10 +49,15 @@ const mapStateToProps = (state) => ({
   email: state.player.gravatarEmail,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  savePicture: (state) => dispatch(pictureUpdate(state)),
+});
+
 Header.propTypes = {
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
   email: PropTypes.string.isRequired,
+  savePicture: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
