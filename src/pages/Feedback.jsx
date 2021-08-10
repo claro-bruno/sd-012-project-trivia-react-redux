@@ -81,18 +81,22 @@ class Feedback extends React.Component {
         <div>
           <h1>Desempenho</h1>
         </div>
-        <div>
-          <h3>
-            Pontuação final:
-            <p data-testid="feedback-total-score">{score}</p>
-          </h3>
-          <h3>
-            Número de acertos:
-            <p data-testid="feedback-total-question">{assertions}</p>
-          </h3>
-          {(assertions >= SCORE_NUMBER)
-            ? this.mandouBem()
-            : this.podiaSerMelhor() }
+        <div className="main-content">
+          <div>
+            <h3>
+              Pontuação final:
+              <p data-testid="feedback-total-score">{score}</p>
+            </h3>
+            <h3>
+              Número de acertos:
+              <p data-testid="feedback-total-question">{assertions}</p>
+            </h3>
+          </div>
+          <div>
+            {(assertions >= SCORE_NUMBER)
+              ? this.mandouBem()
+              : this.podiaSerMelhor() }
+          </div>
         </div>
         <div>
           <Link to="/">

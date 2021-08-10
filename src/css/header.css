@@ -1,9 +1,10 @@
 header {
-  background-color: black;
+  background-color: #282c34;
   border: 3px solid whitesmoke;
   display: flex;
   height: 100px;
   justify-content: space-between;
+  align-items: center;
   padding: 10px;
   width: auto;
 }
