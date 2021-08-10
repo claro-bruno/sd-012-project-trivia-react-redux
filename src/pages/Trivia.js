@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { BORDER_BLACK, questionTest } from '../data';
 import StaticTrivia from '../components/StaticTrivia';
 import Header from '../components/Header';
+import Feedback from './Feedback';
 
 class Trivia extends Component {
   constructor() {
@@ -182,29 +182,7 @@ class Trivia extends Component {
       );
     }
     return (
-      <div>
-        <Header />
-        <span>{ timer }</span>
-        <span data-testid="question-category">
-          { questions[currentQuestion].category }
-        </span>
-        <p data-testid="question-text">
-          { questions[currentQuestion].question }
-        </p>
-        { this.shuffledAnswers(questions[currentQuestion]) }
-        <button
-          className="btn-next"
-          data-testid="btn-next"
-          type="button"
-          onClick={ this.nextQuestion }
-          style={ { display: 'none' } }
-        >
-          Próxima
-        </button>
-        <button type="button" data-testid="btn-ranking">
-          <Link to="/ranking">Ver Ranking</Link>
-        </button>
-      </div>
+      <Feedback />
     );
   }
 }

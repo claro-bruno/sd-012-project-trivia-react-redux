@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Ranking from './Ranking';
 
-export class Feedback extends Component {
+class Feedback extends Component {
   render() {
     const state = JSON.parse(localStorage.getItem('state'));
     const { player } = state;
