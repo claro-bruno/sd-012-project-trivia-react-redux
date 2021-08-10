@@ -62,11 +62,19 @@ class Login extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { name } = this.state;
+    const { name, email } = this.state;
     const { userName } = this.props;
     this.setState({ redirect: 'trivia' });
     userName(this.state);
-    localStorage.setItem('userName', name);
+    const player = {
+      player: {
+        name,
+        assertions: 0,
+        score: 0,
+        gravataEmail: email,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(player));
   }
 
   handleClick() {

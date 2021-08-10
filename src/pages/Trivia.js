@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { BORDER_BLACK } from '../data';
+import { BORDER_BLACK, questionTest } from '../data';
 import StaticTrivia from '../components/StaticTrivia';
 import Header from '../components/Header';
+import Feedback from './Feedback';
 
 class Trivia extends Component {
   constructor() {
@@ -18,6 +18,8 @@ class Trivia extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.updateTimer = this.updateTimer.bind(this);
+    this.colorReset = this.colorReset.bind(this);
+    this.click = this.click.bind(this);
   }
 
   componentDidMount() {
@@ -28,6 +30,15 @@ class Trivia extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const { currentQuestion } = this.state;
+    const maxQuestions = 5;
+    if (currentQuestion < maxQuestions) {
+      this.colorReset();
+      this.updateTimer(prevState);
+    }
+  }
+
+  colorReset() {
     const { timer } = this.state;
     const correct = document.querySelector('.correct-answer');
     const incorrects = document.querySelectorAll('.wrong-answer');
@@ -44,7 +55,6 @@ class Trivia extends Component {
       }
       next.disabled = 'true';
     }
-    this.updateTimer(prevState);
   }
 
   updateTimer(prevState) {
@@ -87,7 +97,7 @@ class Trivia extends Component {
               data-testid="correct-answer"
               className="correct-answer"
               type="button"
-              onClick={ this.handleClick }
+              onClick={ this.click }
               style={ { border: '1px solid black' } }
             >
               { question.correct_answer }
@@ -101,7 +111,7 @@ class Trivia extends Component {
             data-testid={ `wrong-answer-${controllIncorrects - 1}` }
             className="wrong-answer"
             type="button"
-            onClick={ this.handleClick }
+            onClick={ this.click }
             style={ { border: '1px solid black' } }
           >
             { question.incorrect_answers[controllIncorrects - 1] }
@@ -109,6 +119,32 @@ class Trivia extends Component {
         );
       })
     );
+  }
+
+  async click({ target }) {
+    await this.handleClick();
+    const { timer, currentQuestion } = this.state;
+    const state = JSON.parse(localStorage.getItem('state'));
+    if (target.className === 'correct-answer') {
+      let result = 0;
+      const dez = 10;
+      const tres = 3;
+      if (questionTest[currentQuestion].difficulty === 'easy') result = dez + timer;
+      else if (questionTest[currentQuestion].difficulty === 'medium') {
+        result = dez + (timer * 2);
+      } else {
+        result = dez + (timer * tres);
+      }
+      const player = {
+        player: {
+          name: state.player.name,
+          score: result,
+          assertions: state.player.assertions + 1,
+          gravatarEmail: state.player.gravatarEmail,
+        },
+      };
+      localStorage.setItem('state', JSON.stringify(player));
+    }
   }
 
   handleClick() {
@@ -123,14 +159,10 @@ class Trivia extends Component {
   }
 
   nextQuestion() {
-    const maxQuestions = 5;
-    this.setState((state) => {
-      if (state.currentQuestion < maxQuestions - 1) {
-        return {
-          currentQuestion: state.currentQuestion + 1,
-        };
-      }
-    });
+    this.setState((state) => ({
+      currentQuestion: state.currentQuestion + 1,
+      timer: 30,
+    }));
   }
 
   render() {
@@ -142,36 +174,15 @@ class Trivia extends Component {
           <Header />
           <span>{ timer }</span>
           <StaticTrivia
-            handleClick={ this.handleClick }
+            currentQuestion={ currentQuestion }
+            handleClick={ this.click }
             nextQuestion={ this.nextQuestion }
           />
         </div>
       );
     }
     return (
-      <div>
-        <Header />
-        <span>{ timer }</span>
-        <span data-testid="question-category">
-          { questions[currentQuestion].category }
-        </span>
-        <p data-testid="question-text">
-          { questions[currentQuestion].question }
-        </p>
-        { this.shuffledAnswers(questions[currentQuestion]) }
-        <button
-          className="btn-next"
-          data-testid="btn-next"
-          type="button"
-          onClick={ this.nextQuestion }
-          style={ { display: 'none' } }
-        >
-          Próxima
-        </button>
-        <button type="button" data-testid="btn-ranking">
-          <Link to="/ranking">Ver Ranking</Link>
-        </button>
-      </div>
+      <Feedback />
     );
   }
 }
