@@ -19,7 +19,6 @@ class Feedback extends React.Component {
       ranking = [obj];
     }
     localStorage.setItem('ranking', JSON.stringify(ranking));
-    // { name: nome-da-pessoa, score: 10, picture: url-da-foto-no-gravatar }
   }
 
   render() {

@@ -19,7 +19,6 @@ class Game extends React.Component {
       timer: 30,
       idTimer: 0,
       showButton: false,
-      correctGuess: 0,
     };
 
     this.fetchApi = this.fetchApi.bind(this);
@@ -82,13 +81,15 @@ class Game extends React.Component {
   }
 
   checkAnswer(e) {
-    const { questionNumber, questions, idTimer, timer, correctGuess } = this.state;
+    const { questionNumber, questions, idTimer, timer } = this.state;
     clearInterval(idTimer);
     const correctAnswer = questions[questionNumber].correct_answer;
     if (e) {
       this.handleScore(e, questions[questionNumber], timer);
       if (e.target.value === correctAnswer) {
-        this.setState({ correctGuess: correctGuess + 1 });
+        const { getScore } = this.props;
+        getScore(1);
+        saveLocalStorage();
       }
     }
     this.setState({ showButton: true });
@@ -148,7 +149,7 @@ class Game extends React.Component {
   }
 
   nextQuestion() {
-    const { questionNumber, questions, correctGuess } = this.state;
+    const { questionNumber, questions } = this.state;
     this.setState({
       showButton: false,
     });
@@ -164,12 +165,7 @@ class Game extends React.Component {
         answer.disabled = false;
       });
     } else {
-      // Aqui deve ser a chamada da proxima pagina caso tenha sido a ultima questão.
-      const storage = JSON.parse(localStorage.getItem('state'));
-      storage.player.assertions = correctGuess;
-      localStorage.setItem('state', JSON.stringify(storage));
-      const { history, getScore } = this.props;
-      getScore(correctGuess);
+      const { history } = this.props;
       history.push('/feedback');
     }
   }
