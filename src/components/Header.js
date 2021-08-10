@@ -6,8 +6,7 @@ import '../styles/Header.css';
 
 class Header extends React.Component {
   render() {
-    const { userMail, userName } = this.props;
-    const playerData = JSON.parse(localStorage.getItem('state'));
+    const { userMail, userName, score } = this.props;
     const userMailHashCode = md5(userMail).toString();
     return (
       <header className="standard-header">
@@ -29,7 +28,7 @@ class Header extends React.Component {
           <span>
             Pontuação:
             <span className="player-score-number" data-testid="header-score">
-              {playerData ? playerData.score : 0}
+              { score }
             </span>
           </span>
         </div>
@@ -47,6 +46,7 @@ Header.propTypes = {
 const mapStateToProps = (state) => ({
   userName: state.loginReducer.name,
   userMail: state.loginReducer.email,
+  score: state.gameReducer.score,
 });
 
 export default connect(mapStateToProps)(Header);
