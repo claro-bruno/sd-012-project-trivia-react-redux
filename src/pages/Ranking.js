@@ -33,7 +33,7 @@ class Ranking extends React.Component {
     return (
       <>
         { redirect && <Redirect to="/" /> }
-        <h2>Ranking</h2>
+        <h2 data-testid="ranking-title">Ranking</h2>
         <Button
           name="HOME"
           testId="btn-go-home"
@@ -47,10 +47,10 @@ class Ranking extends React.Component {
                 <li key={ `${score}.${name}.${score}` }>
                   <img src={ picture } alt={ `Player avatar ${index}` } />
                   <h3 data-testid={ `player-name-${index}` }>
-                    { `NOME: ${name}` }
+                    { name }
                   </h3>
                   <h4 data-testid={ `player-score-${index}` }>
-                    { `PONTUAÇÃO: ${score}` }
+                    { score }
                   </h4>
                 </li>
               );
