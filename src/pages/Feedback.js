@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
+import Results from '../components/Results';
 
 class Feedback extends React.Component {
   constructor() {
@@ -39,7 +39,7 @@ class Feedback extends React.Component {
   }
 
   redirectLogin() {
-  this.setState({ redirect: true });
+    this.setState({ redirect: true });
   }
 
   render() {
@@ -49,6 +49,7 @@ class Feedback extends React.Component {
     }
     return (
       <section>
+        <Results />
         <Header score={ score } />
         <p data-testid="feedback-text">{message || 'Loading'}</p>
         <button
