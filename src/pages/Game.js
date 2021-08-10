@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { MD5 } from 'crypto-js';
 import { getQuestions } from '../services/api';
 import ButtonNextQuestion from '../components/ButtonNextQuestion';
 import Timer from '../components/Timer';
+import Header from '../components/Header';
 
 class Game extends Component {
   constructor(props) {
@@ -88,23 +86,13 @@ class Game extends Component {
   }
 
   render() {
-    const { name, gravatarEmail } = this.props;
-    const hash = MD5(gravatarEmail).toString();
-    const getImg = `https://www.gravatar.com/avatar/${hash}`;
     const { /* index */ disableButton, answered } = this.state;
     // o index acima, implementar após a lógica das respostas corretas
     // para mudar de acordo com o numero da questão;
 
-    // https://github.com/tryber/sd-010-a-project-trivia-react-redux/pull/600/
-    // commits/6c6c13f6c3fdfb09f19cf9f33f6e8cd814b7bd04
-
     return (
       <div>
-        <header>
-          <img data-testid="header-profile-picture" src={ getImg } alt="user avatar" />
-          <p data-testid="header-player-name">{name}</p>
-          <p data-testid="header-score">0</p>
-        </header>
+        <Header />
         {this.renderQuestions()}
         <ButtonNextQuestion
           disableButton={ disableButton }
@@ -121,19 +109,4 @@ class Game extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  name: state.login.player.name,
-  gravatarEmail: state.login.player.gravatarEmail,
-});
-
-export default connect(mapStateToProps)(Game);
-
-Game.propTypes = {
-  name: PropTypes.string,
-  gravatarEmail: PropTypes.string,
-};
-
-Game.defaultProps = {
-  name: '',
-  gravatarEmail: '',
-};
+export default Game;
