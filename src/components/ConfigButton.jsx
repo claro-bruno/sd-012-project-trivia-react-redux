@@ -6,6 +6,7 @@ class ConfigButton extends Component {
     return (
       <Link to="/config">
         <button
+          className="config-button"
           data-testid="btn-settings"
           type="button"
         >
