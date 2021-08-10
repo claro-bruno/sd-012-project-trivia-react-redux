@@ -23,7 +23,10 @@ class Header extends React.Component {
         <h2 className="name" data-testid="header-player-name">
           { name || 'default name'}
         </h2>
-        <h2 className="score" data-testid="header-score">{ `Score: ${score}` }</h2>
+        <label htmlFor="score" className="score">
+          Score
+          <h2 data-testid="header-score">{ score }</h2>
+        </label>
       </header>
     );
   }

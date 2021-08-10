@@ -5,6 +5,9 @@ const INITIAL_STATE = {
   error: null,
   isLoading: false,
   numeroQuestoes: 5,
+  difficulty: 0,
+  type: 0,
+  category: 0,
 };
 
 const buttonReducer = (state = INITIAL_STATE, action) => {
@@ -30,7 +33,10 @@ const buttonReducer = (state = INITIAL_STATE, action) => {
   case 'SET_AMOUNT':
     return {
       ...state,
-      numeroQuestoes: action.value,
+      numeroQuestoes: action.value.quantidade,
+      difficulty: action.value.difficulty,
+      type: action.value.type,
+      category: action.value.category,
     };
   default:
     return state;

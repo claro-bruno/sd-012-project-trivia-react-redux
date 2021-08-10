@@ -19,7 +19,9 @@ header {
 
 .score {
   color: white;
-  margin-right: 5%;
+  font-size: 20px;
+  margin-right: 3%;
+  margin-top: 10px;
 }
 
 .name {
