@@ -6,6 +6,7 @@ import { getQuestions } from '../services/api';
 import ButtonNextQuestion from '../components/ButtonNextQuestion';
 import Timer from '../components/Timer';
 import Header from '../components/Header';
+import '../App.css';
 import { getScore } from '../redux/actions';
 
 class Game extends Component {
@@ -27,6 +28,8 @@ class Game extends Component {
     this.score = this.score.bind(this);
     this.saveOnLocalStorage = this.saveOnLocalStorage.bind(this);
   }
+
+  // refactor: e possivel colocar o timer dentro do componentDidMount
 
   componentDidMount() {
     this.getQuestions1();
@@ -108,7 +111,7 @@ class Game extends Component {
           <button
             type="button"
             data-testid="correct-answer"
-            className="correct-answer-btn"
+            className={ answered ? 'correct-answer-btn' : '' }
             id="correct-btn"
             onClick={ () => this.score(quest) }
           >
@@ -119,7 +122,8 @@ class Game extends Component {
               data-testid={ `wrong-answer-${index1}` }
               key={ index1 }
               type="button"
-              className="incorrect-answer-btn"
+              id="incorrect-btn"
+              className={ answered ? 'incorrect-answer-btn' : '' }
               onClick={ () => this.setState({ answered: true }) }
             >
               {wrong}
@@ -150,7 +154,6 @@ class Game extends Component {
             index={ questionIndex }
           />
         )}
-
         <Link to="/feedback">
           <button data-testid="feedbackButton" type="button">Feedback</button>
         </Link>

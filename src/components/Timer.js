@@ -17,8 +17,8 @@ const Timer = ({ timer, answered, index }) => {
   }, [counter, answered, index, timer]);
 
   useEffect(() => {
-    const correctAnswer = document.querySelector('.correct-answer-btn');
-    const incorrectBtn = document.querySelectorAll('.incorrect-answer-btn');
+    const correctAnswer = document.getElementById('correct-btn');
+    const incorrectBtn = document.querySelectorAll('#incorrect-btn');
     if (counter > 0) {
       correctAnswer.disabled = false;
     } else if (counter <= 0 || answered) {
