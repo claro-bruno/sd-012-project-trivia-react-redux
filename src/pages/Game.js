@@ -27,12 +27,14 @@ class Game extends React.Component {
   }
 
   onClickAnswer() {
+    const nextButton = document.querySelector('.isVisible');
     const buttons = document.querySelectorAll('.answer-buttons');
     buttons.forEach((button) => {
       if (button.id === 'correct-answer') {
         button.classList.add('correct');
       } else button.classList.add('wrong');
     });
+    nextButton.classList.remove('isVisible');
   }
 
   async displayQuiz() {
@@ -108,11 +110,13 @@ class Game extends React.Component {
   handleClick() {
     const { index } = this.state;
     const arrLength = 4;
+    const nextButton = document.getElementById('next-button');
     console.log('fui clicado');
     if (index < arrLength) {
-      return this.setState((prevState) => ({
+      this.setState((prevState) => ({
         index: prevState.index + 1,
       }));
+      return nextButton.classList.add('isVisible');
     }
     return this.setState({
       redirect: true,
@@ -131,8 +135,9 @@ class Game extends React.Component {
         <button
           onClick={ this.handleClick }
           type="button"
-          className="btn btn-primary"
+          className="isVisible btn btn-primary"
           id="next-button"
+          data-testid="btn-next"
         >
           { index < redirectNumber ? 'Proxima' : 'Ver Pontuação' }
         </button>
