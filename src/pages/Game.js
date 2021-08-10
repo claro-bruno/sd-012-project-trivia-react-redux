@@ -14,7 +14,6 @@ class Game extends Component {
     this.state = {
       questions: [],
       loading: true,
-      responseCode: null,
       // nextQuestion: false, // muda pra true na funçao de mudar a cor;
     };
 
@@ -37,7 +36,6 @@ class Game extends Component {
         .then((response) => response.json())
         .then((data) => this.setState({
           questions: data.results,
-          responseCode: data.response_code,
           loading: false,
         }));
     } catch (erro) {
@@ -47,7 +45,7 @@ class Game extends Component {
   }
 
   render() {
-    const { questions, responseCode, loading } = this.state;
+    const { questions, loading } = this.state;
     return (
       <div>
         <Header className="header" />
@@ -55,7 +53,7 @@ class Game extends Component {
           {
             loading
               ? 'Carregando...'
-              : <Questions responseCode={ responseCode } questions={ questions } />
+              : <Questions questions={ questions } />
           }
         </div>
       </div>
@@ -64,7 +62,7 @@ class Game extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  token: state.tokenReducer.token,
+  tokenStore: state.tokenReducer.token,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -73,8 +71,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Game.propTypes = {
+<<<<<<< HEAD
   tokenStore: PropTypes.string.isRequired,
+=======
+>>>>>>> bf20b0657923f3c403beeec39f6b555f3e56b549
   getToken: PropTypes.func.isRequired,
+  tokenStore: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

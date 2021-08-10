@@ -47,6 +47,7 @@ class Login extends React.Component {
       gravatarEmail,
     } };
     localStorage.setItem('state', JSON.stringify(newUser));
+    fetchToken();
     history.push('/game');
   }
 
