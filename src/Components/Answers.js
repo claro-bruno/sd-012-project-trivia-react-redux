@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './Answers.css';
 
 class Answers extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class Answers extends React.Component {
     return array;
   }
 
-  answers(question) {
+  answers(question, show) {
     const answers = [...question.incorrect_answers, question.correct_answer];
     const arrayAnswers = this.shuffleArray(answers);
     const { onClick } = this.props;
@@ -31,12 +32,13 @@ class Answers extends React.Component {
             <button
               key={ index }
               type="button"
+              // onClick={ () => sendShowAnswers(true) }
+              onClick={ () => onClick() }
               data-testid="correct-answer"
-              className="answer-btn"
-              name="correct-answer"
-              onClick={ (e) => onClick(e) }
+              className={ show ? 'correct answer-btn' : 'answer-btn' }
+              name="wrong-answer"
             >
-              { question.correct_answer }
+              {question.correct_answer}
             </button>
           );
         }
@@ -45,13 +47,13 @@ class Answers extends React.Component {
         return (
           <button
             key={ index }
-            data-testid={ `wrong-answer-${controllIncorrects - 1}` }
             type="button"
-            className="answer-btn"
-            name="wrong-answer"
-            onClick={ (e) => onClick(e) }
+            className={ show ? 'wrong answer-btn' : 'answer-btn' }
+            // onClick={ () => sendShowAnswers(true) }
+            onClick={ () => onClick() }
+            data-testid={ `wrong-answer-${controllIncorrects - 1}` }
           >
-            { question.incorrect_answers[controllIncorrects - 1] }
+            {question.incorrect_answers[controllIncorrects - 1]}
           </button>
         );
       })
@@ -59,21 +61,19 @@ class Answers extends React.Component {
   }
 
   render() {
-    const { question } = this.props;
-    return (
-      this.answers(question)
-    );
+    const { question, show } = this.props;
+    return this.answers(question, show);
   }
 }
 
 Answers.propTypes = {
   question: PropTypes.shape({
     correct_answer: PropTypes.string.isRequired,
-    incorrect_answers: PropTypes.arrayOf(
-      PropTypes.string.isRequired,
-    ).isRequired,
+    incorrect_answers: PropTypes.arrayOf(PropTypes.string.isRequired)
+      .isRequired,
   }).isRequired,
   onClick: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired,
 };
 
 export default Answers;

@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { actionFetchApiGame } from '../redux/actions';
+import { connect } from 'react-redux';
 import Loading from '../Components/Loading';
 import Answers from '../Components/Answers';
 import HeaderGame from '../Components/HeaderGame';
+import { actionFetchApiGame, showAnswers } from '../redux/actions';
 import Timer from '../Components/timer';
 
 class Game extends React.Component {
@@ -12,17 +12,21 @@ class Game extends React.Component {
     super();
     this.state = {
       index: 0,
-      score: 0,
-      assertions: 0,
-      name: '',
-      gravatarEmail: '',
+      isAnswered: false,
+      timer: 30,
+      result: 0,
+      player: {
+        name: '',
+        assertions: 0,
+        score: 0,
+        gravatarEmail: '',
+      },
     };
     this.showNextQuestion = this.showNextQuestion.bind(this);
     this.btnNext = this.btnNext.bind(this);
     this.incorrectAndCorrectQuestion = this.incorrectAndCorrectQuestion.bind(this);
-    this.showBtnNext = this.showBtnNext.bind(this);
+    this.setLocalStorage = this.setLocalStorage.bind(this);
     this.savingPoints = this.savingPoints.bind(this);
-    this.createLocalStorage = this.createLocalStorage.bind(this);
   }
 
   componentDidMount() {
@@ -30,70 +34,86 @@ class Game extends React.Component {
     fetchApiGame(token);
   }
 
-  savingPoints(difficulty) {
-    const point = 10;
-    const easy = 1;
-    const medium = 2;
-    const hard = 3;
-    let difficultyPoint = 0;
-
-    switch (difficulty) {
-    case 'easy':
-      difficulty = easy;
-      break;
-    case 'medium':
-      difficulty = medium;
-      break;
-    case 'hard':
-      difficultyPoint = hard;
-      break;
-    default:
-      return difficultyPoint;
-    }
-    this.setState((state) => ({
-      score: state.score + point + (Timer * difficultyPoint),
-      assertions: state.assertions + 1,
-    }));
+  setLocalStorage() {
+    const { player: jogador } = this.state;
+    localStorage.setItem('state', JSON.stringify({ player: jogador }));
   }
 
-  createLocalStorage() {
-    const { score, assertions, name, gravatarEmail } = this.state;
+  savingPoints(correct) {
+    const { timer, index } = this.state;
+    const { questions: { results } } = this.props;
+    const { difficulty } = results[index];
+    const ten = 10;
+    let result = 0;
+    if (correct === 'true') {
+      switch (difficulty) {
+      case 'easy':
+        result = ten + (timer * 1);
+        break;
+      case 'medium':
+        result = ten + (timer * 2);
+        break;
+      case 'hard':
+        result = ten + (timer * Number('3'));
+        break;
+      default:
+        console.log('erro no switch');
+      }
+      this.setState((prevState) => ({
+        player: {
+          ...prevState.player,
+          assertions: prevState.player.assertions + 1,
+        },
+      }));
+    }
+    return result;
+  }
 
-    const stateLocalStorage = {
+  handleClick(correct) {
+    const resultado = this.savingPoints(correct);
+    this.setState((prevState) => ({
+      isAnswered: true,
+      timer: 0,
+      result: prevState.result + resultado,
       player: {
-        score,
-        assertions,
-        name,
-        gravatarEmail,
+        ...prevState.player,
+        score: prevState.result + resultado,
+        assertions: prevState.player.assertions,
       },
-    };
-    const keyLocalStorage = JSON.stringify(stateLocalStorage);
-    localStorage.setItem('state', keyLocalStorage);
+    }), () => {
+      console.log(this.state);
+      this.setLocalStorage();
+    });
   }
 
   showNextQuestion() {
+    const { sendShowAnswers } = this.props;
     this.setState((state) => ({
       index: state.index + 1,
     }));
+    sendShowAnswers(false);
   }
 
+  // requisito 10
   btnNext() {
-    const { questions, history: { push } } = this.props;
+    const { history: { push } } = this.props;
     const { index } = this.state;
     const numberQuestions = 4;
+    const { show } = this.props;
 
-    if (index !== 0 && index < numberQuestions) {
+    if (show && index < numberQuestions) {
       return (
         <button
           type="button"
           data-testid="btn-next"
-          onClick={ () => this.showNextQuestion(questions) }
+          onClick={ () => this.showNextQuestion() }
         >
           Próxima
         </button>
       );
     }
-    if (index !== 0 && index > numberQuestions) {
+
+    if (show && index === numberQuestions) {
       return (
         <button
           type="button"
@@ -105,27 +125,18 @@ class Game extends React.Component {
     }
   }
 
-  showBtnNext() {
-    const { questions } = this.props;
-    return (
-      <button
-        type="button"
-        data-testid="btn-next"
-        onClick={ () => this.showNextQuestion(questions) }
-      >
-        Próxima
-      </button>
-    );
-  }
-
   incorrectAndCorrectQuestion() {
-    this.showNextQuestion();
+    const { sendShowAnswers } = this.props;
+    sendShowAnswers(true);
+    this.btnNext();
+    this.handleClick();
   }
 
   render() {
-    const { questions, isFetching } = this.props;
+    const { questions, isFetching, show } = this.props;
     const { index } = this.state;
     if (isFetching) return <Loading />;
+
     return (
       <>
         <HeaderGame />
@@ -143,8 +154,9 @@ class Game extends React.Component {
                   { questions[index].question }
                 </h3>
                 <Answers
+                  show={ show }
                   question={ questions[index] }
-                  onClick={ this.incorrectAndCorrectQuestion }
+                  onClick={ () => this.incorrectAndCorrectQuestion() }
                 />
               </div>
               { this.btnNext() }
@@ -159,15 +171,17 @@ class Game extends React.Component {
 
 Game.propTypes = {
   fetchApiGame: PropTypes.func.isRequired,
+  history: PropTypes.objectOf().isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  push: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(
     PropTypes.shape({
       category: PropTypes.string.isRequired,
       question: PropTypes.string.isRequired,
     }).isRequired,
   ).isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  history: PropTypes.arrayOf().isRequired, //  precisa arrumar essa props
-  push: PropTypes.func.isRequired, //  precisa arrumar essa props
+  sendShowAnswers: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired,
   token: PropTypes.string.isRequired,
 };
 
@@ -176,10 +190,12 @@ const mapStateToProps = (state) => ({
   isFetching: state.gameReducer.isFetching,
   indexQuestion: state.gameReducer.indexQuestion,
   token: state.player.token,
+  show: state.answers.show,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchApiGame: (token) => dispatch(actionFetchApiGame(token)),
+  sendShowAnswers: (show) => dispatch(showAnswers(show)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
