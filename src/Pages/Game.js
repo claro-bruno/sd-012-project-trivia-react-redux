@@ -40,50 +40,54 @@ class Game extends React.Component {
   }
 
   savingPoints(correct) {
+    console.log(correct);
     const { timer, index } = this.state;
-    const { questions: { results } } = this.props;
-    const { difficulty } = results[index];
+    const { questions } = this.props;
+    // console.log(this.props.questions);
+    const { difficulty } = questions[index];
+    console.log(difficulty);
     const ten = 10;
     let result = 0;
-    if (correct === 'true') {
-      switch (difficulty) {
-      case 'easy':
-        result = ten + (timer * 1);
-        break;
-      case 'medium':
-        result = ten + (timer * 2);
-        break;
-      case 'hard':
-        result = ten + (timer * Number('3'));
-        break;
-      default:
-        console.log('erro no switch');
-      }
-      this.setState((prevState) => ({
-        player: {
-          ...prevState.player,
-          assertions: prevState.player.assertions + 1,
-        },
-      }));
+    switch (difficulty) {
+    case 'easy':
+      result = ten + (timer * 1);
+      break;
+    case 'medium':
+      result = ten + (timer * 2);
+      break;
+    case 'hard':
+      result = ten + (timer * Number('3'));
+      break;
+    default:
+      console.log('erro no switch');
+      break;
     }
+    this.setState((prevState) => ({
+      player: {
+        ...prevState.player,
+        assertions: prevState.player.assertions + 1,
+      },
+    }));
     return result;
   }
 
   handleClick(correct) {
-    const resultado = this.savingPoints(correct);
-    this.setState((prevState) => ({
-      isAnswered: true,
-      timer: 0,
-      result: prevState.result + resultado,
-      player: {
-        ...prevState.player,
-        score: prevState.result + resultado,
-        assertions: prevState.player.assertions,
-      },
-    }), () => {
-      console.log(this.state);
-      this.setLocalStorage();
-    });
+    if (correct === 'correct') {
+      const resultado = this.savingPoints(correct);
+      this.setState((prevState) => ({
+        isAnswered: true,
+        timer: 0,
+        result: prevState.result + resultado,
+        player: {
+          ...prevState.player,
+          score: prevState.result + resultado,
+          assertions: prevState.player.assertions,
+        },
+      }), () => {
+        this.setLocalStorage();
+      });
+    }
+    console.log(this.state);
   }
 
   showNextQuestion() {
@@ -125,11 +129,12 @@ class Game extends React.Component {
     }
   }
 
-  incorrectAndCorrectQuestion() {
+  incorrectAndCorrectQuestion(answer) {
     const { sendShowAnswers } = this.props;
     sendShowAnswers(true);
+    // console.log(answer[0]);
     this.btnNext();
-    this.handleClick();
+    this.handleClick(answer);
   }
 
   render() {
@@ -156,7 +161,7 @@ class Game extends React.Component {
                 <Answers
                   show={ show }
                   question={ questions[index] }
-                  onClick={ () => this.incorrectAndCorrectQuestion() }
+                  onClick={ ({ target: { name } }) => this.incorrectAndCorrectQuestion(name) }
                 />
               </div>
               { this.btnNext() }
