@@ -21,12 +21,14 @@ const updateScore = (payload) => ({
   payload,
 });
 
-export const fetchQuestions = (token) => async (dispatch) => {
-  const QUESTIONS_URL = `https://opentdb.com/api.php?amount=5&encode=base64&token=${token}`;
+export const fetchQuestions = (token, parameters) => async (dispatch) => {
+  const { difficulty, categoryId, type } = parameters;
+  const URL = `https://opentdb.com/api.php?amount=5&category=${categoryId}&difficulty=${difficulty}&type=${type}&token=${token}&encode=base64`;
   try {
     dispatch(requestQuestions());
-    const questionsRequest = await fetch(QUESTIONS_URL);
+    const questionsRequest = await fetch(URL);
     const questionsJSON = await questionsRequest.json();
+    console.log(questionsJSON.results);
     dispatch(receiveQuestions(questionsJSON.results));
   } catch (e) {
     dispatch(failRequestQuestion(e));

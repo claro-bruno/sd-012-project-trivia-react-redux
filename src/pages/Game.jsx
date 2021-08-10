@@ -13,8 +13,8 @@ class Game extends Component {
   }
 
   componentDidMount() {
-    const { token, getQuestions } = this.props;
-    getQuestions(token);
+    const { token, getQuestions, parameters } = this.props;
+    getQuestions(token, parameters);
     const rankingStorage = JSON.parse(localStorage.getItem('ranking'));
     if (!rankingStorage) {
       localStorage.setItem('ranking', JSON.stringify([]));
@@ -61,10 +61,11 @@ class Game extends Component {
 const mapStateToProps = (state) => ({
   token: state.player.token,
   questions: state.game.results,
+  parameters: state.settings.parameters,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getQuestions: (token) => dispatch(fetchQuestions(token)),
+  getQuestions: (token, parameters) => dispatch(fetchQuestions(token, parameters)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
@@ -73,4 +74,5 @@ Game.propTypes = {
   token: PropTypes.string.isRequired,
   getQuestions: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  parameters: PropTypes.objectOf(PropTypes.string).isRequired,
 };

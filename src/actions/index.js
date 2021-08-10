@@ -23,3 +23,10 @@ export {
   NEW_RANK,
   setNewRank,
 } from './ranking';
+
+export {
+  REQUEST_CATEGORIES,
+  RECEIVE_CATEGORIES,
+  RECEIVE_CATEGORIES_ERROR,
+  SET_PARAMETERS,
+} from './settings';

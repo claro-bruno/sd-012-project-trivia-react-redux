@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -60,7 +59,7 @@ class Questions extends React.Component {
   }
 
   timerEnd() {
-    const thirySeconds = 30000;
+    const thirySeconds = 30005;
     this.timeOut = setTimeout(() => {
       this.setState({
         disabled: true,
@@ -104,10 +103,7 @@ class Questions extends React.Component {
         <h2 className="position-absolute timer">
           <p>{timer}</p>
         </h2>
-        <h2
-          data-testid="question-category"
-          className="category"
-        >
+        <h2 data-testid="question-category" className="category">
           {atob(questions[index].category)}
         </h2>
         <h4
@@ -124,8 +120,7 @@ class Questions extends React.Component {
             key={ `answer-${mapIndex}` }
             data-testid={ testid }
             className={
-              showAnswers ? `${className} ${isCorrect}`
-                : `${isCorrect} btn btn-secondary`
+              showAnswers ? `${className} ${isCorrect}` : `${isCorrect} btn btn-secondary`
             }
             disabled={ disabled }
             onClick={ ({ target }) => (
@@ -145,8 +140,7 @@ class Questions extends React.Component {
             {index < this.four ? 'Próxima' : 'Finalizar'}
           </button>
         )}
-      </main>
-    );
+      </main>);
   }
 }
 
