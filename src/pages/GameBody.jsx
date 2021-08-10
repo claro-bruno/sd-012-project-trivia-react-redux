@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import './Answers.css';
 
 class GameBody extends Component {
   constructor(props) {
@@ -10,13 +11,17 @@ class GameBody extends Component {
       disable: true,
       alternatives: [],
       randomIndex: '',
+      className: '',
+      className2: '',
+      wrong: 'wrong',
+      correct: 'correct',
       disableAnswers: false,
     };
     this.createQuestion = this.createQuestion.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.rad = this.rad.bind(this);
     this.createOptions = this.createOptions.bind(this);
-    this.buttonsAsnswer = this.buttonsAsnswer.bind(this);
+    this.buttonAnswer = this.buttonAnswer.bind(this);
   }
 
   componentDidMount() {
@@ -30,10 +35,6 @@ class GameBody extends Component {
       index: index + 1,
       disableAnswers: false,
     });
-  }
-
-  buttonsAsnswer() {
-    this.setState({ disableAnswers: true });
   }
 
   createQuestion() {
@@ -63,7 +64,9 @@ class GameBody extends Component {
   }
 
   createOptions() {
-    console.log('chamou createOptions');
+    const { alternatives, randomIndex, className, wrong,
+      correct, className2 } = this.state;
+    return ((alternatives).map((elm, ind) => (
 
     const { alternatives, randomIndex, disableAnswers } = this.state;
     return (alternatives.map((elm, ind) => (
@@ -71,10 +74,12 @@ class GameBody extends Component {
         ? (
           <button
             type="button"
+            onClick={ this.buttonAnswer }
             disabled={ disableAnswers }
-            onClick={ this.buttonsAsnswer }
             key={ ind }
             data-testid="correct-answer"
+            id={ correct }
+            className={ className }
           >
             {elm}
           </button>
@@ -82,15 +87,25 @@ class GameBody extends Component {
         : (
           <button
             type="button"
+            onClick={ this.buttonAnswer }
             disabled={ disableAnswers }
-            onClick={ this.buttonsAsnswer }
             key={ ind }
             data-testid={ `wrong-answer-${ind}` }
+            id={ wrong }
+            className={ className2 }
           >
             {elm}
           </button>
         )
     )));
+  }
+
+  buttonAnswer() {
+    this.setState({
+      disableAnswers: true,
+      className: 'correctAnswer',
+      className2: 'incorrectAnswer',
+    });
   }
 
   render() {
