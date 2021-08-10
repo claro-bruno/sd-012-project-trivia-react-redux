@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { fetchAPI } from '../redux/actions';
 import Question from '../components/Question';
@@ -20,6 +21,7 @@ class GamePage extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     const { loading } = this.state;
     setNewPlayer(this.props);
     return (
@@ -40,5 +42,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   API: (diff) => dispatch(fetchAPI(diff)),
 });
+
+GamePage.propTypes = {
+  API: PropTypes.func,
+  diff: PropTypes.string,
+}.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(GamePage);

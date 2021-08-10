@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Timer extends React.Component {
   constructor() {
@@ -28,7 +29,6 @@ class Timer extends React.Component {
         if (!newSecond) {
           const { timerOver } = this.props;
           timerOver();
-          console.log('Acabou o tempo');
           clearInterval(this.timerId);
         }
       });
@@ -46,5 +46,9 @@ class Timer extends React.Component {
     );
   }
 }
+
+Timer.propTypes = {
+  timerOver: PropTypes.func,
+}.isRequired;
 
 export default Timer;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import GenericBtn from '../GenericBtn';
 import { savePlayerAtRanking, setNewScore } from '../../utils/player';
 import { nextQuestion, currentScore, addAssertion } from '../../redux/actions';
@@ -18,6 +19,45 @@ class Question extends React.Component {
     this.handleNext = this.handleNext.bind(this);
     this.showRank = this.showRank.bind(this);
     this.timerOver = this.timerOver.bind(this);
+    this.setQuestions = this.setQuestions.bind(this);
+  }
+
+  componentDidMount() {
+    this.startTimer();
+    this.setQuestions();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerId);
+  }
+
+  setQuestions() {
+    const { questions, qIndex } = this.props;
+    this.setState({ currQuestion: questions[qIndex] });
+  }
+
+  handleNext() {
+    const { next, questions, qIndex } = this.props;
+    clearInterval(this.timerId);
+    this.setState({
+      answered: false,
+      seconds: 30,
+    }, () => {
+      next();
+      this.startTimer();
+      this.setState({ currQuestion: questions[qIndex + 1] });
+    });
+  }
+
+  showRank() {
+    savePlayerAtRanking();
+    this.setState({ currQuestion: undefined });
+  }
+
+  timerOver() {
+    this.setState({
+      answered: true,
+    });
   }
 
   startTimer() {
@@ -54,40 +94,6 @@ class Question extends React.Component {
     }
 
     this.setState({ answered: true }, () => addScore(addPoint));
-  }
-
-  handleNext() {
-    const { next, questions, qIndex } = this.props;
-    clearInterval(this.timerId);
-    this.setState({
-      answered: false,
-      seconds: 30,
-    }, () => {
-      next();
-      this.startTimer();
-      this.setState({ currQuestion: questions[qIndex + 1] });
-    });
-  }
-
-  showRank() {
-    savePlayerAtRanking();
-    this.setState({ currQuestion: undefined });
-  }
-
-  timerOver() {
-    this.setState({
-      answered: true,
-    });
-  }
-
-  componentDidMount() {
-    const { questions, qIndex } = this.props;
-    this.startTimer();
-    this.setState({ currQuestion: questions[qIndex] });
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerId);
   }
 
   render() {
@@ -152,5 +158,14 @@ const mapStateToProps = (state) => ({
   questions: state.gameReducer.questions,
   qIndex: state.gameReducer.qIndex,
 });
+
+Question.propTypes = {
+  qIndex: PropTypes.number,
+  difficulty: PropTypes.string,
+  questions: PropTypes.arrayOf(PropTypes.object),
+  next: PropTypes.func,
+  addScore: PropTypes.func,
+  addOneAssertion: PropTypes.func,
+}.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question);
