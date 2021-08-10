@@ -189,11 +189,11 @@ class GameScreen extends Component {
   }
 
   render() {
-    const { timeCount } = this.state;
+    const { timeCount, score } = this.state;
     return (
       <div>
         <h1>Tela Jogo</h1>
-        <Header />
+        <Header score={ score } />
         { this.renderQuestionsApi() }
         <p>
           {' '}

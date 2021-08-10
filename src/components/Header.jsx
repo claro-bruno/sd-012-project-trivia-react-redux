@@ -24,7 +24,6 @@ class Header extends Component {
 }
 const mapStateToProps = (state) => ({
   userPlayer: state.user.userInfo,
-  score: state.user.userInfo,
   requestGameApi: state.game.gameDataApi,
 });
 export default connect(mapStateToProps)(Header);
