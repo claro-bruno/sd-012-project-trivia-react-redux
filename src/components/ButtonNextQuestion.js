@@ -3,25 +3,25 @@ import PropTypes from 'prop-types';
 
 class ButtonNextQuestion extends React.Component {
   render() {
-    const { onClick, disableButton } = this.props;
+    const { disableButton, answered } = this.props;
     return (
       <div>
-        <button
-          disabled={ disableButton }
-          type="button"
-          onClick={ onClick }
-          data-testid="btn-next"
-        >
-          Próxima
-        </button>
+        {!disableButton && answered ? (
+          <button
+            type="button"
+            data-testid="btn-next"
+          >
+            Próxima
+          </button>)
+          : null}
       </div>
     );
   }
 }
 
 ButtonNextQuestion.propTypes = {
-  onClick: PropTypes.func.isRequired,
   disableButton: PropTypes.bool.isRequired,
+  answered: PropTypes.bool.isRequired,
 };
 
 export default ButtonNextQuestion;

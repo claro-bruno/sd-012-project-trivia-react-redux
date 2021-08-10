@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const Timer = ({ timer }) => {
+const Timer = ({ timer, answered }) => {
   const [counter, setCounter] = useState(timer);
   const interval = 1000;
   const timeout = 5000;
+  console.log(answered);
 
   useEffect(() => {
-    if (counter > 0) {
+    if (counter > 0 && !answered) {
       setTimeout(() => setCounter(counter - 1), interval);
     }
-  }, [counter]);
-  console.log(counter);
+    if (answered) {
+      clearTimeout();
+    }
+  }, [counter, answered]);
 
   useEffect(() => {
     const correctAnswer = document.querySelector('.correct-answer-btn');
@@ -27,7 +30,7 @@ const Timer = ({ timer }) => {
         correctAnswer.disabled = false;
       }, timeout);
     }
-  });
+  }, [counter]);
 
   return (
     <div>
@@ -42,4 +45,5 @@ export default Timer;
 
 Timer.propTypes = {
   timer: PropTypes.number.isRequired,
+  answered: PropTypes.bool.isRequired,
 };

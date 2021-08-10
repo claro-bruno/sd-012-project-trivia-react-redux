@@ -13,14 +13,13 @@ class Game extends Component {
 
     this.state = {
       questions: [],
-      index: 0,
       disableButton: false,
+      answered: false,
       timer: 30,
     };
 
     this.getQuestions1 = this.getQuestions1.bind(this);
     this.renderQuestions = this.renderQuestions.bind(this);
-    this.handleInplementButton = this.handleInplementButton.bind(this);
   }
 
   componentDidMount() {
@@ -40,17 +39,17 @@ class Game extends Component {
     });
   }
 
-  handleInplementButton() {
-    this.setState((previusState) => ({
-      index: previusState.index + 1,
-    }));
-    this.buttonEnable(true);
-    // implementar no borda o buttonEnable como false
-    // após o requisito 6 e 7 - implementar o reset da borda aqui;
-  }
+  // handleInplementButton() {
+  //   this.setState((previusState) => ({
+  //     index: previusState.index + 1,
+  //   }));
+  //   this.buttonEnable(true);
+  //   // implementar no borda o buttonEnable como false
+  //   // após o requisito 6 e 7 - implementar o reset da borda aqui;
+  // }
 
   renderQuestions() {
-    const { questions, timer } = this.state;
+    const { questions, timer, answered } = this.state;
     const questionFilter = questions.filter((category) => questions
       .indexOf(category) === 0);
 
@@ -59,6 +58,7 @@ class Game extends Component {
         <div key={ index } className="questions">
           <Timer
             timer={ timer }
+            answered={ answered }
           />
           <h3 data-testid="question-category">{quest.category}</h3>
           <p data-testid="question-text">{quest.question}</p>
@@ -67,6 +67,7 @@ class Game extends Component {
             data-testid="correct-answer"
             className="correct-answer-btn"
             id="correct-btn"
+            onClick={ () => this.setState({ answered: true }) }
           >
             {quest.correct_answer}
           </button>
@@ -76,6 +77,7 @@ class Game extends Component {
               key={ index1 }
               type="button"
               className="incorrect-answer-btn"
+              onClick={ () => this.setState({ answered: true }) }
             >
               {wrong}
             </button>
@@ -89,7 +91,7 @@ class Game extends Component {
     const { name, gravatarEmail } = this.props;
     const hash = MD5(gravatarEmail).toString();
     const getImg = `https://www.gravatar.com/avatar/${hash}`;
-    const { /* index */ disableButton } = this.state;
+    const { /* index */ disableButton, answered } = this.state;
     // o index acima, implementar após a lógica das respostas corretas
     // para mudar de acordo com o numero da questão;
 
@@ -105,8 +107,8 @@ class Game extends Component {
         </header>
         {this.renderQuestions()}
         <ButtonNextQuestion
-          onClick={ this.handleInplementButton }
           disableButton={ disableButton }
+          answered={ answered }
           /*  buttonEnable={ this.buttonEnable } */
           // colocar o buttonEnable após o return da modificação das bordas tanto para resetar
           // a borda, quanto para habilitar o botao para pergunta seguinte.
