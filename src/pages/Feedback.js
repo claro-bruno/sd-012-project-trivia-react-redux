@@ -5,31 +5,12 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
 class Feedback extends React.Component {
-  // constructor() {
-  //   super();
-
-  //   // this.performanceCheck = this.performanceCheck.bind(this);
-  // }
-
-  // performanceCheck() {
-  //   const state = JSON.parse(localStorage.getItem('state'));
-  //   const { assertions } = state.player;
-  //   const expected = 3;
-
-  //   if (assertions < expected) {
-  //     return 'Podia ser melhor...';
-  //   }
-
-  //   return 'Mandou bem!';
-  // }
-
   render() {
     const { score, assertions } = this.props;
     const minimalGuess = 3;
     return (
       <div>
         <Header />
-        {/* <h1 data-testid="feedback-text">{ this.performanceCheck() }</h1> */}
         <h1>Feedback</h1>
         <h2
           data-testid="feedback-text"
