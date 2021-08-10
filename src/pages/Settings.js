@@ -113,7 +113,7 @@ class Settings extends React.Component {
   render() {
     return (
       <main className={ styles.mainSection }>
-        <section>
+        <section className={ styles.settingSection }>
           <h1 data-testid="settings-title">
             Settings
           </h1>

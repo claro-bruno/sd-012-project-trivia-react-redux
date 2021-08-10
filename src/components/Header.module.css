@@ -1,0 +1,21 @@
+.headerGame {
+  background-color: #fea418;
+  border-radius: 5px;
+  display: flex;
+  height: 130px;
+  justify-content: center;
+  width: 100%;
+}
+
+.imgGame, .playerGame {
+  color: aliceblue;
+  margin-right: 20px;
+  margin-top: 25px;
+  text-shadow: 4px 4px 8px #1d2551;
+}
+
+.playerPoints {
+  color: aliceblue;
+  margin-top: 45px;
+  text-shadow: 2px 2px 4px #1d2551;
+}

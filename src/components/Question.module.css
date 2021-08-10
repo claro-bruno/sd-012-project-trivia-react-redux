@@ -1,0 +1,27 @@
+.questionGame {
+  background-color: #e9eaeb;
+  border-radius: 10px;
+  box-shadow: 3px 3px 5px #7ea8df;
+  height: 450px;
+  margin-top: 50px;
+  width: 550px;
+}
+
+.mainGame {
+  background-color: #1d2551;
+  display: flex;
+  height: 800px;
+  justify-content: center;
+  width: 100%;
+}
+
+h4, p {
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
+
+.timerQuestion {
+  margin-bottom: 5px;
+  margin-left: 20px;
+}

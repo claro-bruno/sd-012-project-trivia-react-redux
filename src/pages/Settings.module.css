@@ -12,7 +12,7 @@ input, select {
   width: 100%;
 }
 
-section {
+.settingSection {
   background-color: #fea418;
   border-radius: 10px;
   box-shadow: 3px 3px 5px #7ea8df;
