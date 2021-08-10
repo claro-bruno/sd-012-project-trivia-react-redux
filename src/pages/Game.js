@@ -9,7 +9,6 @@ import Header from '../components/Header';
 import '../App.css';
 import { getScore } from '../redux/actions';
 
-
 class Game extends Component {
   constructor(props) {
     super(props);
