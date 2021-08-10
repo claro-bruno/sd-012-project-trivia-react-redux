@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { actionSettings } from '../redux/actions';
 
 const URL = 'https://opentdb.com/api_category.php';
@@ -64,6 +65,7 @@ class Settings extends React.Component {
           <option value="multiple">Multipla Escolha</option>
           <option value="boolean">Verdadeiro ou Falso</option>
         </select>
+        <Link to="/">Salvar</Link>
       </div>
     );
   }
