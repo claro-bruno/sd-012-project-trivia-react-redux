@@ -1,0 +1,80 @@
+.feedback {
+  align-items: flex-start;
+  background-color: #82c91e;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 100vh;
+
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 100vh;
+}
+
+.div-messages {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 50px;
+}
+
+.div-msg {
+  background-color: #228be6;
+  color: #511f52;
+  font-weight: 700;
+  text-align: center;
+  width: 100vh;
+}
+
+.div-score {
+  font-weight: 700;
+  text-align: center;
+  width: 100vh;
+}
+
+.correct-questions {
+  color: #e67700;
+  font-weight: 700;
+}
+
+.div-button {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+}
+
+.button-ranking {
+  background-color: #fa5252;
+  border: none;
+  border-radius: 7px;
+  color: white;
+  font-weight: 700;
+  margin-right: 30px;
+  padding: 7px 14px;
+  transition: 0.3s;
+}
+
+.button-ranking:hover {
+  background-color: #511f52;
+  transition: 0.2s;
+}
+
+.button-play-again {
+  background-color: #511f52;
+  border: none;
+  border-radius: 7px;
+  color: white;
+  font-weight: 700;
+  padding: 7px 14px;
+  transition: 0.3s;
+}
+
+.button-play-again:hover {
+  background-color: #fa5252;
+  transition: 0.2s;
+}

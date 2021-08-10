@@ -47,19 +47,24 @@ class Ranking extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1 data-testid="ranking-title">Ranking</h1>
-        {/* Requisito 18 precisa que o requisito 10 esteja pronto */}
-        { this.renderPlayersResults() }
-        <Link to="/">
-          <button
-            data-testid="btn-go-home"
-            type="button"
-            onClick={ this.resetPlayerSpecs }
-          >
-            Início
-          </button>
-        </Link>
+      <div className="ranking">
+        <div className="title-button">
+          <h1 data-testid="ranking-title">Ranking</h1>
+          <Link to="/">
+            <button
+              className="button-start"
+              data-testid="btn-go-home"
+              type="button"
+              onClick={ this.resetPlayerSpecs }
+            >
+              Início
+            </button>
+          </Link>
+        </div>
+        <div className="players">
+          {/* Requisito 18 precisa que o requisito 10 esteja pronto */}
+          { this.renderPlayersResults() }
+        </div>
       </div>);
   }
 }
