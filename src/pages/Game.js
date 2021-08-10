@@ -14,6 +14,7 @@ class Game extends React.Component {
       loading: true,
       index: 0,
       redirect: false,
+      isVisible: false,
     };
     this.displayQuiz = this.displayQuiz.bind(this);
     this.displayQuestion = this.displayQuestion.bind(this);
@@ -25,13 +26,19 @@ class Game extends React.Component {
     this.displayQuiz();
   }
 
+  addClass() {
+    const nextButton = document.querySelector('#select-button')
+  }
+
   onClickAnswer() {
+    const nextButton = document.querySelector('.isVisible');
     const buttons = document.querySelectorAll('.answer-buttons');
     buttons.forEach((button) => {
       if (button.id === 'correct-answer') {
         button.classList.add('correct');
       } else button.classList.add('wrong');
     });
+    nextButton.classList.remove('isVisible')
   }
 
   async displayQuiz() {
@@ -90,7 +97,7 @@ class Game extends React.Component {
               className="answer-buttons"
               data-testid={ this.checkCorrect(item, correct, i) }
               id={ this.checkCorrect(item, correct, i) }
-            >
+            >  
               <button type="button" onClick={ this.onClickAnswer }>{item}</button>
             </li>)) }
         </ul>
@@ -113,13 +120,15 @@ class Game extends React.Component {
 
   render() {
     const { loading, redirect, index } = this.state;
+    const { isVisible } = this.state
     const redirectNumber = 4;
     return (
       <div>
         <Header />
         { redirect ? <Redirect to="/score" /> : null }
         { loading ? <Loading /> : this.displayQuestion() }
-        <button onClick={ this.handleClick } type="button" className="btn btn-primary">
+        <button onClick={ this.handleClick } data-testid="btn-next" type="button" 
+        className='isVisible btn btn-primary'>
           { index < redirectNumber ? 'Proxima' : 'Ver Pontuação' }
         </button>
       </div>
