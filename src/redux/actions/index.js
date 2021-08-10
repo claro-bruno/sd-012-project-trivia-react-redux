@@ -2,6 +2,7 @@ export const USER_INFO = 'USER_INFO';
 export const GET_TOKEN = 'GET_TOKEN';
 export const GET_TOKEN_SUCCESS = 'GET_TOKEN_SUCCESS';
 export const GET_TOKEN_FAILED = 'GET_TOKEN_FAILED';
+export const SCORE = 'SCORE';
 
 export const actionUserInfo = (name, email) => ({
   type: USER_INFO,
@@ -20,6 +21,11 @@ export const getTokenSuccess = (payload) => ({
 
 export const getTokenFailed = (payload) => ({
   type: GET_TOKEN_FAILED,
+  payload,
+});
+
+export const createScore = (payload) => ({
+  type: 'SCORE',
   payload,
 });
 
