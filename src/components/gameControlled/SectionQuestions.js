@@ -50,7 +50,7 @@ class SectionQuestions extends React.Component {
           <Button
             testId="correct-answer"
             name={ questions[questionPosition].correct_answer }
-            handleClick={ correctClick }
+            handleClick={ () => correctClick(questions[questionPosition].difficulty) }
             disabled={ questionsDisable }
             className={ color ? 'correctColor' : null }
           />

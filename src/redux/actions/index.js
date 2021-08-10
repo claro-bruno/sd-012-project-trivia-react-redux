@@ -14,4 +14,8 @@ export {
   questionsFetchAPI,
 } from './questionsTriviaAction';
 
-export { ADD_ASSERTIONS, addAssertions } from './assertionsAction';
+export {
+  ADD_ASSERTIONS,
+  ADD_STORAGE,
+  addAssertions,
+  addStorage } from './assertionsAction';

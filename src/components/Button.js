@@ -41,5 +41,3 @@ Button.defaultProps = {
   testId: '',
   className: '',
 };
-
-// export default Button;
