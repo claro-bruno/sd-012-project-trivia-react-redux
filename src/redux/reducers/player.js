@@ -1,4 +1,4 @@
-import { GET_USER_DATA, SCORE_UPDATE } from '../actions/types';
+import { GET_USER_DATA, SCORE_UPDATE, GUESS_UPDATE } from '../actions/types';
 
 const INITIAL_STATE = {
   name: '',
@@ -20,6 +20,10 @@ const player = (state = INITIAL_STATE, action) => {
       ...state,
       name: action.name,
       gravatarEmail: action.email,
+    };
+  case GUESS_UPDATE:
+    return {
+      ...state, assertions: action.payload,
     };
   default:
     return state;
