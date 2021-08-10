@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginAction, fetchAPItoken } from '../actions/index';
+import '../styles/Login.css';
+import loginImage from '../styles/images/login-img.png';
 
 class Login extends React.Component {
   constructor() {
@@ -56,43 +58,49 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
-        <input
-          name="name"
-          type="text"
-          data-testid="input-player-name"
-          placeholder="Coloque seu nome aqui :)"
-          onChange={ this.handleChange }
-        />
-
-        <input
-          name="email"
-          id="email"
-          type="email"
-          data-testid="input-gravatar-email"
-          placeholder="E-mail aqui :)"
-          onChange={ this.handleChange }
-        />
-
-        <Link to="/trivia">
-          <button
-            disabled={ this.inputsValidation() }
-            data-testid="btn-play"
-            type="button"
-            onClick={ () => this.tokenRequire() }
-          >
-            JOGAR
-          </button>
-        </Link>
-
-        <Link to="/settings">
-          <button
-            data-testid="btn-settings"
-            type="button"
-          >
-            CONFIGURAÇÕES
-          </button>
-        </Link>
+      <div className="login-page">
+        <div className="login-box">
+          <div className="left">
+            <img src={ loginImage } className="img-login" alt="login" />
+          </div>
+          <div className="right">
+            <h6 className="login-title-span">Bem vindo(a) ao</h6>
+            <h4 className="login-title">Kahootrivia</h4>
+            <form className="form-login">
+              <input
+                name="name"
+                type="text"
+                data-testid="input-player-name"
+                placeholder="Coloque seu nome aqui :)"
+                onChange={ this.handleChange }
+              />
+              <input
+                name="email"
+                id="email"
+                type="email"
+                data-testid="input-gravatar-email"
+                placeholder="E-mail aqui :)"
+                onChange={ this.handleChange }
+              />
+            </form>
+            <Link to="/trivia">
+              <button
+                className="button-play"
+                disabled={ this.inputsValidation() }
+                data-testid="btn-play"
+                type="button"
+                onClick={ () => this.tokenRequire() }
+              >
+                JOGAR
+              </button>
+            </Link>
+            <Link to="/settings">
+              <button className="settings-link" data-testid="btn-settings" type="button">
+                CONFIGURAÇÕES
+              </button>
+            </Link>
+          </div>
+        </div>
       </div>);
   }
 }

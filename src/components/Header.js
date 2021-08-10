@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
+import '../styles/Header.css';
 
 class Header extends Component {
   constructor() {
@@ -14,14 +15,46 @@ class Header extends Component {
 
     this.emailCript = this.emailCript.bind(this);
     this.gravatar = this.gravatar.bind(this);
+    this.setPlayerInLocalStorage = this.setPlayerInLocalStorage.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.emailCript();
+    await this.gravatar();
+    this.setPlayerInLocalStorage();
   }
 
   componentDidUpdate() {
-    this.gravatar();
+    this.updatePlayerSpecsInLocalStorage();
+  }
+
+  // função que guarda as informações do jogador no localStorage
+  setPlayerInLocalStorage() {
+    const { criptoEmail, imgGravatar } = this.state;
+    const { nameUser } = this.props;
+    const player = {
+      name: nameUser,
+      assertions: 0,
+      score: 0,
+      gravatarEmail: criptoEmail,
+      picture: imgGravatar,
+    };
+
+    localStorage.setItem('state', JSON.stringify({ player }));
+  }
+
+  updatePlayerSpecsInLocalStorage() {
+    const { criptoEmail, imgGravatar } = this.state;
+    const { nameUser, playerScore, playerAsserts } = this.props;
+    const player = {
+      name: nameUser,
+      assertions: playerAsserts,
+      score: playerScore,
+      gravatarEmail: criptoEmail,
+      picture: imgGravatar,
+    };
+
+    localStorage.setItem('state', JSON.stringify({ player }));
   }
 
   // criptografia do email para a api gravatar
@@ -36,32 +69,17 @@ class Header extends Component {
   // função para pegar a imagem na api do gravatar
   async gravatar() {
     const { criptoEmail } = this.state;
-    const { nameUser, playerScore, playerAsserts } = this.props;
     const fetchGravatar = await fetch(`https://www.gravatar.com/avatar/${criptoEmail}`);
     this.setState({
       imgGravatar: fetchGravatar.url,
     });
-
-    const player = {
-      name: nameUser,
-      assertions: playerAsserts,
-      score: playerScore,
-      gravatarEmail: criptoEmail,
-    };
-    localStorage.setItem('state', JSON.stringify({ player }));
-
-    localStorage.setItem('ranking', JSON.stringify([{
-      name: nameUser,
-      score: playerScore,
-      picture: fetchGravatar.url,
-    }]));
   }
 
   render() {
     const { imgGravatar } = this.state;
     const { nameUser, playerScore } = this.props;
     return (
-      <div>
+      <div className="header">
         <header>
           <img
             alt="imagem jogador"

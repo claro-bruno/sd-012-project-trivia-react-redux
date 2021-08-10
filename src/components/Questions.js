@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Loading from './Loading';
 import { getScoreAction } from '../actions';
+import '../styles/Questions.css';
 
 class Questions extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class Questions extends Component {
       time: 30,
       score: 0,
       asserts: 0,
+      arrayOfQuestions: [],
     };
 
     this.fetchQuestionsAndAnswers = this.fetchQuestionsAndAnswers.bind(this);
@@ -105,6 +107,7 @@ class Questions extends Component {
       activeButton: false,
       disabled: false,
       time: 30,
+      arrayOfQuestions: [],
     }, () => this.questionTimer());
   }
 
@@ -114,6 +117,15 @@ class Questions extends Component {
       activeButton: true,
       disabled: true,
     });
+  }
+
+  teste(answer) {
+    const { activeButton, indexQuestion, trivias } = this.state;
+    const correctAnswer = trivias[indexQuestion].correct_answer;
+
+    if (activeButton) {
+      return (answer === correctAnswer ? 'green-border' : 'red-border');
+    }
   }
 
   calculateScore() {
@@ -160,36 +172,41 @@ class Questions extends Component {
 
   // Renderiza Perguntas da Trivia.
   makeTrivias() {
-    const { trivias, indexQuestion, activeButton, disabled, time } = this.state;
+    const { trivias, indexQuestion, disabled, arrayOfQuestions, time } = this.state;
+    const randomizator = 0.5;
+    let allQuestions = [trivias[indexQuestion].correct_answer,
+      ...trivias[indexQuestion].incorrect_answers];
+    const correctAnswer = trivias[indexQuestion].correct_answer;
+
+    const buttons = arrayOfQuestions.length > 0
+      ? arrayOfQuestions
+      : allQuestions = allQuestions.sort(() => Math.random() - randomizator);
+
+    if (arrayOfQuestions.length === 0) {
+      this.setState({
+        arrayOfQuestions: buttons,
+      });
+    }
+
     return (
       <>
-        <span id="timer">{ time }</span>
+        <span>{ time }</span>
         <h1 data-testid="question-category">{ trivias[indexQuestion].category }</h1>
         <h2 data-testid="question-text">{ trivias[indexQuestion].question }</h2>
         <ol>
-          <li>
-            <button
-              id="correct"
-              data-testid="correct-answer"
-              type="button"
-              onClick={ this.calculateScore }
-              disabled={ disabled }
-              className={ activeButton ? 'green-border' : '' }
-            >
-              { trivias[indexQuestion].correct_answer }
-            </button>
-          </li>
-          { trivias[indexQuestion].incorrect_answers.map(((wrongAnswer, index) => (
+          { buttons.map(((answer, index) => (
             <li key={ index }>
               <button
                 name="incorrect"
                 type="button"
-                className={ activeButton ? 'red-border' : '' }
-                onClick={ this.showButtonNext }
+                className={ this.teste(answer) }
+                onClick={ answer === correctAnswer
+                  ? this.calculateScore : this.showButtonNext }
                 disabled={ disabled }
-                data-testid={ `wrong-answer-${index}` }
+                data-testid={ answer === correctAnswer
+                  ? 'correct-answer' : `wrong-answer-${index}` }
               >
-                { wrongAnswer }
+                { answer }
               </button>
             </li>
           ))) }
