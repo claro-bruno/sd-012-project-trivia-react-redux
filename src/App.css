@@ -18,6 +18,10 @@ body {
   background-color: #13c062;
 }
 
+.btn-yellow {
+  background-color: #f9cc2c;
+}
+
 .h-main {
   height: 75vh;
 }
