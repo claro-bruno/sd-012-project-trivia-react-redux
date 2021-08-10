@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Answers from './Answers';
 import { shuffleArray, addRankingToStorage } from '../helpers';
+import styles from './Question.module.css';
 
 class Question extends React.Component {
   constructor(props) {
@@ -47,16 +48,18 @@ class Question extends React.Component {
     const answers = [...incorrectAnswers, correctAnswer];
     shuffleArray(answers);
     return (
-      <section>
-        <h4 data-testid="question-category">{ category }</h4>
-        <p data-testid="question-text">{ question }</p>
-        <Answers
-          answers={ answers }
-          correctAnswer={ correctAnswer }
-          difficulty={ difficulty }
-          nextQuestion={ this.nextClick }
-        />
-      </section>
+      <main className={ styles.mainGame }>
+        <section className={ styles.questionGame }>
+          <h4 data-testid="question-category">{ category }</h4>
+          <p data-testid="question-text">{ question }</p>
+          <Answers
+            answers={ answers }
+            correctAnswer={ correctAnswer }
+            difficulty={ difficulty }
+            nextQuestion={ this.nextClick }
+          />
+        </section>
+      </main>
     );
   }
 }

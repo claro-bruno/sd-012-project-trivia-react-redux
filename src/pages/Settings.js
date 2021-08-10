@@ -6,6 +6,7 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import { requestCategories } from '../helpers';
 import { changeSettings } from '../redux/action';
+import styles from './Settings.module.css';
 
 const difficulties = [
   { name: 'Any', id: 'any' },
@@ -76,7 +77,7 @@ class Settings extends React.Component {
       typeArray,
     } = this.state;
     return (
-      <div>
+      <div className={ styles.setOptions }>
         <Input
           type="number"
           name="amount"
@@ -111,16 +112,18 @@ class Settings extends React.Component {
 
   render() {
     return (
-      <section>
-        <h1 data-testid="settings-title">
-          Settings
-        </h1>
-        { this.renderInputs() }
-        <Button
-          onClick={ () => this.handleClick('/') }
-          buttonText="Tela de preenchimento dos dados"
-        />
-      </section>
+      <main className={ styles.mainSection }>
+        <section className={ styles.settingSection }>
+          <h1 data-testid="settings-title">
+            Settings
+          </h1>
+          { this.renderInputs() }
+          <Button
+            onClick={ () => this.handleClick('/') }
+            buttonText="Tela de preenchimento dos dados"
+          />
+        </section>
+      </main>
     );
   }
 }

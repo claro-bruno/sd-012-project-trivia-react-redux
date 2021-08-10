@@ -6,6 +6,7 @@ import { requestTrivia } from '../redux/action';
 import Question from '../components/Question';
 import Header from '../components/Header';
 import Show from '../Sonoplastia/ShowdoMilhão .mp3';
+import styles from './Game.module.css';
 
 class Game extends React.Component {
   componentDidMount() {
@@ -16,7 +17,7 @@ class Game extends React.Component {
   render() {
     const { loading, history } = this.props;
     return (
-      <main>
+      <main className={ styles.mainGame }>
         <ReactAudioPlayer autoPlay loop src={ Show } volume={ 0.1 } />
         <Header />
         { (loading) ? <h1>Loading</h1> : <Question history={ history } /> }

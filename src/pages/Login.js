@@ -9,6 +9,7 @@ import {
   addStateToStorage,
   requestImageGravatar,
 } from '../helpers';
+import styles from './Login.module.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -77,12 +78,12 @@ class Login extends React.Component {
     const { name, email, emailCheck, nameCheck } = this.state;
     const btnCheck = !(emailCheck === true && nameCheck === true);
     return (
-      <main>
-        <header className="App-header">
-          <img src={ logo } className="App-logo" alt="logo" />
+      <main className={ styles.mainLogin }>
+        <header className={ styles.appHeader }>
+          <img src={ logo } className={ styles.appLogo } alt="logo" />
         </header>
         <form>
-          <label htmlFor="name">
+          <label htmlFor="name" className={ styles.labelHeader }>
             Nome:
             <input
               type="text"
@@ -92,7 +93,7 @@ class Login extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
-          <label htmlFor="email">
+          <label htmlFor="email" className={ styles.labelHeader }>
             E-mail:
             <input
               type="email"
@@ -102,20 +103,22 @@ class Login extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
-          <Button
-            buttonText="Jogar"
-            testId="btn-play"
-            onClick={ async () => {
-              await this.playGame();
-              this.handleClick('/game');
-            } }
-            disabled={ btnCheck }
-          />
-          <Button
-            buttonText="Settings"
-            testId="btn-settings"
-            onClick={ () => this.handleClick('/settings') }
-          />
+          <div className={ styles.buttonLogin }>
+            <Button
+              buttonText="Jogar"
+              testId="btn-play"
+              onClick={ async () => {
+                await this.playGame();
+                this.handleClick('/game');
+              } }
+              disabled={ btnCheck }
+            />
+            <Button
+              buttonText="Settings"
+              testId="btn-settings"
+              onClick={ () => this.handleClick('/settings') }
+            />
+          </div>
         </form>
       </main>
     );
