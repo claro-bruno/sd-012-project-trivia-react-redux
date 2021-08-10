@@ -59,20 +59,26 @@ class Feedback extends React.Component {
   render() {
     const stateLocalStorage = JSON.parse(localStorage.getItem('state'));
     const { player: { score, assertions } } = stateLocalStorage;
-    const { redirectToLogin, handleClickRanking, state: { stateRedirect, redirectRanking } } = this;
+    const {
+      redirectToLogin,
+      handleClickRanking,
+      state: {
+        stateRedirect,
+        redirectRanking,
+      },
+    } = this;
 
     return (
       <>
         { redirectRanking && <Redirect to="/ranking" />}
         { stateRedirect && <Redirect to="/" /> }
         <Header score={ score } />
-        <button
-          data-testid="btn-play-again"
-          type="button"
+        <Button
+          testId="btn-play-again"
           onClick={ redirectToLogin }
         >
           Jogar novamente
-        </button>
+        </Button>
         <Button
           name="Ver Ranking"
           testId="btn-ranking"
