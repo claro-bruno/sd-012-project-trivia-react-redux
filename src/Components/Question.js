@@ -18,6 +18,7 @@ class Question extends Component {
         { correctAnswer: props.question.correct_answer },
         ...props.question.incorrect_answers]),
     };
+    this.revealAnswers = this.revealAnswers.bind(this);
   }
 
   componentDidMount() {
@@ -25,17 +26,21 @@ class Question extends Component {
     dispatchUpdateScore();
   }
 
-  handleAnswer(isCorrect) {
+  revealAnswers() {
     this.setState({
       correta: 'correta',
       errada: 'errada',
     });
+  }
+
+  handleAnswer(isCorrect) {
     const {
       question,
       dispatchUpdateScore,
       stopTimer,
       remainingTime,
     } = this.props;
+    this.revealAnswers();
     stopTimer();
     dispatchUpdateScore(
       remainingTime, difficultyToPoints(question.difficulty), isCorrect,
@@ -43,14 +48,14 @@ class Question extends Component {
   }
 
   render() {
-    const { correta, errada } = this.state;
+    const { answers, correta, errada } = this.state;
     const {
       question,
       isOutOfTime,
       isQuestionAnswered,
       history,
     } = this.props;
-    const { answers } = this.state;
+
     return (
       <>
         <Stopwatch />

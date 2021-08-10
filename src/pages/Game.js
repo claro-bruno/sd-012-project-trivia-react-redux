@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../Components/Header';
-import { fetchQuestions } from '../redux/actions';
+import { fetchQuestions, resetScore } from '../redux/actions';
 import Question from '../Components/Question';
 import Score from '../Components/Score';
 
 class Game extends Component {
   componentDidMount() {
-    const { token, dispatchFetchQuestions } = this.props;
+    const { token, dispatchFetchQuestions, dispatchResetScore } = this.props;
+    dispatchResetScore();
     dispatchFetchQuestions(token);
   }
 
@@ -47,6 +48,7 @@ Game.propTypes = {
   token: PropTypes.string.isRequired,
   isFetchingQuestions: PropTypes.bool.isRequired,
   dispatchFetchQuestions: PropTypes.func.isRequired,
+  dispatchResetScore: PropTypes.func.isRequired,
   currentQuestion: PropTypes.number.isRequired,
 };
 
@@ -58,6 +60,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
   dispatchFetchQuestions: (token) => dispatch(fetchQuestions(token)),
+  dispatchResetScore: () => dispatch(resetScore()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

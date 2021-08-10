@@ -1,4 +1,5 @@
 const tokenURL = 'https://opentdb.com/api_token.php?command=request';
+const questionsURL = 'https://opentdb.com/api.php?amount=5&token=';
 
 export const updateProfile = (name, email) => ({
   type: 'UPDATE_PROFILE',
@@ -44,7 +45,7 @@ const getQuestionsError = (error) => ({
 
 export const fetchQuestions = (token) => (dispatch) => {
   dispatch(sendQuestionsRequest());
-  fetch(`https://opentdb.com/api.php?amount=5&token=${token}`)
+  fetch(`${questionsURL}${token}`)
     .then((response) => response.json())
     .then((json) => dispatch(getQuestions(json)))
     .catch((error) => dispatch(getQuestionsError(error)));
@@ -82,4 +83,8 @@ export const updateScore = (timer, difficulty, isCorrect) => ({
   timer,
   difficulty,
   isCorrect,
+});
+
+export const resetScore = () => ({
+  type: 'RESET_SCORE',
 });

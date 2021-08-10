@@ -1,3 +1,5 @@
+import md5 from 'crypto-js/md5';
+
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 export function shuffle(array) {
   let currentIndex = array.length; let randomIndex;
@@ -17,7 +19,6 @@ export function shuffle(array) {
 }
 
 export const difficulties = { hard: 3, medium: 2, easy: 1 };
-
 export function difficultyToPoints(difficulty) {
   switch (difficulty) {
   case 'hard':
@@ -58,7 +59,10 @@ export const isSecondLastQuestion = (state) => {
   return questions.length - 2 === currentQuestion;
 };
 
-export const isLastQuestion = (state) => {
-  const { questions, currentQuestion } = state;
-  return questions.length - 1 === currentQuestion;
-};
+export const getGravatarURL = (email) => `https://www.gravatar.com/avatar/${md5(email).toString()}`;
+
+export const getRank = ({ player }) => ({
+  name: player.name,
+  score: player.score,
+  picture: getGravatarURL(player.gravatarEmail),
+});
