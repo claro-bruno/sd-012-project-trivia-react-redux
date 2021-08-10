@@ -74,11 +74,10 @@ class Feedback extends React.Component {
         { stateRedirect && <Redirect to="/" /> }
         <Header score={ score } />
         <Button
+          name="Jogar novamente"
           testId="btn-play-again"
-          onClick={ redirectToLogin }
-        >
-          Jogar novamente
-        </Button>
+          handleClick={ redirectToLogin }
+        />
         <Button
           name="Ver Ranking"
           testId="btn-ranking"
