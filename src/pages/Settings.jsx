@@ -5,14 +5,13 @@ import Button from '../components/Button';
 import { fetchCategories, setParameters } from '../actions/settings';
 import Loading from '../components/Loading';
 
-class Conf extends Component {
+class Settings extends Component {
   constructor() {
     super();
     this.state = {
       type: '',
       difficulty: '',
       categoryId: 0,
-      redirect: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -79,9 +78,9 @@ const mapDispatchToProps = (dispatch) => ({
   getCategories: () => dispatch(fetchCategories()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Conf);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
 
-Conf.propTypes = {
+Settings.propTypes = {
   setParams: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,

@@ -28,7 +28,7 @@ class Button extends Component {
   }
 
   render() {
-    const { testid, inner, to, reset } = this.props;
+    const { testid, inner, to, reset, className } = this.props;
     const { shouldRedirect } = this.state;
     if (shouldRedirect) return <Redirect to={ to } />;
     return (
@@ -40,6 +40,7 @@ class Button extends Component {
           if (to === '/ranking') this.addNewRank();
           else reset();
         } }
+        className={ className }
       >
         {inner}
       </button>

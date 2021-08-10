@@ -80,7 +80,7 @@ class Login extends Component {
     const { name, email, shouldRedirectToGame, shouldRedirectToConf } = this.state;
 
     if (shouldRedirectToGame) return <Redirect to="/game" />;
-    if (shouldRedirectToConf) return <Redirect to="/configuracoes" />;
+    if (shouldRedirectToConf) return <Redirect to="/settings" />;
 
     return (
       <main className="login-page row  align-items-center">

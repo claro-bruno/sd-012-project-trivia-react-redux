@@ -12334,6 +12334,57 @@ header .header-score {
   border: 3px solid red;
 }
 
+.feedback-page {
+  background-image: url("./images/Earth-Spinning-Stars.jpg");
+  background-size: cover;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.feedback-container {
+  color: white;
+  top: 15vh;
+  height: 80vh;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 5px;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 50vw;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.feedback-container .feedback-text {
+  top: 0;
+  left: 0;
+  padding: 5px;
+  width: 100%;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #7f00fc;
+}
+
+.feedback-container button {
+  width: 200px;
+  margin: 10px;
+}
+
+.feedback-container .low-assertions {
+  color: red;
+}
+
+.feedback-container .high-assertions {
+  color: #06f00f;
+}
+
 .row {
   display: -webkit-box;
   display: -ms-flexbox;
