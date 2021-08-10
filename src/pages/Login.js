@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import md5 from 'crypto-js/md5';
 import { getUserData } from '../redux/actions';
-// import saveLocalStorage from '../helper/saveLocalStorage';
+import saveLocalStorage from '../helper/saveLocalStorage';
 import getUserInfo from '../services/api';
 import './login.css';
+import { pictureUpdate } from '../redux/actions/gameActions';
 
 class Login extends React.Component {
   constructor() {
@@ -19,6 +21,20 @@ class Login extends React.Component {
     this.validation = this.validation.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+  }
+
+  getProfilePicture() {
+    const { savePicture } = this.props;
+    const { email } = this.state;
+    const hash = md5(email).toString();
+    const pictureUrl = `https://www.gravatar.com/avatar/${hash}`;
+    savePicture(pictureUrl);
+  }
+
+  handleChange({ target }) {
+    this.setState({
+      [target.id]: target.value,
+    }, () => this.validation());
   }
 
   validation() {
@@ -35,29 +51,14 @@ class Login extends React.Component {
     }
   }
 
-  handleChange({ target }) {
-    this.setState({
-      [target.id]: target.value,
-    }, () => this.validation());
-  }
-
   async handleLogin() {
     const { name, email } = this.state;
-    const { score, assertions, gravatarEmail } = this.props;
     const userInfo = await getUserInfo();
     localStorage.setItem('token', userInfo.token);
     const { getUser, history } = this.props;
     getUser(name, email);
-    const obj = {
-      player: {
-        name,
-        assertions,
-        score,
-        gravatarEmail,
-      },
-    };
-    localStorage.setItem('state', JSON.stringify(obj));
-    // saveLocalStorage();
+    this.getProfilePicture();
+    saveLocalStorage();
     history.push('/game');
   }
 
@@ -120,14 +121,9 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  score: state.player.score,
-  assertions: state.player.assertions,
-  gravatarEmail: state.player.gravatarEmail,
-});
-
 const mapDispatchToProps = (dispatch) => ({
   getUser: (name, email) => dispatch(getUserData(name, email)),
+  savePicture: (state) => dispatch(pictureUpdate(state)),
 });
 
 Login.propTypes = {
@@ -135,9 +131,7 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  score: PropTypes.number.isRequired,
-  assertions: PropTypes.number.isRequired,
-  gravatarEmail: PropTypes.string.isRequired,
+  savePicture: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);
