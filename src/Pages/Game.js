@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { actionFetchApiGame } from '../redux/actions';
+import { connect } from 'react-redux';
 import Loading from '../Components/Loading';
 import Answers from '../Components/Answers';
 import HeaderGame from '../Components/HeaderGame';
+import { actionFetchApiGame, showAnswers } from '../redux/actions';
 import Timer from '../Components/timer';
 
 class Game extends React.Component {
@@ -16,7 +16,6 @@ class Game extends React.Component {
     this.showNextQuestion = this.showNextQuestion.bind(this);
     this.btnNext = this.btnNext.bind(this);
     this.incorrectAndCorrectQuestion = this.incorrectAndCorrectQuestion.bind(this);
-    this.showBtnNext = this.showBtnNext.bind(this);
   }
 
   componentDidMount() {
@@ -25,28 +24,33 @@ class Game extends React.Component {
   }
 
   showNextQuestion() {
+    const { sendShowAnswers } = this.props;
     this.setState((state) => ({
       index: state.index + 1,
     }));
+    sendShowAnswers(false);
   }
 
+  // requisito 10
   btnNext() {
-    const { questions, history: { push } } = this.props;
+    const { history: { push } } = this.props;
     const { index } = this.state;
     const numberQuestions = 4;
+    const { show } = this.props;
 
-    if (index !== 0 && index < numberQuestions) {
+    if (show && index < numberQuestions) {
       return (
         <button
           type="button"
           data-testid="btn-next"
-          onClick={ () => this.showNextQuestion(questions) }
+          onClick={ () => this.showNextQuestion() }
         >
           Próxima
         </button>
       );
     }
-    if (index !== 0 && index > numberQuestions) {
+
+    if (show && index === numberQuestions) {
       return (
         <button
           type="button"
@@ -58,27 +62,17 @@ class Game extends React.Component {
     }
   }
 
-  showBtnNext() {
-    const { questions } = this.props;
-    return (
-      <button
-        type="button"
-        data-testid="btn-next"
-        onClick={ () => this.showNextQuestion(questions) }
-      >
-        Próxima
-      </button>
-    );
-  }
-
   incorrectAndCorrectQuestion() {
-    this.showNextQuestion();
+    const { sendShowAnswers } = this.props;
+    sendShowAnswers(true);
+    this.btnNext();
   }
 
   render() {
-    const { questions, isFetching } = this.props;
+    const { questions, isFetching, show } = this.props;
     const { index } = this.state;
     if (isFetching) return <Loading />;
+
     return (
       <>
         <HeaderGame />
@@ -96,8 +90,9 @@ class Game extends React.Component {
                   { questions[index].question }
                 </h3>
                 <Answers
+                  show={ show }
                   question={ questions[index] }
-                  onClick={ this.incorrectAndCorrectQuestion }
+                  onClick={ () => this.incorrectAndCorrectQuestion() }
                 />
               </div>
               { this.btnNext() }
@@ -112,15 +107,17 @@ class Game extends React.Component {
 
 Game.propTypes = {
   fetchApiGame: PropTypes.func.isRequired,
+  history: PropTypes.objectOf().isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  push: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(
     PropTypes.shape({
       category: PropTypes.string.isRequired,
       question: PropTypes.string.isRequired,
     }).isRequired,
   ).isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  history: PropTypes.arrayOf().isRequired, //  precisa arrumar essa props
-  push: PropTypes.func.isRequired, //  precisa arrumar essa props
+  sendShowAnswers: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired,
   token: PropTypes.string.isRequired,
 };
 
@@ -129,10 +126,12 @@ const mapStateToProps = (state) => ({
   isFetching: state.gameReducer.isFetching,
   indexQuestion: state.gameReducer.indexQuestion,
   token: state.player.token,
+  show: state.answers.show,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchApiGame: (token) => dispatch(actionFetchApiGame(token)),
+  sendShowAnswers: (show) => dispatch(showAnswers(show)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
