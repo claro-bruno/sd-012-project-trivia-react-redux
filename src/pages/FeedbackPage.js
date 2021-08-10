@@ -1,11 +1,38 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+<<<<<<< HEAD
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { timeReset } from '../redux/actions';
+=======
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
+
+>>>>>>> 6377f700634e92bfcafcad6e54319d5e7015210a
 import HeaderPlayer from '../components/HeaderPlayer';
+import { timeReset } from '../redux/actions';
 
 class FeedbackPage extends Component {
+  componentDidMount() {
+    const { player: { name, score, email } } = JSON.parse(localStorage.getItem('state'));
+    const hash = md5(email).toString();
+    const picture = `https://www.gravatar.com/avatar/${hash}`;
+
+    const newRank = {
+      name,
+      score,
+      picture,
+    };
+    const prevRanking = JSON.parse(localStorage.getItem('ranking'));
+
+    if (prevRanking) {
+      localStorage.setItem('ranking', JSON.stringify([...prevRanking, newRank]));
+    } else {
+      localStorage.setItem('ranking', JSON.stringify([newRank]));
+    }
+  }
+
   render() {
     const { player: { assertions, score } } = JSON.parse(localStorage.getItem('state'));
     const { resetTimer } = this.props;
@@ -37,6 +64,17 @@ class FeedbackPage extends Component {
             Jogar Novamente
           </button>
         </Link>
+<<<<<<< HEAD
+=======
+        <Link to="/ranking">
+          <button
+            type="button"
+            data-testid="btn-ranking"
+          >
+            Ver Ranking
+          </button>
+        </Link>
+>>>>>>> 6377f700634e92bfcafcad6e54319d5e7015210a
       </>
     );
   }
