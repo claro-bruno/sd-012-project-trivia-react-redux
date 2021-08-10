@@ -1,0 +1,28 @@
+.button-play-again {
+  padding: 10px;
+}
+
+.button-ranking {
+  padding: 10px;
+}
+
+.feedback-content {
+  align-items: center;
+  background-color: whitesmoke;
+  border-radius: 8px;
+  box-shadow: 4px 4px 10px black;
+  display: flex;
+  flex-direction: column;
+  height: 550px;
+  justify-content: space-between;
+  padding: 0 100px 100px;
+  width: 450px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active
+{
+  -webkit-box-shadow: 0 0 0 30px whitesmoke inset !important;
+}
