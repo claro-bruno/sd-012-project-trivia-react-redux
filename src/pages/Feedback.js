@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { actionResetGame } from '../redux/actions';
+import Footer from '../components/Footer';
 
 class Feedback extends Component {
   render() {
@@ -38,6 +39,7 @@ class Feedback extends Component {
             Ver Ranking
           </button>
         </Link>
+        <Footer />
       </>
     );
   }
