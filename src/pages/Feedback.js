@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 
 class Feedback extends React.Component {
@@ -12,8 +14,10 @@ class Feedback extends React.Component {
       score: finalScore,
       assertions,
       message: '',
+      redirect: false,
     };
     this.setMessage = this.setMessage.bind(this);
+    this.redirectLogin = this.redirectLogin.bind(this);
   }
 
   componentDidMount() {
@@ -34,13 +38,26 @@ class Feedback extends React.Component {
     }
   }
 
+  redirectLogin() {
+  this.setState({ redirect: true });
+  }
+
   render() {
-    const { score, message } = this.state;
+    const { score, message, redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/" />;
+    }
     return (
       <section>
         <Header score={ score } />
         <p data-testid="feedback-text">{message || 'Loading'}</p>
-
+        <button
+          type="button"
+          data-testid="btn-play-again"
+          onClick={ this.redirectLogin }
+        >
+          Jogar Novamente
+        </button>
       </section>
     );
   }

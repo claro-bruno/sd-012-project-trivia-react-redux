@@ -103,6 +103,10 @@ class Game extends React.Component {
       clearInterval(this.count);
     }
     if (seconds > 0) this.setState({ seconds: seconds - 1 });
+    if (seconds === 0) {
+      this.buttonColorDisabler();
+      clearInterval(this.count);
+    }
     switch (target) {
     case 'correct': clearTimeout(this.count);
       break;
