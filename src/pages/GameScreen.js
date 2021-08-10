@@ -193,17 +193,13 @@ class GameScreen extends Component {
     return (
       <div>
         <h1>Tela Jogo</h1>
-
         <Header />
         { this.renderQuestionsApi() }
-
         <p>
           {' '}
           {timeCount}
         </p>
-
         {this.createLocalStorage()}
-
       </div>
     );
   }
