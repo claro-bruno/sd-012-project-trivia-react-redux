@@ -1,5 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import '../App.css';
+
+const changeColorAnswer = () => {
+  const correctAnswer = document.getElementById('correct-answer-btn');
+  const incorrectAnswers = document.getElementsByName('incorrect');
+
+  incorrectAnswers.forEach((question) => {
+    question.className = 'incorrect-answer-btn';
+  });
+  correctAnswer.className = 'correct-answer-btn';
+  correctAnswer.disable = false;
+  incorrectAnswers.disable = false;
+
+  this.setState({ disableButton: true });
+};
 
 const Timer = ({ timer }) => {
   const [counter, setCounter] = useState(timer);
@@ -20,6 +35,7 @@ const Timer = ({ timer }) => {
       correctAnswer.disabled = false;
     } else if (counter <= 0) {
       correctAnswer.disabled = true;
+      changeColorAnswer();
       for (let i = 0; i < incorrectBtn.length; i += 1) {
         incorrectBtn[i].disabled = true;
       }

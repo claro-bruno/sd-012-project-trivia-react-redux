@@ -6,6 +6,7 @@ import { MD5 } from 'crypto-js';
 import { getQuestions } from '../services/api';
 import ButtonNextQuestion from '../components/ButtonNextQuestion';
 import Timer from '../components/Timer';
+import '../App.css';
 
 class Game extends Component {
   constructor(props) {
@@ -40,6 +41,34 @@ class Game extends Component {
     });
   }
 
+  nextQuestion() {
+    const { index } = this.state;
+    this.setState({
+      index: index + 1,
+      disableButton: true,
+    });
+
+    const correctAnswer = document.getElementById('correct-answer-btn');
+    const incorrectAnswers = document.getElementsByName('incorrect');
+    correctAnswer.className = ('correct-answer-btn');
+    correctAnswer.disable = false;
+    incorrectAnswers.disable = false;
+  }
+
+  changeColorAnswer() {
+    const correctAnswer = document.getElementById('correct-btn');
+    const incorrectAnswers = document.getElementsByName('incorrect');
+
+    incorrectAnswers.forEach((question) => {
+      question.className = 'red-border';
+    });
+    correctAnswer.className = 'green-border';
+    correctAnswer.disable = false;
+    incorrectAnswers.disable = false;
+
+    this.setState({ disableButton: true });
+  }
+
   handleInplementButton() {
     this.setState((previusState) => ({
       index: previusState.index + 1,
@@ -67,6 +96,7 @@ class Game extends Component {
             data-testid="correct-answer"
             className="correct-answer-btn"
             id="correct-btn"
+            onClick={ () => this.changeColorAnswer() }
           >
             {quest.correct_answer}
           </button>
@@ -76,6 +106,7 @@ class Game extends Component {
               key={ index1 }
               type="button"
               className="incorrect-answer-btn"
+              onClick={ () => this.changeColorAnswer() }
             >
               {wrong}
             </button>
