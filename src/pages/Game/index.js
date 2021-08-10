@@ -65,6 +65,9 @@ class Game extends Component {
               question={ questions[questionIndex] }
               questionIndex={ questionIndex }
               nextQuestion={ this.nextQuestion }
+              picture={ encodeEmail }
+              name={ name }
+              score={ score }
             />
           ) }
         </main>
