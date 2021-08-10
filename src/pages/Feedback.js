@@ -39,7 +39,7 @@ class Feedback extends React.Component {
           </span>
         </p>
         <p data-testid="feedback-text">{ this.feedbackText() }</p>
-        <Link to="/">
+        <Link to="/game">
           <button
             type="button"
             data-testid="btn-play-again"

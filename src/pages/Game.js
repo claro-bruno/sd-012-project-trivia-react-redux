@@ -126,6 +126,22 @@ class Game extends Component {
         <Link to="/feedback">
           <button data-testid="feedbackButton" type="button">Feedback</button>
         </Link>
+        <Link to="/game">
+          <button
+            type="button"
+            data-testid="btn-play-again"
+          >
+            Jogar novamente
+          </button>
+        </Link>
+        <Link to="/ranking">
+          <button
+            type="button"
+            data-testid="btn-ranking"
+          >
+            Ranking
+          </button>
+        </Link>
       </div>
     );
   }

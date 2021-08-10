@@ -15,6 +15,7 @@ class Header extends React.Component {
       <div>
         <header>
           <img data-testid="header-profile-picture" src={ getImg } alt="user avatar" />
+          <p data-testid="input-gravatar-email">{ gravatarEmail }</p>
           <p data-testid="header-player-name">{name}</p>
           <p data-testid="header-score">0</p>
         </header>
