@@ -12,8 +12,11 @@ class ButtonPlay extends Component {
           data-testid="btn-play"
           disabled={ isDisabled }
           onClick={ storeFunc }
+          className="play-btn"
         >
-          Jogar
+          <span>
+            Jogar
+          </span>
         </button>
       </Link>
     );

@@ -7,15 +7,19 @@ class NameInput extends Component {
     return (
       <label
         htmlFor="input-player-name"
+        className="label-name"
       >
-        Nome
         <input
           type="text"
           id="input-player-name"
           data-testid="input-player-name"
           onChange={ onChange }
           name="name"
+          autoComplete="off"
+          required
+          className="name-input"
         />
+        <span className="content-name">Nome</span>
       </label>
     );
   }

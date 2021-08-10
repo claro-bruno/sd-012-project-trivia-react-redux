@@ -8,6 +8,7 @@ class ButtonSettings extends Component {
         <button
           type="button"
           data-testid="btn-settings"
+          className="settings-btn"
         >
           Configurações
         </button>

@@ -60,27 +60,31 @@ class LoginScreen extends Component {
   render() {
     const { disabled, email, name } = this.state;
     return (
-      <div>
-        <header className="App-header">
-          <img src={ logo } className="App-logo" alt="logo" />
-          <p>
-            SUA VEZ
-          </p>
-          <NameInput
-            onChange={ this.handleChange }
-            value={ name }
-          />
-          <EmailInput
-            onChange={ this.handleChange }
-            value={ email }
-          />
+      <header className="App-header">
+        <img src={ logo } className="App-logo" alt="logo" />
+        <h1
+          className="your-turn"
+        >
+          Your Turn!
+        </h1>
+        <NameInput
+          onChange={ this.handleChange }
+          value={ name }
+        />
+        <EmailInput
+          onChange={ this.handleChange }
+          value={ email }
+        />
+        <div
+          className="btns-container"
+        >
           <ButtonPlay
             isDisabled={ disabled }
             storeFunc={ this.getToken }
           />
           <ButtonSettings />
-        </header>
-      </div>
+        </div>
+      </header>
     );
   }
 }
