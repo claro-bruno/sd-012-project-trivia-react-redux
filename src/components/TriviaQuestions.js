@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import AnswerButton from './AnswerButton';
 import Timer from './Timer';
 import { getScore } from '../redux/actions';
@@ -94,6 +95,7 @@ class TriviaQuestions extends Component {
       correctanswer, incorrectanswer, id, disabled, myTimer, answerBtn,
     } = this.state;
     if (playerState.length === 0) return <span>Carregando...</span>;
+    if (id === playerState.length) return <Redirect to="/feedback" />;
     const { category, question, correct_answer: correct } = playerState[id];
     const arrayQuestions = this.shuffleQuestions(playerState[id]);
     return (
