@@ -2,6 +2,9 @@ export const USER_INFO = 'USER_INFO';
 export const GET_TOKEN = 'GET_TOKEN';
 export const GET_TOKEN_SUCCESS = 'GET_TOKEN_SUCCESS';
 export const GET_TOKEN_FAILED = 'GET_TOKEN_FAILED';
+export const CORRECT_ANSWER = 'CORRECT_ANSWER';
+export const GET_PICTURE_URL = 'GET_PICTURE_URL';
+export const RESET_GAME = 'RESET_GAME';
 
 export const actionUserInfo = (name, email) => ({
   type: USER_INFO,
@@ -33,3 +36,15 @@ export const getTokenThunk = () => async (dispatch) => {
     dispatch(getTokenFailed(error));
   }
 };
+
+export const actionCorrectAnswer = (payload) => ({
+  type: CORRECT_ANSWER,
+  payload,
+});
+
+export const actionGetPictureUrl = (payload) => ({
+  type: GET_PICTURE_URL,
+  payload,
+});
+
+export const actionResetGame = () => ({ type: RESET_GAME });
