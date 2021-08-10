@@ -16,6 +16,7 @@ class GameBody extends Component {
       wrong: 'wrong',
       correct: 'correct',
       disableAnswers: false,
+      hidden: true,
     };
     this.createQuestion = this.createQuestion.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
@@ -34,6 +35,7 @@ class GameBody extends Component {
     this.setState({
       index: index + 1,
       disableAnswers: false,
+      hidden: true,
     });
   }
 
@@ -64,12 +66,16 @@ class GameBody extends Component {
   }
 
   createOptions() {
-    const { alternatives, randomIndex, className, wrong,
-      correct, className2 } = this.state;
+    const {
+      alternatives,
+      randomIndex,
+      className,
+      wrong,
+      correct,
+      className2,
+      disableAnswers,
+    } = this.state;
     return ((alternatives).map((elm, ind) => (
-
-    const { alternatives, randomIndex, disableAnswers } = this.state;
-    return (alternatives.map((elm, ind) => (
       ind === randomIndex
         ? (
           <button
@@ -105,11 +111,12 @@ class GameBody extends Component {
       disableAnswers: true,
       className: 'correctAnswer',
       className2: 'incorrectAnswer',
+      hidden: false,
     });
   }
 
   render() {
-    const { disable } = this.state;
+    const { disable, hidden } = this.state;
     const { results } = this.props;
     return (
       <div>
@@ -120,6 +127,8 @@ class GameBody extends Component {
           type="button"
           disable={ disable }
           onClick={ this.nextQuestion }
+          data-testid="btn-next"
+          hidden={ hidden }
         >
           Next
         </button>
