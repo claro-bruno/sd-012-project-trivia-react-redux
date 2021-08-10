@@ -1,10 +1,11 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { string, func } from 'prop-types';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import Span from './Span';
 import Img from './Img';
 import '../App.css';
+import { actionHash } from '../redux/actions';
 
 class Header extends React.Component {
   constructor() {
@@ -18,8 +19,10 @@ class Header extends React.Component {
   }
 
   createHash() {
-    const { email } = this.props;
+    const { email, setHash } = this.props;
     const hash = md5(email).toString();
+    setHash(hash);
+    // localStorage.setItem('hash', hash);
     return hash;
   }
 
@@ -60,6 +63,10 @@ const mapStateToProps = (state) => ({
   score: state.scoreReducer.score,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  setHash: (hash) => dispatch(actionHash(hash)),
+});
+
 Span.propTypes = {
   textContent: string.isRequired,
 };
@@ -69,6 +76,7 @@ Header.propTypes = {
   user: string.isRequired,
   score: string.isRequired,
   className: string.isRequired,
+  setHash: func.isRequired,
 };
 
-export default connect(mapStateToProps, null)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

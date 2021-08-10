@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import FeedbackHeader from '../components/FeedBackHeader';
+import FeedBackHeader from '../components/FeedBackHeader';
 import ButtonRanking from '../components/ButtonRanking';
 import '../App.css';
 
@@ -22,7 +22,7 @@ class Feedback extends React.Component {
     return (
       <div className="container-feedback">
         <h1 className="feedback-title" data-testid="feedback-text">Feedback</h1>
-        <FeedbackHeader />
+        <FeedBackHeader />
         <h3
           className="feedback-score"
           data-testid="feedback-total-score"

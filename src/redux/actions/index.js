@@ -6,6 +6,7 @@ export const ISDISABLED = 'IS_DISABLED';
 export const TIMER = 'TIMER';
 export const SCORE = 'SCORE';
 export const ASSERTIONS = 'ASSERTIONS';
+export const HASH = 'HASH';
 
 export const actionEmail = (email) => ({
   type: GET_EMAIL,
@@ -45,4 +46,9 @@ export const actionScore = (score) => ({
 export const actionAssertions = (assertions) => ({
   type: ASSERTIONS,
   assertions,
+});
+
+export const actionHash = (hash) => ({
+  type: HASH,
+  hash,
 });
