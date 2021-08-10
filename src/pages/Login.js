@@ -73,7 +73,7 @@ class Login extends React.Component {
               value={ email }
               id="email"
               name="email"
-              type="email"
+              type="text"
               onChange={ this.handleChange }
             />
           </label>
