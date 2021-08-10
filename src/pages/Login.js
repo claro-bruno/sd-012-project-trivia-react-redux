@@ -5,6 +5,7 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import { actionEmail, actionName } from '../redux/actions';
 import ButtonConfig from '../components/ButtonConfig';
+import fetchToken from '../services/fetchToken';
 
 class Login extends React.Component {
   constructor() {
@@ -17,6 +18,10 @@ class Login extends React.Component {
     this.handleInputs = this.handleInputs.bind(this);
     this.submitBtn = this.submitBtn.bind(this);
     this.configBtn = this.configBtn.bind(this);
+  }
+
+  componentDidMount() {
+    fetchToken();
   }
 
   validade() {
@@ -41,6 +46,7 @@ class Login extends React.Component {
       gravatarEmail,
     } };
     localStorage.setItem('state', JSON.stringify(newUser));
+    fetchToken();
     history.push('/game');
   }
 

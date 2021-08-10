@@ -28,7 +28,8 @@ class Game extends Component {
   }
 
   fetchTokenQuestions() { // pegar o token;
-    const { token } = this.props;
+    // const { token } = this.props;
+    const token = localStorage.getItem('token');
     try {
       const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
       fetch(url)
