@@ -97,8 +97,6 @@ class GameBody extends Component {
     const { difficulty } = results[index];
     // console.log('Gabriel', difficulty);
 
-    const { alternatives, randomIndex, disableAnswers } = this.state;
-    return (alternatives.map((elm, ind) => (
     const {
       alternatives,
       randomIndex,
@@ -108,12 +106,11 @@ class GameBody extends Component {
       className2,
       disableAnswers,
     } = this.state;
-    return ((alternatives).map((elm, ind) => (
+    return (alternatives.map((elm, ind) => (
       ind === randomIndex
         ? (
           <button
             type="button"
-            onClick={ this.buttonAnswer }
             disabled={ disableAnswers }
             onClick={ () => (this.handleClickScore(difficulty)) }
             key={ ind }
