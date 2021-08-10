@@ -92,25 +92,18 @@ class Login extends React.Component {
     const { notValid } = this.state;
     return (
       <div className="container flex flex-col items-center">
-        <img
-          src={ logo }
-          alt="Logo Trivia"
-          className="w-1/2 my-20"
-        />
+        <img src={ logo } alt="Logo Trivia" className="w-1/2 my-20" />
         <div
           className="flex flex-col
           bg-header w-1/3 justify-evenly items-center h-40 rounded-md shadow-2xl"
         >
           <Link to="/settings" className="self-end mr-6 mt-2 text-xl text-white">
-            <button
-              type="button"
-              data-testid="btn-settings"
-            >
+            <button type="button" data-testid="btn-settings">
               <BsGear />
             </button>
           </Link>
-          { this.renderEmailInput() }
-          { this.renderNameInput() }
+          {this.renderEmailInput()}
+          {this.renderNameInput()}
           <div className="button-container">
             <Link to="/quiz">
               <button
