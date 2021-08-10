@@ -12,16 +12,63 @@ class Game extends React.Component {
     super();
     this.state = {
       index: 0,
+      score: 0,
+      assertions: 0,
+      name: '',
+      gravatarEmail: '',
     };
     this.showNextQuestion = this.showNextQuestion.bind(this);
     this.btnNext = this.btnNext.bind(this);
     this.incorrectAndCorrectQuestion = this.incorrectAndCorrectQuestion.bind(this);
     this.showBtnNext = this.showBtnNext.bind(this);
+    this.savingPoints = this.savingPoints.bind(this);
+    this.createLocalStorage = this.createLocalStorage.bind(this);
   }
 
   componentDidMount() {
     const { fetchApiGame, token } = this.props;
     fetchApiGame(token);
+  }
+
+  savingPoints(difficulty) {
+    const point = 10;
+    const easy = 1;
+    const medium = 2;
+    const hard = 3;
+    let difficultyPoint = 0;
+
+    switch (difficulty) {
+    case 'easy':
+      difficulty = easy;
+      break;
+    case 'medium':
+      difficulty = medium;
+      break;
+    case 'hard':
+      difficultyPoint = hard;
+      break;
+    default:
+      return difficultyPoint;
+    }
+    this.setState((state) => ({
+      score: state.score + point + (Timer * difficultyPoint),
+      assertions: state.assertions + 1,
+    }));
+  }
+
+  createLocalStorage() {
+    const { score, assertions, name, gravatarEmail } = this.state;
+
+    const stateLocalStorage = {
+      player: {
+        score,
+        assertions,
+        name,
+        gravatarEmail,
+      },
+    };
+    const keyLocalStorage = JSON.stringify(stateLocalStorage);
+    localStorage.setItem('state', keyLocalStorage);
   }
 
   showNextQuestion() {
