@@ -1,7 +1,7 @@
 .header-section {
-  color: white;
   align-items: center;
-  background-color: #7C838A;
+  background-color: #7c838a;
+  color: white;
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 50px;

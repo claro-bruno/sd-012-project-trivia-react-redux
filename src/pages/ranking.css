@@ -1,47 +1,47 @@
 .container-ranking {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .container-lista-ranking {
-  width: 90%;
-  padding: 20px;
-  border: 1px solid #7C838A;
-  border-radius: 6px;
+	border: 1px solid #7c838a;
+	border-radius: 6px;
+	padding: 20px;
+	width: 90%;
 }
 
 .lista-ranking li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 80%;
-  list-style: none;
-  margin: 10px auto;
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	list-style: none;
+	margin: 10px auto;
+	width: 80%;
 }
 
 .btn-ranking-play {
-	background:linear-gradient(to bottom, #74ad5a 5%, #68a54b 100%);
-	background-color:#74ad5a;
-	border-radius:10px;
-	border:2px solid #3b6e22;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
+	background: linear-gradient(to bottom, #74ad5a 5%, #68a54b 100%);
+	background-color: #74ad5a;
+	border: 2px solid #3b6e22;
+	border-radius: 10px;
+	color: white;
+	cursor: pointer;
+	display: inline-block;
+	font-family: Arial , Helvetica , sans-serif;
 	font-size: 1em;
-	font-weight:700;
-	padding:5px 30px;
-	text-decoration:none;
-  margin: 10px auto;
+	font-weight: 700;
+	margin: 10px auto;
+	padding: 5px 30px;
+	text-decoration: none;
 }
 
 .btn-ranking-play:hover {
-	background:linear-gradient(to bottom, #68a54b 5%, #74ad5a 100%);
-	background-color:#68a54b;
+	background: linear-gradient(to bottom, #68a54b 5%, #74ad5a 100%);
+	background-color: #68a54b;
 }
 
 .btn-ranking-play:active {
-	position:relative;
-	top:1px;
+	position: relative;
+	top: 1px;
 }
