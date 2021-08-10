@@ -202,6 +202,7 @@ class Game extends React.Component {
         count,
         nextButtonInvisible,
         redirect,
+        score,
       },
       nextClick,
       correctClick,
@@ -211,7 +212,7 @@ class Game extends React.Component {
     return (
       <>
         { redirect && <Redirect to="/feedback" /> }
-        <Header />
+        <Header score={ score } />
         <ButtonNext invisible={ nextButtonInvisible } handleClick={ nextClick } />
         <SectionQuestions
           questionPosition={ questionPosition }
