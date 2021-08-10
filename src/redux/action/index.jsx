@@ -38,3 +38,8 @@ export const setLocalStorage = (player) => ({
   type: 'SET_STORAGE',
   player,
 });
+
+export const setAmount = (value) => ({
+  type: 'SET_AMOUNT',
+  value,
+});

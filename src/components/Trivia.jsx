@@ -185,12 +185,13 @@ class Trivia extends React.Component {
 
   render() {
     const { trivia } = this.props;
-    const { category, question } = trivia;
+    const { category, question, difficulty } = trivia;
     const { buttons, time } = this.state;
     return (
       <div>
-        <div>{time}</div>
+        <h3>{`Time remaining: ${time}`}</h3>
         <h4 data-testid="question-category">{category}</h4>
+        <h4>{ `Difficulty: ${difficulty}` }</h4>
         <h3 data-testid="question-text">{`Pergunta:${this.verficaString(question)}`}</h3>
         { buttons }
         { this.button() }
@@ -220,8 +221,10 @@ Trivia.propTypes = {
 const mapStateToProps = (state) => ({
   player: state.player,
 });
+
 const mapDispatchToProps = (dispatch) => ({
   getPoints: (value) => dispatch(getScore(value)),
   setPlayer: (value) => dispatch(setLocalStorage(value)),
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(Trivia);
