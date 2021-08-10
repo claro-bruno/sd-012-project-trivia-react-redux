@@ -16,6 +16,8 @@ class Questions extends Component {
     this.answersRender = this.answersRender.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.countdown = this.countdown.bind(this);
+    this.buttonsGenerator = this.buttonsGenerator.bind(this);
+    this.timerGenerator = this.timerGenerator.bind(this);
   }
 
   componentDidMount() {
@@ -40,6 +42,31 @@ class Questions extends Component {
     clearInterval(this.interval);
   }
 
+  buttonsGenerator(index, answer, disabled, next) {
+    return (
+      <button
+        data-testid={ `wrong-answer${index}` }
+        id={ `wrong-answer${index}` }
+        key={ answer }
+        type="button"
+        onClick={ this.handleClick }
+        disabled={ disabled }
+        className={ next ? 'wrong-answer' : 'btn-general' }
+      >
+        { answer }
+      </button>
+    );
+  }
+
+  timerGenerator() {
+    const { time } = this.state;
+    return (
+      <div className="w-24 text-center text-2xl">
+        {time}
+      </div>
+    );
+  }
+
   answersRender() {
     const { questions, disabled, next } = this.state;
     const question = questions[0];
@@ -47,46 +74,43 @@ class Questions extends Component {
     answers.sort();
     let index = MINUS_ONE;
     return (
-      <div className="bg-violet rounded-md w-2/3">
-        <h1 data-testid="question-text" className="">
-          {question.question}
-        </h1>
-        <p data-testid="question-category">
-          {question.category}
-        </p>
-
-        {answers.map((answer) => {
-          if (answer === question.correct_answer) {
-            return (
-              <button
-                data-testid="correct-answer"
-                id="correct-answer"
-                type="button"
-                key={ answer }
-                onClick={ this.handleClick }
-                disabled={ disabled }
-                className={ next ? 'correct-answer' : '' }
-              >
-                { answer }
-              </button>
-            );
-          }
-          index += 1;
-          return (
-            <button
-              data-testid={ `wrong-answer${index}` }
-              id={ `wrong-answer${index}` }
-              key={ answer }
-              type="button"
-              onClick={ this.handleClick }
-              disabled={ disabled }
-              className={ next ? 'wrong-answer' : '' }
-            >
-              { answer }
-            </button>
-          );
-        })}
-      </div>
+      <>
+        <div className="bg-grey rounded-md w-7/12 flex mt-12 p-2 flex-row">
+          <div className="bg-header flex flex-col items-center p-2">
+            <p data-testid="question-category">
+              {question.category}
+            </p>
+            {this.timerGenerator()}
+          </div>
+          <h1
+            data-testid="questNion-text"
+            className="text-center justify-self-center text-xl ml-8"
+          >
+            {question.question}
+          </h1>
+        </div>
+        <div className="mt-8 flex flex-wrap">
+          {answers.map((answer) => {
+            if (answer === question.correct_answer) {
+              return (
+                <button
+                  data-testid="correct-answer"
+                  id="correct-answer"
+                  type="button"
+                  key={ answer }
+                  onClick={ this.handleClick }
+                  disabled={ disabled }
+                  className={ next ? 'correct-answer' : 'btn-general' }
+                >
+                  { answer }
+                </button>
+              );
+            }
+            index += 1;
+            return this.buttonsGenerator(index, answer, disabled, next);
+          })}
+        </div>
+      </>
     );
   }
 
@@ -109,12 +133,9 @@ class Questions extends Component {
   }
 
   render() {
-    const { questions, next, time } = this.state;
+    const { questions, next } = this.state;
     return (
       <main className="flex flex-col items-center">
-        <div className="aliceblue-color bg-header w-24 text-center text-2xl mt-6">
-          {time}
-        </div>
         {questions[0] && this.answersRender()}
         {next && <button data-testid="btn-next" type="button">Proxima Pergunta</button>}
       </main>

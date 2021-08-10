@@ -22,6 +22,10 @@ body {
   color: aliceblue;
 }
 
-.bg-violet {
-  background-color: #6d0266;
+.bg-grey {
+  background-color: #9c9797;
+}
+
+.btn-general {
+  border: 1px black solid;
 }
