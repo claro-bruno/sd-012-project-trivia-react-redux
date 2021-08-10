@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PlayAgainButton from '../components/PlayAgainButton';
+import RankingButton from '../components/RankingButton';
 import UserProfile from '../components/UserProfile';
 
 export default class extends Component {
@@ -37,6 +39,8 @@ export default class extends Component {
           {' '}
           acerto(s)
         </h3>
+        <PlayAgainButton />
+        <RankingButton />
       </div>
     );
   }
