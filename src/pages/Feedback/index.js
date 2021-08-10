@@ -18,6 +18,19 @@ class Feedback extends Component {
     return (assertions >= numberAssertions) ? moreAssertion : lessAssertion;
   }
 
+  addToRanking(picture, name, score) {
+    const saveRanking = JSON.parse(localStorage.getItem('ranking'));
+    if (saveRanking) {
+      localStorage.setItem('ranking', JSON.stringify(
+        [...saveRanking, { picture, name, score }],
+      ));
+    } else {
+      localStorage.setItem('ranking', JSON.stringify(
+        [{ picture, name, score }],
+      ));
+    }
+  }
+
   render() {
     const { gravatarEmail, name, score, assertions } = this.props;
     const encodeEmail = md5(gravatarEmail).toString();
@@ -55,7 +68,11 @@ class Feedback extends Component {
               </button>
             </Link>
             <Link to="/ranking">
-              <button type="button" data-testid="btn-ranking">
+              <button
+                type="button"
+                data-testid="btn-ranking"
+                onClick={ () => this.addToRanking(encodeEmail, name, score) }
+              >
                 Ver Ranking
               </button>
             </Link>
