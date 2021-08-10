@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from '../Input';
 
-class LoginInputs extends React.Component {
+class InputsLogin extends React.Component {
   render() {
     const { props: {
       value1,
@@ -35,11 +35,11 @@ class LoginInputs extends React.Component {
 }
 
 const { func, string } = PropTypes;
-LoginInputs.propTypes = {
+InputsLogin.propTypes = {
   onChange1: func.isRequired,
   value1: string.isRequired,
   onChange2: func.isRequired,
   value2: string.isRequired,
 };
 
-export default LoginInputs;
+export default InputsLogin;
