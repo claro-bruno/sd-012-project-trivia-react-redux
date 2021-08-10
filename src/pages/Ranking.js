@@ -20,7 +20,7 @@ class Ranking extends React.Component {
           ))}
         </ul>
         <Link to="/">
-          <button data-testid="btn-go-home" type="button">Inicio</button>
+          <button data-testid="btn-go-home" type="button">Início</button>
         </Link>
       </section>
     );
