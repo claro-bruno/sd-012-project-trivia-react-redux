@@ -1,43 +1,64 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import Loading from '../components/Loading';
 import Header from '../components/Header';
-import Timer from '../components/Timer';
 import Answers from '../components/Answers';
-import { pauseTime } from '../redux/actions/actionTimer';
+import { pauseTime, noTime } from '../redux/actions/actionTimer';
 import { actionPlayer } from '../redux/actions/actionPlayer';
 import './Game.css';
 
 class Game extends Component {
   constructor() {
     super();
-
     this.state = {
       data: '',
       currentQuestion: 0,
+      rightQuestions: 0,
       loading: true,
+      timer: 30,
+      pauseTimer: false,
     };
-
     this.fetchApi = this.fetchApi.bind(this);
     this.page = this.page.bind(this);
     this.handleClickAnswer = this.handleClickAnswer.bind(this);
     this.showBtnNextQuestion = this.showBtnNextQuestion.bind(this);
     this.handleAnswers = this.handleAnswers.bind(this);
+    this.updateTimer = this.updateTimer.bind(this);
+    this.handleNextQuestion = this.handleNextQuestion.bind(this);
   }
 
   componentDidMount() {
     this.fetchApi();
+    this.updateTimer();
+  }
+
+  updateTimer() {
+    const ONE_SECOND = 1000;
+    this.interval = setInterval(
+      () => this.setState((previousTime) => ({ timer: previousTime.timer - 1 }), () => {
+        const { timer, pauseTimer } = this.state;
+        const { changeTimer } = this.props;
+        const maximumTime = 0;
+        let timeOff = false;
+        if (timer === maximumTime || pauseTimer) {
+          clearInterval(this.interval);
+          timeOff = true;
+        }
+        changeTimer({ timer, timeOff });
+      }),
+      ONE_SECOND,
+    );
   }
 
   handleAnswers(data) {
     const splitNumber = 0.5;
     const answers = data.results.map((question) => {
-      const wrongAnswers = question.incorrect_answers
-        .map((option) => ({
-          text: option,
-          correct: false,
-        }));
+      const wrongAnswers = question.incorrect_answers.map((option) => ({
+        text: option,
+        correct: false,
+      }));
       const allAnswers = [
         ...wrongAnswers,
         {
@@ -45,8 +66,7 @@ class Game extends Component {
           correct: true,
         },
       ];
-      return allAnswers
-        .sort(() => Math.random() - splitNumber); // código retirado de https://flaviocopes.com/
+      return allAnswers.sort(() => Math.random() - splitNumber); // código retirado de https://flaviocopes.com/
     });
     return answers;
   }
@@ -69,29 +89,32 @@ class Game extends Component {
         },
       });
       return data;
-    } catch (error) {
-      return error;
-    }
+    } catch (error) { return error; }
   }
 
   handleClickAnswer({ target }) {
-    const { pauseTimer, player, name, gravatarEmail } = this.props;
+    const { rightQuestions } = this.state;
+    let assertions = rightQuestions;
+    const { player, name, gravatarEmail, changeTimer } = this.props;
     const incorrectList = document.getElementsByName('incorrect');
     const correctList = document.getElementById('correct');
     incorrectList.forEach((item) => { item.className = 'incorrect'; });
     correctList.className = 'correct';
     const scoreFunc = this.calculateTotalPoints(target);
-    const stopTimer = true;
-    pauseTimer({ stopTimer });
-    player(name, 0, scoreFunc, gravatarEmail);
+    this.setState({ pauseTimer: true });
+    const timeOff = true;
+    changeTimer({ timeOff });
+    if (target.id === 'correct') {
+      assertions += 1;
+      this.setState({ rightQuestions: rightQuestions + 1 });
+    }
+    player(name, assertions, scoreFunc, gravatarEmail);
   }
 
   calculateTotalPoints({ name }) {
-    const { timer } = this.props;
+    const { timer } = this.state;
     const BASE_POINT = 10;
-    if (name === 'correct') {
-      return BASE_POINT + (timer * this.calculateDifficultyPoint());
-    }
+    if (name === 'correct') return BASE_POINT + (timer * this.calculateDifficultyPoint());
     return 0;
   }
 
@@ -101,13 +124,28 @@ class Game extends Component {
     const HARD = 3;
     const MEDIUM = 2;
     const EASY = 1;
-    if (difficulty === 'hard') {
-      return HARD;
-    }
-    if (difficulty === 'medium') {
-      return MEDIUM;
-    }
+    if (difficulty === 'hard') return HARD;
+    if (difficulty === 'medium') return MEDIUM;
     return EASY;
+  }
+
+  handleNextQuestion() {
+    const { changeTimer } = this.props;
+    const { currentQuestion } = this.state;
+    const incorrectList = document.getElementsByName('incorrect');
+    const correctList = document.getElementById('correct');
+    incorrectList.forEach((item) => { item.classList.remove('incorrect'); });
+    correctList.classList.remove('correct');
+    const timeOff = false;
+    changeTimer({ timeOff });
+    // const lastQuestion = 4;
+    const MAX_TIME = 30;
+    this.setState({
+      timer: MAX_TIME,
+      currentQuestion: currentQuestion + 1,
+      pauseTimer: false,
+    });
+    this.updateTimer();
   }
 
   showBtnNextQuestion() {
@@ -116,6 +154,7 @@ class Game extends Component {
         className="button-nextQuestion"
         type="button"
         data-testid="btn-next"
+        onClick={ () => this.handleNextQuestion() }
       >
         Next Question
       </button>
@@ -123,16 +162,22 @@ class Game extends Component {
   }
 
   page() {
-    const { data,
+    const {
+      data,
       currentQuestion,
+      timer,
     } = this.state;
     const { timeOff } = this.props;
+    const shouldRedirect = 5;
+    if (currentQuestion === shouldRedirect) {
+      return <Redirect to="/feedback" />;
+    }
     return (
       <section>
         <Header />
         <section className="section-game">
           <fieldset className="fieldset-question">
-            <Timer />
+            { timer }
             <h1
               data-testid="question-category"
             >
@@ -162,10 +207,9 @@ class Game extends Component {
   }
 
   render() {
-    const { name, gravatarEmail, score } = this.props;
-    localStorage
-      .setItem('state', JSON
-        .stringify({ player: { name, assertions: 0, score, gravatarEmail } }));
+    const { name, gravatarEmail, score, assertions } = this.props;
+    localStorage.setItem('state', JSON
+      .stringify({ player: { name, assertions, score, gravatarEmail } }));
     const { isLoading } = this.props;
     return isLoading ? <Loading /> : this.pageRender();
   }
@@ -179,6 +223,7 @@ const mapStateToProps = (state) => ({
   timer: state.timerReducer.time,
   timeOff: state.timerReducer.timeOff,
   score: state.player.score,
+  assertions: state.player.assertions,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -187,6 +232,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   player: (name, assertions, score, gravatarEmail) => (
     dispatch(actionPlayer(name, assertions, score, gravatarEmail))),
+  changeTimer: (timer) => dispatch(noTime(timer)),
 });
 
 Game.propTypes = {
