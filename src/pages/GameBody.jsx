@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { setScore } from '../redux/action';
 
 class GameBody extends Component {
   constructor(props) {
@@ -11,16 +12,36 @@ class GameBody extends Component {
       alternatives: [],
       randomIndex: '',
       disableAnswers: false,
+      timer: 2,
+      score: 0,
     };
     this.createQuestion = this.createQuestion.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.rad = this.rad.bind(this);
     this.createOptions = this.createOptions.bind(this);
     this.buttonsAsnswer = this.buttonsAsnswer.bind(this);
+    this.handleClickScore = this.handleClickScore.bind(this);
   }
 
   componentDidMount() {
     this.rad();
+  }
+
+  handleClickScore(diff) {
+    // console.log('gabriel', target, diff);
+    const { setStateScore } = this.props;
+    const { timer, score } = this.state;
+    const dez = 10;
+    const diffLevel = {
+      hard: 3,
+      medium: 2,
+      easy: 1,
+    };
+    const scoreCount = score + dez + (timer * diffLevel[diff]);
+    console.log(scoreCount);
+    // localStorage.setItem('score', token.token); NÃO ESQUECER DE SETAR O LOCAL STORAGE CONFORME ESTRUTURA RECOMENDADA
+    setStateScore(scoreCount);
+    this.buttonsAsnswer();
   }
 
   nextQuestion() {
@@ -30,6 +51,7 @@ class GameBody extends Component {
       index: index + 1,
       disableAnswers: false,
     });
+    this.rad();
   }
 
   buttonsAsnswer() {
@@ -63,7 +85,11 @@ class GameBody extends Component {
   }
 
   createOptions() {
-    console.log('chamou createOptions');
+    // console.log('chamou createOptions');
+    const { index } = this.state;
+    const { results } = this.props;
+    const { difficulty } = results[index];
+    // console.log('Gabriel', difficulty);
 
     const { alternatives, randomIndex, disableAnswers } = this.state;
     return (alternatives.map((elm, ind) => (
@@ -72,7 +98,7 @@ class GameBody extends Component {
           <button
             type="button"
             disabled={ disableAnswers }
-            onClick={ this.buttonsAsnswer }
+            onClick={ () => (this.handleClickScore(difficulty)) }
             key={ ind }
             data-testid="correct-answer"
           >
@@ -114,11 +140,16 @@ class GameBody extends Component {
 }
 
 GameBody.propTypes = {
-  results: PropTypes.string.isRequired,
+  results: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setStateScore: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   results: state.questions.results,
 });
 
-export default connect(mapStateToProps, null)(GameBody);
+const mapDispatchToProps = (dispatch) => ({
+  setStateScore: (score) => dispatch(setScore(score)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameBody);
