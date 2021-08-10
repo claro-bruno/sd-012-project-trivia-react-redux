@@ -1,0 +1,22 @@
+input, select {
+  margin-bottom: 5px;
+  margin-left: 5px;
+  width: 270px;
+}
+
+.mainSection {
+  background-color: #1d2551;
+  display: flex;
+  height: 800px;
+  justify-content: center;
+  width: 100%;
+}
+
+section {
+  background-color: #fea418;
+  border-radius: 10px;
+  box-shadow: 3px 3px 5px #7ea8df;
+  height: 250px;
+  margin-top: 50px;
+  width: 350px;
+}

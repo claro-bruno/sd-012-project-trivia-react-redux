@@ -9,7 +9,7 @@ import {
   addStateToStorage,
   requestImageGravatar,
 } from '../helpers';
-import styles from './Login.modules.css';
+import styles from './Login.module.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -78,7 +78,7 @@ class Login extends React.Component {
     const { name, email, emailCheck, nameCheck } = this.state;
     const btnCheck = !(emailCheck === true && nameCheck === true);
     return (
-      <main>
+      <main className={ styles.mainLogin }>
         <header className={ styles.appHeader }>
           <img src={ logo } className={ styles.appLogo } alt="logo" />
         </header>
