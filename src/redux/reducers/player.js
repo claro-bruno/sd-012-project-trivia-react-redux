@@ -20,6 +20,8 @@ const player = (state = INITIAL_STATE, action) => {
       ...state,
       name: action.name,
       gravatarEmail: action.email,
+      score: 0,
+      assertions: 0,
     };
   case GUESS_UPDATE:
     return {
