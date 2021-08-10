@@ -195,7 +195,7 @@ class Questions extends Component {
   }
 
   render() {
-    const { questions, next, time, redirect } = this.state;
+    const { questions, next, redirect } = this.state;
     if (redirect) {
       return <Redirect to="/feedback" />;
     }
