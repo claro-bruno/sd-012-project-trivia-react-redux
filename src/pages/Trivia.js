@@ -136,7 +136,7 @@ class Trivia extends Component {
     const { timer, currentQuestion } = this.state;
     const { questions } = this.props;
     const { className } = target;
-    const DEZ = 10; 
+    const DEZ = 10;
     const hard = 3;
     const medium = 2;
 
@@ -164,7 +164,7 @@ class Trivia extends Component {
         assertions,
         score,
         gravatarEmail: state.player.gravatarEmail,
-      } 
+      };
     };
     localStorage.setItem('state', JSON.stringify(player));
   }
