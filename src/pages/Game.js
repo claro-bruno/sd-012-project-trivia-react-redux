@@ -97,11 +97,11 @@ class Game extends React.Component {
   }
 
   timer(target) {
-    const limit = 30000;
-    setTimeout(() => {
-      this.buttonColorDisabler();
-    }, limit);
     const { seconds } = this.state;
+    if (seconds === 0) {
+      this.buttonColorDisabler();
+      clearInterval(this.count);
+    }
     if (seconds > 0) this.setState({ seconds: seconds - 1 });
     switch (target) {
     case 'correct': clearTimeout(this.count);
