@@ -3,8 +3,26 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import '../Style/feedBack.css';
+import { fetchGravatarImage } from '../services/api';
 
 class Feedback extends Component {
+  async componentDidMount() {
+    const { name, score, email } = this.props;
+    const picture = await fetchGravatarImage(email);
+    const user = {
+      name,
+      score,
+      picture,
+    };
+    const saveRanking = JSON.parse(localStorage.getItem('ranking'));
+    if (!saveRanking) {
+      localStorage.setItem('ranking', JSON.stringify([user]));
+    } else {
+      const newRanking = [...saveRanking, user].sort((a, b) => b.score - a.score);
+      localStorage.setItem('ranking', JSON.stringify(newRanking));
+    }
+  }
+
   render() {
     const ASSERTIONS_CHECK = 3;
     const { assertions, score } = this.props;
@@ -40,6 +58,8 @@ class Feedback extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  name: state.player.user.name,
+  email: state.player.user.email,
   score: state.player.score,
   assertions: state.player.assertions,
 });
