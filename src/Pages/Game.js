@@ -161,7 +161,9 @@ class Game extends React.Component {
                 <Answers
                   show={ show }
                   question={ questions[index] }
-                  onClick={ ({ target: { name } }) => this.incorrectAndCorrectQuestion(name) }
+                  onClick={ (
+                    { target: { name } },
+                  ) => this.incorrectAndCorrectQuestion(name) }
                 />
               </div>
               { this.btnNext() }
@@ -176,13 +178,15 @@ class Game extends React.Component {
 
 Game.propTypes = {
   fetchApiGame: PropTypes.func.isRequired,
-  history: PropTypes.objectOf().isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   isFetching: PropTypes.bool.isRequired,
-  push: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(
     PropTypes.shape({
       category: PropTypes.string.isRequired,
       question: PropTypes.string.isRequired,
+      difficulty: PropTypes.string.isRequired,
     }).isRequired,
   ).isRequired,
   sendShowAnswers: PropTypes.func.isRequired,
