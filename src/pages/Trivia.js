@@ -164,7 +164,7 @@ class Trivia extends Component {
         assertions,
         score,
         gravatarEmail: state.player.gravatarEmail,
-      };
+      },
     };
     localStorage.setItem('state', JSON.stringify(player));
   }

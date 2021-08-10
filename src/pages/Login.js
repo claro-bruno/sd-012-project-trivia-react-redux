@@ -78,7 +78,7 @@ class Login extends React.Component {
         assertions: 0,
         score: 0,
         gravatarEmail: userEmail,
-      };
+      },
     };
     localStorage.setItem('state', JSON.stringify(player));
   }
