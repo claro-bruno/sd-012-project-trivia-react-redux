@@ -3,10 +3,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import { Redirect } from 'react-router-dom';
-import Header from '../components/Header';
 import ButtonNext from '../components/gameControlled/ButtonNext';
 import SectionQuestions from '../components/gameControlled/SectionQuestions';
 import '../App.css';
+import Header from '../components/Header';
 
 class Game extends React.Component {
   constructor() {
@@ -27,7 +27,7 @@ class Game extends React.Component {
     this.setScore = this.setScore.bind(this);
 
     this.state = {
-      correctAnswers: 0,
+      assertions: 0,
       score: 0,
       questionPosition: 0,
       questionsDisable: false,
@@ -40,29 +40,42 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    const { startTime } = this;
+    const {
+      startTime,
+      setStateProperties,
+      props: { userData: { user, email } },
+      state: { gravatarEmail, assertions, score },
+    } = this;
 
-    startTime();
-
-    const { setStateProperties, props: { userData: { email } } } = this;
     const profile = md5(email).toString();
     const SRC = `https://www.gravatar.com/avatar/${profile}`;
 
     setStateProperties('gravatarEmail', SRC);
+
+    const state = { player: { name: user, gravatarEmail, assertions, score } };
+    localStorage.setItem('state', JSON.stringify(state));
+
+    startTime();
   }
 
   componentDidUpdate() {
-    const { stopTime } = this;
+    const {
+      stopTime,
+      props: { userData: { user } },
+      state: { gravatarEmail, assertions, score },
+    } = this;
 
     stopTime();
+    const state = { player: { name: user, gravatarEmail, assertions, score } };
+    localStorage.setItem('state', JSON.stringify(state));
   }
 
   setCorrectAnswer() {
     const {
-      setStateProperties, buttonNextStatus, state: { correctAnswers },
+      setStateProperties, buttonNextStatus, state: { assertions },
     } = this;
 
-    setStateProperties('correctAnswers', correctAnswers + 1);
+    setStateProperties('assertions', assertions + 1);
     buttonNextStatus();
   }
 
@@ -94,15 +107,11 @@ class Game extends React.Component {
     const INITIAL_PARAMETER = 10;
     const points = INITIAL_PARAMETER + (level * count);
 
-    const { props: { userData: { user } },
-      state: { gravatarEmail, correctAnswers, score, redirect },
+    const {
+      state: { score },
       setStateProperties } = this;
-    setStateProperties('score', score + points);
 
-    if (redirect === true) {
-      const player = { name: user, gravatarEmail, assertions: correctAnswers, score };
-      localStorage.setItem('player', JSON.stringify(player));
-    }
+    setStateProperties('score', score + points);
   }
 
   correctClick(difficulty) {
