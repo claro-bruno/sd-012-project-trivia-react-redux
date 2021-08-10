@@ -1,11 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-<<<<<<< HEAD
 import md5 from 'crypto-js/md5';
-=======
 import { Redirect } from 'react-router-dom';
->>>>>>> 349f99c8772eb4f5200c0314946369be10196a68
 import Header from '../components/Header';
 import ButtonNext from '../components/gameControlled/ButtonNext';
 import SectionQuestions from '../components/gameControlled/SectionQuestions';
@@ -37,11 +34,8 @@ class Game extends React.Component {
       color: false,
       count: 30,
       nextButtonInvisible: true,
-<<<<<<< HEAD
       gravatarEmail: '',
-=======
       redirect: false,
->>>>>>> 349f99c8772eb4f5200c0314946369be10196a68
     };
   }
 
@@ -105,8 +99,8 @@ class Game extends React.Component {
       setStateProperties } = this;
 
     setStateProperties('score', score + points);
-    const Score = { name: user, gravatarEmail, assertions: correctAnswers, score };
-    localStorage.setItem('player', Score);
+    const player = { name: user, gravatarEmail, assertions: correctAnswers, score };
+    localStorage.setItem('player', JSON.stringify(player));
   }
 
   correctClick(difficulty) {

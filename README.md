@@ -590,7 +590,6 @@ Recomendamos que o Redux e o Router sejam configurados nesse requisito, para que
   * Aguarda mais de 30 segundos para responder
 
 #### 9. Crie o placar com as seguintes características:
-
   **PRIORIDADE 3** - Ao clicar na resposta correta, pontos devem ser somados no placar da pessoa que está jogando
 
   **Observações técnicas**
