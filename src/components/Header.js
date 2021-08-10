@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class Header extends React.Component {
   render() {
@@ -19,10 +20,15 @@ class Header extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  getUrl: state.gravatar.url,
+  getName: state.gravatar.name,
+});
+
 Header.propTypes = {
   getUrl: PropTypes.string.isRequired,
   getName: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
 };
 
-export default Header;
+export default connect(mapStateToProps, null)(Header);
