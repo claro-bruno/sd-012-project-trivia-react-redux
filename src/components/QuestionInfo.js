@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import UniqueButton from './UniqueButton';
 import Button from './Button';
+import { scorePlayer } from '../redux/actions';
 import './questioninfo.css';
 
 class QuestionInfo extends Component {
@@ -44,7 +46,7 @@ class QuestionInfo extends Component {
 
   sumUserPoints() {
     const basePoints = 10;
-    const { timer, questions } = this.props;
+    const { timer, questions, addScore } = this.props;
     const { index } = this.state;
     const difficultyMultiplier = () => {
       if (questions[index].difficulty === 'easy') {
@@ -67,6 +69,7 @@ class QuestionInfo extends Component {
         locals.player.assertions + 1,
         score: locals.player.score + points },
     }));
+    addScore(locals.player.score + points);
   }
 
   renderQuestions() {
@@ -131,14 +134,19 @@ class QuestionInfo extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  addScore: (score) => dispatch(scorePlayer(score)),
+});
+
 QuestionInfo.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   disabled: PropTypes.bool,
   timer: PropTypes.number.isRequired,
+  addScore: PropTypes.func.isRequired,
 };
 
 QuestionInfo.defaultProps = {
   disabled: false,
 };
 
-export default QuestionInfo;
+export default connect(null, mapDispatchToProps)(QuestionInfo);

@@ -6,8 +6,7 @@ import './header.css';
 
 class Header extends Component {
   render() {
-    const { email, name } = this.props;
-    const { player: { score } } = JSON.parse(localStorage.getItem('state'));
+    const { email, name, scorePlayer } = this.props;
     return (
       <header>
         <img
@@ -21,7 +20,7 @@ class Header extends Component {
         </h2>
         <span data-testid="header-score" className="score">
           <span className="score-text">Placar:</span>
-          {score}
+          {scorePlayer}
         </span>
       </header>
     );
@@ -36,6 +35,7 @@ Header.propTypes = {
 const mapStateToProps = (state) => ({
   email: state.userInfosReducer.email,
   name: state.userInfosReducer.name,
+  scorePlayer: state.userReducer.score,
 });
 
 export default connect(mapStateToProps, null)(Header);
