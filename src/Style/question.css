@@ -47,8 +47,8 @@ body {
 }
 
 .wrong {
-  background-color: rgb(255, 0, 0);
-  border: 3px solid rgb(255, 0, 0);
+  background-color: red;
+  border: 3px solid red;
 }
 
 .btn-next {
