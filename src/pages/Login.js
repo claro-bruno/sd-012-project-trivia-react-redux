@@ -55,12 +55,6 @@ class Login extends Component {
     this.setState({ btnDisable: !validator });
   }
 
-  handleClick() {
-    const { fetchAPItoken, token } = this.props;
-    fetchAPItoken();
-    localStorage.setItem('token', token);
-  }
-
   render() {
     const { name, email, btnDisable, redirect } = this.state;
     return (
