@@ -4,25 +4,6 @@
   padding: 0;
 }
 
-.ranking-page {
-  align-items: center;
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-}
-
-.ranking-page h1 {
-  margin: 25px;
-}
-
-.score-board {
-  border: 1px black solid;
-  display: flex;
-  flex-flow: column;
-  margin-top: 5%;
-  width: 75%;
-}
-
 .eachPlayer-list {
   align-items: center;
   border: 1px black solid;
