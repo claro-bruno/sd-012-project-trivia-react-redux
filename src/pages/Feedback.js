@@ -29,11 +29,11 @@ class Feedback extends React.Component {
     const { assertions } = this.state;
     if (assertions < NUMBER_OF_QUESTIONS) {
       return (
-        <p data-testid="feedback-text">Podia ser melhor...</p>
+        <h2 data-testid="feedback-text">Podia ser melhor...</h2>
       );
     }
     return (
-      <p data-testid="feedback-text">Mandou bem!</p>
+      <h2 data-testid="feedback-text">Mandou bem!</h2>
     );
   }
 
@@ -42,7 +42,7 @@ class Feedback extends React.Component {
     const email = md5(gravatarEmail).toString();
     const urlGravatar = `https://www.gravatar.com/avatar/${email}`;
 
-    const { score/* , assertions */ } = this.state;
+    const { score, assertions } = this.state;
     return (
       <div>
         <header>
@@ -63,6 +63,10 @@ class Feedback extends React.Component {
 
         <div>
           { this.renderMessage() }
+          <p data-testid="feedback-total-score">
+            {`Você acertou ${assertions} questões!`}
+          </p>
+          <p data-testid="feedback-total-question">{`Um total de ${score} pontos.`}</p>
         </div>
       </div>
     );
