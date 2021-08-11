@@ -20,6 +20,7 @@ class Game extends React.Component {
     this.scoreCounter = this.scoreCounter.bind(this);
     this.assertionsCounter = this.assertionsCounter.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.changeColorAnswer = this.changeColorAnswer.bind(this);
   }
 
   // Requisito 8 - para fazer foi consultado essa vídeo-aula: https://www.youtube.com/watch?v=NAx76xx40jM
@@ -67,6 +68,7 @@ class Game extends React.Component {
       this.scoreCounter(difficulty);
       this.assertionsCounter();
     }
+    this.changeColorAnswer();
     // this.setLocalStorageGame();
 
     this.setState({
@@ -94,6 +96,14 @@ class Game extends React.Component {
     });
   }
 
+  changeColorAnswer() {
+    const cssValueWrong = '3px solid rgb(255, 0, 0)';
+    const cssCorrectValue = '3px solid rgb(6, 240, 15)';
+    document.getElementById('btn-next').style.display = 'block';
+    document.getElementById('correct').style.border = cssCorrectValue;
+    document.getElementById('incorrect').style.border = cssValueWrong;
+  }
+
   // logica baseada no seguinte repositorio https://github.com/tryber/sd-012-project-trivia-react-redux/pull/8/commits/a93062a005d249fcc708168294a7926669bbf914
   renderQuestions() {
     const { triviaQuest } = this.props;
@@ -108,6 +118,7 @@ class Game extends React.Component {
           { triviaQuest[0].question }
         </p>
         <button
+          id="correct"
           type="button"
           data-testid="correct-answer"
           name="correct"
@@ -120,6 +131,7 @@ class Game extends React.Component {
         {
           triviaQuest[0].incorrect_answers.map((key, index) => (
             <button
+              id="incorrect"
               type="button"
               data-testid={ `wrong-answer-${index}` }
               name="incorrect"
@@ -132,7 +144,6 @@ class Game extends React.Component {
             </button>
           ))
         }
-
         <h3>
           Tempo:
           { count }
@@ -145,10 +156,19 @@ class Game extends React.Component {
     const { triviaQuest } = this.props;
     const firstQuestion = triviaQuest[0];
     return (
-      <section>
+      <div>
         <Header />
-        { firstQuestion ? this.renderQuestions() : <p>LOADING</p> }
-      </section>
+        <section>
+          { firstQuestion ? this.renderQuestions() : <p>LOADING</p> }
+          <button
+            type="button"
+            data-testid="btn-next"
+            id="btn-next"
+          >
+            Next
+          </button>
+        </section>
+      </div>
     );
   }
 }
