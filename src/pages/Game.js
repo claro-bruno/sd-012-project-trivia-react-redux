@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import './Game.css';
-// import NextButton from '../components/NextButton';
 
 class Game extends React.Component {
   constructor(props) {
@@ -224,8 +224,6 @@ class Game extends React.Component {
           >
             Next
           </button> */}
-
-          <NextButton />
 
         </section>
       </div>
