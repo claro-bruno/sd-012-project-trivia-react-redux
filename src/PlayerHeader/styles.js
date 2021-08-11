@@ -1,34 +1,30 @@
 import styled from 'styled-components';
 
 const PlayerHeaderS = styled.header` /* desabilitando problema stylelint */
+  align-items: center;
   background-color: ${({ theme }) => theme.primary};
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px gray;
+  color: ${({ theme }) => theme.secondary};
   display: flex;
-  justify-content: center;
-  margin: 20px auto 0;
-  padding: 20px 10px;
-  width: 550px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 100%;
+  min-height: 10vh;
+  padding: 4px 48px;
 
   section {
+    align-items: center;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: 25px;
-  }
 
-  h3 {
-    font-size: 19px;
-  }
-
-  h4 {
-    font-weight: 900;
-    margin-top: 5px;
+    h3 {
+      align-self: flex-end;
+      margin: 0 0 2px 8px;
+    }
   }
 
   img {
-    border-radius: 5px;
-    width: 100px;
+    border-radius: 50%;
+    height: 55px;
+    width: 55px;
   }
 `;
 

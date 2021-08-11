@@ -8,18 +8,18 @@ class PlayerHeader extends Component {
 
     return (
       <PlayerHeaderS>
-        <img
-          src={ `https://www.gravatar.com/avatar/${encodeEmail}` }
-          alt="profile"
-          data-testid="header-profile-picture"
-        />
         <section>
+          <img
+            src={ `https://www.gravatar.com/avatar/${encodeEmail}` }
+            alt="profile"
+            data-testid="header-profile-picture"
+          />
           <h3 data-testid="header-player-name">{ name }</h3>
-          <h4>
-            { 'Pontuação: ' }
-            <span data-testid="header-score">{ score }</span>
-          </h4>
         </section>
+        <h3>
+          { 'Pontuação: ' }
+          <span data-testid="header-score">{ score }</span>
+        </h3>
       </PlayerHeaderS>
     );
   }
@@ -27,7 +27,7 @@ class PlayerHeader extends Component {
 
 PlayerHeader.propTypes = {
   name: PropTypes.string.isRequired,
-  score: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
   encodeEmail: PropTypes.string.isRequired,
 };
 

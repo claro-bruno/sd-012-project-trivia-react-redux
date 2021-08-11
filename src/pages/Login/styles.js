@@ -81,6 +81,7 @@ export const LoginFormS = styled.form` /* desabilitando problema stylelint */
     width: 85%;
 
     input {
+      background-color: ${({ theme }) => theme.secondary};
       border: transparent;
       border-radius: 3px;
       box-shadow: 1px 1px 3px gray;
