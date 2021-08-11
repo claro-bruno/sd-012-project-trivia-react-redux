@@ -1,4 +1,4 @@
-import { CHANGE_ASSERTIONS, CHANGE_SCORE } from '../redux/actions';
+import { CHANGE_ASSERTIONS, CHANGE_SCORE, RESET_STATE } from '../redux/actions';
 
 const CREATE_LOGIN = 'CREATE_LOGIN';
 
@@ -24,6 +24,8 @@ const player = (state = initialState, action) => {
     return { ...state, score: action.payload };
   case CHANGE_ASSERTIONS:
     return { ...state, assertions: action.payload };
+  case RESET_STATE:
+    return initialState;
   default:
     return state;
   }
