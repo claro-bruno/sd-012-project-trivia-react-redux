@@ -72,8 +72,10 @@ class Game extends React.Component {
     const { currentTime, index, assertions } = this.state;
     const { questions } = this.props;
     const { difficulty } = questions[index];
-    const ten = 10;
+    console.log(difficulty);
+
     const three = 3;
+    const ten = 10;
 
     let result = 0;
     switch (difficulty) {

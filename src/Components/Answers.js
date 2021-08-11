@@ -6,28 +6,28 @@ class Answers extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      arrayAnswers: [],
-    };
+    // this.state = {
+    //   arrayAnswers: [],
+    // };
 
     this.shuffleArray = this.shuffleArray.bind(this);
-    this.teste = this.teste.bind(this);
+    // this.teste = this.teste.bind(this);
   }
 
-  componentDidMount() {
-    const { question } = this.props;
-    console.log('questao', question);
+  // componentDidMount() {
+  //   const { question } = this.props;
+  //   console.log('questao', question);
 
-    const answers = [...question.incorrect_answers, question.correct_answer];
-    console.log('respostas', answers);
+  //   const answers = [...question.incorrect_answers, question.correct_answer];
+  //   console.log('respostas', answers);
 
-    this.shuffleArray(answers);
-    this.teste(answers);
-  }
+  //   this.shuffleArray(answers);
+  //   this.teste(answers);
+  // }
 
-  teste(answers) {
-    this.setState({ arrayAnswers: answers });
-  }
+  // teste(answers) {
+  //   this.setState({ arrayAnswers: answers });
+  // }
 
   // consultei o StackOverFlow para resolver essa parte
   // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
@@ -36,7 +36,7 @@ class Answers extends React.Component {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
-    this.setState({ arrayAnswers: array });
+    // this.setState({ arrayAnswers: array });
     return array;
   }
 
