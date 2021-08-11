@@ -7,34 +7,58 @@ import Button from './Button';
 import { scorePlayer } from '../redux/actions';
 import './questioninfo.css';
 
+const ANSWERED_QUESTION = 'Respondida!';
+
 class QuestionInfo extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       index: 0,
+      seconds: 30,
+      disabled: false,
     };
 
-    this.changeColorsAnswer = this.changeColorsAnswer.bind(this);
     this.changeButtonVisibility = this.changeButtonVisibility.bind(this);
-    this.changeQuestions = this.changeQuestions.bind(this);
     this.resetQuestions = this.resetQuestions.bind(this);
+    this.count = this.count.bind(this);
+    this.resetTimer = this.resetTimer.bind(this);
+    this.answeredQuestion = this.answeredQuestion.bind(this);
+  }
+
+  componentDidMount() {
+    this.count();
+  }
+
+  count() {
+    const sec = 1000;
+    const interval = setInterval(() => {
+      const { seconds } = this.state;
+      this.setState({
+        seconds: seconds - 1,
+      });
+      if (seconds === 1) {
+        clearInterval(interval);
+        this.setState({
+          seconds: 'Time\'s Up',
+          disabled: true,
+        });
+      } else if (seconds === ANSWERED_QUESTION) {
+        clearInterval(interval);
+        this.setState({
+          seconds: ANSWERED_QUESTION,
+        });
+      }
+    }, sec);
   }
 
   changeButtonVisibility() {
     const buttonNextQuestion = document.getElementsByClassName('btn-next')[0];
     buttonNextQuestion.classList.add('visible');
-  }
-
-  changeColorsAnswer() {
     const correct = document.getElementById('correct-answer');
     const incorrect = document.getElementsByName('incorrect-answer');
     incorrect.forEach((question) => { question.className += ' questionWrong'; });
     correct.className += ' questionCorrect';
-  }
-
-  changeQuestions() {
-    this.setState((p) => ({ index: p.index + 1 }));
   }
 
   resetQuestions() {
@@ -42,12 +66,25 @@ class QuestionInfo extends Component {
     const incorrect = document.getElementsByName('incorrect-answer');
     incorrect.forEach((question) => question.classList.remove('questionWrong'));
     correct.classList.remove('questionCorrect');
+    this.setState((p) => ({ index: p.index + 1 }));
+  }
+
+  answeredQuestion() {
+    this.setState({
+      seconds: ANSWERED_QUESTION,
+    });
+  }
+
+  resetTimer() {
+    this.setState({
+      seconds: 30,
+    });
   }
 
   sumUserPoints() {
     const basePoints = 10;
-    const { timer, questions, addScore } = this.props;
-    const { index } = this.state;
+    const { questions, addScore } = this.props;
+    const { seconds, index } = this.state;
     const difficultyMultiplier = () => {
       if (questions[index].difficulty === 'easy') {
         return 1;
@@ -60,15 +97,14 @@ class QuestionInfo extends Component {
         return hardMultiplier;
       }
     };
-    const points = basePoints + (timer * difficultyMultiplier());
+    const points = basePoints + (seconds * difficultyMultiplier());
     const locals = JSON.parse(localStorage.getItem('state'));
     localStorage.setItem('state', JSON.stringify({
       player: {
         ...locals.player,
         assertions:
         locals.player.assertions + 1,
-        score: locals.player.score + points },
-    }));
+        score: locals.player.score + points } }));
     addScore(locals.player.score + points);
   }
 
@@ -85,12 +121,13 @@ class QuestionInfo extends Component {
   }
 
   render() {
-    const { index } = this.state;
-    const { questions, disabled } = this.props;
+    const { index, seconds, disabled } = this.state;
+    const { questions } = this.props;
     const finalQuestion = 5;
     if (index === finalQuestion) return <Redirect to="/feedback" />;
     return (
       <div className="question-container">
+        <div className="timer"><span>{seconds}</span></div>
         <p className="question-category" data-testid="question-category">
           <span className="category">Category:</span>
           {`${questions[index].category}`}
@@ -104,8 +141,8 @@ class QuestionInfo extends Component {
           className="correct-answer"
           onClick={ () => {
             this.changeButtonVisibility();
-            this.changeColorsAnswer();
             this.sumUserPoints();
+            this.answeredQuestion();
           } }
           innerText={ questions[index].correct_answer }
         />
@@ -116,17 +153,17 @@ class QuestionInfo extends Component {
             dataTestId={ `wrong-answer-${i}` }
             onClick={ () => {
               this.changeButtonVisibility();
-              this.changeColorsAnswer();
+              this.answeredQuestion();
             } }
             innerText={ incorrect }
-          />
-        ))}
+          />))}
         <UniqueButton
           className="btn-next"
           innerText="PRÓXIMA"
           onClick={ () => {
-            this.changeQuestions();
             this.resetQuestions();
+            this.resetTimer();
+            this.count();
           } }
         />
       </div>
@@ -140,13 +177,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 QuestionInfo.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  disabled: PropTypes.bool,
-  timer: PropTypes.number.isRequired,
   addScore: PropTypes.func.isRequired,
-};
-
-QuestionInfo.defaultProps = {
-  disabled: false,
 };
 
 export default connect(null, mapDispatchToProps)(QuestionInfo);

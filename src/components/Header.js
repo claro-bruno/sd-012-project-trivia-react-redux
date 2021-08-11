@@ -15,11 +15,11 @@ class Header extends Component {
           alt={ `Name:${name}` }
         />
         <h2 data-testid="header-player-name">
-          <span className="user">User:</span>
+          <span className="user">Pessoa jogadora:</span>
           { name }
         </h2>
         <span data-testid="header-score" className="score">
-          <span className="score-text">Placar:</span>
+          <span className="score-text">Pontuação:</span>
           {scorePlayer}
         </span>
       </header>

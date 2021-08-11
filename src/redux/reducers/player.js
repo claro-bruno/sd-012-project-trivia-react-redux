@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   isFetching: true,
   error: '',
   score: 0,
+  timer: 30,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {

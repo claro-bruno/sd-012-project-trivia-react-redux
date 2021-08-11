@@ -65,13 +65,13 @@ class FeedBack extends React.Component {
             alt={ `Name:${name}` }
           />
           <h3 data-testid="header-player-name">
-            <span className="player">Jogador:</span>
+            <span className="player">Pessoa jogadora:</span>
             {name}
           </h3>
           <p className="total-score" data-testid="header-score">{score}</p>
         </header>
         <div className="results">
-          <h2>Resultados</h2>
+          <h2>Results</h2>
           <p className="assertions">
             Número de acertos:
             <span data-testid="feedback-total-question">{assertions}</span>
