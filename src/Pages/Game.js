@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Loading from '../Components/Loading';
 import Answers from '../Components/Answers';
 import HeaderGame from '../Components/HeaderGame';
-import { actionFetchApiGame, showAnswers } from '../redux/actions';
+import { actionFetchApiGame, dispatchScore, showAnswers } from '../redux/actions';
 
 class Game extends React.Component {
   constructor() {
@@ -13,14 +13,9 @@ class Game extends React.Component {
       index: 0,
       currentTime: 30,
       isAnswered: false,
-      timer: 30,
       result: 0,
-      player: {
-        name: '',
-        assertions: 0,
-        score: 0,
-        gravatarEmail: '',
-      },
+      assertions: 0,
+      score: 0,
 
     };
     this.showNextQuestion = this.showNextQuestion.bind(this);
@@ -39,8 +34,15 @@ class Game extends React.Component {
   }
 
   setLocalStorage() {
-    const { player: jogador } = this.state;
-    localStorage.setItem('state', JSON.stringify({ player: jogador }));
+    const { assertions, score } = this.state;
+    const { name, gravatarEmail } = this.props;
+    const jogador = JSON.stringify({ player: {
+      name,
+      gravatarEmail,
+      assertions,
+      score,
+    } });
+    localStorage.setItem('state', jogador);
   }
 
   disableBtn() {
@@ -66,7 +68,7 @@ class Game extends React.Component {
 
   savingPoints(correct) {
     console.log(correct);
-    const { timer, index } = this.state;
+    const { currentTime, index, assertions } = this.state;
     const { questions } = this.props;
     // console.log(this.props.questions);
     const { difficulty } = questions[index];
@@ -75,24 +77,19 @@ class Game extends React.Component {
     let result = 0;
     switch (difficulty) {
     case 'easy':
-      result = ten + (timer * 1);
+      result = ten + (currentTime * 1);
       break;
     case 'medium':
-      result = ten + (timer * 2);
+      result = ten + (currentTime * 2);
       break;
     case 'hard':
-      result = ten + (timer * Number('3'));
+      result = ten + (currentTime * Number('3'));
       break;
     default:
       console.log('erro no switch');
       break;
     }
-    this.setState((prevState) => ({
-      player: {
-        ...prevState.player,
-        assertions: prevState.player.assertions + 1,
-      },
-    }));
+    this.setState({ assertions: assertions + 1 });
     return result;
   }
 
@@ -101,18 +98,15 @@ class Game extends React.Component {
       const resultado = this.savingPoints(correct);
       this.setState((prevState) => ({
         isAnswered: true,
-        timer: 0,
         result: prevState.result + resultado,
-        player: {
-          ...prevState.player,
-          score: prevState.result + resultado,
-          assertions: prevState.player.assertions,
-        },
-      }), () => {
-        this.setLocalStorage();
-      });
+        score: prevState.result + resultado,
+        assertions: prevState.assertions,
+      }));
     }
+    this.setLocalStorage();
     console.log(this.state);
+    const then = JSON.parse(localStorage.getItem('state'));
+    console.log(then);
   }
 
   showNextQuestion() {
@@ -166,12 +160,12 @@ class Game extends React.Component {
 
   render() {
     const { questions, isFetching, show } = this.props;
-    const { index, currentTime } = this.state;
+    const { index, currentTime, score } = this.state;
     if (isFetching) return <Loading />;
 
     return (
       <>
-        <HeaderGame />
+        <HeaderGame score={ score } />
         {
           questions.length > 0 ? (
             <section className="App">
@@ -227,11 +221,14 @@ const mapStateToProps = (state) => ({
   indexQuestion: state.gameReducer.indexQuestion,
   token: state.player.token,
   show: state.answers.show,
+  name: state.player.name,
+  gravatarEmail: state.player.gravatarEmail,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchApiGame: (token) => dispatch(actionFetchApiGame(token)),
   sendShowAnswers: (show) => dispatch(showAnswers(show)),
+  savedScore: (score) => dispatch(dispatchScore(score)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
