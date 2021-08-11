@@ -54,7 +54,15 @@ export const userScore = (score) => ({
 export const fetchAPI = () => (dispatch) => {
   dispatch(getQuestions());
   const token = localStorage.getItem('token');
-  const endpoint = `https://opentdb.com/api.php?amount=5&encode=base64&token=${token}`;
+  const settings = JSON.parse(localStorage.getItem('settings'));
+  let endpoint = '';
+  if (settings === null) {
+    endpoint = `https://opentdb.com/api.php?amount=5&encode=base64&token=${token}`;
+    console.log('teste');
+  } else {
+    const { category, difficulty, type } = settings;
+    endpoint = `https://opentdb.com/api.php?amount=5&encode=base64&token=${token}&category=${category}&difficulty=${difficulty}&type=${type}`;
+  }
   fetch(endpoint)
     .then((data) => data.json())
     .then((response) => dispatch(getQuestionsSuccess(response.results)))

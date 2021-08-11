@@ -2,11 +2,12 @@ import React from 'react';
 
 class MessageFeedback extends React.Component {
   getAssertions() {
+    const three = 3;
     const state = JSON.parse(localStorage.getItem('state'));
-    if (state.player.assertions < 2 + 1) {
+    if (state.player.assertions < three) {
       return this.messageCouldBeBetter();
     }
-    if (state.player.assertions >= 2 + 1) {
+    if (state.player.assertions >= three) {
       return this.messageGoodJob();
     }
   }
