@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import './Game.css';
+// import NextButton from '../components/NextButton';
 
 class Game extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class Game extends React.Component {
       disabled: false,
       score: 0,
       assertions: 0,
+      // questionNumber: 0,
     };
 
     this.renderQuestions = this.renderQuestions.bind(this);
@@ -21,6 +23,8 @@ class Game extends React.Component {
     this.assertionsCounter = this.assertionsCounter.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.changeColorAnswer = this.changeColorAnswer.bind(this);
+    // this.fiveQuestions = this.fiveQuestions.bind(this);
+    // this.handleClickNextButton = this.handleClickNextButton(this);
   }
 
   // Requisito 8 - para fazer foi consultado essa vídeo-aula: https://www.youtube.com/watch?v=NAx76xx40jM
@@ -74,6 +78,8 @@ class Game extends React.Component {
     this.setState({
       disabled: true,
     });
+
+    // this.handleClickNextButton();
   }
 
   scoreCounter(difficulty) {
@@ -104,14 +110,57 @@ class Game extends React.Component {
     document.getElementById('incorrect').style.border = cssValueWrong;
   }
 
+  // Rsacunho do Requisito 11
+  // const { questionNumber } = this.state;
+  // const MAX_QUESTIONS = 5;
+  // if (questionNumber <= MAX_QUESTIONS) {
+  //   this.setState((prevState) => ({
+  //     questionNumber: prevState.questionNumber + 1,
+  //   }), () => console.log(questionNumber));
+  // }
+  // this.setState((state) => ({
+  //   ...state,
+
+  // }));
+
+  // fiveQuestions() {
+  //   // const { triviaQuest } = this.props;
+  //   // const firstQuestion = triviaQuest[0];
+  //   // console.log(triviaQuest);
+
+  // }
+
+  // handleClickNextButton() {
+  //   const { questionNumber } = this.state;
+
+  //   const MAX_QUESTIONS = 5;
+  //   if (questionNumber < MAX_QUESTIONS) {
+  //     this.setState((prevState) => ({
+  //       ...prevState,
+  //       questionNumber: prevState.questionNumber + 1,
+  //     })/* , () => console.log(questionNumber) */);
+  //   }
+  //   console.log(questionNumber);
+
+  //   // this.setState((state) => ({
+  //   //   ...state,
+  //   //   questionNumber: state.questionNumber + 1,
+  //   // }));
+
+  //   // this.setState({
+  //   //   questionNumber: questionNumber + 1,
+  //   // });
+  // }
+
   // logica baseada no seguinte repositorio https://github.com/tryber/sd-012-project-trivia-react-redux/pull/8/commits/a93062a005d249fcc708168294a7926669bbf914
+
   renderQuestions() {
     const { triviaQuest } = this.props;
-    const { count, disabled } = this.state;
-
+    const { count, disabled/* , questionNumber  */ } = this.state;
     return (
       <div>
         <p data-testid="question-category">
+          Categoria:
           { triviaQuest[0].category }
         </p>
         <p data-testid="question-text">
@@ -155,18 +204,29 @@ class Game extends React.Component {
   render() {
     const { triviaQuest } = this.props;
     const firstQuestion = triviaQuest[0];
+    // const { questionNumber } = this.state;
+    // const firstQuestion = triviaQuest[questionNumber];
+    if (triviaQuestion[questionNumber] === undefined) {
+      // this.storeInTheRanking();
+      return <Redirect to="/feedback" />;
+    }
+    console.log(firstQuestion);
     return (
       <div>
         <Header />
         <section>
           { firstQuestion ? this.renderQuestions() : <p>LOADING</p> }
-          <button
+          {/* <button
             type="button"
             data-testid="btn-next"
             id="btn-next"
+            onClick={ this.handleClickNextButton }
           >
             Next
-          </button>
+          </button> */}
+
+          <NextButton />
+
         </section>
       </div>
     );
