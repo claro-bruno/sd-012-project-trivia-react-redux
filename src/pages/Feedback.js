@@ -80,7 +80,7 @@ class FeedBack extends React.Component {
             Pontuação:
             <span data-testid="feedback-total-score">{score}</span>
           </p>
-          <p data-testid="feedback-text">{this.feedBackMessage()}</p>
+          <p className="feedback" data-testid="feedback-text">{this.feedBackMessage()}</p>
           <div className="buttons-container">
             <button type="button" data-testid="btn-play-again" onClick={ this.playAgain }>
               Jogar Novamente
