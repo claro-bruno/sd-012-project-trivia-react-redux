@@ -36,7 +36,7 @@ class Settings extends React.Component {
         <fieldset className="settings-field">
           <Link className="link" to="/">
             <i className="bi bi-house-fill" />
-            {' Home'}
+            {' Return'}
           </Link>
           <h1 data-testid="settings-title" className="settings-title">Settings</h1>
           <label htmlFor="category-id">
