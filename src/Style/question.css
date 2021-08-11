@@ -43,22 +43,22 @@ body {
 
 .correct {
   background-color: rgb(19, 212, 26);
-  border-radius: 30px;
+  /* border-radius: 30px;
   color: black;
   display: flex;
   margin-bottom: 20px;
   margin-left: 200px;
-  width: 200px;
+  width: 200px; */
 }
 
 .wrong {
   background-color: rgb(216, 16, 16);
-  border-radius: 30px;
-  color: darkgray;
+  /* border-radius: 30px;
+  color: black;
   display: flex;
   margin-bottom: 20px;
   margin-left: 200px;
-  width: 200px;
+  width: 200px; */
 }
 
 .btn-next {
