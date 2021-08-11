@@ -2,7 +2,71 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+
 import { addUserName, addEmail, addToken, timeReset } from '../redux/actions';
+
+const Play = styled.button`
+  display: block;
+  width: 100%;
+  border: none;
+  background: linear-gradient(to right, hsl(198, 60%, 50%), hsl(176, 68%, 64%));
+  color: hsl(0, 0%, 100%);
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.75rem;
+  border-radius: 2.5rem;
+  margin-top: 3rem;
+
+  &:disabled {
+    filter: opacity(0.8);
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Input = styled.input`
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  padding: 1em 0.5rem;
+  border-bottom: 1px solid hsla(0, 0%, 100%, 62.5%);
+  color: hsl(0, 0%, 100%);
+  border-radius: 0.125rem;
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover, 
+  &:-webkit-autofill:focus, 
+  &:-webkit-autofill:active {
+    transition: background-color 5000s;
+    -webkit-text-fill-color: hsl(0, 0%, 100%);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: hsla(0, 0%, 100%, 62.5%);
+  }
+`;
+
+const Settings = styled.button`
+  background-color: transparent;
+  border: none;
+  color: hsla(0, 0%, 100%, 62.5%);
+  margin-left: auto;
+  display: block;
+  margin-top: 0.625rem;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+`;
 
 class LoginForm extends Component {
   constructor() {
@@ -59,7 +123,7 @@ class LoginForm extends Component {
     const { resetTimer } = this.props;
     return (
       <form>
-        <input
+        <Input
           type="email"
           placeholder="Email"
           name="email"
@@ -67,7 +131,7 @@ class LoginForm extends Component {
           onChange={ this.handleChange }
           value={ email }
         />
-        <input
+        <Input
           type="text"
           placeholder="Name"
           name="name"
@@ -76,23 +140,23 @@ class LoginForm extends Component {
           value={ name }
         />
         <Link to="/questions">
-          <button
+          <Play
             type="button"
             data-testid="btn-play"
             disabled={ !this.handleLoginInfo() }
             onClick={ () => this.addInfoToStore() }
           >
             Play
-          </button>
+          </Play>
         </Link>
         <Link to="/settings">
-          <button
+          <Settings
             type="button"
             data-testid="btn-settings"
             onClick={ () => resetTimer() }
           >
             Settings
-          </button>
+          </Settings>
         </Link>
       </form>
     );
