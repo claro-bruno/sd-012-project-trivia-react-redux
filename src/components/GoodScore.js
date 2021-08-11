@@ -11,7 +11,7 @@ class GoodScore extends Component {
     return (
       <div>
         <Image
-          src="https://www.pinclipart.com/picdir/big/45-453116_shocked-happy-cliparts-co-awesome-face-no-background.png"
+          src="https://www.clipartmax.com/png/full/426-4267156_pokemon-clip-art-happy-pikachu.png"
           alt="Congratulations!"
         />
         <h1>Congratulations!</h1>

@@ -10,7 +10,7 @@ class BadScore extends Component {
   render() {
     return (
       <div>
-        <Image alt="bad score" src="https://www.pinclipart.com/picdir/big/71-716926_pikachu-clipart-yellow-imgenes-de-pikachu-sad-png.png" />
+        <Image alt="bad score" src="https://data.whicdn.com/images/68563219/original.png" />
         <h1>You can do it better next time...</h1>
       </div>
     );
