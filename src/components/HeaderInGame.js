@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchGravatarImage } from '../services/api';
-import './headerInGame.css';
+import '../Style/headerInGame.css';
 
 class HeaderInGame extends Component {
   constructor() {
@@ -30,13 +30,16 @@ class HeaderInGame extends Component {
       <div className="userInfos">
         <div className="left-side-infos">
           <img
+            className="img-gravatar"
             src={ gravatarImage }
             alt="user gravatar"
             data-testid="header-profile-picture"
           />
           <p data-testid="header-player-name">{userName}</p>
         </div>
-        <p data-testid="header-score">{userScore}</p>
+        <p className="score-counter" data-testid="header-score">
+          {userScore}
+        </p>
       </div>
     );
   }

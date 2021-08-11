@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Trivia from './pages/Trivia';
 import Login from './pages/Login';
+// import Game from './pages/Game';
 import './App.css';
 import HeaderInGame from './components/HeaderInGame';
 import Config from './pages/Config';

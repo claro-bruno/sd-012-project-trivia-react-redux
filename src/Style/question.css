@@ -1,0 +1,66 @@
+body {
+  background-color: rgb(10, 10, 10);
+}
+
+.score-counter {
+  border-color: rgb(81, 86, 255);
+  border-radius: 30px;
+  border-style: solid;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  width: 100px;
+}
+
+.main-questions {
+  border-color: rgb(81, 86, 255);
+  border-radius: 30px;
+  border-style: solid;
+  color: white;
+  margin-bottom: 10px;
+  margin-left: 400px;
+  margin-top: 70px;
+  min-height: 260px;
+  position: relative;
+  text-align: center;
+  width: 600px;
+}
+
+.time-counter {
+  background: rgb(81, 86, 255);
+  display: flex;
+  text-align: center;
+}
+
+.quest-btn {
+  border-radius: 30px;
+  color: black;
+  display: flex;
+  margin-bottom: 20px;
+  margin-left: 200px;
+  width: 200px;
+}
+
+.correct {
+  background-color: rgb(6, 240, 15);
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.wrong {
+  background-color: red;
+  border: 3px solid red;
+}
+
+.btn-next {
+  background: rgb(81, 86, 255);
+  border: 1px solid white;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-left: 400px;
+  padding: 8px 5px;
+  text-shadow: 0 1px 1px #333;
+  width: 600px;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './question.css';
+import '../Style/question.css';
 
 class Question extends Component {
   render() {
@@ -17,21 +17,24 @@ class Question extends Component {
     } = this.props;
     const sortedAnswers = [...incorrectAnswers, correctAnswer].sort();
     return (
-      <>
-        <h2>{ timeCounter }</h2>
-        <h2 data-testid="question-category">{ category }</h2>
+      <section className="main-questions">
+        <h2 className="time-counter">
+          Time :
+          { timeCounter }
+        </h2>
+        <h2 className="quest-category" data-testid="question-category">{ category }</h2>
         <p data-testid="question-text">{ question }</p>
         { sortedAnswers.map((answer, index) => {
           const isCorrect = answer === correctAnswer;
           const dataTestId = isCorrect
             ? 'correct-answer'
             : `wrong-answer-${incorrectAnswers.indexOf(answer)}`;
-          const className = isCorrect
-            ? 'correct'
-            : 'wrong';
+          const interruptor = isCorrect
+            ? 'correct quest-btn'
+            : 'wrong quest-btn';
           return (
             <button
-              className={ resolved ? className : '' }
+              className={ resolved ? interruptor : 'quest-btn' }
               type="button"
               key={ index }
               data-testid={ dataTestId }
@@ -42,7 +45,7 @@ class Question extends Component {
             </button>
           );
         })}
-      </>
+      </section>
     );
   }
 }

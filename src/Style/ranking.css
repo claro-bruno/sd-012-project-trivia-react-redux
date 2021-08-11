@@ -1,0 +1,54 @@
+.ranking-screen {
+  border-color: rgb(81, 86, 255);
+  border-radius: 30px;
+  border-style: solid;
+  color: white;
+  margin-bottom: 10px;
+  margin-left: 400px;
+  margin-top: 70px;
+  min-height: 260px;
+  position: relative;
+  text-align: center;
+  width: 600px;
+}
+
+.ranking-player {
+  border-bottom: rgb(81, 86, 255);
+  border-bottom-style: solid;
+}
+
+.ranking-img {
+  display: flex;
+  padding-left: 50px;
+}
+
+.ranking-name {
+  border-radius: 30px;
+  display: flex;
+  margin-bottom: 20px;
+  margin-left: 200px;
+  width: 200px;
+}
+
+.ranking-score {
+  border-radius: 30px;
+  display: flex;
+  margin-bottom: 20px;
+  margin-left: 200px;
+  width: 200px;
+}
+
+.btn-home {
+  background: rgb(81, 86, 255);
+  border: 1px solid white;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-left: 0;
+  margin-top: 5px;
+  padding: 8px 5px;
+  text-shadow: 0 1px 1px #333;
+  width: 500px;
+}

@@ -1,0 +1,25 @@
+.userInfos {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 20px;
+}
+
+.left-side-infos {
+  align-items: center;
+  border-color: rgb(81, 86, 255);
+  border-radius: 30px;
+  border-style: solid;
+  color: white;
+  display: flex;
+  justify-content: left;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 500px;
+}
+
+.img-gravatar {
+  border-color: rgb(132, 156, 161);
+  border-radius: 30px;
+  border-style: solid;
+}
