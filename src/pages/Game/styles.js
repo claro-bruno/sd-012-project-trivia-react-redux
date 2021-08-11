@@ -2,15 +2,14 @@
 import styled from 'styled-components';
 
 export const GameHeaderS = styled.header` /* desabilitando problema stylelint */
-  background-color: #fafafa;
+  background-color: ${({ theme }) => theme.primary};
   border-radius: 5px;
   box-shadow: 1px 1px 3px gray;
   display: flex;
   justify-content: center;
-  margin: auto;
-  margin-top: 20px;
+  margin: 20px auto 0;
   padding: 20px 10px;
-  width: 50%;
+  width: 550px;
 
   section {
     display: flex;
@@ -40,7 +39,7 @@ export const GameBodyS = styled.main` /* desabilitando problema stylelint */
   box-shadow: 1px 1px 3px gray;
   margin: 20px auto;
   padding: 50px;
-  width: 50%;
+  width: 80%;
 
   p {
     background-color: #fafafa;
@@ -54,20 +53,20 @@ export const GameBodyS = styled.main` /* desabilitando problema stylelint */
   }
 
   section {
-    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 
     div {
-      align-items: center;
       display: flex;
       flex-direction: column;
 
       button {
-        border-radius: 50px;
+        border-radius: 3px;
         font-weight: 550;
+        margin-right: 15px;
         margin-top: 16px;
-        width: 50%;
       }
-
     }
   }
 `;

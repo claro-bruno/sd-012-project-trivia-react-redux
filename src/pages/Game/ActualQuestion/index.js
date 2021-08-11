@@ -116,7 +116,7 @@ class ActualQuestion extends Component {
             onClick={ () => { this.handleChangeStyle(); this.submitCorrectAnswer(); } }
             disabled={ answered }
           >
-            { answer }
+            { atob(answer) }
           </AnswerButtonS>
         );
       }
@@ -131,7 +131,7 @@ class ActualQuestion extends Component {
           onClick={ this.handleChangeStyle }
           disabled={ answered }
         >
-          { answer }
+          { atob(answer) }
         </AnswerButtonS>
       );
     });
@@ -157,8 +157,8 @@ class ActualQuestion extends Component {
     return (
       <section>
         <p>{ timer }</p>
-        <h2 data-testid="question-category">{ category }</h2>
-        <h4 data-testid="question-text">{ question }</h4>
+        <h2 data-testid="question-category">{ atob(category) }</h2>
+        <h4 data-testid="question-text">{ atob(question) }</h4>
         <div>
           { this.renderAnswers(answers, correctAnswer, answered) }
           { answered && (questionIndex < maxIndex ? (

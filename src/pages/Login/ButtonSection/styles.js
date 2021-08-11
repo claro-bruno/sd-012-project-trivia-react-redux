@@ -23,7 +23,7 @@ export const ConfigButtonS = styled.button` /* desabilitando problema stylelint 
 `;
 
 export const PlayButtonS = styled.button` /* desabilitando problema stylelint */
-  background-color: #2fc18c;
+  background-color: ${({ theme }) => theme.primary};
   border: none;
   border-radius: 3px;
   color: whitesmoke;

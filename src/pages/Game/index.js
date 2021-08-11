@@ -25,7 +25,7 @@ class Game extends Component {
   getQuestions() {
     const numberOfQuestions = 5;
     const token = localStorage.getItem('token');
-    const endpoind = `https://opentdb.com/api.php?amount=${numberOfQuestions}&token=${token}`;
+    const endpoind = `https://opentdb.com/api.php?amount=${numberOfQuestions}&encode=base64&token=${token}`;
     fetch(endpoind)
       .then((response) => response.json())
       .then(({ results }) => this.setState({ questions: results, loaded: true }));

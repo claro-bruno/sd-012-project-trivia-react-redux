@@ -13,7 +13,7 @@ export const LoginPageS = styled.section` /* desabilitando problema stylelint */
 `;
 
 export const LoginHeaderS = styled.header` /* desabilitando problema stylelint */
-  background-color: #2fc18c;
+  background-color: ${({ theme }) => theme.primary};
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
