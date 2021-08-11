@@ -9,7 +9,11 @@ const PlayerHeaderS = styled.header` /* desabilitando problema stylelint */
   justify-content: space-between;
   max-width: 100%;
   min-height: 10vh;
-  padding: 4px 48px;
+  padding: 4px 36px;
+
+  h3 {
+    margin: 0;
+  }
 
   section {
     align-items: center;

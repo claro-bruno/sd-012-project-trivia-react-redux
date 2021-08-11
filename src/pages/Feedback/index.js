@@ -29,35 +29,23 @@ class Feedback extends Component {
           score={ score }
           encodeEmail={ encodeEmail }
         />
-        <h1 data-testid="feedback-text">Feedback</h1>
-        <p data-testid="feedback-text">{ this.performPlayer() }</p>
+        <h1 data-testid="feedback-text">{ this.performPlayer() }</h1>
         <div>
           <p>
             {'Pontuação: '}
-            <span data-testid="feedback-total-score">
-              {score}
-            </span>
+            <span data-testid="feedback-total-score">{score}</span>
           </p>
           <p>
             {'Acertou '}
-            <span data-testid="feedback-total-question">
-              {assertions}
-            </span>
+            <span data-testid="feedback-total-question">{assertions}</span>
             {' perguntas'}
           </p>
           <div>
             <Link to="/">
-              <button type="button" data-testid="btn-play-again">
-                Jogar novamente
-              </button>
+              <button type="button" data-testid="btn-play-again">Jogar novamente</button>
             </Link>
             <Link to="/ranking">
-              <button
-                type="button"
-                data-testid="btn-ranking"
-              >
-                Ver Ranking
-              </button>
+              <button type="button" data-testid="btn-ranking">Ver Ranking</button>
             </Link>
           </div>
         </div>
