@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setScore } from '../redux/action';
-import './Answers.css';
-import Timer from '../components/Timer';
 
 class GameBody extends Component {
   constructor(props) {
@@ -19,17 +17,36 @@ class GameBody extends Component {
       hidden: true,
       wrong: '',
       correct: '',
+      seconds: 30,
     };
     this.createQuestion = this.createQuestion.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.rad = this.rad.bind(this);
     this.createOptions = this.createOptions.bind(this);
     this.buttonsAnswer = this.buttonsAnswer.bind(this);
+    this.count = this.count.bind(this);
     this.handleClickScore = this.handleClickScore.bind(this);
   }
 
   componentDidMount() {
+    this.count();
     this.rad();
+  }
+
+  count() {
+    const sec = 1000;
+    const interval = setInterval(() => {
+      const { seconds } = this.state;
+      this.setState({
+        seconds: seconds - 1,
+      });
+      if (seconds === 1) {
+        clearInterval(interval);
+        this.setState({
+          seconds: 'Time\'s Up',
+        });
+      }
+    }, sec);
   }
 
   handleClickScore(diff) {
@@ -58,6 +75,7 @@ class GameBody extends Component {
       hidden: true,
       correct: '',
       wrong: '',
+      seconds: 30,
     });
     this.rad();
   }
@@ -143,11 +161,16 @@ class GameBody extends Component {
   }
 
   render() {
-    const { disable, hidden } = this.state;
+    const { disable, hidden, seconds } = this.state;
     const { results } = this.props;
     return (
       <div>
-        <Timer />
+        <p>Timer</p>
+        <span>
+          {
+            seconds
+          }
+        </span>
         {
           (results.length > 0) ? this.createQuestion() : <p>LOADING</p>
         }
