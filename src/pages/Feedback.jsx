@@ -79,8 +79,8 @@ class Feedback extends React.Component {
     return (
       <>
         <Header />
-        <div>
-          <h1>Desempenho</h1>
+        <div className="body-feedback">
+          <h1 className="titulo">Desempenho</h1>
         </div>
         <div className="main-content">
           <div>
@@ -98,8 +98,6 @@ class Feedback extends React.Component {
               ? this.mandouBem()
               : this.podiaSerMelhor() }
           </div>
-        </div>
-        <div>
           <Link to="/">
             <button type="button" data-testid="btn-play-again">
               Jogar novamente
@@ -110,6 +108,8 @@ class Feedback extends React.Component {
               Ver Ranking
             </button>
           </Link>
+        </div>
+        <div>
           <Footer />
         </div>
       </>

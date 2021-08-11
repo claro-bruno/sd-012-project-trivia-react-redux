@@ -1,11 +1,18 @@
+/* .body-feedback {
+  background-image: url("../images/abstract-1628703162054-6515.jpg");
+} */
+
 .ranking-image {
   border-radius: 50%;
   padding: 10px 0;
 }
 
+.titulo {
+  color: white;
+}
 .player-label {
   align-items: center;
-  background-color: rgb(211, 223, 219);
+  /* background-color: rgb(211, 223, 219); */
   border-radius: 10px;
   display: flex;
   justify-content: space-between;
@@ -25,8 +32,4 @@
   width: 400px;
 }
 
-.main-content {
-  align-items: center;
-  display: flex;
-  justify-content: space-around;
-}
+

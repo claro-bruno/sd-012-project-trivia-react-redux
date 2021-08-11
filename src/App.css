@@ -1,9 +1,14 @@
+body {
+  margin:0;
+  padding:0;
+}
+
 .App {
   text-align: center;
 }
 
 button {
-  background-color: #71b3b8;
+  background-color: rgb(53, 76, 110);
   border: none;
   border-radius: 4px;
   color: white;
@@ -49,7 +54,7 @@ button:hover {
 
 .App-header {
   align-items: center;
-  background-color: #282c34;
+  background-image: url("./images/abstract-1628703162054-6515.jpg");
   color: white;
   display: flex;
   flex-direction: column;

@@ -1,12 +1,30 @@
-.FixedHeightContainer {
-  background: rgb(144, 177, 182);
-  margin: 80px auto;
-  padding: 1px;
-  width: 60%;
+body {
+  background-image: url("../images/abstract-1628703162054-6515.jpg");
+}
+.ranking-body {
+  margin: 0 auto;
+  border-radius: 15px;
+  height: 700px;
+  background-color: white;
+  width: 1200px;
+  opacity: 0.9;
+}
+.main-content {
+  color: #246669;
+  padding: 40px 0px;
+  margin: 50px auto;
+  font-size: 30px;
+  border-radius: 15px;
+  opacity: 0.9;
+  background-color: white;
+  width: 1300px;
 }
 
-.ranking-body {
-  background-color: #282c34;
+.FixedHeightContainer {
+  background: rgb(144, 177, 182);
+  margin: 20px auto;
+  padding: 1px;
+  width: 80%;
 }
 
 .Content {

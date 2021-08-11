@@ -1,5 +1,26 @@
-input {
-  border-radius: 4px;
-  margin: 0 20px;
-  padding: 10px;
+body {
+  background-image: url("../images/abstract-1628703162054-6515.jpg");
+}
+
+.App-header {
+  background-color: white;
+}
+
+::placeholder {
+  color: black;
+  opacity: 1; /* Firefox */
+}
+
+.body-login {
+  margin-top: 30px;
+  border-radius: 10px;
+  opacity: 0.9;
+  background-color: white;
+  width: 450px;
+}
+
+.btn-login {
+  width: 150px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

@@ -1,3 +1,7 @@
+body {
+  background-image: url("../images/abstract-1628703162054-6515.jpg");
+}
+
 .Game {
   align-content: space-between;
   display: flexbox;
