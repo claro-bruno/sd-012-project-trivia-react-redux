@@ -10,12 +10,12 @@ class Footer extends Component {
       >
         <p>
           <span>Desenvolvido por </span>
-          <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/Bernardo-Coelho-Cezario/" target="_blank" rel="noopener noreferrer">
             Bernardo
           </a>
           ,
           {' '}
-          <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/caio-cesar-lopes/" target="_blank" rel="noopener noreferrer">
             Caio
           </a>
           ,
