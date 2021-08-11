@@ -6,6 +6,7 @@ const STATE_INITIAL = ({
   loading: false,
   error: null,
   score: 0,
+  assertions: 0,
 });
 
 const questions = (state = STATE_INITIAL, action) => {
@@ -33,7 +34,8 @@ const questions = (state = STATE_INITIAL, action) => {
   case SET_SCORE:
     return {
       ...state,
-      score: action.payload,
+      score: action.payload.score,
+      assertions: action.payload.assertions,
     };
 
   default:

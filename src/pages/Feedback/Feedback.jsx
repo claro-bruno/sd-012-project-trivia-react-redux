@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Header from './Header';
 
 class Feedback extends React.Component {
@@ -9,6 +11,7 @@ class Feedback extends React.Component {
   }
 
   render() {
+    const { score, assertions } = this.props;
     const assertionsMin = 3;
     return (
       <>
@@ -16,7 +19,8 @@ class Feedback extends React.Component {
         <div>
           <h3 data-testid="feedback-text">
             {
-              (assertios >= assertionsMin ? 'Mandou bem!' : 'Podia ser melhor...')
+              (assertions >= assertionsMin)
+                ? <span>Mandou bem!</span> : <span>Podia ser melhor...</span>
             }
           </h3>
           <div>
@@ -59,7 +63,14 @@ class Feedback extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  assertions: state.reducer.assertions,
+  assertions: state.questions.assertions,
+  score: state.questions.score,
 });
+
+Feedback.propTypes = {
+  score: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
+
+};
 
 export default connect(mapStateToProps)(Feedback);

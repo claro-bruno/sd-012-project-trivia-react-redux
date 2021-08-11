@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { setScore } from '../redux/action';
+
+const cinco = 5;
 
 class GameBody extends Component {
   constructor(props) {
@@ -18,6 +21,7 @@ class GameBody extends Component {
       seconds: 30,
       stopTimer: false,
       assertions: 0,
+      score: 0,
     };
     this.createQuestion = this.createQuestion.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
@@ -64,15 +68,15 @@ class GameBody extends Component {
       },
     };
     this.setState({
+      score: state.player.score,
       assertions: state.player.assertions,
     });
     localStorage.setItem('state', JSON.stringify(state));
-    setStateScore(state.player.score);
+    setStateScore(state.player.score, state.player.assertions);
   }
 
   handleClickScore(diff) {
-    const { score } = this.props;
-    const { seconds, assertions } = this.state;
+    const { seconds, assertions, score } = this.state;
     const dez = 10;
     const diffLevel = {
       hard: 3,
@@ -90,9 +94,8 @@ class GameBody extends Component {
 
   nextQuestion() {
     const { index } = this.state;
-    // index precisa ser tratado , pois ira sobresair o tamanho do array
     this.setState({
-      index: index + 1,
+      index: index < cinco ? index + 1 : index,
       disableAnswers: false,
       hidden: true,
       correct: '',
@@ -107,7 +110,6 @@ class GameBody extends Component {
   createQuestion() {
     const { results } = this.props;
     const { index } = this.state;
-    console.log('results GameBody', results[index]);
     const { category, question } = results[index];
     return (
       <div>
@@ -131,11 +133,9 @@ class GameBody extends Component {
   }
 
   createOptions() {
-    // console.log('chamou createOptions');
     const { index } = this.state;
     const { results } = this.props;
     const { difficulty } = results[index];
-    // console.log('Gabriel', difficulty);
 
     const {
       alternatives,
@@ -185,15 +185,14 @@ class GameBody extends Component {
   }
 
   render() {
-    const { disable, hidden, seconds } = this.state;
+    const { disable, hidden, seconds, index } = this.state;
     const { results } = this.props;
+    if (index >= cinco) return <Redirect to="/feedback" />;
     return (
       <div>
         <p>Timer</p>
         <span>
-          {
-            seconds
-          }
+          { seconds }
         </span>
         {
           (results.length > 0) ? this.createQuestion() : <p>LOADING</p>
@@ -215,7 +214,6 @@ class GameBody extends Component {
 GameBody.propTypes = {
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
   setStateScore: PropTypes.func.isRequired,
-  score: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   gravatarEmail: PropTypes.string.isRequired,
 };
@@ -228,7 +226,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setStateScore: (score) => dispatch(setScore(score)),
+  setStateScore: (score, assertions) => dispatch(setScore(score, assertions)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameBody);
