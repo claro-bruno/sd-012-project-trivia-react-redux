@@ -23,20 +23,24 @@ const Container = styled.main`
 const Title = styled.h2`
   font-size: 2.5rem;
   color: hsl(0, 0%, 100%);
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 
   @media (min-width: 60rem) {
-    margin-top: 4rem;
+    margin-top: 3rem;
     font-size: 2.75rem;
   }
 `;
 
-const Assertions = styled.span`
+const Bold = styled.span`
   font-weight: 600;
 `;
 
 const Points = styled.p`
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
+
+  @media (min-width: 60rem) {
+    margin-bottom: 2rem;
+  }
 `;
 
 const Message = styled.p`
@@ -58,7 +62,7 @@ const Button = styled.button`
   cursor: pointer;
   padding: 0.5rem;
   width: 13.75rem;
-  border-radius: 0.625rem;
+  border-radius: 0.25rem;
 
   &:hover {
     filter: opacity(0.8);
@@ -104,14 +108,14 @@ class FeedbackPage extends Component {
           <p>
             Você acertou
             {' '}
-            <Assertions data-testid="feedback-total-question">{assertions}</Assertions>
+            <Bold data-testid="feedback-total-question">{assertions}</Bold>
             {' '}
             {assertions === 1 ? 'pergunta' : 'perguntas'}
           </p>
           <Points>
             Sua pontuação foi
             {' '}
-            <span data-testid="feedback-total-score">{score}</span>
+            <Bold data-testid="feedback-total-score">{score}</Bold>
           </Points>
           <Link to="/">
             <Button
