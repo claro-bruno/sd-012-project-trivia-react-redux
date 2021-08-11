@@ -1,4 +1,5 @@
 import { fetchToken, fetchQuiz } from '../../services/fetch';
+import shuffleArray from '../../utils';
 
 export const NAME_SET = 'USER_SET';
 export const EMAIL_SET = 'EMAIL_SET';
@@ -51,8 +52,18 @@ export const getToken = () => async (dispatch) => {
 export const getQuiz = () => async (dispatch) => {
   dispatch(quizStart());
   try {
-    const results = await fetchQuiz();
+    let results = await fetchQuiz();
+    results = results.map((result) => {
+      const {
+        correct_answer: correct,
+        incorrect_answers: incorrect = [] } = result;
+      const sortedArray = [correct, ...incorrect];
+      const newArray = shuffleArray(sortedArray);
+      const newResult = { ...result, sortedArray: newArray };
+      return newResult;
+    });
     dispatch(quizSuccess(results));
+    console.log(results);
   } catch (error) {
     console.log(error);
   }
