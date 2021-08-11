@@ -22,7 +22,5 @@ class Ranking extends Component {
           <button type="button" data-testid="btn-go-home">Voltar para o Início</button>
         </Link>
       </div>
-    );
-  }
-}
+
 export default Ranking;
