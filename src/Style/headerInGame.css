@@ -18,7 +18,7 @@
   width: 500px;
 }
 
-#img-gravatar {
+.img-gravatar {
   border-color: rgb(132, 156, 161);
   border-radius: 30px;
   border-style: solid;

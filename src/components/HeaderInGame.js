@@ -30,14 +30,14 @@ class HeaderInGame extends Component {
       <div className="userInfos">
         <div className="left-side-infos">
           <img
-            id="img-gravatar"
+            className="img-gravatar"
             src={ gravatarImage }
             alt="user gravatar"
             data-testid="header-profile-picture"
           />
           <p data-testid="header-player-name">{userName}</p>
         </div>
-        <p id="score-counter" data-testid="header-score">
+        <p className="score-counter" data-testid="header-score">
           Score:
           {userScore}
         </p>

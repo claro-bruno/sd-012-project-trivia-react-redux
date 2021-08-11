@@ -29,13 +29,13 @@ class Question extends Component {
           const dataTestId = isCorrect
             ? 'correct-answer'
             : `wrong-answer-${incorrectAnswers.indexOf(answer)}`;
-          const className = isCorrect
+          const interruptor = isCorrect
             ? 'correct'
             : 'wrong';
           return (
             <button
+              className={ resolved ? interruptor : '' }
               id="quest-btn"
-              className={ resolved ? className : '' }
               type="button"
               key={ index }
               data-testid={ dataTestId }

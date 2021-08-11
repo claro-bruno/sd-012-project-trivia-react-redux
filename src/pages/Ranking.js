@@ -11,16 +11,16 @@ class Ranking extends Component {
         {
           getRanking.map((user, index) => (
             <div key={ index }>
-              <div id="ranking-player">
-                <img id="ranking-img" src={ user.picture } alt="user icon" />
+              <div className="ranking-player">
+                <img className="ranking-img" src={ user.picture } alt="user icon" />
                 <p
-                  id="ranking-name"
+                  className="ranking-name"
                   data-testid={ `player-name-${index}` }
                 >
                   { user.name }
                 </p>
                 <p
-                  id="ranking-score"
+                  className="ranking-score"
                   data-testid={ `player-score-${index}` }
                 >
                   { user.score }
@@ -30,7 +30,13 @@ class Ranking extends Component {
           ))
         }
         <Link to="/">
-          <button id="btn-go-home" type="button" data-testid="btn-go-home">Home</button>
+          <button
+            className="btn-home"
+            type="button"
+            data-testid="btn-go-home"
+          >
+            Home
+          </button>
         </Link>
       </div>
     );

@@ -70,7 +70,7 @@ class Login extends Component {
         >
           Nome:
           <input
-            id="input-name"
+            className="input-name"
             value={ name }
             name="name"
             onChange={ this.handleChange }
@@ -83,7 +83,7 @@ class Login extends Component {
         >
           Email:
           <input
-            id="input-email"
+            className="input-email"
             value={ email }
             name="email"
             onChange={ this.handleChange }
@@ -92,7 +92,7 @@ class Login extends Component {
           />
         </label>
         <button
-          id="btn-play"
+          className="btn-play"
           type="button"
           data-testid="btn-play"
           disabled={ btnDisable }
@@ -102,7 +102,7 @@ class Login extends Component {
         </button>
         <div>
           <Link to="/config" data-testid="btn-settings">
-            <button id="btn-config" type="button">Configurações</button>
+            <button className="btn-config" type="button">Configurações</button>
           </Link>
         </div>
       </fieldset>

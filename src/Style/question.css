@@ -2,58 +2,18 @@ body {
   background-color: rgb(10, 10, 10);
 }
 
-#score-counter {
-  color: white;
-  border-color: rgb(81,86,255);
+.score-counter {
+  border-color: rgb(81, 86, 255);
   border-radius: 30px;
   border-style: solid;
+  color: white;
   font-size: 20px;
   text-align: center;
   width: 100px;
 }
 
-.correct {
-  background-color: rgb(19, 212, 26);
-  border-radius: 30px;
-  color: black;
-  width: 200px;
-}
-
-.wrong {
-  background-color: rgb(216, 16, 16);
-  border-radius: 30px;
-  color: darkgray;
-  width: 200px;
-}
-
-#quest-btn {
-  border-radius: 30px;
-  display: flex;
-  margin-bottom: 20px;
-  margin-left: 200px;
-  width: 200px;
-}
-
-#btn-next {
-  background: rgb(81,86,255);
-  border: 1px solid white;
-  color: white;
-  cursor: pointer;
-  font-size: 20px;
-  margin-bottom: 10px;
-  margin-left: 400px;
-  padding: 8px 5px;
-  -webkit-border-radius: 5px;
-  text-shadow: 0 1px 1px #333;
-  width: 600px ! important;
-
-  border-radius: 30px;
-
-  transition: all 0.2s linear;
-}
-
 .main-questions {
-  border-color: rgb(81,86,255);
+  border-color: rgb(81, 86, 255);
   border-radius: 30px;
   border-style: solid;
   color: white;
@@ -61,13 +21,56 @@ body {
   margin-left: 400px;
   margin-top: 70px;
   min-height: 260px;
-  text-align: center;
   position: relative;
+  text-align: center;
   width: 600px;
 }
 
 .time-counter {
-  background: rgb(81,86,255);
+  background: rgb(81, 86, 255);
   display: flex;
   text-align: center;
+}
+
+#quest-btn {
+  border-radius: 30px;
+  color: black;
+  display: flex;
+  margin-bottom: 20px;
+  margin-left: 200px;
+  width: 200px;
+}
+
+.correct {
+  background-color: rgb(19, 212, 26);
+  border-radius: 30px;
+  color: black;
+  display: flex;
+  margin-bottom: 20px;
+  margin-left: 200px;
+  width: 200px;
+}
+
+.wrong {
+  background-color: rgb(216, 16, 16);
+  border-radius: 30px;
+  color: darkgray;
+  display: flex;
+  margin-bottom: 20px;
+  margin-left: 200px;
+  width: 200px;
+}
+
+.btn-next {
+  background: rgb(81, 86, 255);
+  border: 1px solid white;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-left: 400px;
+  padding: 8px 5px;
+  text-shadow: 0 1px 1px #333;
+  width: 600px;
 }
