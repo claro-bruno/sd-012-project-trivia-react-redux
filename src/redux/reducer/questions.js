@@ -1,4 +1,5 @@
-import { GET_QUESTION, GET_QUESTION_SUCCESS, GET_QUESTION_ERROR, SET_SCORE } from '../action';
+import { GET_QUESTION, GET_QUESTION_SUCCESS,
+  GET_QUESTION_ERROR, SET_SCORE } from '../action';
 
 const STATE_INITIAL = ({
   results: [],
