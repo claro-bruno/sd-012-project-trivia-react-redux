@@ -105,3 +105,28 @@
   text-shadow: 0 1px 0 white;
   text-transform: uppercase;
 }
+
+.btn-next {
+  background: linear-gradient(to bottom, #d0451b 5%, #bc3315 100%);
+  background-color: #d0451b;
+  border: 2px solid #942911;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Arial , Helvetica , sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 24px;
+  text-decoration: none;
+}
+
+.btn-next:hover {
+  background: linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
+  background-color: #bc3315;
+}
+
+.btn-next:active {
+  position: relative;
+  top: 1px;
+}

@@ -27,8 +27,8 @@ class Header extends React.Component {
             src={ this.getProfilePic() }
             alt="foto de perfil"
           />
-          <h1 data-testid="header-player-name">{ loginInfos.name }</h1>
         </div>
+        <h1 data-testid="header-player-name">{ loginInfos.name }</h1>
         <div className="score-section">
           <p>Pontos:</p>
           <p data-testid="header-score">{ score }</p>

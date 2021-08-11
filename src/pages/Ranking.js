@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './ranking.css';
 
 class Ranking extends React.Component {
   getLocalStorage() {
@@ -11,8 +12,8 @@ class Ranking extends React.Component {
     const ranking = this.getLocalStorage();
     const sortedRanking = ranking.sort((a, b) => b.score - a.score);
     return (
-      <div>
-        <ul>
+      <div className="container-lista-ranking">
+        <ul className="lista-ranking">
           {sortedRanking.map((player, index) => (
             <li key={ index }>
               <img src={ player.picture } alt="player" />
@@ -28,7 +29,11 @@ class Ranking extends React.Component {
   renderHomeBtn() {
     return (
       <Link to="/">
-        <button type="button" data-testid="btn-go-home">
+        <button
+          className="btn-ranking-play"
+          type="button"
+          data-testid="btn-go-home"
+        >
           Inicio
         </button>
       </Link>
@@ -37,7 +42,7 @@ class Ranking extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container-ranking">
         <h1 data-testid="ranking-title">Ranking</h1>
         {this.renderRanking()}
         {this.renderHomeBtn()}

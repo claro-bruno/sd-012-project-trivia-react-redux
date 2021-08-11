@@ -1,0 +1,93 @@
+body {
+  background-color: #e6f3ff;
+}
+
+.container-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 180px;
+  max-width: 80%;
+}
+
+.container-form {
+  align-self: center;
+  background-color: #b0bac3;
+  border: 1px solid gainsboro;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 5px;
+  padding: 12px 24px;
+  width: 60%;
+}
+
+.img-logo {
+  align-self: center;
+  margin-bottom: 10px;
+  max-width: 60%;
+}
+
+input {
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.btn-play {
+  background: linear-gradient(to bottom, #74ad5a 5%, #68a54b 100%);
+  background-color: #74ad5a;
+  border: 2px solid #3b6e22;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Arial , Helvetica , sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+  margin: 10px auto;
+  max-width: 30%;
+  padding: 5px 30px;
+  text-decoration: none;
+}
+
+.btn-play:hover {
+  background: linear-gradient(to bottom, #68a54b 5%, #74ad5a 100%);
+  background-color: #68a54b;
+}
+
+.btn-play:active {
+  position: relative;
+  top: 1px;
+}
+
+.container-link {
+  margin: 0 auto;
+}
+
+.btn-setting {
+  background: linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+  background-color: #ffec64;
+  border: 1px solid #fa2;
+  border-radius: 6px;
+  color: #333;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Arial , Helvetica , sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+  margin: 10px auto;
+  padding: 5px 30px;
+  text-decoration: none;
+}
+
+.btn-setting:hover {
+  background: linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+  background-color: #ffab23;
+}
+
+.btn-setting:active {
+  position: relative;
+  top: 1px;
+}
