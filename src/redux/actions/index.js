@@ -5,6 +5,8 @@ export const GET_TOKEN_FAILED = 'GET_TOKEN_FAILED';
 export const CORRECT_ANSWER = 'CORRECT_ANSWER';
 export const GET_PICTURE_URL = 'GET_PICTURE_URL';
 export const RESET_GAME = 'RESET_GAME';
+export const CHANGE_SETTINGS = 'CHANGE_SETTINGS';
+export const RESET_SETTINGS = 'RESET_SETTINGS';
 
 export const actionUserInfo = (name, email) => ({
   type: USER_INFO,
@@ -48,3 +50,14 @@ export const actionGetPictureUrl = (payload) => ({
 });
 
 export const actionResetGame = () => ({ type: RESET_GAME });
+
+export const actionSettings = ({ difficulty, category, tipo }) => ({
+  type: CHANGE_SETTINGS,
+  difficulty,
+  category,
+  tipo,
+});
+
+export const actionResetSettings = () => ({
+  type: RESET_SETTINGS,
+});

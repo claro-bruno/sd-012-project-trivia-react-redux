@@ -41,8 +41,9 @@ class Questions extends Component {
   }
 
   async getUnities() {
+    const { difficulty, type, category } = this.props;
     const token = localStorage.getItem('token');
-    const API_URL = `https://opentdb.com/api.php?amount=5&token${token}`;
+    const API_URL = `https://opentdb.com/api.php?amount=5&${difficulty}${category}${type}token${token}`;
     const response = await fetch(API_URL);
     const questions = await response.json();
     this.setState(() => ({
@@ -218,6 +219,9 @@ const mapStateToProps = (state) => ({
   assertions: state.gameReducer.assertions,
   name: state.loginReducer.name,
   picture: state.loginReducer.pictureUrl,
+  difficulty: state.settingsReducer.difficulty,
+  category: state.settingsReducer.category,
+  type: state.settingsReducer.type,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
@@ -227,4 +231,7 @@ Questions.propTypes = {
   name: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
+  difficulty: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import { actionResetGame } from '../redux/actions';
+import { actionResetGame, actionResetSettings } from '../redux/actions';
 import Footer from '../components/Footer';
 import congrats from '../images/congrats.svg';
 
@@ -32,10 +32,10 @@ class Feedback extends Component {
     );
   }
 
-  renderButtons(resetGame) {
+  renderButtons(resetGame, resetSettings) {
     return (
       <div className="w-1/2 flex flex-col justify-center items-center">
-        <Link to="/" onClick={ () => resetGame() }>
+        <Link to="/" onClick={ () => { resetGame(); resetSettings(); } }>
           <button
             type="button"
             data-testid="btn-play-again"
@@ -44,7 +44,7 @@ class Feedback extends Component {
             Jogar novamente
           </button>
         </Link>
-        <Link to="/ranking" onClick={ () => resetGame() }>
+        <Link to="/ranking" onClick={ () => { resetGame(); resetSettings(); } }>
           <button
             type="button"
             data-testid="btn-ranking"
@@ -58,7 +58,7 @@ class Feedback extends Component {
   }
 
   render() {
-    const { assertions, score, resetGame } = this.props;
+    const { assertions, score, resetGame, resetSettings } = this.props;
     const NUMBER_THREE = 3;
 
     return (
@@ -85,7 +85,7 @@ class Feedback extends Component {
           </div>
           <div className="flex w-3/5 justify-center">
             { this.renderScoreAndAssertions(score, assertions) }
-            { this.renderButtons(resetGame) }
+            { this.renderButtons(resetGame, resetSettings) }
           </div>
         </div>
         <Footer />
@@ -101,6 +101,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   resetGame: () => dispatch(actionResetGame()),
+  resetSettings: () => dispatch(actionResetSettings()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
@@ -109,4 +110,5 @@ Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
   resetGame: PropTypes.func.isRequired,
+  resetSettings: PropTypes.func.isRequired,
 };
