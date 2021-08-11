@@ -12,22 +12,21 @@ const MIN_ASSERTIONS = 3;
 
 const Container = styled.main`
   text-align: center;
-  font-size: 1.125rem;
   color: hsla(0, 0%, 100%, 93.75%);
 
   @media (min-width: 60rem) {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
   }
 `;
 
 const Title = styled.h2`
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: hsl(0, 0%, 100%);
   margin-top: 1.5rem;
 
   @media (min-width: 60rem) {
     margin-top: 3rem;
-    font-size: 2.75rem;
+    font-size: 2.25rem;
   }
 `;
 

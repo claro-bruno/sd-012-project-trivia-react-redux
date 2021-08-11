@@ -22,6 +22,10 @@ const Play = styled.button`
   &:disabled {
     filter: opacity(0.8);
   }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const Input = styled.input`
@@ -58,6 +62,10 @@ const Settings = styled.button`
   display: block;
   margin-top: 0.625rem;
   cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 class LoginForm extends Component {
