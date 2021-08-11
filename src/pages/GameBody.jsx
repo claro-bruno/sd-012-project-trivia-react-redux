@@ -12,12 +12,12 @@ class GameBody extends Component {
       alternatives: [],
       randomIndex: '',
       disableAnswers: false,
-      timer: 2,
-      score: 0,
       hidden: true,
       wrong: '',
       correct: '',
       seconds: 30,
+      stopTimer: false,
+      assertions: 0,
     };
     this.createQuestion = this.createQuestion.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
@@ -26,21 +26,23 @@ class GameBody extends Component {
     this.buttonsAnswer = this.buttonsAnswer.bind(this);
     this.count = this.count.bind(this);
     this.handleClickScore = this.handleClickScore.bind(this);
+    this.mountLocalStorage = this.mountLocalStorage.bind(this);
   }
 
   componentDidMount() {
     this.count();
     this.rad();
+    this.mountLocalStorage();
   }
 
   count() {
     const sec = 1000;
     const interval = setInterval(() => {
-      const { seconds } = this.state;
+      const { seconds, stopTimer } = this.state;
       this.setState({
         seconds: seconds - 1,
       });
-      if (seconds === 1) {
+      if (seconds === 1 || stopTimer) {
         clearInterval(interval);
         this.setState({
           seconds: 'Time\'s Up',
@@ -51,20 +53,38 @@ class GameBody extends Component {
     }, sec);
   }
 
+  mountLocalStorage(score = 0, assertions = 0) {
+    const { name, gravatarEmail, setStateScore } = this.props;
+    const state = {
+      player: {
+        name,
+        assertions,
+        score,
+        gravatarEmail,
+      },
+    };
+    this.setState({
+      assertions: state.player.assertions,
+    });
+    localStorage.setItem('state', JSON.stringify(state));
+    setStateScore(state.player.score);
+  }
+
   handleClickScore(diff) {
-    // console.log('gabriel', target, diff);
-    const { setStateScore } = this.props;
-    const { timer, score } = this.state;
+    const { score } = this.props;
+    const { seconds, assertions } = this.state;
     const dez = 10;
     const diffLevel = {
       hard: 3,
       medium: 2,
       easy: 1,
     };
-    const scoreCount = score + dez + (timer * diffLevel[diff]);
-    console.log(scoreCount);
-    // localStorage.setItem('score', token.token); NÃO ESQUECER DE SETAR O LOCAL STORAGE CONFORME ESTRUTURA RECOMENDADA
-    setStateScore(scoreCount);
+    const scoreSum = score + dez + (seconds * diffLevel[diff]);
+    const assertSum = assertions + 1;
+    this.setState({
+      stopTimer: true,
+    });
+    this.mountLocalStorage(scoreSum, assertSum);
     this.buttonsAnswer();
   }
 
@@ -78,8 +98,10 @@ class GameBody extends Component {
       correct: '',
       wrong: '',
       seconds: 30,
+      stopTimer: false,
     });
     this.rad();
+    this.count();
   }
 
   createQuestion() {
@@ -193,10 +215,16 @@ class GameBody extends Component {
 GameBody.propTypes = {
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
   setStateScore: PropTypes.func.isRequired,
+  score: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   results: state.questions.results,
+  score: state.questions.score,
+  name: state.user.name,
+  gravatarEmail: state.user.email,
 });
 
 const mapDispatchToProps = (dispatch) => ({
