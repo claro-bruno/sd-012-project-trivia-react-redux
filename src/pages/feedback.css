@@ -50,11 +50,19 @@
   margin-bottom: 0;
 }
 
+.results .assertions {
+  font-size: 18px;
+}
+
 .results .assertions span {
   color: #7f5af0;
   font-size: 20px;
   font-weight: 600;
   margin-left: 8px;
+}
+
+.results .points {
+  font-size: 18px;
 }
 
 .results .points span {
@@ -64,17 +72,22 @@
   margin-left: 8px;
 }
 
+.results .feedback {
+  font-size: 18px;
+}
+
 .results .buttons-container button {
   background-color: #7f5af0;
   border: 1px solid #7f5af0;
   border-radius: 4px;
   color: #eee;
   cursor: pointer;
-  font-size: 14px;
+  font-family: Courgette , cursive;
+  font-size: 16px;
   font-weight: 600;
   margin: 8px 0;
   margin-right: 12px;
-  padding: 4px;
+  padding: 6px;
   transition: background-color 0.2s;
 }
 
