@@ -1,0 +1,65 @@
+.ranking-container {
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+}
+
+.ranking-container h1 {
+  color: orange;
+  margin-top: 30px;
+}
+
+.ranking {
+  color: white;
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  width: 80%;
+}
+
+.ranking-item {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ranking-item:nth-child( odd ) {
+  background: linear-gradient(rgba(109, 102, 102, 0.63), rgba(0, 0, 0, 0));
+}
+
+.ranking-item img {
+  border-radius: 50%;
+}
+
+.score {
+  color: rgb(94, 238, 94);
+}
+
+
+.btn-go-home {
+  border: none;
+  font-size: 15px;
+  padding: 10px 20px;
+  transition: 300ms;
+}
+
+.btn-go-home:hover {
+  background-color: orange;
+}
+
+.ranking-medal {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+}
+
+.medals {
+  display: flex;
+  flex-flow: column;
+}
+
+.medals img {
+  margin: 15px 0;
+  width: 50px;
+}

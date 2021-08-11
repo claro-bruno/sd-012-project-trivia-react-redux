@@ -1,15 +1,21 @@
 import React from 'react';
+import './Ranking.css';
 
 class RankingList extends React.Component {
   render() {
     const history = JSON.parse(localStorage.getItem('history'));
     return (
-      <ol>
+      <ol className="ranking">
         { history.map((player, index) => (
-          <li key={ index }>
+          <li key={ index } className="ranking-item">
             <img src={ player.gravatarEmail } alt="playerIMG" />
-            <p data-testid={ `player-name-${index}` }>{ player.name }</p>
-            <p data-testid={ `player-score-${index}` }>{ player.score }</p>
+            <h4 data-testid={ `player-name-${index}` }>{ player.name }</h4>
+            <h4
+              className="score"
+              data-testid={ `player-score-${index}` }
+            >
+              { player.score }
+            </h4>
           </li>
         ))}
       </ol>

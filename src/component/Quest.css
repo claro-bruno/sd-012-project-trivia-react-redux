@@ -34,7 +34,7 @@ h1, h2, h3, h4 {
 }
 
 .correct-answer {
-  border: none;
+  border: 3px solid #282c34;
   border-radius: 0%;
   font-size: 18px;
   margin: 10px;
@@ -43,7 +43,7 @@ h1, h2, h3, h4 {
 }
 
 .wrong-answer {
-  border: none;
+  border: 3px solid #282c34;
   border-radius: 0%;
   font-size: 18px;
   margin: 10px;
