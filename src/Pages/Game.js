@@ -213,6 +213,8 @@ Game.propTypes = {
   sendShowAnswers: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
   token: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
