@@ -17,7 +17,6 @@ class Questions extends Component {
     };
     this.displayQuiz = this.displayQuiz.bind(this);
     this.displayQuestion = this.displayQuestion.bind(this);
-    this.shuffleArray = this.shuffleArray.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.setTimer = this.setTimer.bind(this);
     this.disableButtons = this.disableButtons.bind(this);
@@ -28,10 +27,14 @@ class Questions extends Component {
     this.setTimer();
   }
 
-  shouldComponentUpdate(_props, state) {
-    if (state.ceil) {
-      return false;
-    }
+  // shouldComponentUpdate(_props, state) {
+  //   if (state.ceil) {
+  //     return false;
+  //   }
+  // }
+
+  componentWillUnmount() {
+
   }
 
   onClickAnswer() {
@@ -81,19 +84,6 @@ class Questions extends Component {
     return quizFromRedux.length > 0 ? this.setState({ loading: false }) : null;
   }
 
-  // source: https://www.horadecodar.com.br/2021/05/10/como-embaralhar-um-array-em-javascript-shuffle/
-  shuffleArray(arr) {
-    // Loop em todos os elementos
-    for (let i = arr.length - 1; i >= 0; i -= 1) {
-      // Escolhendo elemento aleatório
-      const j = Math.floor(Math.random() * (i + 1));
-      // Reposicionando elemento
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    // Retornando array com aleatoriedade
-    return arr;
-  }
-
   checkCorrect(item, correct, index) {
     if (item === correct) {
       return 'correct-answer';
@@ -103,16 +93,12 @@ class Questions extends Component {
 
   displayQuestion() {
     const { quizFromRedux } = this.props;
-    console.log(quizFromRedux);
     const { index } = this.state;
     const {
       category,
       question,
       correct_answer: correct,
-      incorrect_answers: incorrect = [] } = quizFromRedux[index];
-
-    const sortedArray = [correct, ...incorrect];
-    this.shuffleArray(sortedArray);
+      sortedArray } = quizFromRedux[index];
     return (
       <div>
         <p data-testid="question-category">{ category }</p>
