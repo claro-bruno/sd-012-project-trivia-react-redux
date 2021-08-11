@@ -1,6 +1,6 @@
 body {
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 }
 
 .App {
@@ -54,7 +54,7 @@ button:hover {
 
 .App-header {
   align-items: center;
-  background-image: url("./images/abstract-1628703162054-6515.jpg");
+  background-image: url('./images/abstract-1628703162054-6515.jpg');
   color: white;
   display: flex;
   flex-direction: column;

@@ -51,8 +51,14 @@ class Config extends Component {
 
   selectCategory() {
     return (
-      <label htmlFor="categoria" >Categoria
-        <select id="categoria" className="select-config" name="category" onChange={ this.change }>
+      <label htmlFor="categoria">
+        Categoria
+        <select
+          id="categoria"
+          className="select-config"
+          name="category"
+          onChange={ this.change }
+        >
           <option value="any">Any Category</option>
           <option value="9">General Knowledge</option>
           <option value="10">Entertainment: Books</option>
@@ -91,7 +97,7 @@ class Config extends Component {
           Escolha a quantidade de perguntas do jogo:
           {' '}
           <input
-          className="numbers"
+            className="numbers"
             type="number"
             name="quantidade"
             id="configQuestions"
@@ -102,16 +108,18 @@ class Config extends Component {
           />
         </label>
         { this.selectCategory() }
-        <label>Escolha a dificuldade:
-          <select name="difficulty" onChange={ this.change }>
+        <label htmlFor="configdifficulty">
+          Escolha a dificuldade:
+          <select name="difficulty" onChange={ this.change } id="configdifficulty">
             <option value="any">Dificuldade</option>
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
           </select>
         </label>
-          <label>Escolha tipo de pergunta:
-          <select name="type" onChange={ this.change }>
+        <label htmlFor="configtype">
+          Escolha tipo de pergunta:
+          <select name="type" onChange={ this.change } id="configtype">
             <option value="any">Multipla escolha | Verdadeiro ou Falso</option>
             <option value="multiple">Multiple Choice</option>
             <option value="boolean">True / False</option>

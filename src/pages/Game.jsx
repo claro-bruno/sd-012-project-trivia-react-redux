@@ -1,11 +1,11 @@
-import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { Redirect, Link } from "react-router-dom";
-import Trivia from "../components/Trivia";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import "../css/game.css";
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Redirect, Link } from 'react-router-dom';
+import Trivia from '../components/Trivia';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import '../css/game.css';
 
 class Game extends React.Component {
   constructor() {
@@ -57,8 +57,7 @@ class Game extends React.Component {
     const { questions, indexQuestion, error } = this.state;
     if (error === false) return <div>Carregando...</div>;
     if (error === true) {
-      const errorMessage =
-        "Não existe questões suficientes com essas especificações";
+      const errorMessage = 'Não existe questões suficientes com essas especificações';
       return (
         <div>
           <h2 className="message-erro">{errorMessage}</h2>
@@ -76,9 +75,9 @@ class Game extends React.Component {
       <div className="Game">
         <Header />
         <Trivia
-          key={indexQuestion}
-          trivia={questions[indexQuestion]}
-          onClick={this.nextQuestion}
+          key={ indexQuestion }
+          trivia={ questions[indexQuestion] }
+          onClick={ this.nextQuestion }
         />
         <Footer />
       </div>
