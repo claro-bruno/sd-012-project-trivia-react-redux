@@ -72,16 +72,16 @@ class Game extends React.Component {
     this.setState({
       disabled: true,
     });
+    this.handleClickAnswers();
   }
 
   scoreCounter(difficulty) {
-    const { /* score, */ count } = this.state;
+    const { count } = this.state;
 
     const questionLevel = { hard: 3, medium: 2, easy: 1 };
     const DEFAULT_NUMBER = 10;
     const newScore = DEFAULT_NUMBER + (count * questionLevel[difficulty]);
 
-    // return (newScore);
     this.setState((prevState) => ({
       score: prevState.score + newScore,
     }));
@@ -92,6 +92,16 @@ class Game extends React.Component {
     this.setState({
       assertions: assertions + 1,
     });
+  }
+
+  handleClickAnswers() {
+    const cssWrongValue = '3px solid rgb(255, 0, 0)';
+    const cssCorrectValue = '3px solid rgb(6, 240, 15)';
+    document.getElementById('btn-next').style.display = 'block';
+    document.getElementById('btnCorrectAnswer').style.border = cssCorrectValue;
+    document.getElementById('btn-0').style.border = cssWrongValue;
+    document.getElementById('btn-1').style.border = cssWrongValue;
+    document.getElementById('btn-2').style.border = cssWrongValue;
   }
 
   // logica baseada no seguinte repositorio https://github.com/tryber/sd-012-project-trivia-react-redux/pull/8/commits/a93062a005d249fcc708168294a7926669bbf914
@@ -108,6 +118,7 @@ class Game extends React.Component {
           { triviaQuest[0].question }
         </p>
         <button
+          id="btnCorrectAnswer"
           type="button"
           data-testid="correct-answer"
           name="correct"
@@ -120,6 +131,7 @@ class Game extends React.Component {
         {
           triviaQuest[0].incorrect_answers.map((key, index) => (
             <button
+              id={ `btn-${index}` }
               type="button"
               data-testid={ `wrong-answer-${index}` }
               name="incorrect"
@@ -148,6 +160,14 @@ class Game extends React.Component {
       <section>
         <Header />
         { firstQuestion ? this.renderQuestions() : <p>LOADING</p> }
+        <button
+          type="button"
+          data-testid="btn-next"
+          id="btn-next"
+          // style={ { border: 'solid red 10px' } }
+        >
+          Next
+        </button>
       </section>
     );
   }
