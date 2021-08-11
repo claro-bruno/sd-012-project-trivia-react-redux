@@ -37,7 +37,7 @@ const Answer = styled.button`
   display: block;
   padding: 0.625rem;
   opacity: ${({ theme: { answered, over } }) => {
-    if (answered || over) return '0.875';
+    if (answered || over) return '0.75';
   }};
   border: ${({ theme: { answered, over, id } }) => {
     if (answered || over) {
@@ -79,18 +79,28 @@ const NextBtn = styled.button`
   font-weight: 600;
   margin: 2rem auto;
   cursor: pointer;
+
+  &:hover {
+    filter: opacity(0.8);
+  }
 `;
 
 const Grid = styled.main`
-  max-width: 30rem;
+  max-width: 40rem;
   margin-left:auto;
   margin-right:auto;
+  margin-top: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   display: grid;
   gap: 2rem;
 
   @media screen and (min-width: 60rem) {
-    max-width: none;
-    grid-template-columns: 2fr 3fr;
+    margin-top: 4rem;
+    max-width: 60rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    grid-template-columns: 4fr 5fr;
     gap: 4rem;
   }
 `;

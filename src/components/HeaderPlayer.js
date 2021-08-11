@@ -4,13 +4,25 @@ import md5 from 'crypto-js/md5';
 import styled from 'styled-components';
 
 const Header = styled.header`
+  background-color: hsl(218, 28%, 13%);
+  margin-bottom: 1rem;
+
+  @media (min-width: 60rem) {
+    margin-bottom: 2rem;
+  }
+`;
+
+const Container = styled.div`
+  max-width: 70rem;
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
 
   @media (min-width: 60rem) {
-    margin-bottom: 4rem;
+    padding: 1.5rem;
   }
 `;
 
@@ -31,15 +43,17 @@ class HeaderPlayer extends Component {
 
     return (
       <Header>
-        <Avatar src={ `https://www.gravatar.com/avatar/${hash}` } alt="Avatar" data-testid="header-profile-picture" />
-        <div>
-          <p>
-            <span data-testid="header-score">{score}</span>
-            {' '}
-            pontos
-          </p>
-          <p data-testid="header-player-name">{ name }</p>
-        </div>
+        <Container>
+          <Avatar src={ `https://www.gravatar.com/avatar/${hash}` } alt="Avatar" data-testid="header-profile-picture" />
+          <div>
+            <p>
+              <span data-testid="header-score">{score}</span>
+              {' '}
+              pontos
+            </p>
+            <p data-testid="header-player-name">{ name }</p>
+          </div>
+        </Container>
       </Header>
     );
   }

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import GameQuestions from '../components/GameQuestions';
 import HeaderPlayer from '../components/HeaderPlayer';
 import { timeReset } from '../redux/actions';
+import ErrorPage from './ErrorPage';
+import Loading from '../components/Loading';
 
 class GamePage extends Component {
   constructor() {
@@ -50,12 +52,12 @@ class GamePage extends Component {
   render() {
     const { questions, counter, loading, answered } = this.state;
     const MIN_QUESTIONS = 5;
-    if (loading) return 'Loading';
+    if (loading) return <Loading />;
     return (
       <>
         <HeaderPlayer />
         {questions.length < MIN_QUESTIONS
-          ? 'Error'
+          ? <ErrorPage />
           : (
             <GameQuestions
               onAnswer={ this.questionAnswered }
