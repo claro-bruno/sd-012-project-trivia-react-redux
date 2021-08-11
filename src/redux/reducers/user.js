@@ -37,7 +37,7 @@ function user(state = INITIAL_STATE, action) {
     localStorage.setItem('state', JSON.stringify(saveScore(state, action)));
     return setScore(state, action);
   case 'RESET_SCORE':
-    return { ...state, score: 0 };
+    return { ...state, score: 0, assertions: 0 };
   default: return state;
   }
 }

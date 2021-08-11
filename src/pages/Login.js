@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { fetchToken, updateProfile } from '../redux/actions';
+import { fetchCategories, fetchToken, updateProfile } from '../redux/actions';
 
 class Login extends Component {
   constructor(props) {
@@ -13,6 +13,11 @@ class Login extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    const { dispatchFetchCategories } = this.props;
+    dispatchFetchCategories();
   }
 
   handleChange(e) {
@@ -83,6 +88,7 @@ class Login extends Component {
 const mapDispatchToProps = (dispatch) => ({
   dispatchFetchToken: () => dispatch(fetchToken()),
   dispatchUpdateProfile: (name, email) => dispatch(updateProfile(name, email)),
+  dispatchFetchCategories: () => dispatch(fetchCategories()),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
@@ -93,4 +99,5 @@ Login.propTypes = {
   }).isRequired,
   dispatchFetchToken: PropTypes.func.isRequired,
   dispatchUpdateProfile: PropTypes.func.isRequired,
+  dispatchFetchCategories: PropTypes.func.isRequired,
 };

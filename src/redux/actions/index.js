@@ -1,5 +1,10 @@
 const tokenURL = 'https://opentdb.com/api_token.php?command=request';
-const questionsURL = 'https://opentdb.com/api.php?amount=5&token=';
+const categoriesURL = 'https://opentdb.com/api_category.php';
+const questionsURL = 'https://opentdb.com/api.php?amount=5';
+const withTokenURL = '&token=';
+const withCategoryURL = '&category=';
+const withDifficultyURL = '&difficulty=';
+const withTypeURL = '&type=';
 
 export const updateProfile = (name, email) => ({
   type: 'UPDATE_PROFILE',
@@ -43,9 +48,12 @@ const getQuestionsError = (error) => ({
   error,
 });
 
-export const fetchQuestions = (token) => (dispatch) => {
+export const fetchQuestions = (token) => (dispatch, state) => {
   dispatch(sendQuestionsRequest());
-  fetch(`${questionsURL}${token}`)
+  fetch(`${questionsURL}${withTokenURL}${token}${withCategoryURL}${state()
+    .config.selectedCategory.id}${withDifficultyURL}${state()
+    .config.selectedDifficulty.id}${withTypeURL}${state()
+    .config.selectedType.id}`)
     .then((response) => response.json())
     .then((json) => dispatch(getQuestions(json)))
     .catch((error) => dispatch(getQuestionsError(error)));
@@ -87,4 +95,33 @@ export const updateScore = (timer, difficulty, isCorrect) => ({
 
 export const resetScore = () => ({
   type: 'RESET_SCORE',
+});
+
+const sendCategoriesRequest = () => ({
+  type: 'SEND_CATEGORIES_REQUEST',
+});
+
+const getCategories = (response) => ({
+  type: 'GET_CATEGORIES',
+  response,
+});
+
+const getCategoriesError = (error) => ({
+  type: 'GET_CATEGORIES_ERROR',
+  error,
+});
+
+export const fetchCategories = () => (dispatch) => {
+  dispatch(sendCategoriesRequest());
+  fetch(categoriesURL)
+    .then((response) => response.json())
+    .then((json) => dispatch(getCategories(json)))
+    .catch((error) => dispatch(getCategoriesError(error)));
+};
+
+export const updateSelectedConfigs = (selected, configName, configsList) => ({
+  type: 'UPDATE_SELECTED_CONFIGS',
+  configName,
+  configsList,
+  selected,
 });
