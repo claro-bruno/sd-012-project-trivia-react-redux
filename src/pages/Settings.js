@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/Settings.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -60,35 +61,38 @@ class Settings extends React.Component {
       return (<h1>Loading...</h1>);
     }
     return (
-      <div>
-        <h1 data-testid="settings-title">SETTINGS</h1>
-        <select name="categories" onChange={ this.handleChange }>
-          { result.map((category) => (
-            <option key={ category.id } value={ category.id }>
-              { category.name }
-            </option>
-          )) }
-        </select>
+      <div className="settings-page">
+        <div className="settings-text">
+          <h1 data-testid="settings-title">SETTINGS</h1>
+          <select name="categories" onChange={ this.handleChange }>
+            { result.map((category) => (
+              <option key={ category.id } value={ category.id }>
+                { category.name }
+              </option>
+            )) }
+          </select>
 
-        <select name="dificulty" onChange={ this.handleChange }>
-          <option value="any">Any Difficulty</option>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-        </select>
+          <select name="dificulty" onChange={ this.handleChange }>
+            <option value="any">Any Difficulty</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
 
-        <select name="type" onChange={ this.handleChange }>
-          <option value="any">Any Type</option>
-          <option value="multiple">Multiple Choice</option>
-          <option value="boolean">True / False</option>
-        </select>
+          <select name="type" onChange={ this.handleChange }>
+            <option value="any">Any Type</option>
+            <option value="multiple">Multiple Choice</option>
+            <option value="boolean">True / False</option>
+          </select>
 
-        <Link to="/">
-          <button className="settings" type="button">
-            VOLTAR PARA PAGINA INICIAL
-          </button>
-        </Link>
-      </div>);
+          <Link to="/">
+            <button className="settings" type="button">
+              VOLTAR PARA PAGINA INICIAL
+            </button>
+          </Link>
+        </div>
+      </div>
+    );
   }
 }
 

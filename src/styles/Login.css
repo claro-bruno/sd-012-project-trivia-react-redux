@@ -2,8 +2,9 @@
   align-items: center;
   background-color: #84459c;
   display: flex;
+  height: 100vh;
   justify-content: center;
-  min-height: 100vh;
+  overflow-y: hidden;
 }
 
 .login-box {
