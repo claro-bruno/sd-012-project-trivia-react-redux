@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setScore } from '../redux/action';
 import './Answers.css';
+import Timer from '../components/Timer';
 
 class GameBody extends Component {
   constructor(props) {
@@ -12,22 +13,19 @@ class GameBody extends Component {
       disable: true,
       alternatives: [],
       randomIndex: '',
-      className: '',
-      className2: '',
-      wrong: 'wrong',
-      correct: 'correct',
       disableAnswers: false,
       timer: 2,
       score: 0,
       hidden: true,
+      wrong: '',
+      correct: '',
     };
     this.createQuestion = this.createQuestion.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.rad = this.rad.bind(this);
     this.createOptions = this.createOptions.bind(this);
-    this.buttonsAsnswer = this.buttonsAsnswer.bind(this);
+    this.buttonsAnswer = this.buttonsAnswer.bind(this);
     this.handleClickScore = this.handleClickScore.bind(this);
-    this.buttonAnswer = this.buttonAnswer.bind(this);
   }
 
   componentDidMount() {
@@ -48,7 +46,7 @@ class GameBody extends Component {
     console.log(scoreCount);
     // localStorage.setItem('score', token.token); NÃO ESQUECER DE SETAR O LOCAL STORAGE CONFORME ESTRUTURA RECOMENDADA
     setStateScore(scoreCount);
-    this.buttonsAsnswer();
+    this.buttonsAnswer();
   }
 
   nextQuestion() {
@@ -58,8 +56,8 @@ class GameBody extends Component {
       index: index + 1,
       disableAnswers: false,
       hidden: true,
-      className: '',
-      className2: '',
+      correct: '',
+      wrong: '',
     });
     this.rad();
   }
@@ -100,10 +98,8 @@ class GameBody extends Component {
     const {
       alternatives,
       randomIndex,
-      className,
       wrong,
       correct,
-      className2,
       disableAnswers,
     } = this.state;
     return (alternatives.map((elm, ind) => (
@@ -116,7 +112,7 @@ class GameBody extends Component {
             key={ ind }
             data-testid="correct-answer"
             id={ correct }
-            className={ className }
+            style={ { border: correct } }
           >
             {elm}
           </button>
@@ -124,12 +120,12 @@ class GameBody extends Component {
         : (
           <button
             type="button"
-            onClick={ this.buttonAnswer }
+            onClick={ this.buttonsAnswer }
             disabled={ disableAnswers }
             key={ ind }
             data-testid={ `wrong-answer-${ind}` }
             id={ wrong }
-            className={ className2 }
+            style={ { border: wrong } }
           >
             {elm}
           </button>
@@ -137,11 +133,11 @@ class GameBody extends Component {
     )));
   }
 
-  buttonAnswer() {
+  buttonsAnswer() {
     this.setState({
       disableAnswers: true,
-      className: 'correctAnswer',
-      className2: 'incorrectAnswer',
+      wrong: '3px solid rgb(255, 0, 0)',
+      correct: '3px solid rgb(6, 240, 15)',
       hidden: false,
     });
   }
@@ -151,6 +147,7 @@ class GameBody extends Component {
     const { results } = this.props;
     return (
       <div>
+        <Timer />
         {
           (results.length > 0) ? this.createQuestion() : <p>LOADING</p>
         }
