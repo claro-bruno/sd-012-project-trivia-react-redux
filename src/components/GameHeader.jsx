@@ -38,14 +38,16 @@ export default class HeaderGame extends Component {
     const { url } = this.state;
     const { name, score } = this.getPlayerFromLocalStorage();
     return (
-      <header>
+      <header className="d-flex justify-content-between">
         <img
           data-testid="header-profile-picture"
           alt="profilePhoto"
           src={ url }
         />
         <h3 data-testid="header-player-name">{ name }</h3>
-        <h4 data-testid="header-score">{ score }</h4>
+        <div className="score">
+          <h4 data-testid="header-score">{ score }</h4>
+        </div>
       </header>
     );
   }

@@ -146,7 +146,7 @@ class Questions extends Component {
       incorrect_answers: incorrectAnswer,
       type } = results[idQuestion];
     return (
-      <div>
+      <div className="d-flex flex-column">
         <h4 data-testid="question-category">{ category }</h4>
         <h3 data-testid="question-text">{ question }</h3>
         {
@@ -195,7 +195,7 @@ class Questions extends Component {
 
     if (shouldRedirect) return <Redirect to="/feedback" />;
     return (
-      <div>
+      <div className="d-flex flex-column align-items-center">
         <div className="questions">
           {
             results ? this.renderQuestion() : null
@@ -206,7 +206,7 @@ class Questions extends Component {
         </div>
         <button
           type="button"
-          className="button-next"
+          className="button-next btn btn-primary"
           data-testid="btn-next"
           style={ !isAnswered ? { display: 'none' } : null }
           onClick={ this.nextQuestion }
