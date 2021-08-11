@@ -9,7 +9,7 @@ class Header extends React.Component {
   }
 
   render() {
-    const { userName, userimg, userScore } = this.props;
+    const { userName, userimg } = this.props;
     return (
       <header>
         <img data-testid="header-profile-picture" alt="gravatar" src={ userimg } />
@@ -33,7 +33,6 @@ const mapStateToProps = (state) => ({
 Header.propTypes = {
   userName: PropTypes.string.isRequired,
   userimg: PropTypes.string.isRequired,
-  score: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);
