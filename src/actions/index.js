@@ -4,6 +4,7 @@ export const GET_TOKEN_SUCCESS = 'GET_TOKEN_SUCCESS';
 export const GET_TOKEN_LOAD = 'GET_TOKEN_LOAD';
 export const GET_TIMER = 'GET_TIMER';
 export const GET_SCORE = 'GET_SCORE';
+export const GET_SETTINGS = 'GET_SETTINGS';
 
 // action para pegar o email e nome do login
 export function loginAction(emailInput, nameInput) {
@@ -25,6 +26,15 @@ export function getScoreAction(scoreValue, assertsValue) {
     type: GET_SCORE,
     score: scoreValue,
     asserts: assertsValue,
+  };
+}
+
+export function getSettingsAction(categoriesValue, dificultValue, typeValue) {
+  return {
+    type: GET_SETTINGS,
+    categories: categoriesValue,
+    dificult: dificultValue,
+    typeValue,
   };
 }
 

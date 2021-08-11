@@ -3,18 +3,20 @@
 .trivia-page {
   background-color: #fab005;
   height: 100vh;
+  overflow: hidden;
   width: 100%;
 }
 
 header {
   display: flex;
+  height: 100px;
   margin: auto;
   width: 90%;
 }
 
 [ data-testid = 'header-profile-picture' ] {
   border-radius: 50%;
-  margin: 20px auto;
+  margin: 10px auto;
 }
 
 [ data-testid = 'header-player-name' ] {
@@ -103,7 +105,7 @@ li {
   display: flex;
   height: 40px;
   justify-content: center;
-  margin: 2% auto;
+  margin: 1% auto;
   text-decoration: none;
   width: 70%;
 }
