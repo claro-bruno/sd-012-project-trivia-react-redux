@@ -4,11 +4,31 @@ import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 
 class Feedback extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.getScoreLocalStorage = this.getScoreLocalStorage.bind(this);
+    this.state = {
+      score: 0,
+    };
+  }
+
+  componentDidMount() {
+    this.getScoreLocalStorage();
+  }
+
+  getScoreLocalStorage() {
+    const state = JSON.parse(localStorage.getItem('state'));
+    const { player: { score, assertions } } = state;
+    this.setState({ score, assertions });
+  }
+
   render() {
     const { name, gravatarEmail } = this.props;
     const email = md5(gravatarEmail).toString();
     const urlGravatar = `https://www.gravatar.com/avatar/${email}`;
 
+    const { score, assertions } = this.state;
     return (
       <div>
         <header>
@@ -20,12 +40,16 @@ class Feedback extends React.Component {
           <p data-testid="header-player-name">
             { name }
           </p>
+          <p>Final score:</p>
           <span data-testid="header-score">
-            Placar: 0
+            { score }
           </span>
         </header>
         <div>
-          <p data-testid="feedback-text">Feedback</p>
+          <p data-testid="feedback-text">
+            Feedback text
+            { assertions }
+          </p>
         </div>
       </div>
     );
