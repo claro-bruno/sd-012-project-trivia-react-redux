@@ -8,7 +8,7 @@ const Logo = styled.img`
   margin: 0 auto;
   margin-bottom: 2rem;
   pointer-events: none;
-  width: 250px;
+  max-width: 11.25rem;
 
   animation-name: rotate;
   animation-duration: 2s;
@@ -29,8 +29,8 @@ const Logo = styled.img`
 const Main = styled.main`
   align-items: center;
   display: flex;
-  height: 100vh;
   justify-content: center;
+  padding: 2rem 1rem;
 `;
 
 const Container = styled.div`
@@ -38,13 +38,13 @@ const Container = styled.div`
   margin-left: auto;
   margin-right: auto;
   background-color: hsl(218, 28%, 13%);
-  padding: 4rem 2rem;
+  padding: 2rem;
   border-radius: 0.375rem;
 `;
 
 const Title = styled.img`
   margin: 0 auto;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   @media ( prefers-reduced-motion : no-preference ) {
     animation: shake infinite 1.125s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   }
