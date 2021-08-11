@@ -27,8 +27,8 @@ export const questionsFetchAPI = (token) => async (dispatch) => {
   dispatch(getQuestions());
   try {
     const fetchAPIQuestions = await fetchQuestions(token);
-    await dispatch(getQuestionsSucess(fetchAPIQuestions));
+    dispatch(getQuestionsSucess(fetchAPIQuestions));
   } catch (error) {
-    await dispatch(getQuestionsError(error));
+    dispatch(getQuestionsError(error));
   }
 };
