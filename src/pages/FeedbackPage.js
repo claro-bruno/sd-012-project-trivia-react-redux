@@ -16,7 +16,6 @@ const Container = styled.main`
   text-align: center;
   color: hsla(0, 0%, 100%, 93.75%);
   margin-bottom: 1.5rem;
-
   @media (min-width: 60rem) {
     font-size: 1.125rem;
     margin-bottom: 3rem;
@@ -27,7 +26,6 @@ const Title = styled.h2`
   font-size: 2rem;
   color: hsl(0, 0%, 100%);
   margin-top: 1.5rem;
-
   @media (min-width: 60rem) {
     margin-top: 3rem;
     font-size: 2.25rem;
@@ -40,7 +38,6 @@ const Bold = styled.span`
 
 const Points = styled.p`
   margin-bottom: 1rem;
-
   @media (min-width: 60rem) {
     margin-bottom: 2rem;
   }
@@ -66,7 +63,6 @@ const Button = styled.button`
   padding: 0.5rem;
   width: 13.75rem;
   border-radius: 0.25rem;
-
   &:hover {
     filter: opacity(0.8);
   }
