@@ -73,6 +73,7 @@ class Game extends React.Component {
     // console.log(this.props.questions);
     const { difficulty } = questions[index];
     console.log(difficulty);
+    const three = 3;
     const ten = 10;
     let result = 0;
     switch (difficulty) {
@@ -83,7 +84,7 @@ class Game extends React.Component {
       result = ten + (currentTime * 2);
       break;
     case 'hard':
-      result = ten + (currentTime * Number('3'));
+      result = ten + (currentTime * three);
       break;
     default:
       console.log('erro no switch');
