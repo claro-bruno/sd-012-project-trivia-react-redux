@@ -63,10 +63,10 @@ class Feedback extends React.Component {
 
         <div>
           { this.renderMessage() }
-          <p data-testid="feedback-total-score">
+          <p data-testid="feedback-total-question">
             {`Você acertou ${assertions} questões!`}
           </p>
-          <p data-testid="feedback-total-question">{`Um total de ${score} pontos.`}</p>
+          <p data-testid="feedback-total-score">{`Um total de ${score} pontos.`}</p>
         </div>
       </div>
     );
