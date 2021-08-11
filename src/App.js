@@ -4,7 +4,7 @@ import './App.css';
 import Login from './pages/Login';
 import Game from './pages/Game';
 import Config from './pages/Config';
-import Score from './pages/Score';
+import Feedback from './pages/Feedback';
 
 export default function App() {
   return (
@@ -27,8 +27,8 @@ export default function App() {
         />
         <Route
           exact
-          path="/score"
-          component={ () => <Score /> }
+          path="/feedback"
+          component={ () => <Feedback /> }
         />
       </Switch>
     </div>
