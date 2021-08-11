@@ -30,12 +30,11 @@ class Question extends Component {
             ? 'correct-answer'
             : `wrong-answer-${incorrectAnswers.indexOf(answer)}`;
           const interruptor = isCorrect
-            ? 'correct'
-            : 'wrong';
+            ? 'correct quest-btn'
+            : 'wrong quest-btn';
           return (
             <button
-              className={ resolved ? interruptor : '' }
-              id="quest-btn"
+              className={ resolved ? interruptor : 'quest-btn' }
               type="button"
               key={ index }
               data-testid={ dataTestId }
