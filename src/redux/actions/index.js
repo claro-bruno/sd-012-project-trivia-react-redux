@@ -64,6 +64,7 @@ export const getQuiz = () => async (dispatch) => {
       return newResult;
     });
     dispatch(quizSuccess(results));
+    console.log(results);
   } catch (error) {
     console.log(error);
   }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Loading from './Loading';
 import { getQuiz, getScore } from '../redux/actions';
+import { getQuiz } from '../redux/actions';
 
 class Questions extends Component {
   constructor() {
@@ -68,6 +69,17 @@ class Questions extends Component {
       },
     };
     localStorage.setItem('state', JSON.stringify(state));
+  }
+  
+  onClickAnswer() {
+    const nextButton = document.querySelector('.btn');
+    const buttons = document.querySelectorAll('.answer-buttons');
+    buttons.forEach((button) => {
+      if (button.id === 'correct-answer') {
+        button.classList.add('correct');
+      } else button.classList.add('wrong');
+    });
+    nextButton.classList.remove('isVisible');
   }
 
   setTimer() {
@@ -135,7 +147,7 @@ class Questions extends Component {
       question,
       correct_answer: correct,
       sortedArray } = quizFromRedux[index];
-
+    
     return (
       <div>
         <p data-testid="question-category">{ category }</p>
