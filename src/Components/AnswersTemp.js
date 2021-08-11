@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Answers.css';
 
-class Answers extends React.Component {
+class AnswersTemp extends React.Component {
   constructor(props) {
     super(props);
 
@@ -12,21 +12,13 @@ class Answers extends React.Component {
 
     this.shuffleArray = this.shuffleArray.bind(this);
     this.answers = this.answers.bind(this);
-    // this.teste = this.teste.bind(this);
   }
 
   componentDidMount() {
     const { question } = this.props;
     console.log(question);
 
-    // const answers = [...question.incorrect_answers, question.correct_answer];
-    
-    const answers = [
-      question.incorrect_answers[0],
-      question.incorrect_answers[1],
-      question.incorrect_answers[2],
-      question.correct_answer,
-    ];
+    const answers = [...question.incorrect_answers, question.correct_answer];
     console.log(answers);
 
     this.shuffleArray(answers);
@@ -125,11 +117,10 @@ class Answers extends React.Component {
         );
       })
     );
-
   }
 }
 
-Answers.propTypes = {
+AnswersTemp.propTypes = {
   question: PropTypes.shape({
     correct_answer: PropTypes.string.isRequired,
     incorrect_answers: PropTypes.arrayOf(PropTypes.string.isRequired)
@@ -139,4 +130,4 @@ Answers.propTypes = {
   show: PropTypes.bool.isRequired,
 };
 
-export default Answers;
+export default AnswersTemp;

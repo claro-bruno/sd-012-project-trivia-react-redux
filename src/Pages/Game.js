@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loading from '../Components/Loading';
 import Answers from '../Components/Answers';
+
 import HeaderGame from '../Components/HeaderGame';
 import { actionFetchApiGame, dispatchScore, showAnswers } from '../redux/actions';
 
@@ -70,9 +71,7 @@ class Game extends React.Component {
     console.log(correct);
     const { currentTime, index, assertions } = this.state;
     const { questions } = this.props;
-    // console.log(this.props.questions);
     const { difficulty } = questions[index];
-    console.log(difficulty);
     const ten = 10;
     let result = 0;
     switch (difficulty) {
@@ -104,9 +103,6 @@ class Game extends React.Component {
       }));
     }
     this.setLocalStorage();
-    console.log(this.state);
-    const then = JSON.parse(localStorage.getItem('state'));
-    console.log(then);
   }
 
   showNextQuestion() {
@@ -153,7 +149,6 @@ class Game extends React.Component {
   incorrectAndCorrectQuestion(answer) {
     const { sendShowAnswers } = this.props;
     sendShowAnswers(true);
-    // console.log(answer[0]);
     this.btnNext();
     this.handleClick(answer);
   }
