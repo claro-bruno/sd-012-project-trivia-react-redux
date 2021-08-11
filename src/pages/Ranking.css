@@ -1,0 +1,44 @@
+.section-ranking {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.title {
+  color: whitesmoke;
+}
+
+.ranking-list {
+  background-color: whitesmoke;
+  list-style: none;
+  padding: 0px;
+  width: 80%;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 4px 4px 10px black;
+  margin-bottom: 35px;
+  align-self: center;
+}
+
+.li-ranking {
+  padding: 20px 0px;
+  height: min-content;
+  border-radius: 8px;
+}
+
+.li-ranking:nth-child(even) {
+  background-color: silver;
+  margin: 0;
+}
+
+#user-pic {
+  border-radius: 50%;
+}
+
+.score {
+  margin-bottom: 0px;
+}
+
+.go-back-btn {
+  bottom: 15px;
+}
