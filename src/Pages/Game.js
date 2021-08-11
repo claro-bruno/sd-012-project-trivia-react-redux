@@ -4,29 +4,116 @@ import { connect } from 'react-redux';
 import Loading from '../Components/Loading';
 import Answers from '../Components/Answers';
 import HeaderGame from '../Components/HeaderGame';
-import { actionFetchApiGame, showAnswers } from '../redux/actions';
-import Timer from '../Components/timer';
+import { actionFetchApiGame, dispatchScore, showAnswers } from '../redux/actions';
 
 class Game extends React.Component {
   constructor() {
     super();
     this.state = {
       index: 0,
+      currentTime: 30,
+      isAnswered: false,
+      result: 0,
+      assertions: 0,
+      score: 0,
+
     };
     this.showNextQuestion = this.showNextQuestion.bind(this);
     this.btnNext = this.btnNext.bind(this);
     this.incorrectAndCorrectQuestion = this.incorrectAndCorrectQuestion.bind(this);
+    this.changeCurrentTime = this.changeCurrentTime.bind(this);
+    this.disableBtn = this.disableBtn.bind(this);
+    this.setLocalStorage = this.setLocalStorage.bind(this);
+    this.savingPoints = this.savingPoints.bind(this);
   }
 
   componentDidMount() {
     const { fetchApiGame, token } = this.props;
     fetchApiGame(token);
+    this.changeCurrentTime();
+  }
+
+  setLocalStorage() {
+    const { assertions, score } = this.state;
+    const { name, gravatarEmail } = this.props;
+    const jogador = JSON.stringify({ player: {
+      name,
+      gravatarEmail,
+      assertions,
+      score,
+    } });
+    localStorage.setItem('state', jogador);
+  }
+
+  disableBtn() {
+    const answerBtn = document.querySelectorAll('.answer-btn');
+    answerBtn.forEach((button) => {
+      button.setAttribute('disabled', 'disabled');
+    });
+  }
+
+  changeCurrentTime() {
+    const updateTime = 1000;
+    const limitTime = 30000;
+
+    setInterval(() => {
+      const { currentTime } = this.state;
+      if (currentTime > 0) this.setState({ currentTime: currentTime - 1 });
+    }, updateTime);
+
+    setTimeout(() => {
+      this.disableBtn();
+    }, limitTime);
+  }
+
+  savingPoints(correct) {
+    console.log(correct);
+    const { currentTime, index, assertions } = this.state;
+    const { questions } = this.props;
+    // console.log(this.props.questions);
+    const { difficulty } = questions[index];
+    console.log(difficulty);
+    const ten = 10;
+    let result = 0;
+    switch (difficulty) {
+    case 'easy':
+      result = ten + (currentTime * 1);
+      break;
+    case 'medium':
+      result = ten + (currentTime * 2);
+      break;
+    case 'hard':
+      result = ten + (currentTime * Number('3'));
+      break;
+    default:
+      console.log('erro no switch');
+      break;
+    }
+    this.setState({ assertions: assertions + 1 });
+    return result;
+  }
+
+  handleClick(correct) {
+    if (correct === 'correct') {
+      const resultado = this.savingPoints(correct);
+      this.setState((prevState) => ({
+        isAnswered: true,
+        result: prevState.result + resultado,
+        score: prevState.result + resultado,
+        assertions: prevState.assertions,
+      }));
+    }
+    this.setLocalStorage();
+    console.log(this.state);
+    const then = JSON.parse(localStorage.getItem('state'));
+    console.log(then);
   }
 
   showNextQuestion() {
     const { sendShowAnswers } = this.props;
     this.setState((state) => ({
       index: state.index + 1,
+      currentTime: 30,
     }));
     sendShowAnswers(false);
   }
@@ -54,7 +141,8 @@ class Game extends React.Component {
       return (
         <button
           type="button"
-          onClick={ () => push('/') } // fazer push para a tela de feedback
+          data-testid="btn-next"
+          onClick={ () => push('/feedback') } // fazer push para a tela de feedback
         >
           Ver Resultado
         </button>
@@ -62,24 +150,26 @@ class Game extends React.Component {
     }
   }
 
-  incorrectAndCorrectQuestion() {
+  incorrectAndCorrectQuestion(answer) {
     const { sendShowAnswers } = this.props;
     sendShowAnswers(true);
+    // console.log(answer[0]);
     this.btnNext();
+    this.handleClick(answer);
   }
 
   render() {
     const { questions, isFetching, show } = this.props;
-    const { index } = this.state;
+    const { index, currentTime, score } = this.state;
     if (isFetching) return <Loading />;
 
     return (
       <>
-        <HeaderGame />
+        <HeaderGame score={ score } />
         {
           questions.length > 0 ? (
             <section className="App">
-              <Timer />
+              { currentTime }
               <div>
                 <p data-testid="question-category">
                   <strong>Categoria: </strong>
@@ -92,7 +182,9 @@ class Game extends React.Component {
                 <Answers
                   show={ show }
                   question={ questions[index] }
-                  onClick={ () => this.incorrectAndCorrectQuestion() }
+                  onClick={ (
+                    { target: { name } },
+                  ) => this.incorrectAndCorrectQuestion(name) }
                 />
               </div>
               { this.btnNext() }
@@ -107,18 +199,22 @@ class Game extends React.Component {
 
 Game.propTypes = {
   fetchApiGame: PropTypes.func.isRequired,
-  history: PropTypes.objectOf().isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   isFetching: PropTypes.bool.isRequired,
-  push: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(
     PropTypes.shape({
       category: PropTypes.string.isRequired,
       question: PropTypes.string.isRequired,
+      difficulty: PropTypes.string.isRequired,
     }).isRequired,
   ).isRequired,
   sendShowAnswers: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
   token: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -127,11 +223,14 @@ const mapStateToProps = (state) => ({
   indexQuestion: state.gameReducer.indexQuestion,
   token: state.player.token,
   show: state.answers.show,
+  name: state.player.name,
+  gravatarEmail: state.player.gravatarEmail,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchApiGame: (token) => dispatch(actionFetchApiGame(token)),
   sendShowAnswers: (show) => dispatch(showAnswers(show)),
+  savedScore: (score) => dispatch(dispatchScore(score)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

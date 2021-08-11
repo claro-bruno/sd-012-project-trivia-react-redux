@@ -4,6 +4,17 @@ import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 
 class HeaderGame extends React.Component {
+  // constructor() {
+  //   super();
+  //   this.getResult = this.getResult.bind(this);
+  // }
+
+  // getResult() {
+  //   const result = localStorage.getItem('state');
+  //   const { player: { score } } = JSON.parse(result);
+  //   return score;
+  // }
+
   render() {
     const { name, email, score } = this.props;
     const hash = md5(email).toString();
@@ -18,8 +29,7 @@ class HeaderGame extends React.Component {
         />
         <p data-testid="header-player-name">{ name }</p>
         <p data-testid="header-score">
-          Pontos:
-          { Number(score) }
+          { score }
         </p>
       </header>
     );
@@ -35,7 +45,7 @@ HeaderGame.propTypes = {
 const mapStateToProps = (state) => ({
   name: state.player.name,
   email: state.player.gravatarEmail,
-  score: state.gameReducer.score,
+  // score: state.gameReducer.score,
 });
 
-export default connect(mapStateToProps, null)(HeaderGame);
+export default connect(mapStateToProps)(HeaderGame);

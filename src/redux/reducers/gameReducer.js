@@ -9,6 +9,7 @@ const INITIAL_STATE = {
   questions: [],
   isFetching: false,
   score: 0,
+  assertions: 0,
 };
 
 const gameReducer = (state = INITIAL_STATE, action) => {

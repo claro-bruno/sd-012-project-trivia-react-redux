@@ -5,6 +5,7 @@ import Game from './Pages/Game';
 import Config from './Pages/Config';
 import Login from './Pages/Login';
 import Ranking from './Pages/Ranking';
+import Feedback from './Pages/Feedback';
 
 class App extends React.Component {
   render() {
@@ -14,6 +15,7 @@ class App extends React.Component {
         <Route path="/ranking" render={ (props) => <Ranking { ...props } /> } />
         <Route path="/configs" render={ (props) => <Config { ...props } /> } />
         <Route exact path="/" render={ (props) => <Login { ...props } /> } />
+        <Route path="/feedback" render={ (props) => <Feedback { ...props } /> } />
       </Switch>
     );
   }
