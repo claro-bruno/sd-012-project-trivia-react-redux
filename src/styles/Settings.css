@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Chonburi&family=Courgette&family=Quantico:wght@700&display=swap') ;
+
+.settings-page {
+  background-image: url('./images/settings1-.jpg');
+  background-size: cover;
+  display: flex;
+  height: 100vh;
+  margin: 0;
+  text-align: center;
+}
+
+.settings-text {
+  align-items: center;
+  color: rgb(185, 185, 185);
+  display: flex;
+  font-family: Quantico , sans-serif;
+  font-size: 130%;
+  height: 10%;
+  justify-content: center;
+  margin: 20px;
+  text-align: center;
+  width: 100%;
+}
