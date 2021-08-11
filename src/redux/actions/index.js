@@ -7,6 +7,7 @@ export const TOKEN_START = 'TOKEN_START';
 export const TOKEN_SUCCESS = 'TOKEN_SUCCESS';
 export const QUIZ_START = 'QUIZ_START';
 export const QUIZ_SUCCESS = 'QUIZ_SUCCESS';
+export const GET_SCORE = 'GET_SCORE';
 
 export const nameSet = (payload) => ({
   type: NAME_SET,
@@ -63,8 +64,12 @@ export const getQuiz = () => async (dispatch) => {
       return newResult;
     });
     dispatch(quizSuccess(results));
-    console.log(results);
   } catch (error) {
     console.log(error);
   }
 };
+
+export const getScore = (score) => ({
+  type: GET_SCORE,
+  payload: score,
+});
