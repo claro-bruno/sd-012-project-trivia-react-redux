@@ -18,6 +18,14 @@ body {
   background-color: #13c062;
 }
 
+.black-border {
+  border: 1px black solid;
+}
+
+.blue-background {
+  background-color: #2796ca;
+}
+
 .aliceblue-color {
   color: aliceblue;
 }
