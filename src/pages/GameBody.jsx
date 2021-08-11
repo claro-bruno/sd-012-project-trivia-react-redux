@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { setScore } from '../redux/action';
+
+const cinco = 5;
 
 class GameBody extends Component {
   constructor(props) {
@@ -90,9 +93,8 @@ class GameBody extends Component {
 
   nextQuestion() {
     const { index } = this.state;
-    // index precisa ser tratado , pois ira sobresair o tamanho do array
     this.setState({
-      index: index + 1,
+      index: (index < cinco) ? index + 1 : index,
       disableAnswers: false,
       hidden: true,
       correct: '',
@@ -104,10 +106,16 @@ class GameBody extends Component {
     this.count();
   }
 
+  redirect() {
+    const { index } = this.state;
+    if (index === cinco) {
+      return <Redirect to="/feedback" />;
+    }
+  }
+
   createQuestion() {
     const { results } = this.props;
     const { index } = this.state;
-    console.log('results GameBody', results[index]);
     const { category, question } = results[index];
     return (
       <div>
@@ -131,11 +139,9 @@ class GameBody extends Component {
   }
 
   createOptions() {
-    // console.log('chamou createOptions');
     const { index } = this.state;
     const { results } = this.props;
     const { difficulty } = results[index];
-    // console.log('Gabriel', difficulty);
 
     const {
       alternatives,

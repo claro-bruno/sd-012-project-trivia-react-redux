@@ -9,6 +9,7 @@ class Feedback extends React.Component {
   }
 
   render() {
+    const { score, assertions } = this.props;
     const assertionsMin = 3;
     return (
       <>
@@ -59,7 +60,8 @@ class Feedback extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  assertions: state.reducer.assertions,
+  assertions: state.questions.assertions,
+  score: state.questions.score,
 });
 
 export default connect(mapStateToProps)(Feedback);
