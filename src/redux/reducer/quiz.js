@@ -1,8 +1,9 @@
-import { QUIZ_START, QUIZ_SUCCESS } from '../actions';
+import { QUIZ_START, QUIZ_SUCCESS, GET_SCORE } from '../actions';
 
 const initialState = {
   fetch: false,
   quiz: '',
+  score: 0,
 };
 
 const quizReducer = (state = initialState, action) => {
@@ -17,6 +18,11 @@ const quizReducer = (state = initialState, action) => {
       ...state,
       fetch: action.payload.fetch,
       quiz: action.payload.results,
+    };
+  case GET_SCORE:
+    return {
+      ...state,
+      score: action.payload,
     };
   default: return state;
   }

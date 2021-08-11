@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 class Header extends React.Component {
   render() {
-    const { name, email } = this.props;
+    const { name, email, score } = this.props;
     const hash = md5(email).toString();
     return (
       <nav className="navbar navbar-light bg-light">
@@ -27,7 +27,7 @@ class Header extends React.Component {
             className="navbar-brand mb-0 h1"
             data-testid="header-score"
           >
-            { 0 }
+            { score }
           </span>
         </div>
       </nav>
@@ -38,11 +38,13 @@ class Header extends React.Component {
 Header.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   name: state.user.name,
   email: state.user.email,
+  score: state.quizReducer.score,
 });
 
 export default connect(mapStateToProps, null)(Header);

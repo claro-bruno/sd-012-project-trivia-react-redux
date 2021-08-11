@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Loading from './Loading';
+import { getQuiz, getScore } from '../redux/actions';
 import { getQuiz } from '../redux/actions';
 
 class Questions extends Component {
@@ -14,23 +15,62 @@ class Questions extends Component {
       redirect: false,
       ceil: 30,
       floor: 0,
+      assertions: 0,
     };
     this.displayQuiz = this.displayQuiz.bind(this);
     this.displayQuestion = this.displayQuestion.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.setTimer = this.setTimer.bind(this);
     this.disableButtons = this.disableButtons.bind(this);
+    this.onClickAnswer = this.onClickAnswer.bind(this);
+    this.sumScore = this.sumScore.bind(this);
+    this.setUserOnLocalStorage = this.setUserOnLocalStorage.bind(this);
   }
 
   componentDidMount() {
     this.displayQuiz();
     this.setTimer();
+    this.setUserOnLocalStorage();
   }
 
   componentDidUpdate() {
     this.disableButtons();
   }
 
+  onClickAnswer({ target }) {
+    const nextButton = document.querySelector('.btn');
+    const correct = 'correct-answer';
+    const buttons = document.querySelectorAll('.answer-buttons');
+    clearInterval(this.timerID);
+    buttons.forEach((button) => {
+      if (button.id === correct) {
+        button.classList.add('correct');
+      } else button.classList.add('wrong');
+    });
+    if (target.id === correct) {
+      this.setState((prevState) => ({
+        assertions: prevState.assertions + 1,
+      }), this.sumScore);
+    }
+    nextButton.classList.remove('isVisible');
+  }
+
+  setUserOnLocalStorage(value = 0) {
+    const { userFromRedux } = this.props;
+    const { assertions } = this.state;
+    console.log(userFromRedux);
+    const { name, email } = userFromRedux;
+    const state = {
+      player: {
+        name,
+        assertions,
+        score: value,
+        gravatarEmail: email,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(state));
+  }
+  
   onClickAnswer() {
     const nextButton = document.querySelector('.btn');
     const buttons = document.querySelectorAll('.answer-buttons');
@@ -54,6 +94,21 @@ class Questions extends Component {
         }
       });
     }, timerSecond);
+  }
+
+  sumScore() {
+    const { quizFromRedux, scoreToRedux, scoreFromRedux } = this.props;
+    const { index } = this.state;
+    const { difficulty } = quizFromRedux[index];
+    const dez = 10;
+    const { ceil } = this.state;
+    const pontuacao = { hard: 3, medium: 2, easy: 1 };
+    const calculo = dez + (ceil * pontuacao[difficulty]);
+    console.log(calculo);
+    const soma = calculo + scoreFromRedux;
+    console.log(soma);
+    scoreToRedux(soma);
+    this.setUserOnLocalStorage(soma);
   }
 
   disableButtons() {
@@ -92,6 +147,7 @@ class Questions extends Component {
       question,
       correct_answer: correct,
       sortedArray } = quizFromRedux[index];
+    
     return (
       <div>
         <p data-testid="question-category">{ category }</p>
@@ -161,15 +217,21 @@ class Questions extends Component {
 
 const mapStateToProps = (state) => ({
   quizFromRedux: state.quizReducer.quiz,
+  scoreFromRedux: state.quizReducer.score,
+  userFromRedux: state.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   quizToRedux: () => dispatch(getQuiz()),
+  scoreToRedux: (score) => dispatch(getScore(score)),
 });
 
 Questions.propTypes = {
   quizFromRedux: PropTypes.arrayOf(PropTypes.string).isRequired,
   quizToRedux: PropTypes.func.isRequired,
+  scoreToRedux: PropTypes.func.isRequired,
+  scoreFromRedux: PropTypes.number.isRequired,
+  userFromRedux: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
