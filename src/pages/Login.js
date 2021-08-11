@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { actionCreateLogin, resetState } from '../redux/actions';
 import { fetchApi } from '../services/api';
+import HeaderInLogin from '../components/HeaderInLogin';
 import '../Style/login.css';
+import '../Style/headerInLogin.css';
 
 class Login extends Component {
   constructor(props) {
@@ -55,58 +57,53 @@ class Login extends Component {
     this.setState({ btnDisable: !validator });
   }
 
-  handleClick() {
-    const { fetchAPItoken, token } = this.props;
-    fetchAPItoken();
-    localStorage.setItem('token', token);
-  }
-
   render() {
     const { name, email, btnDisable, redirect } = this.state;
     return (
-      <fieldset className="login-screen">
-        { redirect && <Redirect to="/game/trivia" /> }
-        <label
-          htmlFor="input-player-name"
-        >
-          Nome:
-          <input
-            className="input-name"
-            value={ name }
-            name="name"
-            onChange={ this.handleChange }
-            type="text"
-            data-testid="input-player-name"
-          />
-        </label>
-        <label
-          htmlFor="input-gravatar-email"
-        >
-          Email:
-          <input
-            className="input-email"
-            value={ email }
-            name="email"
-            onChange={ this.handleChange }
-            type="text"
-            data-testid="input-gravatar-email"
-          />
-        </label>
-        <button
-          className="btn-play"
-          type="button"
-          data-testid="btn-play"
-          disabled={ btnDisable }
-          onClick={ () => this.handlePlayBtn(this.state) }
-        >
-          Jogar
-        </button>
-        <div>
-          <Link to="/config" data-testid="btn-settings">
-            <button className="btn-config" type="button">Configurações</button>
-          </Link>
-        </div>
-      </fieldset>
+      <>
+        <div className="logo"><HeaderInLogin /></div>
+        <fieldset className="login-screen">
+          { redirect && <Redirect to="/game/trivia" /> }
+          <label htmlFor="input-player-name">
+            Nome:
+            <input
+              className="input-name"
+              value={ name }
+              name="name"
+              onChange={ this.handleChange }
+              type="text"
+              data-testid="input-player-name"
+            />
+          </label>
+          <label
+            htmlFor="input-gravatar-email"
+          >
+            E-mail:
+            <input
+              className="input-email"
+              value={ email }
+              name="email"
+              onChange={ this.handleChange }
+              type="text"
+              data-testid="input-gravatar-email"
+            />
+          </label>
+          <button
+            className="btn-play"
+            type="button"
+            data-testid="btn-play"
+            disabled={ btnDisable }
+            onClick={ () => this.handlePlayBtn(this.state) }
+          >
+            Jogar
+          </button>
+          <div>
+            <Link to="/config" data-testid="btn-settings">
+              <button className="btn-config" type="button">Configurações</button>
+            </Link>
+          </div>
+        </fieldset>
+      </>
     );
   }
 }
