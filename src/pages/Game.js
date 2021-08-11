@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getQuestions } from '../services/api';
+import { localStorageRankingInit } from '../services/localStorage';
 import ButtonNextQuestion from '../components/ButtonNextQuestion';
 import Timer from '../components/Timer';
 import Header from '../components/Header';
@@ -34,6 +35,14 @@ class Game extends Component {
   componentDidMount() {
     this.getQuestions1();
     this.saveOnLocalStorage();
+  }
+
+  componentWillUnmount() {
+    localStorageRankingInit();
+    const ranking = JSON.parse(localStorage.getItem('ranking'));
+    const arr = [...ranking];
+    const save = JSON.stringify(arr);
+    localStorage.setItem('ranking', save);
   }
 
   async getQuestions1() {
@@ -78,7 +87,6 @@ class Game extends Component {
       answered: true,
     }), () => {
       const { score, assertions } = this.state;
-      console.log(score);
       this.saveOnLocalStorage();
       dispatchScore(assertions, score);
     });

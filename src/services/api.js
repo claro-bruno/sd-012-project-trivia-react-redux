@@ -1,3 +1,5 @@
+import { MD5 } from 'crypto-js';
+
 export const url = 'https://opentdb.com/api_token.php?command=request';
 export const questionUrl = 'https://opentdb.com/api.php?amount=5&token=';
 
@@ -25,3 +27,9 @@ export async function getQuestions() {
   JSON.stringify(localStorage.setItem('token', token));
   return data.results;
 }
+
+export const fetchGravatar = async (email) => {
+  const hash = MD5(email).toString();
+  const gravatar = await fetch(`https://www.gravatar.com/avatar/${hash}`);
+  return gravatar.url;
+};

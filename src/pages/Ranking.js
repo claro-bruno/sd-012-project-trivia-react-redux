@@ -1,22 +1,27 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
+import { loadRankingFromStorage } from '../services/localStorage';
 
-class Ranking extends React.Component {
+class Ranking extends Component {
   render() {
+    const ranking = loadRankingFromStorage();
+    const orderedRanking = ranking.sort((a, b) => b.score - a.score);
     return (
-      <>
-        <Header />
+      <div className="ranking">
         <p data-testid="ranking-title">Ranking</p>
-        <Link to="/">
-          <button
-            type="button"
-            data-testid="btn-go-home"
-          >
-            Voltar ao início
-          </button>
+        <ul>
+          { orderedRanking.map((player, index) => (
+            <li key={ index }>
+              <img src={ player.gravatarUrl } alt={ player.name } />
+              <p data-testid={ `player-name-${index}` }>{ player.name }</p>
+              <p data-testid={ `player-score-${index}` }>{ player.score }</p>
+            </li>
+          )) }
+        </ul>
+        <Link to="/" data-testid="btn-go-home">
+          <button type="button">Tela inicial</button>
         </Link>
-      </>
+      </div>
     );
   }
 }

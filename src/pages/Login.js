@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createLogin, fetchAvatar, resetAssertions } from '../redux/actions';
 import getInfo from '../services/api';
-import { createLogin } from '../redux/actions';
 
 class Login extends Component {
   constructor() {
@@ -20,11 +20,13 @@ class Login extends Component {
   }
 
   async getLogin() {
-    const { dispatchPlayer } = this.props;
+    const { dispatchPlayer, avatarFetch, resetAssertionsAction } = this.props;
     const { name, gravatarEmail } = this.state;
     const login = await getInfo();
+    await avatarFetch(gravatarEmail);
 
     dispatchPlayer(name, gravatarEmail);
+    resetAssertionsAction();
     return login;
   }
 
@@ -90,10 +92,14 @@ class Login extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchPlayer: (value, email) => dispatch(createLogin(value, email)),
+  avatarFetch: (email) => dispatch(fetchAvatar(email)),
+  resetAssertionsAction: () => dispatch(resetAssertions()),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   dispatchPlayer: PropTypes.func.isRequired,
+  avatarFetch: PropTypes.func.isRequired,
+  resetAssertionsAction: PropTypes.func.isRequired,
 };
