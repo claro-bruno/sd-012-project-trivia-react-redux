@@ -20,7 +20,7 @@ class Game extends React.Component {
     this.scoreCounter = this.scoreCounter.bind(this);
     this.assertionsCounter = this.assertionsCounter.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.handleClickAnswers = this.handleClickAnswers.bind(this);
+    this.changeColorAnswer = this.changeColorAnswer.bind(this);
   }
 
   // Requisito 8 - para fazer foi consultado essa vídeo-aula: https://www.youtube.com/watch?v=NAx76xx40jM
@@ -68,7 +68,7 @@ class Game extends React.Component {
       this.scoreCounter(difficulty);
       this.assertionsCounter();
     }
-    this.handleClickAnswers();
+    this.changeColorAnswer();
     // this.setLocalStorageGame();
 
     this.setState({
@@ -96,14 +96,12 @@ class Game extends React.Component {
     });
   }
 
-  handleClickAnswers() {
+  changeColorAnswer() {
     const cssValueWrong = '3px solid rgb(255, 0, 0)';
     const cssCorrectValue = '3px solid rgb(6, 240, 15)';
     document.getElementById('btn-next').style.display = 'block';
     document.getElementById('correct').style.border = cssCorrectValue;
     document.getElementById('incorrect').style.border = cssValueWrong;
-    // document.getElementById('btn-1').style.border = cssValueWrong;
-    // document.getElementById('btn-2').style.border = cssValueWrong;
   }
 
   // logica baseada no seguinte repositorio https://github.com/tryber/sd-012-project-trivia-react-redux/pull/8/commits/a93062a005d249fcc708168294a7926669bbf914
