@@ -13,7 +13,7 @@ class Game extends React.Component {
     this.state = {
       index: 0,
       currentTime: 30,
-      isAnswered: false,
+      // isAnswered: false,
       result: 0,
       assertions: 0,
       score: 0,
@@ -67,12 +67,14 @@ class Game extends React.Component {
     }, limitTime);
   }
 
-  savingPoints(correct) {
-    console.log(correct);
+  savingPoints() {
+    // console.log(correct);
     const { currentTime, index, assertions } = this.state;
     const { questions } = this.props;
     const { difficulty } = questions[index];
     const ten = 10;
+    const three = 3;
+
     let result = 0;
     switch (difficulty) {
     case 'easy':
@@ -82,7 +84,7 @@ class Game extends React.Component {
       result = ten + (currentTime * 2);
       break;
     case 'hard':
-      result = ten + (currentTime * Number('3'));
+      result = ten + (currentTime * three);
       break;
     default:
       console.log('erro no switch');
@@ -94,9 +96,9 @@ class Game extends React.Component {
 
   handleClick(correct) {
     if (correct === 'correct') {
-      const resultado = this.savingPoints(correct);
+      const resultado = this.savingPoints();
       this.setState((prevState) => ({
-        isAnswered: true,
+        // isAnswered: true,
         result: prevState.result + resultado,
         score: prevState.result + resultado,
         assertions: prevState.assertions,
@@ -156,6 +158,7 @@ class Game extends React.Component {
   render() {
     const { questions, isFetching, show } = this.props;
     const { index, currentTime, score } = this.state;
+
     if (isFetching) return <Loading />;
 
     return (

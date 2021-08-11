@@ -22,12 +22,7 @@ class Answers extends React.Component {
     console.log('respostas', answers);
 
     this.shuffleArray(answers);
-    // this.teste(answers);
-  }
-
-  componentWillUnmount() {
-    const { question } = this.props;
-    console.log('questao nova', question);
+    this.teste(answers);
   }
 
   teste(answers) {
@@ -86,48 +81,39 @@ class Answers extends React.Component {
   // }
 
   render() {
-    // const { question, show } = this.props;
-    // return this.answers(question, show);
-
     const { question, show } = this.props;
-    const { arrayAnswers } = this.state;
-    // console.log('pergunta da vez', question);
-    // console.log('respostas', arrayAnswers);
-
+    // const { arrayAnswers } = this.state;
+    const incorrectAnswers = question.incorrect_answers;
     const { onClick } = this.props;
-    let controllIncorrects = 0;
-
     return (
-      arrayAnswers.map((answer, index) => {
-        if (answer === question.correct_answer) {
+      <div>
+        { incorrectAnswers.map((answer, index) => {
+          console.log('teste');
           return (
             <button
               key={ index }
               type="button"
               onClick={ (event) => onClick(event) }
-              data-testid="correct-answer"
-              className={ show ? 'correct answer-btn' : 'answer-btn' }
-              name="correct"
+              data-testid={ `wrong-answer-${index}` }
+              className={ show ? 'wrong answer-btn' : 'answer-btn' }
+              name="wrong"
             >
-              {question.correct_answer}
+              {question.incorrect_answers[index]}
             </button>
           );
-        }
+        })}
 
-        controllIncorrects += 1;
-        return (
-          <button
-            key={ index }
-            type="button"
-            onClick={ (event) => onClick(event) }
-            data-testid={ `wrong-answer-${controllIncorrects - 1}` }
-            className={ show ? 'wrong answer-btn' : 'answer-btn' }
-            name="wrong"
-          >
-            {question.incorrect_answers[controllIncorrects - 1]}
-          </button>
-        );
-      })
+        <button
+          key="correct"
+          type="button"
+          onClick={ (event) => onClick(event) }
+          data-testid="correct-answer"
+          className={ show ? 'correct answer-btn' : 'answer-btn' }
+          name="correct"
+        >
+          {question.correct_answer}
+        </button>
+      </div>
     );
   }
 }
