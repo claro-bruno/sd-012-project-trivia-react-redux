@@ -30,7 +30,7 @@ export default function player(state = INITIAL_STATE, action) {
       score: action.score,
     };
   case RESET_ASSERTIONS:
-    return { ...state, assertions: 0, score: 0 };
+    return { ...state, assertions: 0, score: 10 };
   default:
     return state;
   }
