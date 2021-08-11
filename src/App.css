@@ -345,7 +345,26 @@ hr {
   width: 100%;
 }
 
+.container-graphic {
+  background-color: aquamarine;
+  margin: 0 auto;
+  width: 50%;
+}
+
+.graphic {
+  position: relative;
+  width: 200px;
+}
+
+@media ( max-width : 1200px ) {
+
+  canvas {
+    width: 80%;
+  }
+}
+
 @media ( max-width : 770px ) {
+
 
   .cont-questions {
     color: aliceblue;
