@@ -2,10 +2,13 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Input from '../components/Input';
-import Button from '../components/Button';
+import InputsLogin from '../components/loginControlled/InputsLogin';
+import ButtonsLogin from '../components/loginControlled/ButtonsLogin';
 import logo from '../trivia.png';
 import { tokenFetchAPI, addLoginAction } from '../redux/actions';
+import '../css/Login.css';
+import '../css/Button.css';
+import '../css/Input.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -77,44 +80,27 @@ class Login extends React.Component {
         redirectRank,
       } } = this;
     const MAX_LENGTH = 5;
+    const disableCondition = !(user.length > MAX_LENGTH && email.includes('@' && '.com'));
     return (
       <>
         { redirectGame && <Redirect to="/game" /> }
         { redirectConfig && <Redirect to="/config" /> }
         { redirectRank && <Redirect to="/ranking" /> }
         <img src={ logo } className="App-logo" alt="logo" />
-        <form>
-          <Input
-            name="user"
-            testId="input-player-name"
-            label="Usuário"
-            onChange={ handleChange }
-            value={ user }
-            type="text"
+        <form className="login-form">
+          <InputsLogin
+            onChange1={ handleChange }
+            value1={ user }
+            onChange2={ handleChange }
+            value2={ email }
+            className="std-input"
           />
-          <Input
-            name="email"
-            testId="input-gravatar-email"
-            label="E-mail"
-            onChange={ handleChange }
-            value={ email }
-            type="email"
-          />
-          <Button
-            testId="btn-play"
-            name="Entrar"
-            disabled={ !(user.length > MAX_LENGTH && email.includes('@' && '.com')) }
-            handleClick={ handleClickGame }
-          />
-          <Button
-            testId="btn-settings"
-            name="Configurações"
-            handleClick={ handleClickConfig }
-          />
-          <Button
-            testId="btn-ranking"
-            name="Ranking"
-            handleClick={ handleClickRank }
+          <ButtonsLogin
+            disabled={ disableCondition }
+            handleClick1={ handleClickGame }
+            handleClick2={ handleClickConfig }
+            handleClick3={ handleClickRank }
+            className="std-button"
           />
         </form>
       </>

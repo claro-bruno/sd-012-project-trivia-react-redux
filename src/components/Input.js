@@ -6,26 +6,30 @@ export default class Input extends React.Component {
     const {
       props: {
         name,
-        label,
+        // label,
         value,
         onChange,
         testId,
         type,
+        className,
+        placeholder,
       },
     } = this;
     return (
-      <label htmlFor={ name }>
-        { label }
-        <input
-          id={ name }
-          data-testid={ testId }
-          name={ name }
-          type={ type }
-          value={ value }
-          onChange={ onChange }
-          required
-        />
-      </label>
+      // <label htmlFor={ name }>
+    // { label }
+      <input
+        id={ name }
+        data-testid={ testId }
+        name={ name }
+        type={ type }
+        value={ value }
+        onChange={ onChange }
+        className={ className }
+        required
+        placeholder={ placeholder }
+      />
+      // {/* </label> */}
     );
   }
 }
@@ -37,9 +41,18 @@ const {
 
 Input.propTypes = {
   name: string.isRequired,
-  label: string.isRequired,
-  value: string.isRequired,
+  className: string,
+  // label: string,
+  value: string,
   onChange: func.isRequired,
-  testId: string.isRequired,
+  testId: string,
   type: string.isRequired,
+  placeholder: string.isRequired,
+};
+
+Input.defaultProps = {
+  testId: '',
+  className: '',
+  // label: '',
+  value: '',
 };
