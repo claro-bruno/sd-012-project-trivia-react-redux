@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
-import '../styles/Header.css';
 import { actionGetPictureUrl } from '../redux/actions';
 
 class Header extends React.Component {
@@ -34,25 +33,28 @@ class Header extends React.Component {
     const { pictureUrl } = this.state;
 
     return (
-      <header className="standard-header">
-        <div className="player-info">
+      <header className="shadow-lg bg-header flex items-center justify-between pb-5 pt-5">
+        <div className="flex items-center ml-5">
           <img
             data-testid="header-profile-picture"
             src={ pictureUrl }
             alt="avatar do jogador"
-            className="player-image"
+            className="rounded-2xl"
           />
-          <span className="jogador-span">
+          <span className="text-2xl aliceblue-color ml-4">
             Jogador:
-            <span className="player-name" data-testid="header-player-name">
+            <span
+              className="text-2xl aliceblue-color ml-1"
+              data-testid="header-player-name"
+            >
               {userName}
             </span>
           </span>
         </div>
-        <div className="player-score">
+        <div className="text-2xl aliceblue-color mr-5">
           <span>
             Pontuação:
-            <span className="player-score-number" data-testid="header-score">
+            <span className="text-2xl aliceblue-color ml-1" data-testid="header-score">
               { score }
             </span>
           </span>
