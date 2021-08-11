@@ -5,10 +5,10 @@
   padding: 100px;
 }
 
-.buttons {
+/* .buttons {
   display: flex;
   flex-flow: row nowrap;
-}
+} */
 
 .header-player {
   align-items: center;

@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchToken, userAction, userActionName } from '../redux/actions';
 import './pages.css';
+import '../App.css';
+import logo from '../trivia.png';
 
 class Login extends PureComponent {
   constructor() {
@@ -25,7 +27,7 @@ class Login extends PureComponent {
 
   settingsButton() {
     return (
-      <div>
+      <div className="buttons">
         <Link
           to="/settings"
         >
@@ -33,6 +35,7 @@ class Login extends PureComponent {
             data-testid="btn-settings"
             type="button"
           >
+            <span role="img" aria-label="Gear">⚙️</span>
             Configurações
           </button>
         </Link>
@@ -80,47 +83,50 @@ class Login extends PureComponent {
   render() {
     const { email, name, disabled } = this.state;
     return (
-      <form className="form">
-        <label
-          htmlFor="email"
-        >
-          <input
-            placeholder="Email"
-            type="email"
-            name="email"
-            className=""
-            data-testid="input-gravatar-email"
-            value={ email }
-            onChange={ this.handleInput }
-          />
-        </label>
-
-        <label
-          htmlFor="name"
-        >
-          <input
-            placeholder="Nome"
-            type="text"
-            name="name"
-            className=""
-            data-testid="input-player-name"
-            value={ name }
-            onChange={ this.handleInput }
-          />
-        </label>
-        <div className="buttons">
-          <button
-            data-testid="btn-play"
-            type="button"
-            disabled={ disabled }
-            onClick={ this.handleClick }
+      <div className="App App-header">
+        <img src={ logo } className="App-logo" alt="logo" />
+        <form className="form">
+          <label
+            htmlFor="email"
           >
-            Jogar
-          </button>
+            <input
+              placeholder="Email"
+              type="email"
+              name="email"
+              className=""
+              data-testid="input-gravatar-email"
+              value={ email }
+              onChange={ this.handleInput }
+            />
+          </label>
 
-          { this.settingsButton() }
-        </div>
-      </form>
+          <label
+            htmlFor="name"
+          >
+            <input
+              placeholder="Nome"
+              type="text"
+              name="name"
+              className=""
+              data-testid="input-player-name"
+              value={ name }
+              onChange={ this.handleInput }
+            />
+          </label>
+          <div className="buttons">
+            <button
+              data-testid="btn-play"
+              type="button"
+              disabled={ disabled }
+              onClick={ this.handleClick }
+            >
+              Jogar
+            </button>
+
+            { this.settingsButton() }
+          </div>
+        </form>
+      </div>
     );
   }
 }
