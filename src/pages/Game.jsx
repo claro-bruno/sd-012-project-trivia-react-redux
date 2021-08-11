@@ -29,9 +29,9 @@ class Game extends Component {
   }
 
   componentDidMount() {
-    const { getQuiz, token, amount, id, difficulty, type } = this.props;
+    const { getQuiz, token, amount, id } = this.props;
     this.startTimer(0, true);
-    getQuiz({ token, amount, id, difficulty, type });
+    getQuiz(token, amount, id);
     this.completeRandomIndex();
   }
 
@@ -132,15 +132,13 @@ class Game extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   timeoutTrue: () => dispatch(actionTimeoutTrue()),
-  getQuiz: (data) => dispatch(fetchQuiz(data)),
+  getQuiz: (token, amount, id) => dispatch(fetchQuiz(token, amount, id)),
 });
 
 const mapStateToProps = (state) => ({
   token: state.user.token,
   amount: state.user.amount,
   id: state.user.id,
-  difficulty: state.user.difficulty,
-  type: state.user.type,
   questions: state.quiz.questions,
   loading: state.quiz.loading,
   timeout: state.quiz.timeout,
@@ -153,8 +151,6 @@ Game.propTypes = {
   loading: bool.isRequired,
   getQuiz: func.isRequired,
   token: string.isRequired,
-  type: string.isRequired,
-  difficulty: string.isRequired,
   amount: number.isRequired,
   id: number.isRequired,
   questions: arrayOf(shape({

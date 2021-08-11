@@ -63,7 +63,7 @@ class Question extends Component {
 
         <div className="alternatives">
           {randomIndex.map((index) => {
-            if (!alternatives[index]) return null;
+            if (!alternatives[index]) return;
             const { correct, alt, index: i, isCorrect } = alternatives[index];
             return (
               <button
