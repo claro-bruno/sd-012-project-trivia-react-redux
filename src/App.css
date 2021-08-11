@@ -17,3 +17,23 @@ body {
 .btn-green {
   background-color: #13c062;
 }
+
+.aliceblue-color {
+  color: aliceblue;
+}
+
+.bg-grey {
+  background-color: #9c9797;
+}
+
+.stopwatch {
+  background-color: #6f9dc9;
+}
+
+.btn-yellow {
+  background-color: #f9cc2c;
+}
+
+.h-main {
+  height: 75vh;
+}

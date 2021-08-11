@@ -1,15 +1,61 @@
 .correct-answer {
+  background-color: #9c9797;
   border: 3px solid rgb(6, 240, 15);
+  font-size: 20px;
+  margin: 15px 35px;
+  padding: 7px;
 }
 
 .correct-answer.selected {
   background-color: rgb(6, 240, 15);
+  font-size: 20px;
+  margin: 15px 35px;
+  padding: 7px;
 }
 
 .wrong-answer {
+  background-color: #9c9797;
   border: 3px solid red;
+  font-size: 20px;
+  margin: 15px 35px;
+  padding: 7px;
 }
 
 .wrong-answer.selected {
   background-color: red;
+  font-size: 20px;
+  margin: 15px 35px;
+  padding: 7px;
+}
+
+.btn-generic {
+  background-color: #9c9797;
+  border: 1px black solid;
+  font-size: 20px;
+  margin: 15px 35px;
+  padding: 7px;
+}
+
+.btn-generic:hover {
+  transform: scale(1.06);
+}
+
+.btn-generic:active {
+  transform: scale(0.99);
+}
+
+.btn-next {
+  background-color: #13c062;
+  border: 1px black solid;
+  font-size: 20px;
+  margin: 15px 35px;
+  padding: 7px;
+}
+
+.btn-next:hover {
+  transform: scale(1.06);
+}
+
+.btn-next:active {
+  transform: scale(0.99);
 }

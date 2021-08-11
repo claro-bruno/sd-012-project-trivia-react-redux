@@ -27,6 +27,8 @@ class Questions extends Component {
     this.answersRender = this.answersRender.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.countdown = this.countdown.bind(this);
+    this.buttonsGenerator = this.buttonsGenerator.bind(this);
+    this.timerGenerator = this.timerGenerator.bind(this);
     this.calculateScore = this.calculateScore.bind(this);
     this.buttonFunction = this.buttonFunction.bind(this);
     this.removeFirstQuestion = this.removeFirstQuestion.bind(this);
@@ -74,6 +76,31 @@ class Questions extends Component {
       .setItem('ranking', JSON.stringify([...storedRanking, { name, score, picture }]));
   }
 
+  buttonsGenerator(index, answer, disabled, next) {
+    return (
+      <button
+        data-testid={ `wrong-answer${index}` }
+        id={ `wrong-answer${index}` }
+        key={ answer }
+        type="button"
+        onClick={ this.handleClick }
+        disabled={ disabled }
+        className={ next ? 'wrong-answer' : 'btn-generic' }
+      >
+        { answer }
+      </button>
+    );
+  }
+
+  timerGenerator() {
+    const { time } = this.state;
+    return (
+      <div className="w-24 text-center text-2xl">
+        {time}
+      </div>
+    );
+  }
+
   answersRender() {
     const { questions, disabled, next } = this.state;
     const question = questions[0];
@@ -82,43 +109,41 @@ class Questions extends Component {
     let index = MINUS_ONE;
     return (
       <>
-        <h1 data-testid="question-category">
-          {question.category}
-        </h1>
-        <p data-testid="question-text">
-          {question.question}
-        </p>
-        {answers.map((answer) => {
-          if (answer === question.correct_answer) {
-            return (
-              <button
-                data-testid="correct-answer"
-                id="correct-answer"
-                type="button"
-                key={ answer }
-                onClick={ this.handleClick }
-                disabled={ disabled }
-                className={ next ? 'correct-answer' : '' }
-              >
-                { answer }
-              </button>
-            );
-          }
-          index += 1;
-          return (
-            <button
-              data-testid={ `wrong-answer${index}` }
-              id={ `wrong-answer${index}` }
-              key={ answer }
-              type="button"
-              onClick={ this.handleClick }
-              disabled={ disabled }
-              className={ next ? 'wrong-answer' : '' }
-            >
-              { answer }
-            </button>
-          );
-        })}
+        <div className="bg-grey rounded-md w-7/12 flex mt-12 p-2 flex-row">
+          <div className="bg-header flex flex-col items-center p-2 stopwatch">
+            <p data-testid="question-category">
+              {question.category}
+            </p>
+            {this.timerGenerator()}
+          </div>
+          <h1
+            data-testid="question-text"
+            className="text-center justify-self-center text-xl ml-8"
+          >
+            {question.question}
+          </h1>
+        </div>
+        <div className="mt-8 grid grid-cols-2">
+          {answers.map((answer) => {
+            if (answer === question.correct_answer) {
+              return (
+                <button
+                  data-testid="correct-answer"
+                  id="correct-answer"
+                  type="button"
+                  key={ answer }
+                  onClick={ this.handleClick }
+                  disabled={ disabled }
+                  className={ next ? 'correct-answer' : 'btn-generic' }
+                >
+                  { answer }
+                </button>
+              );
+            }
+            index += 1;
+            return this.buttonsGenerator(index, answer, disabled, next);
+          })}
+        </div>
       </>
     );
   }
@@ -165,21 +190,19 @@ class Questions extends Component {
         data-testid="btn-next"
         type="button"
         onClick={ () => this.removeFirstQuestion() }
+        className="btn-next"
       >
         Proxima Pergunta
       </button>);
   }
 
   render() {
-    const { questions, next, time, redirect } = this.state;
+    const { questions, next, redirect } = this.state;
     if (redirect) {
       return <Redirect to="/feedback" />;
     }
     return (
-      <main>
-        <div className="timer">
-          {time}
-        </div>
+      <main className="flex flex-col items-center">
         {questions[0] && this.answersRender()}
         {next ? this.buttonFunction() : null}
       </main>

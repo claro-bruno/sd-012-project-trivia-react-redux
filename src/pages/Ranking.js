@@ -29,7 +29,7 @@ class Ranking extends React.Component {
   }
 
   noStorageData() {
-    return <span>Sem pontuações no momento.</span>;
+    return <span>Nenhuma pontuação registrada</span>;
   }
 
   render() {
