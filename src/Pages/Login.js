@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchLoginAction } from '../redux/actions';
 import ConfigButton from '../Components/ConfigButton';
-import logo from '../trivia.png';
+import logo from '../trivia2.png';
 
 class Login extends React.Component {
   constructor() {
