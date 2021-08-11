@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
 import '../styles/Ranking.css';
 import primeiroLugar from '../images/first-place.png';
 import segundoLugar from '../images/second-place.png';
@@ -76,18 +75,15 @@ class Ranking extends React.Component {
     const localStorageData = JSON.parse(localStorage.getItem('ranking'));
 
     return (
-      <>
-        <Header />
-        <div className="flex flex-col items-center">
-          <h1 data-testid="ranking-title" className="text-5xl mb-6 mt-12">Ranking</h1>
-          {localStorageData ? this.scoreBoard() : this.noStorageData()}
-          <Link className="ranking-button-container" to="/">
-            <button data-testid="btn-go-home" className="ranking-button" type="button">
-              Página de Login
-            </button>
-          </Link>
-        </div>
-      </>
+      <div className="flex flex-col items-center">
+        <h1 data-testid="ranking-title" className="text-5xl mb-6 mt-12">Ranking</h1>
+        {localStorageData ? this.scoreBoard() : this.noStorageData()}
+        <Link className="ranking-button-container" to="/">
+          <button data-testid="btn-go-home" className="ranking-button" type="button">
+            Página de Login
+          </button>
+        </Link>
+      </div>
     );
   }
 }

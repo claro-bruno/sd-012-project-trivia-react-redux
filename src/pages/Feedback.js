@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { actionResetGame, actionResetSettings } from '../redux/actions';
-import Footer from '../components/Footer';
 import congrats from '../images/congrats.svg';
 
 const IMG_URL = 'https://st2.depositphotos.com/1575949/9163/v/950/depositphotos_91632748-stock-illustration-keep-trying-red-stamp-text.jpg';
@@ -88,7 +87,6 @@ class Feedback extends Component {
             { this.renderButtons(resetGame, resetSettings) }
           </div>
         </div>
-        <Footer />
       </>
     );
   }
