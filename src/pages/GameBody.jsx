@@ -44,6 +44,8 @@ class GameBody extends Component {
         clearInterval(interval);
         this.setState({
           seconds: 'Time\'s Up',
+          disableAnswers: true,
+          hidden: false,
         });
       }
     }, sec);
