@@ -58,7 +58,6 @@ export const fetchAPI = () => (dispatch) => {
   let endpoint = '';
   if (settings === null) {
     endpoint = `https://opentdb.com/api.php?amount=5&encode=base64&token=${token}`;
-    console.log('teste');
   } else {
     const { category, difficulty, type } = settings;
     endpoint = `https://opentdb.com/api.php?amount=5&encode=base64&token=${token}&category=${category}&difficulty=${difficulty}&type=${type}`;
