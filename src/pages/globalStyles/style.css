@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Risque&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 0.7vw;
+  font-family: 'Risque', cursive;
+}
+
+body {
+  background-color: #41197F;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}

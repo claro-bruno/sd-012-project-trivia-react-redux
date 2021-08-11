@@ -5,6 +5,10 @@ import { Redirect } from 'react-router-dom';
 import md5 from 'crypto-js/md5';
 import NextButton from './nextButton';
 import { submitScore } from '../../redux/actions/submitScoreAction';
+import {
+  QuestionWrapper,
+  GameWrapper, Cat, Quest, Tip, AnswerWrapper, AsButton, Timer,
+} from './styles';
 
 class QuestionLayout extends React.Component {
   constructor() {
@@ -125,41 +129,45 @@ class QuestionLayout extends React.Component {
       return <Redirect to="/feedback" />;
     }
     return (
-      <>
-        {console.log(questions)}
-        <h1 data-testid="question-category">{questions[question].category}</h1>
-        <p data-testid="question-text">{questions[question].question}</p>
-        <span>{timeCount}</span>
-        <button
-          className={ correct }
-          type="button"
-          id="correct"
-          data-testid="correct-answer"
-          onClick={ this.checkAnswer }
-          disabled={ timeCount === 0 || this.handleDisableButtons() }
-        >
-          {questions[question].correct_answer}
+      <GameWrapper>
+        <QuestionWrapper>
+          <Cat data-testid="question-category">{questions[question].category}</Cat>
+          <Quest data-testid="question-text">{questions[question].question}</Quest>
+          <Tip>Fácil</Tip>
+        </QuestionWrapper>
+        <AnswerWrapper>
+          <Timer>{timeCount}</Timer>
+          <AsButton
+            className={ correct }
+            type="button"
+            id="correct"
+            data-testid="correct-answer"
+            onClick={ this.checkAnswer }
+            disabled={ timeCount === 0 || this.handleDisableButtons() }
+          >
+            {questions[question].correct_answer}
 
-        </button>
-        {
-          questions[question].incorrect_answers
-            .map((e, index) => (
-              <button
-                className={ wrong }
-                data-testid={ `wrong-answer-${index}` }
-                type="button"
-                key={ e }
-                onClick={ this.checkAnswer }
-                disabled={ timeCount === 0 || this.handleDisableButtons() }
-              >
-                {e}
-              </button>))
-        }
-        <NextButton
-          onClick={ this.handleClick }
-          hidden={ hidden }
-        />
-      </>
+          </AsButton>
+          {
+            questions[question].incorrect_answers
+              .map((e, index) => (
+                <AsButton
+                  className={ wrong }
+                  data-testid={ `wrong-answer-${index}` }
+                  type="button"
+                  key={ e }
+                  onClick={ this.checkAnswer }
+                  disabled={ timeCount === 0 || this.handleDisableButtons() }
+                >
+                  {e}
+                </AsButton>))
+          }
+          <NextButton
+            onClick={ this.handleClick }
+            hidden={ hidden }
+          />
+        </AnswerWrapper>
+      </GameWrapper>
     );
   }
 }

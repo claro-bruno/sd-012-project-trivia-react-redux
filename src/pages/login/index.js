@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
+import { VscSettingsGear } from 'react-icons/vsc';
 import setUser from '../../redux/actions/userActions';
+import { LoginForm, SettingsWrapper } from './styles';
+import { Tittle, LabelText, Label, Input, Button } from '../globalStyles';
 
 class Login extends React.Component {
   constructor() {
@@ -17,9 +20,7 @@ class Login extends React.Component {
   }
 
   formHandler({ target }) {
-    this.setState({
-      [target.name]: target.value,
-    });
+    this.setState({ [target.name]: target.value });
   }
 
   routeChange() {
@@ -45,46 +46,61 @@ class Login extends React.Component {
     }));
   }
 
+  renderSettings() {
+    return (
+      <SettingsWrapper>
+        <Link to="/settings">
+          <VscSettingsGear
+            size="3vw"
+            color="white"
+            fill="white"
+            type="button"
+            data-testid="btn-settings"
+          >
+            Configurações
+          </VscSettingsGear>
+        </Link>
+      </SettingsWrapper>
+    );
+  }
+
   render() {
     const { email, name, redirect } = this.state;
     if (redirect) return (<Redirect to="/game" />);
     return (
       <>
-        <form>
-          <label htmlFor="input-player-name">
-            Nome
-            <input
+        {this.renderSettings()}
+        <LoginForm>
+          <Tittle>Trivia</Tittle>
+          <Label htmlFor="input-player-name">
+            <LabelText>Nome</LabelText>
+            <Input
               value={ name }
               onChange={ (e) => this.formHandler(e) }
               name="name"
               type="text"
               data-testid="input-player-name"
             />
-          </label>
-          <label htmlFor="input-gravatar-email">
-            Email
-            <input
+          </Label>
+          <Label htmlFor="input-gravatar-email">
+            <LabelText>Email</LabelText>
+            <Input
               onChange={ (e) => this.formHandler(e) }
               value={ email }
               name="email"
               type="text"
               data-testid="input-gravatar-email"
             />
-          </label>
-          <button
+          </Label>
+          <Button
             disabled={ !(email && name) }
             type="button"
             data-testid="btn-play"
             onClick={ this.routeChange }
           >
             Jogar
-          </button>
-        </form>
-        <Link to="/settings">
-          <button type="button" data-testid="btn-settings">
-            Configurações
-          </button>
-        </Link>
+          </Button>
+        </LoginForm>
       </>
     );
   }

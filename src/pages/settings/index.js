@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setCategory, setDifficulty, setType } from '../../redux/actions/settingActions';
 import { categories, difficulty, types } from '../../data';
+import { SettingsContainer, SettingsTitle } from './styles';
+import { Button } from '../globalStyles';
 
 class Settings extends React.Component {
   categoryOptions(category) {
@@ -38,12 +40,13 @@ class Settings extends React.Component {
     ) => this.difficultyOptions(category));
 
     return (
-      <div>
-        <h1 data-testid="settings-title">Configurações</h1>
+      <SettingsContainer style={ { width: '100%' } }>
+        <SettingsTitle data-testid="settings-title">Configurações</SettingsTitle>
         <Select
           placeholder="Categoria"
           options={ categoryOptions }
           onChange={ ({ value }) => setCategoryToStore(value) }
+          style={ { width: '500px' } }
         />
         <Select
           placeholder="Dificuldade"
@@ -55,12 +58,12 @@ class Settings extends React.Component {
           options={ typeOptions }
           onChange={ ({ value }) => setTypeToStore(value) }
         />
-        <Link to="/">
-          <button type="button">
+        <Link to="/" style={ { textDecoration: 'none' } }>
+          <Button type="button" style={ { width: '100%', padding: '0.5vw' } } onClick>
             Voltar
-          </button>
+          </Button>
         </Link>
-      </div>
+      </SettingsContainer>
     );
   }
 }

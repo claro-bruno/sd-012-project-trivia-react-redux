@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from '../game/Header';
+import { FeedbackText, FeedbackP, FeedbackWrapper } from './styles';
+import { Button } from '../globalStyles';
 
 class Feedback extends React.Component {
   constructor(props) {
@@ -19,11 +21,11 @@ class Feedback extends React.Component {
     const { totalAssertions } = this.state;
     if (totalAssertions < scoreToBeat) {
       return (
-        <p data-testid="feedback-text">Podia ser melhor...</p>
+        <FeedbackText data-testid="feedback-text">Podia ser melhor...</FeedbackText>
       );
     }
     return (
-      <p data-testid="feedback-text">Mandou bem!</p>
+      <FeedbackText data-testid="feedback-text">Mandou bem!</FeedbackText>
     );
   }
 
@@ -32,23 +34,41 @@ class Feedback extends React.Component {
     return (
       <>
         <Header />
-        { this.renderFeedback() }
-        <p data-testid="feedback-total-question">
-          {totalAssertions}
-        </p>
-        <p data-testid="feedback-total-score">
-          {totalScore}
-        </p>
-        <Link to="/">
-          <button data-testid="btn-play-again" type="button">
-            Jogar novamente
-          </button>
-        </Link>
-        <Link to="/ranking">
-          <button data-testid="btn-ranking" type="button">
-            Ranking
-          </button>
-        </Link>
+        <FeedbackWrapper>
+          { this.renderFeedback() }
+          <FeedbackP data-testid="feedback-total-question">
+            Você acertou
+            {' '}
+            {totalAssertions}
+            {' '}
+            questões !
+          </FeedbackP>
+          <FeedbackP data-testid="feedback-total-score">
+            Um total de
+            {' '}
+            {totalScore}
+            {' '}
+            pontos !
+          </FeedbackP>
+          <Link to="/" style={ { textDecoration: 'none' } }>
+            <Button
+              style={ { width: '100%', padding: '0.5vw' } }
+              data-testid="btn-play-again"
+              type="button"
+            >
+              Jogar novamente
+            </Button>
+          </Link>
+          <Link to="/ranking" style={ { textDecoration: 'none' } }>
+            <Button
+              data-testid="btn-ranking"
+              type="button"
+              style={ { width: '100%', padding: '0.5vw', backgroundColor: '#8968A3' } }
+            >
+              Ranking
+            </Button>
+          </Link>
+        </FeedbackWrapper>
       </>
     );
   }
