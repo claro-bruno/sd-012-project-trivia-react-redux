@@ -16,8 +16,6 @@ class GameScreen extends Component {
       isActive: false,
       score: 0,
       assertions: 0,
-      name: '',
-      gravatarEmail: '',
     };
 
     this.renderNextButton = this.renderNextButton.bind(this);
@@ -25,13 +23,16 @@ class GameScreen extends Component {
     this.renderQuestionsApi = this.renderQuestionsApi.bind(this);
     this.handleAnswerButtonClick = this.handleAnswerButtonClick.bind(this);
     this.getPointsAndSaveInLocalStorage = this.getPointsAndSaveInLocalStorage.bind(this);
-    this.createLocalStorage = this.createLocalStorage.bind(this);
     this.handleNextButton = this.handleNextButton.bind(this);
     this.setTimer = this.setTimer.bind(this);
   }
 
   componentDidMount() {
     return (this.setTimer());
+  }
+
+  componentWillUnmount() {
+    this.createRankingLocalStorage();
   }
 
   setTimer() {
@@ -79,19 +80,16 @@ class GameScreen extends Component {
     }));
   }
 
-  createLocalStorage() {
-    const { score, assertions, name, gravatarEmail } = this.state;
-
-    const stateLocalStorage = {
-      player: {
-        score,
-        assertions,
-        name,
-        gravatarEmail,
-      },
+  createRankingLocalStorage() {
+    const { score } = this.state;
+    const { userPlayer: { name, gravatarEmail } } = this.props;
+    const newRanking = {
+      name,
+      gravatarEmail,
+      score,
     };
-    const keyLocalStorage = JSON.stringify(stateLocalStorage);
-    localStorage.setItem('state', keyLocalStorage);
+    const rankingLocalStorage = JSON.parse(localStorage.getItem('ranking')) || [];
+    localStorage.setItem('ranking', JSON.stringify([...rankingLocalStorage, newRanking]));
   }
 
   handleAnswerButtonClick(difficulty) {
@@ -189,17 +187,20 @@ class GameScreen extends Component {
   }
 
   render() {
-    const { timeCount } = this.state;
+    const { timeCount, score, assertions } = this.state;
+    const { userPlayer: { name, gravatarEmail } } = this.props;
+    const player = { name, assertions, score, gravatarEmail };
+    const state = { player };
+    localStorage.setItem('state', JSON.stringify(state));
     return (
       <div>
         <h1>Tela Jogo</h1>
-        <Header />
+        <Header score={ score } />
         { this.renderQuestionsApi() }
         <p>
           {' '}
           {timeCount}
         </p>
-        {this.createLocalStorage()}
       </div>
     );
   }
