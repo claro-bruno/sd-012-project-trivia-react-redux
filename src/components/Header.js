@@ -16,8 +16,8 @@ class Header extends React.Component {
         <header>
           <img data-testid="header-profile-picture" src={ getImg } alt="user avatar" />
           <p data-testid="input-gravatar-email">{ gravatarEmail }</p>
-          <p data-testid="header-player-name">{name}</p>
-          <p data-testid="header-score">{score}</p>
+          <p data-testid="header-player-name">{ name }</p>
+          <p data-testid="header-score">{ score }</p>
         </header>
       </div>
     );
@@ -27,6 +27,7 @@ class Header extends React.Component {
 const mapStateToProps = (state) => ({
   name: state.player.name,
   gravatarEmail: state.player.gravatarEmail,
+  score: state.player.score,
 });
 
 export default connect(mapStateToProps)(Header);
