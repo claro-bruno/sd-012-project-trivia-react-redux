@@ -1,0 +1,23 @@
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0 15px 5px;
+  width: 100%;
+}
+
+.img-name {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.score-header {
+  align-self: flex-end;
+  margin-right: 38px;
+  text-align: center;
+}
+
+.profile-picture-header {
+  border-radius: 50px;
+  width: 85%;
+}
