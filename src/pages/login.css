@@ -1,0 +1,134 @@
+.login-content {
+  align-items: center;
+  background-color: rgb(51, 51, 102);
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+.settings-btn {
+  align-self: flex-end;
+  color: rgb(51, 51, 102);
+  margin-right: 10px;
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+.settings-btn:hover {
+  opacity: 1;
+}
+
+.logo-trivia {
+  animation: fade-logo 1s ease;
+  color: rgb(51, 51, 102);
+  font-family: 'Press Start 2P' , cursive;
+  font-size: 40px;
+  margin-top: 70px;
+  text-shadow: 5px 5px 5px gray;
+}
+
+.group-name {
+  animation: fade-logo 1s ease;
+  color: rgb(51, 51, 102);
+  font-family: Fredericka the Great , cursive;
+  font-size: 20px;
+}
+
+@keyframes fade-logo {
+
+  from {
+    font-size: 10px;
+  }
+
+}
+
+.login-field {
+  align-items: center;
+  animation: fade-in-login 2.5s ease-in-out;
+  background-color: rgb(204, 204, 204);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  justify-content: space-between;
+  width: 350px;
+}
+
+.inpts-login {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 35%;
+  justify-content: center;
+  width: 95%;
+}
+
+@keyframes fade-in-login {
+
+  from {
+    opacity: 0;
+  }
+}
+
+.login-field label {
+  margin-bottom: 20px;
+  width: 95%;
+}
+
+.login-field input {
+  border: 1px solid gray;
+  border-radius: 10px;
+  outline: none;
+  padding: 10px 15px;
+  width: 100%;
+}
+
+.login-field input:focus {
+  border: 1px solid rgb(204, 153, 153);
+  box-shadow: 0 0 2px 3px rgb(204, 153, 153);
+}
+
+.login-field input:hover {
+  border: 1px solid rgb(204, 153, 153);
+  box-shadow: 0 0 2px 3px rgb(204, 153, 153);
+}
+
+.login-content button {
+  background-color: rgb(204, 153, 153);
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 2px rgb(80, 56, 56);
+  color: rgb(51, 51, 102);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 40px;
+  opacity: 0.9;
+  outline: none;
+  padding: 10px 0;
+  width: 95%;
+}
+
+.login-content button:hover {
+  opacity: 1;
+}
+
+.login-content button:disabled {
+  background-color: silver;
+  box-shadow: none;
+  cursor: auto;
+  opacity: 0.5;
+}
+
+.login-content button:active {
+  background-color: rgb(189, 104, 104);
+  box-shadow: none;
+}
+
+@media screen and ( max-width : 380px ) {
+
+  .login-field {
+    height: 50%;
+  }
+}

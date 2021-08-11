@@ -6,6 +6,7 @@ import md5 from 'crypto-js/md5';
 import { getUserData } from '../redux/actions';
 import saveLocalStorage from '../helper/saveLocalStorage';
 import getUserInfo from '../services/api';
+import './login.css';
 import { pictureUpdate } from '../redux/actions/gameActions';
 
 class Login extends React.Component {
@@ -61,39 +62,60 @@ class Login extends React.Component {
     history.push('/game');
   }
 
+  renderSettingsBtn() {
+    return (
+      <Link
+        className="settings-btn"
+        data-testid="btn-settings"
+        to="/settings"
+      >
+        <i className="bi bi-gear-fill" />
+        {' Configurações'}
+      </Link>
+    );
+  }
+
   render() {
     const { buttonDisabled, name, email } = this.state;
     return (
-      <div>
-        <label htmlFor="name">
-          Nome:
-          <input
-            value={ name }
-            onChange={ this.handleChange }
-            data-testid="input-player-name"
-            id="name"
-            type="text"
-          />
-        </label>
-        <label htmlFor="email">
-          E-mail:
-          <input
-            value={ email }
-            onChange={ this.handleChange }
-            data-testid="input-gravatar-email"
-            id="email"
-            type="email"
-          />
-        </label>
-        <button
-          data-testid="btn-play"
-          type="button"
-          disabled={ buttonDisabled }
-          onClick={ this.handleLogin }
-        >
-          Jogar!
-        </button>
-        <Link data-testid="btn-settings" to="/settings">Configurações</Link>
+      <div className="login-content">
+        <fieldset className="login-field">
+          {this.renderSettingsBtn()}
+          <div className="title-content">
+            <h1 className="logo-trivia">Trivia</h1>
+            <h3 className="group-name">Grupo Lorem Ipsum</h3>
+          </div>
+          <div className="inpts-login">
+            <label htmlFor="name">
+              <input
+                value={ name }
+                onChange={ this.handleChange }
+                data-testid="input-player-name"
+                id="name"
+                type="text"
+                placeholder="Nome"
+              />
+            </label>
+            <label htmlFor="email">
+              <input
+                value={ email }
+                onChange={ this.handleChange }
+                data-testid="input-gravatar-email"
+                id="email"
+                type="email"
+                placeholder="Email"
+              />
+            </label>
+          </div>
+          <button
+            data-testid="btn-play"
+            type="button"
+            disabled={ buttonDisabled }
+            onClick={ this.handleLogin }
+          >
+            Jogar!
+          </button>
+        </fieldset>
       </div>
     );
   }
