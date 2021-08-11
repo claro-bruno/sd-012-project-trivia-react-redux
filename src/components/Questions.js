@@ -116,7 +116,7 @@ class Questions extends Component {
             {this.timerGenerator()}
           </div>
           <h1
-            data-testid="questNion-text"
+            data-testid="question-text"
             className="text-center justify-self-center text-xl ml-8"
           >
             {question.question}
