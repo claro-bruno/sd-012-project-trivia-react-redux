@@ -45,6 +45,7 @@ class GameBody extends Component {
         this.setState({
           seconds: 'Time\'s Up',
           disableAnswers: true,
+          hidden: false,
         });
       }
     }, sec);
