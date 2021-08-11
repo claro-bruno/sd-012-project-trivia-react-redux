@@ -20,10 +20,12 @@ class SectionQuestions extends React.Component {
   }
 
   shuffleAnswers(correct, incorrect, difficulty) {
-    const { props: { correctClick, wrongClick, color } } = this;
-    // referencias:
+    // referencia:
     // https://github.com/tryber/sd-012-project-trivia-react-redux/pull/78/files
     // https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value
+    const { props: { correctClick, wrongClick, color } } = this;
+    const NUMBER_ONE_NEGATIVE = -1;
+    const NUMBER_ONE = 1;
     return [
       {
         answer: correct,
@@ -31,13 +33,21 @@ class SectionQuestions extends React.Component {
         handleClick: () => correctClick(difficulty),
         className: color ? 'correctColor' : null,
       },
-      [...incorrect.map((item, index) => ({
-        answer: item,
+      ...incorrect.map((answer, index) => ({
+        answer,
         testid: `wrong-answer-${index}`,
         handleClick: wrongClick,
         className: color ? 'wrongColor' : null,
-      }))],
-    ].sort((a, b) => a.answer.localeCompare(b.answer));
+      })),
+    ].sort((a, b) => {
+      if (a.answer < b.answer) {
+        return NUMBER_ONE_NEGATIVE;
+      }
+      if (a.answer > b.answerm) {
+        return NUMBER_ONE;
+      }
+      return 0;
+    });
   }
 
   render() {
@@ -49,19 +59,25 @@ class SectionQuestions extends React.Component {
       return <h2>Loading...</h2>;
     }
 
-    const question = questions[questionPosition];
+    const {
+      category,
+      question,
+      correct_answer: correctAnswer,
+      incorrect_answers: incorrectAnswers,
+      difficulty,
+    } = questions[questionPosition];
 
     return (
       <section>
         <h2>{ count }</h2>
-        <h2 data-testid="question-category">{ question.category }</h2>
-        <h3 data-testid="question-text">{ question.question }</h3>
+        <h2 data-testid="question-category">{ category }</h2>
+        <h3 data-testid="question-text">{ question }</h3>
         <section>
           {
             this.shuffleAnswers(
-              question.correct_answer,
-              question.incorrect_answer,
-              question.difficulty,
+              correctAnswer,
+              incorrectAnswers,
+              difficulty,
             ).map(({ answer, testid, handleClick, className }) => (
               <Button
                 testId={ testid }
