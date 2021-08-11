@@ -22,15 +22,19 @@ class Feedback extends React.Component {
     const state = JSON.parse(localStorage.getItem('state'));
     const { player: { score, assertions } } = state;
     this.setState({ score, assertions });
+    // console.log(score);
   }
 
   renderMessage() {
     const { assertions } = this.state;
-
     if (assertions < NUMBER_OF_QUESTIONS) {
-      return ('Podia ser melhor...');
+      return (
+        <p data-testid="feedback-text">Podia ser melhor...</p>
+      );
     }
-    return ('Mandou bem!');
+    return (
+      <p data-testid="feedback-text">Mandou bem!</p>
+    );
   }
 
   render() {
@@ -38,8 +42,7 @@ class Feedback extends React.Component {
     const email = md5(gravatarEmail).toString();
     const urlGravatar = `https://www.gravatar.com/avatar/${email}`;
 
-    const { score, assertions } = this.state;
-
+    const { score/* , assertions */ } = this.state;
     return (
       <div>
         <header>
@@ -51,25 +54,15 @@ class Feedback extends React.Component {
           <p data-testid="header-player-name">
             { name }
           </p>
+          <p>Final score:</p>
           <span data-testid="header-score">
-            <p>Final score:</p>
             { score }
+            {/* { console.log(score) } */}
           </span>
         </header>
 
         <div>
-          <p data-testid="feedback-text">
-            Feedback text
-            { this.renderMessage }
-          </p>
-
-          <p
-            data-testid="feedback-total-score"
-          >
-            {`Você acertou ${assertions} questões!`}
-          </p>
-
-          <p data-testid="feedback-total-question">{`Um total de ${score} pontos.`}</p>
+          { this.renderMessage() }
         </div>
       </div>
     );
