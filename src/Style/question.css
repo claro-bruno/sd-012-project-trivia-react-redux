@@ -42,11 +42,13 @@ body {
 }
 
 .correct {
-  background-color: rgb(19, 212, 26);
+  background-color: rgb(6, 240, 15);
+  border: 3px solid rgb(6, 240, 15);
 }
 
 .wrong {
-  background-color: rgb(216, 16, 16);
+  background-color: rgb(255, 0, 0);
+  border: 3px solid rgb(255, 0, 0);
 }
 
 .btn-next {
