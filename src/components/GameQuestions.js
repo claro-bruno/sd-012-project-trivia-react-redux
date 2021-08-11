@@ -96,18 +96,16 @@ class GameQuestions extends React.Component {
     let playerScore = state.player.score;
     let diff = 0;
     const ten = 10;
+    const three = 3;
     switch (difficulty) {
     case 'hard':
-      diff = 2 + 1;
-      // console.log(diff);
+      diff = three;
       break;
     case 'medium':
       diff = 2;
-      // console.log(diff);
       break;
     default:
       diff = 1;
-      // console.log(diff);
     }
     const point = ten + (diff * timer);
     playerScore += point;
