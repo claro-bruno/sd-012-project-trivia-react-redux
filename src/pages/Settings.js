@@ -6,7 +6,7 @@ import Button from '../components/Button';
 import Loading from '../components/Loading';
 
 const difficulties = { '': '', Easy: 'easy', Medium: 'medium', Hard: 'hard' };
-const types = { '': '', 'Multipe Choise': 'multipe', 'True / False': 'boolean' };
+const types = { '': '', 'Multiple Choise': 'multiple', 'True / False': 'boolean' };
 
 class Settings extends React.Component {
   constructor() {
