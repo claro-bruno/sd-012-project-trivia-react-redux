@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { nameSet, emailSet, getToken } from '../redux/actions/index';
@@ -13,18 +13,21 @@ class Login extends Component {
     this.state = {
       email: '',
       name: '',
+      redirect: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.onSubmitForm = this.onSubmitForm.bind(this);
     this.emailIsValid = this.emailIsValid.bind(this);
   }
 
-  onSubmitForm() {
+  async onSubmitForm(event) {
+    event.preventDefault();
     const { dispatchSetName, dispatchSetEmail, dispatchToken } = this.props;
     const { name, email } = this.state;
     dispatchSetName(name);
     dispatchSetEmail(email);
-    dispatchToken();
+    await dispatchToken();
+    this.setState({ redirect: true });
   }
 
   handleChange({ target }) {
@@ -39,7 +42,7 @@ class Login extends Component {
   }
 
   render() {
-    const { email, name } = this.state;
+    const { email, name, redirect } = this.state;
 
     const inputEmailProps = {
       type: 'text',
@@ -72,13 +75,12 @@ class Login extends Component {
         <form>
           <Input { ...inputNameProps } testId="input-player-name" />
           <Input { ...inputEmailProps } testId="input-gravatar-email" />
-          <Link to="/game">
-            <SubmitButton { ...buttonProps } testId="btn-play" />
-          </Link>
+          <SubmitButton { ...buttonProps } testId="btn-play" />
           <Link to="/settings">
             <SubmitButton { ...settingsButtonProps } testId="btn-settings" />
           </Link>
         </form>
+        { redirect ? <Redirect to="/game" /> : null }
       </header>
     );
   }

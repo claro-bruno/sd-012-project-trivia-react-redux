@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Loading from './Loading';
-import { getQuiz, getScore } from '../redux/actions';
+import { getQuiz, getScore, getCorrects } from '../redux/actions';
 
 class Questions extends Component {
   constructor() {
@@ -85,8 +85,8 @@ class Questions extends Component {
   }
 
   sumScore() {
-    const { quizFromRedux, scoreToRedux, scoreFromRedux } = this.props;
-    const { index } = this.state;
+    const { quizFromRedux, scoreToRedux, scoreFromRedux, assertionsToRedux } = this.props;
+    const { index, assertions } = this.state;
     const { difficulty } = quizFromRedux[index];
     const dez = 10;
     const { ceil } = this.state;
@@ -96,6 +96,7 @@ class Questions extends Component {
     const soma = calculo + scoreFromRedux;
     console.log(soma);
     scoreToRedux(soma);
+    assertionsToRedux(assertions);
     this.setUserOnLocalStorage(soma);
   }
 
@@ -211,12 +212,14 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   quizToRedux: () => dispatch(getQuiz()),
   scoreToRedux: (score) => dispatch(getScore(score)),
+  assertionsToRedux: (assertions) => dispatch(getCorrects(assertions)),
 });
 
 Questions.propTypes = {
   quizFromRedux: PropTypes.arrayOf(PropTypes.string).isRequired,
   quizToRedux: PropTypes.func.isRequired,
   scoreToRedux: PropTypes.func.isRequired,
+  assertionsToRedux: PropTypes.func.isRequired,
   scoreFromRedux: PropTypes.number.isRequired,
   userFromRedux: PropTypes.objectOf(PropTypes.string).isRequired,
 };

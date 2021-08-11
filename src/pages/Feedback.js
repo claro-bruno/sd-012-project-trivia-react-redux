@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
 class Feedback extends Component {
@@ -30,6 +32,14 @@ class Feedback extends Component {
 
   render() {
     const { redirectBeggining, redirectRanking } = this.state;
+    const { assertions, score } = this.props;
+    const scoreBenchmark = 3;
+    const lowerAssertionsText = 'Podia ser melhor...';
+    const highAssertionsText = 'Mandou bem!';
+    const text1 = 'Acertou ';
+    const text2 = ' perguntas.';
+    const text3 = ' Seu placar foi ';
+
     if (redirectBeggining) {
       return <Redirect to="/" />;
     }
@@ -39,7 +49,16 @@ class Feedback extends Component {
     return (
       <div>
         <Header />
-        <p data-testid="feedback-text">MENSAGENS DE FEEDBACK</p>
+        <p data-testid="feedback-text">
+          { assertions < scoreBenchmark ? lowerAssertionsText : highAssertionsText }
+        </p>
+        <p>
+          { text1 }
+          <span data-testid="feedback-total-question">{ assertions * 1 }</span>
+          { text2 }
+          { text3 }
+          <span data-testid="feedback-total-score">{ score * 1 }</span>
+        </p>
         <button
           type="submit"
           onClick={ this.redirectToBeggining }
@@ -58,4 +77,15 @@ class Feedback extends Component {
     );
   }
 }
-export default Feedback;
+
+const mapStateToProps = (state) => ({
+  assertions: state.quizReducer.assertions,
+  score: state.quizReducer.score,
+});
+
+Feedback.propTypes = {
+  assertions: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
+};
+
+export default connect(mapStateToProps, null)(Feedback);
