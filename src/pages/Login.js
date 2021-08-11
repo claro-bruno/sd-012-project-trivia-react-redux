@@ -56,6 +56,28 @@ class Login extends React.Component {
     getEmail(email, name);
   }
 
+  nameAndEmailInputs() {
+    return (
+      <>
+        <input
+          name="name"
+          type="text"
+          data-testid="input-player-name"
+          placeholder="Coloque seu nome aqui :)"
+          onChange={ this.handleChange }
+        />
+        <input
+          name="email"
+          id="email"
+          type="email"
+          data-testid="input-gravatar-email"
+          placeholder="E-mail aqui :)"
+          onChange={ this.handleChange }
+        />
+      </>
+    );
+  }
+
   render() {
     return (
       <div className="login-page">
@@ -67,21 +89,7 @@ class Login extends React.Component {
             <h6 className="login-title-span">Bem vindo(a) ao</h6>
             <h4 className="login-title">Kahootrivia</h4>
             <form className="form-login">
-              <input
-                name="name"
-                type="text"
-                data-testid="input-player-name"
-                placeholder="Coloque seu nome aqui :)"
-                onChange={ this.handleChange }
-              />
-              <input
-                name="email"
-                id="email"
-                type="email"
-                data-testid="input-gravatar-email"
-                placeholder="E-mail aqui :)"
-                onChange={ this.handleChange }
-              />
+              { this.nameAndEmailInputs() }
             </form>
             <Link to="/trivia">
               <button
@@ -95,7 +103,12 @@ class Login extends React.Component {
               </button>
             </Link>
             <Link to="/settings">
-              <button className="settings-link" data-testid="btn-settings" type="button">
+              <button
+                className="settings-link"
+                data-testid="btn-settings"
+                type="button"
+                onClick={ () => this.tokenRequire() }
+              >
                 CONFIGURAÇÕES
               </button>
             </Link>
