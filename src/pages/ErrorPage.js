@@ -5,6 +5,11 @@ import styled from 'styled-components';
 const Title = styled.h1`
   text-align: center;
   margin-top: 1rem;
+  font-size: 1.5rem;
+
+  @media (min-width: 60rem) {
+    font-size: 1.75rem;
+  }
 `;
 
 const Image = styled.img`
@@ -33,10 +38,18 @@ const BackContainer = styled.div`
   font-size: 1.125rem;
 `;
 
+const Container = styled.main`
+  margin-bottom: 1.5rem;
+
+  @media (min-width: 60rem) {
+    margin-bottom: 3rem;
+  }
+`;
+
 class ErrorPage extends Component {
   render() {
     return (
-      <main>
+      <Container>
         <Title>
           Couldn&apos;t find enough questions for this category.
           <Image
@@ -52,7 +65,7 @@ class ErrorPage extends Component {
             </Back>
           </Link>
         </BackContainer>
-      </main>
+      </Container>
     );
   }
 }

@@ -15,9 +15,11 @@ const MIN_ASSERTIONS = 3;
 const Container = styled.main`
   text-align: center;
   color: hsla(0, 0%, 100%, 93.75%);
+  margin-bottom: 1.5rem;
 
   @media (min-width: 60rem) {
     font-size: 1.125rem;
+    margin-bottom: 3rem;
   }
 `;
 
@@ -47,9 +49,9 @@ const Points = styled.p`
 const Message = styled.div`
   color: ${({ theme: { assertions } }) => {
     if (assertions >= MIN_ASSERTIONS) {
-      return 'green';
+      return 'rgba(6, 240, 15, 0.75)';
     }
-    return 'red';
+    return 'rgba(255, 0, 0, 0.75)';
   }};
 `;
 
