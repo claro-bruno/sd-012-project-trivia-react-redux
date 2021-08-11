@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
+import { connect } from 'react-redux';
 import fetchGravatarImg from '../helpers/helper';
 import { userHashEmail } from '../redux/actions';
 

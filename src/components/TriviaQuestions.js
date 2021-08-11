@@ -22,12 +22,14 @@ class TriviaQuestions extends Component {
       disabled: false,
       myTimer: true,
       answerBtn: false,
+      redirect: false,
     };
 
     this.handleClick = this.handleClick.bind(this);
     this.changeClassStyle = this.changeClassStyle.bind(this);
     this.shuffleQuestions = this.shuffleQuestions.bind(this);
     this.onCorrectAnswer = this.onCorrectAnswer.bind(this);
+    this.sendUserRanking = this.sendUserRanking.bind(this);
   }
 
   onCorrectAnswer() {
@@ -74,7 +76,35 @@ class TriviaQuestions extends Component {
     return randomQuestions;
   }
 
+  sendUserRanking(state) {
+    const { findPlayerName } = this.props;
+    const token = localStorage.getItem('token');
+    const playerImg = `https://www.gravatar.com/avatar/${token}`;
+    const userRanking = {
+      name: findPlayerName, score: state.player.score, picture: playerImg,
+    };
+    if (!localStorage.getItem('ranking')) {
+      localStorage.setItem('ranking', JSON.stringify(
+        [userRanking],
+      ));
+      return userRanking;
+    }
+    const entireRanking = JSON.parse(localStorage.getItem('ranking'));
+    localStorage.setItem('ranking', JSON.stringify(
+      [...entireRanking, userRanking],
+    ));
+  }
+
   handleClick() {
+    const { id } = this.state;
+    const questionLength = 4;
+    if (id === questionLength) {
+      const state = JSON.parse(localStorage.getItem('state'));
+      this.sendUserRanking(state);
+      this.setState({
+        redirect: true,
+      });
+    }
     this.setState((prevState) => ({
       id: prevState.id + 1,
       correctanswer: '',
@@ -92,10 +122,10 @@ class TriviaQuestions extends Component {
   render() {
     const { playerState } = this.props;
     const {
-      correctanswer, incorrectanswer, id, disabled, myTimer, answerBtn,
+      correctanswer, incorrectanswer, id, disabled, myTimer, answerBtn, redirect,
     } = this.state;
     if (playerState.length === 0) return <span>Carregando...</span>;
-    if (id === playerState.length) return <Redirect to="/feedback" />;
+    if (redirect) return <Redirect to="/feedback" />;
     const { category, question, correct_answer: correct } = playerState[id];
     const arrayQuestions = this.shuffleQuestions(playerState[id]);
     return (
@@ -144,6 +174,7 @@ TriviaQuestions.propTypes = {
     question: PropTypes.string.isRequired,
     questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   }).isRequired,
+  findPlayerName: PropTypes.string.isRequired,
   sendScore: PropTypes.func.isRequired,
 };
 
@@ -153,6 +184,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   playerState: state.fetchReducers.questions,
+  findPlayerName: state.user.name,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TriviaQuestions);
