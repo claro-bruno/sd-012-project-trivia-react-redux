@@ -72,12 +72,12 @@ class Game extends React.Component {
     const { questions, isFetching, show } = this.props;
     const { index } = this.state;
     if (isFetching) return <Loading />;
-
+    const maxQuestions = 5;
     return (
       <>
         <HeaderGame />
         {
-          questions.length > 0 ? (
+          questions.length > 0 && questions.length <= maxQuestions ? (
             <section className="App">
               <Timer />
               <div>
