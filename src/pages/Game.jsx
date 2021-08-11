@@ -1,11 +1,11 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
-import Trivia from '../components/Trivia';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import '../css/game.css';
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { Redirect, Link } from "react-router-dom";
+import Trivia from "../components/Trivia";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import "../css/game.css";
 
 class Game extends React.Component {
   constructor() {
@@ -27,7 +27,9 @@ class Game extends React.Component {
 
   fetchQuestions() {
     const { token, numeroQuestoes, difficulty, type, category } = this.props;
-    const API = `https://opentdb.com/api.php?amount=${numeroQuestoes}&token=${token}&difficulty=${difficulty || 0}&type=${type || 0}&category=${category || 0}`;
+    const API = `https://opentdb.com/api.php?amount=${numeroQuestoes}&token=${token}&difficulty=${
+      difficulty || 0
+    }&type=${type || 0}&category=${category || 0}`;
     fetch(API)
       .then((resolve) => resolve.json())
       .then((resolve) => {
@@ -55,17 +57,28 @@ class Game extends React.Component {
     const { questions, indexQuestion, error } = this.state;
     if (error === false) return <div>Carregando...</div>;
     if (error === true) {
-      const errorMessage = 'Não existe questões suficientes com essas especificações';
-      return (<h2>{ errorMessage }</h2>);
+      const errorMessage =
+        "Não existe questões suficientes com essas especificações";
+      return (
+        <div>
+          <h2 className="message-erro">{errorMessage}</h2>
+          <Link to="/">
+            <button type="button">
+              Voltar ao Início
+            </button>
+          </Link>
+        </div>
+      );
     }
+
     if (questions.length === indexQuestion) return <Redirect to="/feedback" />;
     return (
       <div className="Game">
         <Header />
         <Trivia
-          key={ indexQuestion }
-          trivia={ questions[indexQuestion] }
-          onClick={ this.nextQuestion }
+          key={indexQuestion}
+          trivia={questions[indexQuestion]}
+          onClick={this.nextQuestion}
         />
         <Footer />
       </div>
