@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchLoginAction } from '../redux/actions';
 import ConfigButton from '../Components/ConfigButton';
-import logo from '../trivia.png';
+import logo from '../trivia2.png';
 
 class Login extends React.Component {
   constructor() {
@@ -12,8 +12,25 @@ class Login extends React.Component {
     this.state = {
       nome: '',
       email: '',
+      name: '',
+      gravatarEmail: '',
+      assertions: 0,
+      score: 0,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.setLocalStorage = this.setLocalStorage.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  setLocalStorage() {
+    const { assertions, score, name, gravatarEmail } = this.state;
+    const jogador = JSON.stringify({ player: {
+      name,
+      gravatarEmail,
+      assertions,
+      score,
+    } });
+    localStorage.setItem('state', jogador);
   }
 
   handleChange({ target }) {
@@ -21,9 +38,15 @@ class Login extends React.Component {
     this.setState({ [name]: value });
   }
 
+  handleClick(nome, email) {
+    const { sendAction } = this.props;
+    sendAction(nome, email);
+    this.setLocalStorage();
+  }
+
   render() {
     const { nome, email } = this.state;
-    const { history: { push }, sendAction } = this.props;
+    const { history: { push } } = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -57,7 +80,7 @@ class Login extends React.Component {
               type="button"
               data-testid="btn-play"
               disabled={ !nome || !email }
-              onClick={ () => sendAction(nome, email) }
+              onClick={ () => this.handleClick(nome, email) }
             >
               Jogar
             </button>
