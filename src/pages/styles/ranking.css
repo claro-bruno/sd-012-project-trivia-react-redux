@@ -1,0 +1,94 @@
+.ranking-content {
+  align-items: center;
+  background-color: rgb(51, 51, 102);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: flex-start;
+  width: 100vw;
+}
+
+.ranking-container {
+  animation: fade-in-login 1.5s ease-in-out;
+  background-color: rgb(204, 204, 204);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 80px;
+  margin-top: 80px;
+  overflow-y: auto;
+  width: 350px;
+}
+
+.ranking-title {
+  align-self: center;
+  animation: fade-logo 1s ease;
+  color: rgb(51, 51, 102);
+  font-family: Fredericka the Great , cursive;
+  margin-bottom: 40px;
+  margin-top: 40px;
+}
+
+.ranking-element {
+  align-items: center;
+  background-color: rgb(245, 254, 255);
+  border: 1px solid gray;
+  display: flex;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+.ranking-element span {
+  color: rgb(51, 51, 102);
+  font-family: Fredericka the Great , cursive;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.ranking-score {
+  margin-right: 10px;
+}
+
+@keyframes fade-logo {
+
+  from {
+    font-size: 10px;
+  }
+
+}
+
+@keyframes fade-in-login {
+
+  from {
+    opacity: 0;
+  }
+}
+
+@media screen and ( max-width : 350px ) {
+
+  .ranking-container {
+    width: 280px;
+  }
+
+  .ranking-element span {
+    font-size: 16px;
+  }
+}
+
+@media screen and ( max-height : 770px ) {
+
+  .ranking-container {
+    height: 100%;
+  }
+}
+
+@media screen and ( min-width : 750px ) {
+
+  .ranking-container {
+    width: 650px;
+  }
+
+  .ranking-element span {
+    font-size: 25px;
+  }
+}
