@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { saveConfigs } from '../redux/actions/settingsActions';
+import './styles/settings.css';
 
 class Settings extends React.Component {
   constructor() {
@@ -31,9 +32,13 @@ class Settings extends React.Component {
 
   render() {
     return (
-      <fieldset>
-        <h1 data-testid="settings-title">Settings</h1>
-        <form>
+      <div id="settings-content">
+        <fieldset id="settings-field">
+          <Link id="link" to="/">
+            <i className="bi bi-house-fill" />
+            {' Home'}
+          </Link>
+          <h1 data-testid="settings-title" id="settings-title">Settings</h1>
           <label htmlFor="category-id">
             Category:
             <select id="category-id" name="category" onChange={ this.handleChange }>
@@ -64,9 +69,8 @@ class Settings extends React.Component {
           </label>
           <br />
           <button type="button" onClick={ this.handleClick }>Salvar</button>
-        </form>
-        <Link to="/">Home</Link>
-      </fieldset>
+        </fieldset>
+      </div>
     );
   }
 }
