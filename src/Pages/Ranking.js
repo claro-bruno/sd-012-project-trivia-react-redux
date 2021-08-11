@@ -13,7 +13,7 @@ class Ranking extends Component {
     const players = names.map((_, i) => [local[names[i]], parseInt(local[scores[i]], 0)]);
 
     return (
-      <fieldset>
+      <fieldset className="App">
         <legend>
           <h2 data-testid="ranking-title">Ranking</h2>
         </legend>

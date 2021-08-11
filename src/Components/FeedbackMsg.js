@@ -6,7 +6,7 @@ class FeedbackMsg extends React.Component {
     const { assertions } = this.props;
     const validResult = 3;
     return (
-      <div>
+      <div className="App">
         <p
           data-testid="feedback-text"
         >

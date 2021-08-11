@@ -27,7 +27,7 @@ class Feedback extends Component {
   render() {
     const { score, assertions } = this.state;
     return (
-      <div>
+      <div className="App">
         <HeaderGame score={ score } />
         <FeedbackMsg assertions={ assertions } />
         <main>

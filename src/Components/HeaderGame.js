@@ -21,7 +21,7 @@ class HeaderGame extends React.Component {
     const img = `https://www.gravatar.com/avatar/${hash}`;
 
     return (
-      <header>
+      <header className="App">
         <img
           src={ img }
           alt={ email }
