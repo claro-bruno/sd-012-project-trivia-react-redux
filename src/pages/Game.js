@@ -96,14 +96,14 @@ class Game extends React.Component {
     });
   }
 
-  handleClickAnswers() { // mudar o nome dessa func
+  handleClickAnswers() {
     const cssValueWrong = '3px solid rgb(255, 0, 0)';
     const cssCorrectValue = '3px solid rgb(6, 240, 15)';
     document.getElementById('btn-next').style.display = 'block';
-    document.getElementById('btnCorrectAnswer').style.border = cssCorrectValue;
-    document.getElementById('btn-0').style.border = cssValueWrong;
-    document.getElementById('btn-1').style.border = cssValueWrong;
-    document.getElementById('btn-2').style.border = cssValueWrong;
+    document.getElementById('correct').style.border = cssCorrectValue;
+    document.getElementById('incorrect').style.border = cssValueWrong;
+    // document.getElementById('btn-1').style.border = cssValueWrong;
+    // document.getElementById('btn-2').style.border = cssValueWrong;
   }
 
   // logica baseada no seguinte repositorio https://github.com/tryber/sd-012-project-trivia-react-redux/pull/8/commits/a93062a005d249fcc708168294a7926669bbf914
@@ -120,7 +120,7 @@ class Game extends React.Component {
           { triviaQuest[0].question }
         </p>
         <button
-          id="btnCorrectAnswer"
+          id="correct"
           type="button"
           data-testid="correct-answer"
           name="correct"
@@ -133,7 +133,7 @@ class Game extends React.Component {
         {
           triviaQuest[0].incorrect_answers.map((key, index) => (
             <button
-              id={ `btn-${index}` }
+              id="incorrect"
               type="button"
               data-testid={ `wrong-answer-${index}` }
               name="incorrect"
