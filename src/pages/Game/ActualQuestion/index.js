@@ -158,7 +158,7 @@ class ActualQuestion extends Component {
       <section>
         <p>{ timer }</p>
         <h2 data-testid="question-category">{ category }</h2>
-        <p data-testid="question-text">{ question }</p>
+        <h4 data-testid="question-text">{ question }</h4>
         <div>
           { this.renderAnswers(answers, correctAnswer, answered) }
           { answered && (questionIndex < maxIndex ? (

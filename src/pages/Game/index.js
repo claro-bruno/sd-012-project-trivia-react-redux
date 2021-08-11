@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5'; // Utilizando biblioteca CryptoJS conforme README.md;
 
 import ActualQuestion from './ActualQuestion';
+import { GameHeaderS, GameBodyS } from './styles';
 
 class Game extends Component {
   constructor() {
@@ -49,17 +50,19 @@ class Game extends Component {
 
     return (
       <div>
-        <header>
+        <GameHeaderS>
           <img
             // url da foto do usuário, com o formato que está no README.md;
             src={ `https://www.gravatar.com/avatar/${encodeEmail}` }
             alt="profile"
             data-testid="header-profile-picture"
           />
-          <span data-testid="header-player-name">{ name }</span>
-          <span data-testid="header-score">{ score }</span>
-        </header>
-        <main>
+          <section>
+            <h3 data-testid="header-player-name">{ name }</h3>
+            <h4 data-testid="header-score">{ score }</h4>
+          </section>
+        </GameHeaderS>
+        <GameBodyS>
           { loaded
           && (
             <ActualQuestion
@@ -71,7 +74,7 @@ class Game extends Component {
               score={ score }
             />
           ) }
-        </main>
+        </GameBodyS>
       </div>
     );
   }
