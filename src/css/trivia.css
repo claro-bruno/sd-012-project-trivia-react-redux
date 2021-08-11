@@ -1,15 +1,15 @@
 body {
-  background-image: url("../images/abstract-1628703162054-6515.jpg");
+  background-image: url('../images/abstract-1628703162054-6515.jpg');
 }
 
 .trivia-body {
-  color: #246669;
-  padding: 40px 0px;
-  margin: 50px auto;
-  font-size: 30px;
-  border-radius: 15px;
-  opacity: 0.9;
   background-color: white;
+  border-radius: 15px;
+  color: #246669;
+  font-size: 30px;
+  margin: 50px auto;
+  opacity: 0.9;
+  padding: 40px 0;
   width: 1300px;
 }
 

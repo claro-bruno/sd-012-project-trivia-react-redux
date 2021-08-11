@@ -1,53 +1,54 @@
 body {
-  background-image: url("../images/abstract-1628703162054-6515.jpg");
+  background-image: url('../images/abstract-1628703162054-6515.jpg');
   font-size: 20px;
 }
 
 .body-config {
+  background-color: white;
+  border-radius: 10px;
+  height: 650px;
   margin: 0 auto;
   margin-top: 150px;
   opacity: 0.9;
-  border-radius: 10px;
   padding: 10px 30px;
   width: 650px;
-  height: 650px;
-  background-color: white;
 }
+
 .numbers::placeholder {
   color: white;
   opacity: 1; /* Firefox */
 }
 
 input {
-  opacity: 1;
-  text-align: center;
-  width: 320px;;
-  color: white;
-  display: block;
   background-color: rgb(53, 76, 110);
-  border-radius: 3px;
-  padding: 8px 16px;
   border: 1px solid transparent;
   border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  border-radius: 3px;
+  color: white;
   cursor: pointer;
-  user-select: none;
+  display: block;
   margin: 25px auto;
+  opacity: 1;
+  padding: 8px 16px;
+  text-align: center;
+  user-select: none;
+  width: 320px;
 }
 
 /* https://www.w3schools.com/HOWTO/howto_custom_select.asp */
 select {
-  text-align-last:center;
-  width: 350px;
-  display: block;
   background-color: rgb(53, 76, 110);
-  border-radius: 3px;
-  color: white;
-  padding: 8px 16px;
   border: 1px solid transparent;
   border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  border-radius: 3px;
+  color: white;
   cursor: pointer;
-  user-select: none;
+  display: block;
   margin: 25px auto;
+  padding: 8px 16px;
+  text-align-last: center;
+  user-select: none;
+  width: 350px;
 }
 
 button {

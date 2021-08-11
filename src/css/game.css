@@ -1,13 +1,14 @@
 body {
-  background-image: url("../images/abstract-1628703162054-6515.jpg");
+  background-image: url('../images/abstract-1628703162054-6515.jpg');
 }
 
 .message-erro {
-  color:white;
-  margin: 400px auto;
   background-color: black;
+  color: white;
   height: 50px;
+  margin: 400px auto;
 }
+
 .Game {
   align-content: space-between;
   display: flexbox;

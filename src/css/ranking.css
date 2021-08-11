@@ -1,22 +1,24 @@
 body {
-  background-image: url("../images/abstract-1628703162054-6515.jpg");
+  background-image: url('../images/abstract-1628703162054-6515.jpg');
 }
+
 .ranking-body {
-  margin: 0 auto;
+  background-color: white;
   border-radius: 15px;
   height: 700px;
-  background-color: white;
+  margin: 0 auto;
+  opacity: 0.9;
   width: 1200px;
-  opacity: 0.9;
 }
+
 .main-content {
-  color: #246669;
-  padding: 40px 0px;
-  margin: 50px auto;
-  font-size: 30px;
-  border-radius: 15px;
-  opacity: 0.9;
   background-color: white;
+  border-radius: 15px;
+  color: #246669;
+  font-size: 30px;
+  margin: 50px auto;
+  opacity: 0.9;
+  padding: 40px 0;
   width: 1300px;
 }
 
