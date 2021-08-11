@@ -27,14 +27,8 @@ class Questions extends Component {
     this.setTimer();
   }
 
-  // shouldComponentUpdate(_props, state) {
-  //   if (state.ceil) {
-  //     return false;
-  //   }
-  // }
-
-  componentWillUnmount() {
-
+  componentDidUpdate() {
+    this.disableButtons();
   }
 
   onClickAnswer() {
@@ -80,7 +74,6 @@ class Questions extends Component {
 
   endFetch() {
     const { quizFromRedux } = this.props;
-    console.log(quizFromRedux);
     return quizFromRedux.length > 0 ? this.setState({ loading: false }) : null;
   }
 
@@ -144,13 +137,12 @@ class Questions extends Component {
   }
 
   render() {
-    const { loading, redirect, index, ceil, floor } = this.state;
+    const { loading, redirect, index, ceil } = this.state;
     const redirectNumber = 4;
 
     return (
       <div>
         {ceil}
-        {ceil === floor ? 'Acabou o tempo' : null}
         { loading ? <Loading /> : this.displayQuestion()}
         <button
           onClick={ this.handleClick }
