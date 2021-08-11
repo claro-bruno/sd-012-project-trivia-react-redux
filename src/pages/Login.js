@@ -105,7 +105,7 @@ class Login extends React.Component {
         <header className="main-header">
           <h1 className="logo">BRAINTEST</h1>
         </header>
-        <div>
+        <div className="login-box">
           <UserInputs { ...userInputProps } />
           <UserInputs { ...emailInputProps } />
           <GenericBtn { ...loginBtnProps } />

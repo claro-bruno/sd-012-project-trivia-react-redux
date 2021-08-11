@@ -12,26 +12,42 @@ class Feedback extends React.Component {
     return (
       <>
         <Header />
-        <h1 data-testid="feedback-text">
-          {
-            assertions < THREE_ASSERTIONS
-              ? 'Podia ser melhor...'
-              : 'Mandou bem!'
-          }
-        </h1>
-        <p>
-          Você acertou
-          {' '}
-          <span data-testid="feedback-total-question">{assertions}</span>
-          {' '}
-          perguntas e somou
-          {' '}
-          <span data-testid="feedback-total-score">{score}</span>
-          {' '}
-          pontos!
-        </p>
-        <Link to="/ranking" data-testid="btn-ranking">Ver Ranking</Link>
-        <a href="/" data-testid="btn-play-again">Jogar novamente</a>
+        <div className="feedback-board">
+          <div className="feed-mess-head">
+            <h1 className="feed-heading" data-testid="feedback-text">
+              {
+                assertions < THREE_ASSERTIONS
+                  ? 'Podia ser melhor...'
+                  : 'Mandou bem!'
+              }
+            </h1>
+            <p className="feed-message">
+              Você acertou
+              {' '}
+              <span data-testid="feedback-total-question">{assertions}</span>
+              {' '}
+              perguntas e somou
+              {' '}
+              <span data-testid="feedback-total-score">{score}</span>
+              {' '}
+              pontos!
+            </p>
+          </div>
+          <Link
+            className="feed-link"
+            to="/ranking"
+            data-testid="btn-ranking"
+          >
+            Ver Ranking
+          </Link>
+          <a
+            href="/"
+            data-testid="btn-play-again"
+            className="feed-link"
+          >
+            Jogar novamente
+          </a>
+        </div>
       </>
     );
   }

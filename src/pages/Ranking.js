@@ -6,11 +6,15 @@ class Ranking extends React.Component {
     const ranking = getRanking();
     return (
       <div>
-        <a href="/" data-testid="btn-go-home">Voltar ao início</a>
-        <h1 data-testid="ranking-title">Ranking</h1>
+        <a className="feed-link" href="/" data-testid="btn-go-home">Voltar ao início</a>
+        <h1 className="head-rank" data-testid="ranking-title">Ranking</h1>
         {ranking.map((player, index) => (
-          <div key={ index }>
-            <img alt={ player.name } src={ getAvatar(player.gravatarEmail) } />
+          <div className="rank-line" key={ index }>
+            <img
+              className="image-rank"
+              alt={ player.name }
+              src={ getAvatar(player.gravatarEmail) }
+            />
             <p data-testid={ `player-name-${index}` }>{ player.name }</p>
             <p data-testid={ `player-score-${index}` }>{ player.score }</p>
           </div>

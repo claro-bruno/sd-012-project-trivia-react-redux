@@ -8,12 +8,17 @@ class Header extends React.Component {
     return (
       <header className="main-header">
         <h1 className="logo">BRAINTEST</h1>
-        <p data-testid="header-player-name">{`Jogador: ${name}`}</p>
-        <p>
+        <p data-testid="header-player-name" className="name">{`Jogador: ${name}`}</p>
+        <p className="name">
           {'Placar: '}
           <span data-testid="header-score">{score}</span>
         </p>
-        <img data-testid="header-profile-picture" src={ avatar } alt="gravatar" />
+        <img
+          data-testid="header-profile-picture"
+          src={ avatar }
+          alt="gravatar"
+          className="image"
+        />
       </header>
     );
   }

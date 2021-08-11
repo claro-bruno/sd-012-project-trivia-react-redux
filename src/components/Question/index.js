@@ -112,10 +112,10 @@ class Question extends React.Component {
     } = currQuestion;
 
     return (
-      <section>
-        {seconds}
-        <p data-testid="question-category">{category}</p>
-        <p data-testid="question-text">{question}</p>
+      <section className="question-box">
+        <span className="timer">{seconds}</span>
+        <p data-testid="question-category" className="category">{category}</p>
+        <p data-testid="question-text" className="question">{question}</p>
         {incorrectAnswers.map((answer, i) => (
           <GenericBtn
             key={ answer }
@@ -125,7 +125,6 @@ class Question extends React.Component {
             disabled={ answered }
             value={ answer }
           />
-
         ))}
         <GenericBtn
           id="correct-answer"
