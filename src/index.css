@@ -17,3 +17,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+input:focus {
+  border: 1px solid rgb(204, 153, 153);
+  box-shadow: 0 0 2px 3px rgb(204, 153, 153);
+}
+
+input:hover {
+  border: 1px solid rgb(204, 153, 153);
+  box-shadow: 0 0 2px 3px rgb(204, 153, 153);
+}
+
+select {
+  cursor: pointer;
+}
+
+select:focus {
+  border: 1px solid rgb(204, 153, 153);
+  box-shadow: 0 0 2px 3px rgb(204, 153, 153);
+}
+
+select:hover {
+  border: 1px solid rgb(204, 153, 153);
+  box-shadow: 0 0 2px 3px rgb(204, 153, 153);
+}

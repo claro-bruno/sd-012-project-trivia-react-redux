@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import getUserInfo from '../services/api';
 import saveLocalStorage from '../helper/saveLocalStorage';
 import { guessUpdate } from '../redux/actions/gameActions';
-import './game.css';
+import './styles/game.css';
 
 class Game extends React.Component {
   constructor() {

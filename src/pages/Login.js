@@ -6,7 +6,7 @@ import md5 from 'crypto-js/md5';
 import { getUserData } from '../redux/actions';
 import saveLocalStorage from '../helper/saveLocalStorage';
 import getUserInfo from '../services/api';
-import './login.css';
+import './styles/login.css';
 import { pictureUpdate } from '../redux/actions/gameActions';
 
 class Login extends React.Component {
