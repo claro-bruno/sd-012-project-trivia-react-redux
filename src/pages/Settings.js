@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { saveConfigs } from '../redux/actions/settingsActions';
+import './styles/settings.css';
 
 class Settings extends React.Component {
   constructor() {
@@ -31,12 +32,16 @@ class Settings extends React.Component {
 
   render() {
     return (
-      <fieldset>
-        <h1 data-testid="settings-title">Settings</h1>
-        <form>
+      <div className="settings-content">
+        <fieldset className="settings-field">
+          <Link className="link" to="/">
+            <i className="bi bi-house-fill" />
+            {' Return'}
+          </Link>
+          <h1 data-testid="settings-title" className="settings-title">Settings</h1>
           <label htmlFor="category-id">
             Category:
-            <select id="category-id" name="category" onChange={ this.handleChange }>
+            <select name="category" onChange={ this.handleChange }>
               <option value="">Any Category</option>
               <option value="category=18">Science: Computers</option>
               <option value="category=21">Sports</option>
@@ -46,7 +51,11 @@ class Settings extends React.Component {
           <br />
           <label htmlFor="difficulty-id">
             Difficulty:
-            <select id="difficulty-id" name="difficulty" onChange={ this.handleChange }>
+            <select
+              className="difficulty-id"
+              name="difficulty"
+              onChange={ this.handleChange }
+            >
               <option value="">Any Difficulty</option>
               <option value="difficulty=easy">Easy</option>
               <option value="difficulty=medium">Medium</option>
@@ -56,7 +65,7 @@ class Settings extends React.Component {
           <br />
           <label htmlFor="type-id">
             Type:
-            <select id="type-id" name="type" onChange={ this.handleChange }>
+            <select className="type-id" name="type" onChange={ this.handleChange }>
               <option value="">Any Type</option>
               <option value="type=multiple">Multiple Choice</option>
               <option value="type=boolean">True/False</option>
@@ -64,9 +73,8 @@ class Settings extends React.Component {
           </label>
           <br />
           <button type="button" onClick={ this.handleClick }>Salvar</button>
-        </form>
-        <Link to="/">Home</Link>
-      </fieldset>
+        </fieldset>
+      </div>
     );
   }
 }

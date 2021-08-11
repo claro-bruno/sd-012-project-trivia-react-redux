@@ -1,0 +1,104 @@
+.settings-content {
+  align-items: center;
+  background-color: rgb(51, 51, 102);
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+.settings-field {
+  align-items: center;
+  animation: fade-in-setting 2.5s ease-in-out;
+  background-color: rgb(204, 204, 204);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  justify-content: space-between;
+  max-height: 70vh;
+  padding-bottom: 20px;
+  width: 350px;
+}
+
+.settings-title {
+  animation: fade-title-settings 1s ease;
+  color: rgb(51, 51, 102);
+  font-family: Fredericka the Great , cursive;
+  font-size: 35px;
+}
+
+.settings-field label {
+  color: rgb(51, 51, 102);
+  font-size: 16px;
+  font-weight: 600;
+  text-align: start;
+  width: 90%;
+}
+
+.settings-field select {
+  border: 1px solid gray;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  padding: 10px 15px;
+  width: 100%;
+}
+
+.settings-field button {
+  background-color: rgb(204, 153, 153);
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 2px rgb(80, 56, 56);
+  color: rgb(51, 51, 102);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0.9;
+  outline: none;
+  padding: 10px 0;
+  width: 95%;
+}
+
+.settings-field button:hover {
+  opacity: 1;
+}
+
+.settings-field button:active {
+  background-color: rgb(189, 104, 104);
+  box-shadow: none;
+}
+
+.link {
+  align-self: flex-end;
+  color: rgb(51, 51, 102);
+  margin-right: 10px;
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+.link:hover {
+  opacity: 1;
+}
+
+@media screen and ( max-height : 900px ) {
+
+  .settings-field {
+    height: 630px;
+  }
+}
+
+@keyframes fade-in-setting {
+
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-title-settings {
+
+  from {
+    font-size: 5px;
+  }
+
+}
