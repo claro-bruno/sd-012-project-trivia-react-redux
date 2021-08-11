@@ -4,8 +4,8 @@ import {
   USER_ACTION_HASH,
   GET_TOKEN,
   GET_TOKEN_SUCCESS,
-  GET_TOKEN_ERROR,
   GET_SCORE,
+  PLAY_AGAIN,
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
@@ -32,10 +32,10 @@ function user(state = INITIAL_STATE, action) {
     return ({ ...state });
   case GET_TOKEN_SUCCESS:
     return ({ ...state, token: action.token });
-  case GET_TOKEN_ERROR:
-    return ({ ...state, error: action.error });
   case GET_SCORE:
     return ({ ...state, score: Number(state.score) + action.payload });
+  case PLAY_AGAIN:
+    return ({ ...state, score: action.payload });
   default:
     return state;
   }
