@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Roboto:wght@100&display=swap');
+
+* {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+
+}
+
 .section-ranking {
   display: flex;
   flex-direction: column;
@@ -22,8 +30,23 @@
 
 .li-ranking {
   padding: 20px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
   height: min-content;
   border-radius: 8px;
+}
+
+.li-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: min-content;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border: 2px solid black;
+  background-color: #C51D62;
+  color: white;
 }
 
 .li-ranking:nth-child(even) {
@@ -33,6 +56,12 @@
 
 #user-pic {
   border-radius: 50%;
+  width: 90px;
+  height: 90px;
+}
+
+#user-name {
+  width: 200px;
 }
 
 .score {
@@ -40,5 +69,8 @@
 }
 
 .go-back-btn {
-  bottom: 15px;
+  margin: auto;
+  width: 10vw;
+  align-self: center;
+  bottom: 10px;
 }
