@@ -9,7 +9,7 @@ const Logo = styled.img`
   margin-bottom: 1rem;
 
   @media ( prefers-reduced-motion : no-preference ) {
-    animation: shake infinite 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    animation: shake infinite 1.125s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   }
 
   @keyframes shake {
@@ -22,11 +22,11 @@ const Logo = styled.img`
     }
 
     30%, 50%, 70% {
-      transform: translate3d(-4px, 0, 0);
+      transform: translate3d(-2px, 0, 0);
     }
 
     40%, 60% {
-      transform: translate3d(4px, 0, 0);
+      transform: translate3d(2px, 0, 0);
     }
   }
 `;

@@ -79,6 +79,10 @@ const NextBtn = styled.button`
   font-weight: 600;
   margin: 2rem auto;
   cursor: pointer;
+
+  &:hover {
+    filter: opacity(0.8);
+  }
 `;
 
 const Grid = styled.main`
