@@ -6,8 +6,10 @@ import '../css/ranking.css';
 
 class Ranking extends Component {
   getListRanking() {
+    const fim = 5;
     const rankList = JSON.parse(localStorage.getItem('ranking'));
-    return rankList.sort((a, b) => b.score - a.score);
+    const rankSorted = rankList.sort((a, b) => b.score - a.score);
+    return rankSorted.slice(0, fim);
   }
 
   render() {
