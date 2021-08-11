@@ -36,6 +36,28 @@ const Title = styled.h1`
   margin-top: 1rem;
 `;
 
+const Back = styled.button`
+  background-color: transparent;
+  border: none;
+  color: hsla(0, 0%, 100%, 62.5%);
+  margin-left: auto;
+  display: block;
+  margin-top: 0.625rem;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const BackContainer = styled.div`
+  max-width: 50rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+  font-size: 1.125rem;
+`;
+
 class RankingPage extends Component {
   render() {
     const ranking = JSON.parse(localStorage.getItem('ranking'));
@@ -61,14 +83,16 @@ class RankingPage extends Component {
             ))}
         </Container>
 
-        <Link to="/">
-          <button
-            type="button"
-            data-testid="btn-go-home"
-          >
-            Voltar
-          </button>
-        </Link>
+        <BackContainer>
+          <Link to="/">
+            <Back
+              type="button"
+              data-testid="btn-go-home"
+            >
+              Back
+            </Back>
+          </Link>
+        </BackContainer>
       </main>
     );
   }
