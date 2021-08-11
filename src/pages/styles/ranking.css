@@ -16,7 +16,8 @@
   flex-direction: column;
   margin-bottom: 80px;
   margin-top: 80px;
-  width: 550px;
+  overflow-y: auto;
+  width: 350px;
 }
 
 .ranking-title {
@@ -60,5 +61,34 @@
 
   from {
     opacity: 0;
+  }
+}
+
+@media screen and ( max-width : 350px ) {
+
+  .ranking-container {
+    width: 280px;
+  }
+
+  .ranking-element span {
+    font-size: 16px;
+  }
+}
+
+@media screen and ( max-height : 770px ) {
+
+  .ranking-container {
+    height: 100%;
+  }
+}
+
+@media screen and ( min-width : 750px ) {
+
+  .ranking-container {
+    width: 650px;
+  }
+
+  .ranking-element span {
+    font-size: 25px;
   }
 }
