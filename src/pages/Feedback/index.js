@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
+import PlayerHeader from '../../PlayerHeader';
 
 class Feedback extends Component {
   constructor() {
@@ -23,15 +24,11 @@ class Feedback extends Component {
     const encodeEmail = md5(gravatarEmail).toString();
     return (
       <div>
-        <header>
-          <img
-            src={ `https://www.gravatar.com/avatar/${encodeEmail}` }
-            alt="profile"
-            data-testid="header-profile-picture"
-          />
-          <span data-testid="header-player-name">{ name }</span>
-          <span data-testid="header-score">{ score }</span>
-        </header>
+        <PlayerHeader
+          name={ name }
+          score={ score }
+          encodeEmail={ encodeEmail }
+        />
         <h1 data-testid="feedback-text">Feedback</h1>
         <p data-testid="feedback-text">{ this.performPlayer() }</p>
         <div>
