@@ -51,13 +51,9 @@ class SectionQuestions extends React.Component {
   }
 
   render() {
-    const {
-      props: { questionPosition, questionsDisable, count, questions },
-    } = this;
+    const { props: { questionPosition, questionsDisable, count, questions } } = this;
 
-    if (questions.length === 0) {
-      return <h2>Loading...</h2>;
-    }
+    if (questions.length === 0) { return <h2>Loading...</h2>; }
 
     const {
       category,
@@ -74,19 +70,16 @@ class SectionQuestions extends React.Component {
         <h3 data-testid="question-text">{ question }</h3>
         <section>
           {
-            this.shuffleAnswers(
-              correctAnswer,
-              incorrectAnswers,
-              difficulty,
-            ).map(({ answer, testid, handleClick, className }) => (
-              <Button
-                testId={ testid }
-                key={ answer }
-                name={ answer }
-                disabled={ questionsDisable }
-                handleClick={ handleClick }
-                className={ className }
-              />))
+            this.shuffleAnswers(correctAnswer, incorrectAnswers, difficulty)
+              .map(({ answer, testid, handleClick, className }) => (
+                <Button
+                  testId={ testid }
+                  key={ answer }
+                  name={ answer }
+                  disabled={ questionsDisable }
+                  handleClick={ handleClick }
+                  className={ className }
+                />))
           }
         </section>
       </section>
