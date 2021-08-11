@@ -44,7 +44,7 @@ class Ranking extends React.Component {
             stateSort.map((posicao, index) => {
               const { name, score, picture } = posicao;
               return (
-                <li key={ `${score}.${name}.${score}` }>
+                <li key={ `${score}.${name}.${picture}` }>
                   <img src={ picture } alt={ `Player avatar ${index}` } />
                   <h3 data-testid={ `player-name-${index}` }>
                     { name }
