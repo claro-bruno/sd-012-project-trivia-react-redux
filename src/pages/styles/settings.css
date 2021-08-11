@@ -1,4 +1,4 @@
-#settings-content {
+.settings-content {
   align-items: center;
   background-color: rgb(51, 51, 102);
   display: flex;
@@ -7,7 +7,7 @@
   width: 100vw;
 }
 
-#settings-field {
+.settings-field {
   align-items: center;
   animation: fade-in-login 0.5s ease-in-out;
   background-color: rgb(204, 204, 204);
@@ -18,16 +18,16 @@
   width: 350px;
 }
 
-#settings-title {
+.settings-title {
   animation: fade-logo 1s ease;
   color: rgb(51, 51, 102);
   font-family: Fredericka the Great , cursive;
   font-size: 35px;
-  margin-top: 80px;
   margin-bottom: 80px;
+  margin-top: 80px;
 }
 
-#settings-field label {
+.settings-field label {
   color: rgb(51, 51, 102);
   font-size: 16px;
   font-weight: 600;
@@ -35,16 +35,16 @@
   width: 90%;
 }
 
-#settings-field select {
-  font-size: 15px;
+.settings-field select {
   border: 1px solid gray;
   border-radius: 10px;
+  font-size: 15px;
   outline: none;
   padding: 10px 15px;
   width: 100%;
 }
 
-#settings-field button {
+.settings-field button {
   background-color: rgb(204, 153, 153);
   border: none;
   border-radius: 10px;
@@ -53,18 +53,18 @@
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
+  margin-top: 100px;
   opacity: 0.9;
   outline: none;
   padding: 10px 0;
   width: 95%;
-  margin-top: 100px;
 }
 
-#settings-field button:hover {
+.settings-field button:hover {
   opacity: 1;
 }
 
-#link {
+.link {
   align-self: flex-end;
   color: rgb(51, 51, 102);
   margin-right: 10px;
@@ -72,12 +72,28 @@
   text-decoration: none;
 }
 
-#link:hover  {
+.link:hover {
   opacity: 1;
 }
 
 @media screen and ( max-height : 900px ) {
-  #settings-field {
+
+  .settings-field {
     height: 630px;
   }
+}
+
+@keyframes fade-in-login {
+
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-logo {
+
+  from {
+    font-size: 10px;
+  }
+
 }
