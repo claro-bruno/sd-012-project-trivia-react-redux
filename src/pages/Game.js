@@ -28,8 +28,8 @@ class Game extends Component {
   }
 
   fetchTokenQuestions() {
-    const { tokenStore } = this.props;
-    const token = localStorage.getItem('token') || tokenStore;
+    // const { tokenStore } = this.props;
+    const token = localStorage.getItem('token');
     try {
       const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
       fetch(url)
@@ -39,7 +39,6 @@ class Game extends Component {
           loading: false,
         }));
     } catch (erro) {
-      console.error(erro);
       return 'Erro no fetch das perguntas';
     }
   }
@@ -55,6 +54,7 @@ class Game extends Component {
               ? 'Carregando...'
               : <Questions questions={ questions } />
           }
+          {/* <Questions questions={ questions } /> */}
         </div>
       </div>
     );
@@ -71,12 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Game.propTypes = {
-<<<<<<< HEAD
-  tokenStore: PropTypes.string.isRequired,
-=======
->>>>>>> bf20b0657923f3c403beeec39f6b555f3e56b549
   getToken: PropTypes.func.isRequired,
-  tokenStore: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

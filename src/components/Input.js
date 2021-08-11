@@ -6,7 +6,6 @@ class Input extends React.Component {
     const { itemName, name, type, testId, onChange, value, id, className } = this.props;
     return (
       <label htmlFor={ name } className={ className }>
-        {/* {itemName} */}
         <input
           placeholder={ itemName }
           className={ className }

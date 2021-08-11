@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { GraphicComponent } from 'stylized-graphic-component';
 import FeedBackHeader from '../components/FeedBackHeader';
 import ButtonRanking from '../components/ButtonRanking';
 import '../App.css';
+import style from '../style';
 
 class Feedback extends React.Component {
   constructor() {
@@ -19,20 +21,34 @@ class Feedback extends React.Component {
 
   render() {
     const { history, assertions, score } = this.props;
+    const five = 5;
     return (
       <div className="container-feedback">
         <h1 className="feedback-title" data-testid="feedback-text">Feedback</h1>
         <FeedBackHeader />
+        <GraphicComponent
+          className="graphic"
+          style={ style }
+          data={ { Acertos: assertions, Erros: five - assertions } }
+          maxPercent="100%"
+          colors={ ['#00ff00', '#ff0000'] }
+        />
         <h3
           className="feedback-score"
           data-testid="header-score"
         >
-          {score}
+          <span data-testid="feedback-total-score">
+            Pontuação:
+            {' '}
+            {score}
+          </span>
         </h3>
         <h3
           className="feedback-assertions"
           data-testid="feedback-total-question"
         >
+          Acertos:
+          {' '}
           {assertions}
 
         </h3>

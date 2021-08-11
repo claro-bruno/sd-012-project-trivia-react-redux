@@ -60,7 +60,7 @@ class FeedBackHeader extends Component {
         />
         <p
           className="user-feedback"
-          testId="header-player-name"
+          data-testid="header-player-name"
         >
           {user}
         </p>

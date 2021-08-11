@@ -25,10 +25,12 @@ class Questions extends Component {
     this.selectedResponse = this.selectedResponse.bind(this);
     this.changeQuestion = this.changeQuestion.bind(this);
     this.setTimer = this.setTimer.bind(this);
+    this.gameInit = this.gameInit.bind(this);
   }
 
   componentDidMount() {
     this.setTimer();
+    this.gameInit();
   }
 
   setTimer() {
@@ -78,6 +80,7 @@ class Questions extends Component {
     const { setAssertions } = this.props;
     const state = JSON.parse(localStorage.getItem('state'));
     setAssertions(assertionsValue);
+    console.log(scoreValue);
     const newState = {
       player: {
         ...state.player,
@@ -118,9 +121,6 @@ class Questions extends Component {
   replaceSpecialChars(str) { // remove aspas
     return str.normalize('NFD')
       .replace(/[^a-zA-Zs]/g, ' ');
-    // const cod = window.btoa(str);
-    // const decod = window.atob(cod);
-    // return decod;
   }
 
   changeQuestion() {
@@ -135,6 +135,16 @@ class Questions extends Component {
     setDisabled(false);
   }
 
+  gameInit() {
+    const { setScore } = this.props;
+    setScore(0);
+    this.setState({ index: 0 });
+    const { player } = JSON.parse(localStorage.getItem('state'));
+    console.log(player);
+    localStorage.setItem('state', JSON.stringify({ player:
+      { ...player, score: 0, assertions: 0 } }));
+  }
+
   render() {
     const { index, btnClicked, nextQuestion, timer } = this.state;
     const { questions, isDisabled, setDisabled } = this.props;
@@ -143,41 +153,40 @@ class Questions extends Component {
       setDisabled(true);
       clearInterval(this.myInterval);
     }
-    if (index === questions.length) { return <Redirect to="/feedback" />; }
+    if (index > questions.length - 1 && index !== 0) return <Redirect to="/feedback" />;
     const minSec = 10;
+    if (!questions.length) return null;
     return (
       <div className="container-question">
         <div>
           <p className="category" data-testid="question-category">
             {questions[index].category}
           </p>
-          <p testId="header-timer" className={ timer <= minSec ? 'lastTimer' : 'timer' }>
+          <span className="cont-questions">{`${index + 1}/${questions.length}`}</span>
+          <span testId="header-timer" className={ timer <= minSec ? 'ltTimer' : 'timer' }>
             { timer }
-          </p>
+          </span>
+          <hr />
           <p className="question" data-testid="question-text">
             {this.replaceSpecialChars(questions[index].question)}
           </p>
         </div>
         <div className="container-btn">
-          {
-            this.createQuestions().map((question) => (
-              <button
-                data-testid={ question.id === CORRECT_ANSWER
-                  ? CORRECT_ANSWER
-                  : question.id }
-                id={ question.id === CORRECT_ANSWER ? 'correct' : 'incorrect' }
-                type="button"
-                key={ `${question.id}` }
-                disabled={ isDisabled }
-                onClick={ this.verifyAns }
-                className={ btnClicked || timer === 0
-                  ? question.ifCorrect
-                  : 'btn-question' }
-              >
-                {question.answer}
-              </button>
-            ))
-          }
+          {this.createQuestions().map((question) => (
+            <button
+              data-testid={ question.id }
+              id={ question.id === CORRECT_ANSWER ? 'correct' : 'incorrect' }
+              type="button"
+              key={ `${question.id}` }
+              disabled={ isDisabled }
+              onClick={ this.verifyAns }
+              className={ btnClicked || timer === 0
+                ? question.ifCorrect
+                : 'btn-question' }
+            >
+              {question.answer}
+            </button>
+          ))}
         </div>
         { nextQuestion || timer === 0
           ? <ButtonNext testId="btn-next" changeQuestion={ this.changeQuestion } /> : ''}
