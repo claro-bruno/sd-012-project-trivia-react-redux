@@ -4,6 +4,7 @@ export const REQUEST_TOKEN_ERROR = 'REQUEST_TOKEN_ERROR';
 export const REQUEST_QUESTIONS = 'REQUEST_QUESTIONS';
 export const REQUEST_QUESTIONS_SUCCESS = 'REQUEST_QUESTIONS_SUCCESS';
 export const REQUEST_QUESTIONS_ERROR = 'REQUEST_QUESTIONS_ERROR';
+export const SCORE_PLAYER = 'SCORE_PLAYER';
 
 export const requestToken = () => ({
   type: REQUEST_TOKEN,
@@ -27,6 +28,10 @@ export const requestQuestionsSuccess = (value) => ({
 
 export const requestQuestionsError = (error) => ({
   type: REQUEST_QUESTIONS_ERROR, payload: error,
+});
+
+export const scorePlayer = (score) => ({
+  type: SCORE_PLAYER, payload: score,
 });
 
 const END_POINT = 'https://opentdb.com/api_token.php?command=request';
