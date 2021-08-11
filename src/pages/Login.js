@@ -70,7 +70,7 @@ class Login extends React.Component {
         to="/settings"
       >
         <i className="bi bi-gear-fill" />
-        {' Configurações'}
+        {' Settings'}
       </Link>
     );
   }
