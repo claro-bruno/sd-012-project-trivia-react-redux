@@ -34,8 +34,18 @@ class UserProfile extends Component {
           alt={ `${myUserState.name}` }
         />
         <div className="player-score">
-          <span data-testid="header-player-name">{ myUserState.name }</span>
-          <span data-testid="header-score">{ `Placar: ${myUserState.score}` }</span>
+          <span
+            className="header-name"
+            data-testid="header-player-name"
+          >
+            { myUserState.name }
+          </span>
+          <span
+            className="header-score"
+            data-testid="header-score"
+          >
+            { `Placar: ${myUserState.score}` }
+          </span>
         </div>
       </section>
     );

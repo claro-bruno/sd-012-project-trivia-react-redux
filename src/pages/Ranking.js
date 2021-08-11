@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { VscHome } from 'react-icons/vsc';
 import { Link } from 'react-router-dom';
 
 class Ranking extends Component {
@@ -6,12 +7,12 @@ class Ranking extends Component {
     const scoreBoard = JSON.parse(localStorage.getItem('ranking'));
     const rankingBoard = scoreBoard.sort((a, b) => b.score - a.score);
     return (
-      <section>
+      <section className="ranking-section">
         <h2 data-testid="ranking-title">Ranking</h2>
-        <ul>
+        <ul className="ranking-list">
           { rankingBoard.map((ranking, index) => (
-            <li key={ index }>
-              <img src={ ranking.picture } alt={ ranking.name } />
+            <li className="players-list" key={ index }>
+              <img className="player-img" src={ ranking.picture } alt={ ranking.name } />
               <p data-testid={ `player-name-${index}` }>{ ranking.name }</p>
               <p data-testid={ `player-score-${index}` }>{ ranking.score }</p>
             </li>
@@ -19,10 +20,11 @@ class Ranking extends Component {
         </ul>
         <Link to="/">
           <button
+            className="play-again-btn"
             type="button"
             data-testid="btn-go-home"
           >
-            Inicio
+            <VscHome />
           </button>
         </Link>
       </section>

@@ -8,7 +8,9 @@ class GamePage extends Component {
       <div>
         <section className="player-game-section">
           <UserProfile />
-          <TriviaQuestions />
+          <section className="game-questions">
+            <TriviaQuestions />
+          </section>
         </section>
       </div>
     );

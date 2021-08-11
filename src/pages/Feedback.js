@@ -28,7 +28,7 @@ class Feedback extends Component {
     const { userFeedback } = this.props;
 
     return (
-      <section>
+      <section className="feedback-section">
         <section>
           <img
             className="player-img"
@@ -50,8 +50,10 @@ class Feedback extends Component {
           {' '}
           acerto(s)
         </h3>
-        <PlayAgainButton />
-        <RankingButton />
+        <section className="feedback-btns">
+          <PlayAgainButton />
+          <RankingButton />
+        </section>
       </section>
     );
   }

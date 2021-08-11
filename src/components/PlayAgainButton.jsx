@@ -6,10 +6,14 @@ class PlayAgainButton extends Component {
     return (
       <Link to="/">
         <button
+          className="home-btn"
           data-testid="btn-play-again"
           type="button"
         >
-          Jogar novamente
+          <img
+            src="https://img.icons8.com/material-outlined/48/000000/home--v2.png"
+            alt="home"
+          />
         </button>
       </Link>
     );

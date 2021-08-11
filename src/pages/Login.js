@@ -2,8 +2,10 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { FiPlay, FiSettings } from 'react-icons/fi';
 import { fetchToken, redefineScore, userAction, userActionName } from '../redux/actions';
 import './pages.css';
+import WelcomeText from '../components/WelcomeText';
 
 class Login extends PureComponent {
   constructor() {
@@ -36,9 +38,10 @@ class Login extends PureComponent {
         >
           <button
             data-testid="btn-settings"
+            className="btn-settings"
             type="button"
           >
-            Configurações
+            <FiSettings />
           </button>
         </Link>
       </div>
@@ -85,47 +88,51 @@ class Login extends PureComponent {
   render() {
     const { email, name, disabled } = this.state;
     return (
-      <form className="form">
-        <label
-          htmlFor="email"
-        >
-          <input
-            placeholder="Email"
-            type="email"
-            name="email"
-            className=""
-            data-testid="input-gravatar-email"
-            value={ email }
-            onChange={ this.handleInput }
-          />
-        </label>
-
-        <label
-          htmlFor="name"
-        >
-          <input
-            placeholder="Nome"
-            type="text"
-            name="name"
-            className=""
-            data-testid="input-player-name"
-            value={ name }
-            onChange={ this.handleInput }
-          />
-        </label>
-        <div className="buttons">
-          <button
-            data-testid="btn-play"
-            type="button"
-            disabled={ disabled }
-            onClick={ this.handleClick }
+      <section className="login-page">
+        <section className="msg-component">
+          <WelcomeText />
+        </section>
+        <form className="form">
+          <label
+            htmlFor="email"
           >
-            Jogar
-          </button>
-
-          { this.settingsButton() }
-        </div>
-      </form>
+            <input
+              placeholder="Email"
+              type="email"
+              name="email"
+              className="form-control"
+              data-testid="input-gravatar-email"
+              value={ email }
+              onChange={ this.handleInput }
+            />
+          </label>
+          <label
+            htmlFor="name"
+          >
+            <input
+              placeholder="Nome"
+              type="text"
+              name="name"
+              className="form-control"
+              data-testid="input-player-name"
+              value={ name }
+              onChange={ this.handleInput }
+            />
+          </label>
+          <div className="buttons">
+            <button
+              data-testid="btn-play"
+              className="btn-play"
+              type="button"
+              disabled={ disabled }
+              onClick={ this.handleClick }
+            >
+              <FiPlay />
+            </button>
+            { this.settingsButton() }
+          </div>
+        </form>
+      </section>
     );
   }
 }
