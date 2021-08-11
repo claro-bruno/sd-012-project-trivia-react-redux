@@ -21,6 +21,7 @@ class GameBody extends Component {
       seconds: 30,
       stopTimer: false,
       assertions: 0,
+      score: 0,
     };
     this.createQuestion = this.createQuestion.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
@@ -67,15 +68,15 @@ class GameBody extends Component {
       },
     };
     this.setState({
+      score: state.player.score,
       assertions: state.player.assertions,
     });
     localStorage.setItem('state', JSON.stringify(state));
-    setStateScore(state.player.score);
+    setStateScore(state.player.score, state.player.assertions);
   }
 
   handleClickScore(diff) {
-    const { score } = this.props;
-    const { seconds, assertions } = this.state;
+    const { seconds, assertions, score } = this.state;
     const dez = 10;
     const diffLevel = {
       hard: 3,
@@ -94,7 +95,7 @@ class GameBody extends Component {
   nextQuestion() {
     const { index } = this.state;
     this.setState({
-      index: (index < cinco) ? index + 1 : index,
+      index: index < cinco ? index + 1 : index,
       disableAnswers: false,
       hidden: true,
       correct: '',
@@ -104,13 +105,6 @@ class GameBody extends Component {
     });
     this.rad();
     this.count();
-  }
-
-  redirect() {
-    const { index } = this.state;
-    if (index === cinco) {
-      return <Redirect to="/feedback" />;
-    }
   }
 
   createQuestion() {
@@ -191,15 +185,14 @@ class GameBody extends Component {
   }
 
   render() {
-    const { disable, hidden, seconds } = this.state;
+    const { disable, hidden, seconds, index } = this.state;
     const { results } = this.props;
+    if (index >= cinco) return <Redirect to="/feedback" />;
     return (
       <div>
         <p>Timer</p>
         <span>
-          {
-            seconds
-          }
+          { seconds }
         </span>
         {
           (results.length > 0) ? this.createQuestion() : <p>LOADING</p>
@@ -221,7 +214,6 @@ class GameBody extends Component {
 GameBody.propTypes = {
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
   setStateScore: PropTypes.func.isRequired,
-  score: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   gravatarEmail: PropTypes.string.isRequired,
 };
@@ -234,7 +226,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setStateScore: (score) => dispatch(setScore(score)),
+  setStateScore: (score, assertions) => dispatch(setScore(score, assertions)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameBody);
