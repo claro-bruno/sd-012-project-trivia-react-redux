@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import '../css/input.css';
 
 class Input extends Component {
   render() {
@@ -7,6 +8,7 @@ class Input extends Component {
     return (
       <label htmlFor={ id }>
         <input
+          className="input"
           id={ id }
           type={ type }
           name={ name }

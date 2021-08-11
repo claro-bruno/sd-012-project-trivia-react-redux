@@ -1,3 +1,18 @@
+body {
+  background-image: url('../images/abstract-1628703162054-6515.jpg');
+}
+
+.trivia-body {
+  background-color: white;
+  border-radius: 15px;
+  color: #246669;
+  font-size: 30px;
+  margin: 50px auto;
+  opacity: 0.9;
+  padding: 40px 0;
+  width: 1300px;
+}
+
 .next-button {
   margin-top: 15px;
 }
@@ -18,7 +33,12 @@
 }
 
 .bicicleta {
-  border-radius: 5px;
+  border-radius: 50%;
   margin-top: 15px;
   width: 500px;
+}
+
+.btn-next {
+  margin-top: 8px;
+  padding: 12px 80px;
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import '../App.css';
 import logo from '../trivia_silvio2.png';
 import Input from '../components/Input';
 import '../css/login.css';
@@ -64,9 +65,24 @@ class Login extends Component {
     return true;
   }
 
+  renderbtnLogin() {
+    const { newUser } = this.props;
+    return (
+      <button
+        className="btn-login"
+        type="button"
+        data-testid="btn-play"
+        disabled={ this.buttonDisable() }
+        onClick={ () => this.onclick(newUser) }
+      >
+        Jogar
+      </button>
+    );
+  }
+
   render() {
     const { game, config } = this.state;
-    const { newUser, loading } = this.props;
+    const { loading } = this.props;
     if (loading) return <h1>Carregando...</h1>;
     if (game) return <Redirect to="/game" />;
     if (config) return <Redirect to="/config" />;
@@ -74,40 +90,36 @@ class Login extends Component {
       <div className="App">
         <header className="App-header">
           <img src={ logo } className="App-logo" alt="logo" />
-          <p>
-            <Input
-              id="name"
-              name="name"
-              type="text"
-              testid="input-player-name"
-              onChange={ this.handleChange }
-              placeholder="Nome do jogador"
-              required
-            />
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              testid="input-gravatar-email"
-              onChange={ this.handleChange }
-              placeholder="Email"
-            />
-            <button
-              type="button"
-              data-testid="btn-play"
-              disabled={ this.buttonDisable() }
-              onClick={ () => this.onclick(newUser) }
-            >
-              Jogar
-            </button>
-          </p>
-          <button
-            type="button"
-            data-testid="btn-settings"
-            onClick={ this.handleClick }
-          >
-            Configurações
-          </button>
+          <div className="body-login">
+            <p>
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                testid="input-player-name"
+                onChange={ this.handleChange }
+                placeholder="Nome do jogador"
+                required
+              />
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                testid="input-gravatar-email"
+                onChange={ this.handleChange }
+                placeholder="Email"
+              />
+              <button
+                className="btn-login"
+                type="button"
+                data-testid="btn-settings"
+                onClick={ this.handleClick }
+              >
+                Configurações
+              </button>
+              { this.renderbtnLogin() }
+            </p>
+          </div>
         </header>
       </div>
     );

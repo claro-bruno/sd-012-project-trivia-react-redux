@@ -141,6 +141,7 @@ class Trivia extends React.Component {
     const { onClick } = this.props;
     return (
       <button
+        className="btn-next"
         data-testid="btn-next"
         type="button"
         id="proxButton"
@@ -190,15 +191,15 @@ class Trivia extends React.Component {
     const { category, question, difficulty } = trivia;
     const { buttons, time } = this.state;
     return (
-      <div>
+      <div className="trivia-body">
         <div className="time-counter">{`Time remaining: ${time}`}</div>
-        <h4>{ `Difficulty: ${difficulty}` }</h4>
+        <h4>{ `Dificuldade: ${difficulty}` }</h4>
         <h4 className="category-questions" data-testid="question-category">{category}</h4>
         <h3
           className="questions"
           data-testid="question-text"
         >
-          {`Pergunta:${this.verficaString(question)}`}
+          {`Pergunta: ${this.verficaString(question)}`}
         </h3>
         { buttons }
         <div className="next-button">

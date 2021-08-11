@@ -1,7 +1,6 @@
 header {
   align-items: center;
-  background-color: #282c34;
-  border: 3px solid whitesmoke;
+  background-color: white;
   display: flex;
   height: 100px;
   justify-content: space-between;
@@ -10,7 +9,6 @@ header {
 }
 
 .picture {
-  border: 6px solid white;
   border-radius: 50%;
   height: auto;
   margin-left: 5%;
@@ -18,15 +16,14 @@ header {
 }
 
 .score {
-  color: white;
+  color: rgb(26, 82, 128);
   font-size: 20px;
   margin-right: 3%;
   margin-top: 10px;
 }
 
 .name {
-  color: white;
-  font-family: cursive;
+  color: rgb(26, 82, 128);
   font-size: 35px;
   font-style: oblique;
 }
