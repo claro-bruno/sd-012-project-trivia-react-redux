@@ -77,7 +77,7 @@ class RankingPage extends Component {
                   {' - '}
                   <span data-testid={ `player-score-${index}` }>{score}</span>
                   {' '}
-                  pontos
+                  points
                 </p>
               </Rank>
             ))}

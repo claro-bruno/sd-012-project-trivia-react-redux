@@ -148,7 +148,7 @@ class ConfigPage extends Component {
               type="button"
               onClick={ this.handleClick }
             >
-              Confirmar
+              Save
             </Button>
           </Link>
         </form>

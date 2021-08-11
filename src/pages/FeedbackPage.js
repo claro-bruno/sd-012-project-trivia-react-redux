@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import styled, { ThemeProvider } from 'styled-components';
 
+import BadScore from '../components/BadScore';
+import GoodScore from '../components/GoodScore';
 import HeaderPlayer from '../components/HeaderPlayer';
 import { timeReset } from '../redux/actions';
 
@@ -42,7 +44,7 @@ const Points = styled.p`
   }
 `;
 
-const Message = styled.p`
+const Message = styled.div`
   color: ${({ theme: { assertions } }) => {
     if (assertions >= MIN_ASSERTIONS) {
       return 'green';
@@ -96,23 +98,24 @@ class FeedbackPage extends Component {
       <>
         <HeaderPlayer />
         <Container>
-          <Title data-testid="feedback-text">Feedback</Title>
+          <Title data-testid="feedback-text">Your score</Title>
           <ThemeProvider theme={ { assertions } }>
             <Message data-testid="feedback-text">
               {assertions < MIN_ASSERTIONS
-                ? 'Podia ser melhor...'
-                : 'Mandou bem!'}
+                ? <BadScore />
+                : <GoodScore />}
             </Message>
           </ThemeProvider>
           <p>
-            Você acertou
+            You got
             {' '}
             <Bold data-testid="feedback-total-question">{assertions}</Bold>
             {' '}
-            {assertions === 1 ? 'pergunta' : 'perguntas'}
+            {assertions === 1 ? 'question ' : 'questions '}
+            right
           </p>
           <Points>
-            Sua pontuação foi
+            Your score was
             {' '}
             <Bold data-testid="feedback-total-score">{score}</Bold>
           </Points>
@@ -122,7 +125,7 @@ class FeedbackPage extends Component {
               onClick={ () => resetTimer() }
               data-testid="btn-play-again"
             >
-              Jogar Novamente
+              Play Again
             </Button>
           </Link>
           <Link to="/ranking">
@@ -130,7 +133,7 @@ class FeedbackPage extends Component {
               type="button"
               data-testid="btn-ranking"
             >
-              Ver Ranking
+              Ranking
             </Button>
           </Link>
         </Container>
