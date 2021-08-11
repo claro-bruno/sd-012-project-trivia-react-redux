@@ -67,7 +67,7 @@ class GameBody extends Component {
       assertions: state.player.assertions,
     });
     localStorage.setItem('state', JSON.stringify(state));
-    setStateScore(state.player.score);
+    setStateScore(state.player.score, state.player.assertions);
   }
 
   handleClickScore(diff) {
@@ -228,7 +228,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setStateScore: (score) => dispatch(setScore(score)),
+  setStateScore: (score, assertions) => dispatch(setScore(score, assertions)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameBody);
