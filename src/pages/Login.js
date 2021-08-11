@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchToken, userAction, userActionName } from '../redux/actions';
+import { fetchToken, redefineScore, userAction, userActionName } from '../redux/actions';
 import './pages.css';
 
 class Login extends PureComponent {
@@ -17,6 +17,11 @@ class Login extends PureComponent {
     this.handleInput = this.handleInput.bind(this);
     this.settingsButton = this.settingsButton.bind(this);
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidMount() {
+    const { newScore } = this.props;
+    newScore(0);
   }
 
   componentDidUpdate() {
@@ -132,12 +137,14 @@ Login.propTypes = {
   }).isRequired,
   sendUserEmail: PropTypes.func.isRequired,
   sendUserName: PropTypes.func.isRequired,
+  newScore: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   gettingToken: () => dispatch(fetchToken()),
   sendUserEmail: (payload) => dispatch(userAction(payload)),
   sendUserName: (payload) => dispatch(userActionName(payload)),
+  newScore: (payload) => dispatch(redefineScore(payload)),
 });
 
 const mapStateToProps = (state) => ({

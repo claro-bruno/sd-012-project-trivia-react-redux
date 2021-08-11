@@ -5,7 +5,6 @@ class Ranking extends Component {
   render() {
     const scoreBoard = JSON.parse(localStorage.getItem('ranking'));
     const rankingBoard = scoreBoard.sort((a, b) => b.score - a.score);
-
     return (
       <section>
         <h2 data-testid="ranking-title">Ranking</h2>

@@ -9,6 +9,7 @@ import {
   GET_TOKEN_SUCCESS,
   GET_TOKEN_ERROR,
   GET_SCORE,
+  PLAY_AGAIN,
 } from './actionTypes';
 
 export const userAction = (payload) => ({ type: USER_ACTION, payload });
@@ -32,6 +33,8 @@ export const getQuestionsSuccess = (payload) => ({
 export const getQuestionsError = (error) => ({ type: GET_QUESTIONS_ERROR, error });
 
 export const getScore = (payload) => ({ type: GET_SCORE, payload });
+
+export const redefineScore = (payload) => ({ type: PLAY_AGAIN, payload });
 
 const playerInfo = {
   player: {
