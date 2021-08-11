@@ -13,18 +13,20 @@ class Ranking extends Component {
             <div key={ index }>
               <div className="ranking-player">
                 <img className="ranking-img" src={ user.picture } alt="user icon" />
-                <p
+                <div
                   className="ranking-name"
                   data-testid={ `player-name-${index}` }
                 >
+                  <p>Player:</p>
                   { user.name }
-                </p>
-                <p
+                </div>
+                <div
                   className="ranking-score"
                   data-testid={ `player-score-${index}` }
                 >
+                  <p>Score:</p>
                   { user.score }
-                </p>
+                </div>
               </div>
             </div>
           ))

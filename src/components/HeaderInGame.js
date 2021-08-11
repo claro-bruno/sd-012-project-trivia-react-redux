@@ -38,6 +38,7 @@ class HeaderInGame extends Component {
           <p data-testid="header-player-name">{userName}</p>
         </div>
         <p className="score-counter" data-testid="header-score">
+          Score:
           {userScore}
         </p>
       </div>

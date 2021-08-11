@@ -35,10 +35,12 @@ class Feedback extends Component {
         <div>
           <h3>Score:</h3>
           <h3 data-testid="feedback-total-score">
+            Score:
             { score }
           </h3>
           <h3>Right answers:</h3>
           <h3 data-testid="feedback-total-question">
+            Right answers:
             { assertions }
           </h3>
         </div>
