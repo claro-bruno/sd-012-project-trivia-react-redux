@@ -24,7 +24,11 @@
 
 .App-header {
   align-items: center;
-  background-color: #282c34;
+
+  /* background-color: #282c34; */
+  background-color: #cccc;
+  background-image: url('./backgroundImageTrivia1.jpg');
+  background-size: cover;
   color: white;
   display: flex;
   flex-direction: column;

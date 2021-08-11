@@ -9,6 +9,7 @@ class InputsLogin extends React.Component {
       value2,
       onChange1,
       onChange2,
+      className,
     },
     } = this;
     return (
@@ -16,18 +17,20 @@ class InputsLogin extends React.Component {
         <Input
           name="user"
           testId="input-player-name"
-          label="Usuário"
+          placeholder="Usuário"
           onChange={ onChange1 }
           value={ value1 }
           type="text"
+          className={ className }
         />
         <Input
           name="email"
           testId="input-gravatar-email"
-          label="E-mail"
+          placeholder="E-mail"
           onChange={ onChange2 }
           value={ value2 }
           type="email"
+          className={ className }
         />
       </>
     );
@@ -40,6 +43,11 @@ InputsLogin.propTypes = {
   value1: string.isRequired,
   onChange2: func.isRequired,
   value2: string.isRequired,
+  className: string,
+};
+
+InputsLogin.defaultProps = {
+  className: '',
 };
 
 export default InputsLogin;

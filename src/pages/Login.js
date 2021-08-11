@@ -7,6 +7,8 @@ import ButtonsLogin from '../components/loginControlled/ButtonsLogin';
 import logo from '../trivia.png';
 import { tokenFetchAPI, addLoginAction } from '../redux/actions';
 import '../css/Login.css';
+import '../css/Button.css';
+import '../css/Input.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -91,12 +93,14 @@ class Login extends React.Component {
             value1={ user }
             onChange2={ handleChange }
             value2={ email }
+            className="std-input"
           />
           <ButtonsLogin
             disabled={ disableCondition }
             handleClick1={ handleClickGame }
             handleClick2={ handleClickConfig }
             handleClick3={ handleClickRank }
+            className="std-button"
           />
         </form>
       </>

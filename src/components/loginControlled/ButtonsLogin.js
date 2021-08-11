@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button';
+import '../../css/Button.css';
 
 class ButtonsLogin extends React.Component {
   render() {
@@ -18,16 +19,19 @@ class ButtonsLogin extends React.Component {
           name="Entrar"
           disabled={ disabled }
           handleClick={ handleClick1 }
+          className="std-button enter-button"
         />
         <Button
           testId="btn-settings"
           name="Configurações"
           handleClick={ handleClick2 }
+          className="std-button config-button"
         />
         <Button
           testId="btn-ranking"
           name="Ranking"
           handleClick={ handleClick3 }
+          className="std-button ranking-button"
         />
       </>
     );
@@ -40,10 +44,12 @@ ButtonsLogin.propTypes = {
   handleClick1: func.isRequired,
   handleClick2: func.isRequired,
   handleClick3: func.isRequired,
+  // className: string,
 };
 
 ButtonsLogin.defaultProps = {
   disabled: false,
+  // className: '',
 };
 
 export default ButtonsLogin;

@@ -87,7 +87,7 @@ class SectionQuestions extends React.Component {
   }
 }
 
-const { number, func, bool, string, arrayOf, objectOf } = PropTypes;
+const { number, func, bool, string, arrayOf, objectOf, oneOfType } = PropTypes;
 SectionQuestions.propTypes = {
   questionPosition: number.isRequired,
   correctClick: func.isRequired,
@@ -96,7 +96,7 @@ SectionQuestions.propTypes = {
   color: bool.isRequired,
   count: number.isRequired,
   token: string.isRequired,
-  questions: arrayOf(objectOf(string)).isRequired,
+  questions: arrayOf(objectOf(oneOfType([string, arrayOf(string)]))).isRequired,
   setQuestions: func.isRequired,
 };
 

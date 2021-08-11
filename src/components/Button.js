@@ -26,14 +26,14 @@ export default class Button extends React.Component {
   }
 }
 
-const { bool, string, func } = PropTypes;
+const { bool, string, func, oneOfType } = PropTypes;
 
 Button.propTypes = {
   disabled: bool,
   testId: string,
   name: string.isRequired,
   handleClick: func.isRequired,
-  className: string,
+  className: oneOfType([bool, string]),
 };
 
 Button.defaultProps = {
