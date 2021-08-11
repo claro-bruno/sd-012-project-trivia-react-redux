@@ -9,9 +9,9 @@ class Feedback extends Component {
     const { player } = state;
     const { assertions } = player;
     const tres = 3;
-    let mensagem = '';
-    if (assertions < tres) mensagem = 'Podia ser melhor...';
-    else if (assertions >= tres) mensagem = 'Mandou bem!';
+    let msg = '';
+    if (assertions < tres) msg = 'Podia ser melhor...';
+    else if (assertions >= tres) msg = 'Mandou bem!';
     return (
       <div>
         <Header />
@@ -19,7 +19,7 @@ class Feedback extends Component {
         <span data-testid="header-score">{ state.player.score }</span>
         <span data-testid="feedback-total-score">{ state.player.score }</span>
         <span data-testid="feedback-total-question">{ state.player.assertions }</span>
-        <span data-testid="feedback-text">{ mensagem }</span>
+        <span data-testid="feedback-text">{ msg }</span>
         <button type="button" data-testid="btn-play-again">
           <Link to="/">Jogar novamente</Link>
         </button>
