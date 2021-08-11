@@ -1,8 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+
 import Header from '../components/Header';
 import './Game.css';
+
+const MAX_QUESTIONS = 4;
 
 class Game extends React.Component {
   constructor(props) {
@@ -13,6 +17,8 @@ class Game extends React.Component {
       disabled: false,
       score: 0,
       assertions: 0,
+      questionNumber: 0,
+      redirectFeedback: false,
     };
 
     this.renderQuestions = this.renderQuestions.bind(this);
@@ -21,6 +27,7 @@ class Game extends React.Component {
     this.assertionsCounter = this.assertionsCounter.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.changeColorAnswer = this.changeColorAnswer.bind(this);
+    this.handleNextQuestion = this.handleNextQuestion.bind(this);
   }
 
   // Requisito 8 - para fazer foi consultado essa vídeo-aula: https://www.youtube.com/watch?v=NAx76xx40jM
@@ -39,7 +46,6 @@ class Game extends React.Component {
 
   setCounter() {
     const ONE_SECOND = 1000;
-
     this.myInterval = setInterval(() => {
       const { count } = this.state;
       if (count === 1) {
@@ -63,13 +69,27 @@ class Game extends React.Component {
     localStorage.setItem('state', objeto);
   }
 
+  handleNextQuestion() {
+    const { questionNumber } = this.state;
+    clearInterval(this.myInterval);
+    if (questionNumber < MAX_QUESTIONS) {
+      this.setState((prevState) => ({
+        questionNumber: prevState.questionNumber + 1,
+        disabled: false,
+        count: 30,
+      }));
+      this.setCounter();
+    } else {
+      this.setState({ redirectFeedback: true });
+    }
+  }
+
   handleClick({ target: { value: difficulty, name } }) {
     if (name === 'correct') {
       this.scoreCounter(difficulty);
       this.assertionsCounter();
     }
     this.changeColorAnswer();
-    // this.setLocalStorageGame();
 
     this.setState({
       disabled: true,
@@ -77,13 +97,12 @@ class Game extends React.Component {
   }
 
   scoreCounter(difficulty) {
-    const { /* score, */ count } = this.state;
+    const { count } = this.state;
 
     const questionLevel = { hard: 3, medium: 2, easy: 1 };
     const DEFAULT_NUMBER = 10;
     const newScore = DEFAULT_NUMBER + (count * questionLevel[difficulty]);
 
-    // return (newScore);
     this.setState((prevState) => ({
       score: prevState.score + newScore,
     }));
@@ -107,35 +126,34 @@ class Game extends React.Component {
   // logica baseada no seguinte repositorio https://github.com/tryber/sd-012-project-trivia-react-redux/pull/8/commits/a93062a005d249fcc708168294a7926669bbf914
   renderQuestions() {
     const { triviaQuest } = this.props;
-    const { count, disabled } = this.state;
-
+    const { count, disabled, questionNumber } = this.state;
     return (
       <div>
         <p data-testid="question-category">
-          { triviaQuest[0].category }
+          { triviaQuest[questionNumber].category }
         </p>
         <p data-testid="question-text">
-          { triviaQuest[0].question }
+          { triviaQuest[questionNumber].question }
         </p>
         <button
           id="correct"
           type="button"
           data-testid="correct-answer"
           name="correct"
-          value={ triviaQuest[0].difficulty }
+          value={ triviaQuest[questionNumber].difficulty }
           disabled={ disabled }
           onClick={ this.handleClick }
         >
-          { triviaQuest[0].correct_answer }
+          { triviaQuest[questionNumber].correct_answer }
         </button>
         {
-          triviaQuest[0].incorrect_answers.map((key, index) => (
+          triviaQuest[questionNumber].incorrect_answers.map((key, index) => (
             <button
               id="incorrect"
               type="button"
               data-testid={ `wrong-answer-${index}` }
               name="incorrect"
-              value={ triviaQuest[0].difficulty }
+              value={ triviaQuest[questionNumber].difficulty }
               disabled={ disabled }
               onClick={ this.handleClick }
               key={ key }
@@ -152,21 +170,32 @@ class Game extends React.Component {
     );
   }
 
+  renderNextBtn() {
+    return (
+      <button
+        type="button"
+        data-testid="btn-next"
+        id="btn-next"
+        onClick={ this.handleNextQuestion }
+      >
+        Next
+      </button>
+    );
+  }
+
   render() {
     const { triviaQuest } = this.props;
     const firstQuestion = triviaQuest[0];
+    const { redirectFeedback } = this.state;
+    if (redirectFeedback) {
+      return <Redirect to="/feedback" />;
+    }
     return (
       <div>
         <Header />
         <section>
           { firstQuestion ? this.renderQuestions() : <p>LOADING</p> }
-          <button
-            type="button"
-            data-testid="btn-next"
-            id="btn-next"
-          >
-            Next
-          </button>
+          { this.renderNextBtn() }
         </section>
       </div>
     );
