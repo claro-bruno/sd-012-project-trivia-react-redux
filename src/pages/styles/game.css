@@ -1,3 +1,46 @@
 button {
   border: 1px solid black;
 }
+
+body {
+  background-color: rgb(51, 51, 102);
+}
+
+.game-content {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+.game-field {
+  align-items: center;
+  animation: fade-in-login 2.5s ease-in-out;
+  background-color: rgb(204, 204, 204);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  justify-content: space-between;
+  position: relative;
+  width: 350px;
+}
+
+.timer {
+  position: absolute;
+  top: 0;
+  display: flex;
+  right: 0;
+  background-color: rgb(204, 153, 153);
+  padding: 30px;
+  margin: 5px 9px 0 0;
+  border-radius: 50px;
+  font-weight: bold;
+  color: white;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(253, 179, 179);
+}

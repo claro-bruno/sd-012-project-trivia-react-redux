@@ -206,15 +206,17 @@ class Game extends React.Component {
     let pergunta = actualQuestion.question;
     pergunta = this.handleWriteError(pergunta);
     return (
-      <div>
-        <Header />
-        <div>
-          <div>{ timer }</div>
-          <h2 data-testid="question-category">{ actualQuestion.category }</h2>
-          <h3 data-testid="question-text">{ pergunta }</h3>
-          { this.multiple(actualQuestion) }
-        </div>
-        { showButton && buttonNext }
+      <div className="game-content">
+        <fieldset className="game-field">
+          <Header />
+          <div>
+            <div className="timer">{ timer }</div>
+            <h2 data-testid="question-category">{ actualQuestion.category }</h2>
+            <h3 data-testid="question-text">{ pergunta }</h3>
+            { this.multiple(actualQuestion) }
+          </div>
+          { showButton && buttonNext }
+        </fieldset>
       </div>
     );
   }
