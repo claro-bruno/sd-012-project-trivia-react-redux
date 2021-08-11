@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import getUserInfo from '../services/api';
 import saveLocalStorage from '../helper/saveLocalStorage';
 import { guessUpdate } from '../redux/actions/gameActions';
+import loading from '../images/loading.gif';
 import './styles/game.css';
 
 class Game extends React.Component {
@@ -162,7 +163,7 @@ class Game extends React.Component {
       }, () => this.timeInterval());
       const answers = document.querySelectorAll('.alternative-btn');
       answers.forEach((answer) => {
-        answer.style.border = '1px solid black';
+        answer.style.border = '3px solid black';
         answer.disabled = false;
       });
     } else {
@@ -195,12 +196,13 @@ class Game extends React.Component {
         type="button"
         data-testid="btn-next"
         onClick={ this.nextQuestion }
+        className="next-button"
       >
         Próxima
       </button>
     );
     if (!questions.length) {
-      return (<h1>Loading</h1>);
+      return (<img className="loading" src={ loading } alt="Loading" />);
     }
     const actualQuestion = questions[questionNumber];
     let pergunta = actualQuestion.question;
@@ -209,10 +211,10 @@ class Game extends React.Component {
       <div className="game-content">
         <fieldset className="game-field">
           <Header />
-          <div>
+          <div className="questions-content">
             <div className="timer">{ timer }</div>
             <h2 data-testid="question-category">{ actualQuestion.category }</h2>
-            <h3 data-testid="question-text">{ pergunta }</h3>
+            <h3 data-testid="question-text" className="question-style">{ pergunta }</h3>
             { this.multiple(actualQuestion) }
           </div>
           { showButton && buttonNext }

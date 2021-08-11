@@ -15,13 +15,9 @@ body {
 }
 
 .game-field {
-  align-items: center; /* animation: fade-in-login 2.5s ease-in-out; */
+  animation: fade-in-game 2.5s ease-in-out;
   background-color: rgb(204, 204, 204);
   border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  height: 70%;
-  justify-content: space-between;
   position: relative;
   width: 350px;
 }
@@ -34,12 +30,100 @@ body {
   color: white;
   display: flex;
   font-weight: 700;
-  height: 32px;
+  height: 68px;
   justify-content: center;
   margin: 5px 9px 0 0;
-  padding: 30px;
   position: absolute;
   right: 0;
-  top: 0;
-  width: 32px;
+  top: 9px;
+  width: 68px;
+}
+
+.questions-content {
+  align-self: center;
+  margin: auto;
+  max-width: 90%;
+  text-align: center;
+}
+
+.alternative-btn {
+  border: 3px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 7px 0;
+  outline: none;
+  padding: 10px 15px;
+  width: 100%;
+}
+
+.alternative-btn:last-of-type {
+  margin-bottom: 90px;
+}
+
+.alternative-btn:hover {
+  border: 3px solid rgb(204, 153, 153);
+  box-shadow: 0 0 2px 3px rgb(204, 153, 153);
+}
+
+.alternative-btn:disabled {
+  background-color: silver;
+  box-shadow: none;
+  color: black;
+  cursor: auto;
+  opacity: 0.5;
+}
+
+.next-button {
+  background-color: rgb(204, 153, 153);
+  border: none;
+  border-radius: 10px;
+  bottom: 10px;
+  box-shadow: 0 0 5px 2px rgb(80, 56, 56);
+  color: rgb(51, 51, 102);
+  cursor: pointer;
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  left: 2.5%;
+  margin: 10px auto;
+  opacity: 0.9;
+  outline: none;
+  padding: 10px 0;
+  position: absolute;
+  width: 95%;
+}
+
+.next-button:hover {
+  opacity: 1;
+}
+
+.next-button:active {
+  background-color: rgb(189, 104, 104);
+  box-shadow: none;
+}
+
+.question-style {
+  margin: 5px 0;
+}
+
+.loading {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 40vh auto;
+  width: 5%;
+}
+
+@media screen and ( max-width : 600px ) {
+
+  .loading {
+    width: 10%;
+  }
+}
+
+@keyframes fade-in-game {
+
+  from {
+    opacity: 0;
+  }
 }
