@@ -51,7 +51,7 @@ class Login extends React.Component {
     const { email, name, disable } = this.state;
     return (
       <div className="login-container">
-        <h2>Trívia</h2>
+        <h2>Trivia</h2>
         <form>
           <label htmlFor="input-player-name">
             Nome:
