@@ -2,15 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import Paper from '@material-ui/core/Paper';
+import { Box, Button } from '@material-ui/core';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import Questions from '../components/Questions';
+import './Game.css';
+import CardQuestions from '../components/CardQuestions';
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       questionNumber: 0,
       questions: [],
@@ -38,7 +39,6 @@ class Game extends React.Component {
   componentDidUpdate() {
     const { assertions, score } = this.state;
     const { getUrl, getName } = this.props;
-
     const value = {
       player: {
         name: getName,
@@ -88,7 +88,6 @@ class Game extends React.Component {
       medium: 2,
       easy: 1,
     };
-
     switch (name) {
     case 'correct': switch (id) {
     case 'hard': this.setState({
@@ -112,7 +111,7 @@ class Game extends React.Component {
     default:
     }
     this.buttonColorDisabler();
-    this.timer(target.name);
+    this.timer(name);
   }
 
   timer(target) {
@@ -139,7 +138,6 @@ class Game extends React.Component {
     const correctAnswerButton = document.getElementsByClassName('c-answer');
     correctAnswerButton[0].style.border = '3px solid rgb(6, 240, 15)';
     correctAnswerButton[0].setAttribute('disabled', 'disabled');
-
     const incorrectAnswerButton = document.querySelectorAll('.w-answer');
     incorrectAnswerButton.forEach((button) => {
       button.style.border = '3px solid rgb(255, 0, 0)';
@@ -154,7 +152,6 @@ class Game extends React.Component {
     const correctAnswerButton = document.getElementsByClassName('c-answer');
     correctAnswerButton[0].style.border = '1px solid black';
     correctAnswerButton[0].removeAttribute('disabled', 'disabled');
-
     const incorrectAnswerButton = document.querySelectorAll('.w-answer');
     incorrectAnswerButton.forEach((button) => {
       button.style.border = '1px solid black';
@@ -169,6 +166,7 @@ class Game extends React.Component {
     this.setState({
       questionNumber: (questionNumber + 1),
       seconds: resetTimer,
+      next: false,
     });
     this.count = setInterval(this.timer, interval);
     this.enableButton();
@@ -187,15 +185,14 @@ class Game extends React.Component {
     }
     if (!loading) {
       return (
-        <main>
+        <main className="geral">
           <Header getUrl={ getUrl } getName={ getName } score={ score } />
-          <Paper elevation={ 3 }>
-            <p data-testid="question-category">
-              { questions[questionNumber].category }
-            </p>
-            <p data-testid="question-text">
-              { questions[questionNumber].question }
-            </p>
+          <div className="cardEndQuestions">
+            <CardQuestions
+              questions={ questions }
+              questionNumber={ questionNumber }
+              seconds={ seconds }
+            />
             <Questions
               questions={ questions }
               questionNumber={ questionNumber }
@@ -204,23 +201,24 @@ class Game extends React.Component {
             {
               next
                 ? (
-                  <button
-                    type="button"
-                    data-testid="btn-next"
-                    onClick={ this.nextQuestion }
-                  >
-                    Próxima
-                  </button>)
+                  <Box bgcolor="#00BFFF" clone>
+                    <Button
+                      size="medium"
+                      variant="contained"
+                      type="button"
+                      data-testid="btn-next"
+                      onClick={ this.nextQuestion }
+                    >
+                      Próxima
+                    </Button>
+                  </Box>)
                 : null
             }
-          </Paper>
-          <span>{ seconds }</span>
+          </div>
         </main>
       );
     }
-    return (
-      <Loading />
-    );
+    return (<Loading />);
   }
 }
 
@@ -228,10 +226,8 @@ const mapStateToProps = (state) => ({
   getUrl: state.gravatar.url,
   getName: state.gravatar.name,
 });
-
 Game.propTypes = {
   getUrl: PropTypes.string.isRequired,
   getName: PropTypes.string.isRequired,
 };
-
 export default connect(mapStateToProps, null)(Game);
