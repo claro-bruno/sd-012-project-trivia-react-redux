@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import '../App.css';
 
 class Ranking extends Component {
   render() {
@@ -7,27 +8,49 @@ class Ranking extends Component {
     const ranking = JSON.parse(localStorage.getItem('ranking')) || [];
 
     return (
-      <>
-        <h1 data-testid="ranking-title">Ranking</h1>
+      <main className="main-ranking">
+        <h1 className="title-ranking" data-testid="ranking-title">Ranking</h1>
         <table>
-          <tbody>
+          <body className="body-ranking">
             {ranking.sort((a, b) => b.score - a.score)
               .map((rank, index) => (
-                <tr key={ index }>
-                  <td data-testid="player-name">{rank.name}</td>
-                  <td data-testid={ `${rank.score}${index}` }>{rank.score}</td>
-                  <td><img src={ rank.picture } alt="Player's Avatar" /></td>
+                <tr className="resultado-ranking" key={ index }>
+                  <td
+                    className="name-ranking"
+                    data-testid="player-name"
+                  >
+                    Nome:
+                    {rank.name}
+
+                  </td>
+                  <td
+                    className="score-ranking"
+                    data-testid={ `${rank.score}${index}` }
+                  >
+                    Pontuação:
+                    {rank.score}
+
+                  </td>
+                  <td>
+                    <img
+                      className="picture-ranking"
+                      src={ rank.picture }
+                      alt="Player's Avatar"
+                    />
+
+                  </td>
                 </tr>))}
-          </tbody>
+          </body>
         </table>
         <button
+          className="button-ranking"
           onClick={ () => history.push('/') }
           type="button"
           data-testid="btn-go-home"
         >
           Voltar
         </button>
-      </>
+      </main>
     );
   }
 }
