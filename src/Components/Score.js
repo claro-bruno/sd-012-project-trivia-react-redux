@@ -7,6 +7,7 @@ class Score extends Component {
     const { score, dataTestId } = this.props;
     return (
       <h1
+        className="feedText"
         data-testid={ dataTestId }
       >
         {score}

@@ -11,8 +11,9 @@ class Feedback extends Component {
   render() {
     const { assertions, history } = this.props;
     return (
-      <>
+      <div className="feedBack">
         <h1
+          className="feedText"
           data-testid="feedback-text"
         >
           {assertions < minAssertionsForPositiveFeedback
@@ -25,19 +26,21 @@ class Feedback extends Component {
         <Score dataTestId="feedback-total-score" />
         {/* O requisito 14 o teste procura por este Id */}
         <h1
+          className="feedText"
           data-testid="feedback-total-question"
         >
           {assertions}
         </h1>
         <button
+          className="playAgain"
           type="button"
           data-testid="btn-play-again"
           onClick={ () => history.push('/') }
         >
           Play Again
         </button>
-        <Link data-testid="btn-ranking" to="/ranking">Ranking</Link>
-      </>
+        <Link className="ranking" data-testid="btn-ranking" to="/ranking">Ranking</Link>
+      </div>
     );
   }
 }
