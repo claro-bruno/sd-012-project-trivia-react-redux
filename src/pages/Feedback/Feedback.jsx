@@ -14,6 +14,8 @@ class Feedback extends React.Component {
   render() {
     const { userScore, userAssertions, resetQuestions } = this.props;
     const assertionsMin = 3;
+    const localScore = JSON.parse(localStorage.getItem('state')).player.score;
+    const localAssert = JSON.parse(localStorage.getItem('state')).player.assertions;
     return (
       <>
         <Header />
@@ -26,15 +28,11 @@ class Feedback extends React.Component {
             }
           </h3>
           <div>
-            <h2>
-              <span data-testid="feedback-total-score">
-                {`Você acertou ${userAssertions} de 5 perguntas.`}
-              </span>
+            <h2 data-testid="feedback-total-question">
+              {localAssert}
             </h2>
-            <h2>
-              <span data-testid="feedback-total-question">
-                {`Você fez: ${userScore} pontos.`}
-              </span>
+            <h2 data-testid="feedback-total-score">
+              {localScore}
             </h2>
           </div>
           <div>
@@ -72,7 +70,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Feedback.propTypes = {
-  userScore: PropTypes.number.isRequired,
   userAssertions: PropTypes.number.isRequired,
   resetQuestions: PropTypes.func.isRequired,
 };
