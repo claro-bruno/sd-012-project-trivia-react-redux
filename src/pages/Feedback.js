@@ -11,6 +11,7 @@ class Feedback extends React.Component {
     this.getScoreLocalStorage = this.getScoreLocalStorage.bind(this);
     this.state = {
       score: 0,
+      assertions: 0,
     };
   }
 
@@ -63,10 +64,14 @@ class Feedback extends React.Component {
 
         <div>
           { this.renderMessage() }
+          <p>Respostas corretas:</p>
           <p data-testid="feedback-total-question">
-            {`Você acertou ${assertions} questões!`}
+            { assertions }
           </p>
-          <p data-testid="feedback-total-score">{`Um total de ${score} pontos.`}</p>
+          <p>Pontuação total:</p>
+          <p data-testid="feedback-total-score">
+            { score }
+          </p>
         </div>
       </div>
     );
