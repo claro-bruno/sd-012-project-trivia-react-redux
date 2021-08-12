@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
+import { Button, Input } from 'reactstrap';
 import { fetchApiToken, playerUserInfo } from '../actions';
 import image from '../images/trivia.png';
 import './Login.css';
@@ -56,12 +57,11 @@ class Login extends React.Component {
     return (
       <div className="container">
         <img className="logo" src={ image } alt="trivia logo" />
-        <h1>Login Trivia</h1>
-        <form>
+        <form className="containnerInputs">
           <label htmlFor="name">
             Nome:
-            <input
-              className="inputsStyle"
+
+            <Input placeholder="username"
               data-testid="input-player-name"
               value={ name }
               id="name"
@@ -69,11 +69,11 @@ class Login extends React.Component {
               type="text"
               onChange={ this.handleChange }
             />
+
           </label>
           <label htmlFor="email">
             Email:
-            <input
-              className="inputsStyle"
+            <Input placeholder="@example.com"
               data-testid="input-gravatar-email"
               value={ email }
               id="email"
@@ -83,7 +83,8 @@ class Login extends React.Component {
             />
           </label>
           <Link to="/game">
-            <button
+            <Button
+              color="warning"
               className="butonStyle"
               disabled={ isDisable }
               type="button"
@@ -91,11 +92,11 @@ class Login extends React.Component {
               onClick={ () => this.handleSubmit() }
             >
               Jogar
-            </button>
+            </Button>
 
           </Link>
           <Link to="/settings">
-            <button className="butonStyle" type="button" data-testid="btn-settings">Configurações</button>
+            <Button color="info" className="butonStyle" type="button" data-testid="btn-settings">Configurações</Button>
           </Link>
         </form>
       </div>

@@ -1,33 +1,32 @@
 .body{
-
-width: 100%;
-
-
+width: 90%;
+margin: auto;
+background: linear-gradient(90deg, rgb(151, 8, 127) 0%, rgb(38, 40, 167)100%);
+text-align: center;
+color: rgb(255, 255, 255);
 }
+
 .border-green {
-  display: list-item;
-  text-align: center;
-  border: 5px solid rgb(5, 168, 5);
-  width: 90%;
-  height: 60px;
+  border: 1px solid rgb(5, 168, 5);
+  width: 20%;
+  height: 50px;
   color: aliceblue;
   background: green;
   border-radius: 8px;  
-  font-size: 18px;  
+  font-size: 14px;  
   margin: auto;
   margin-top: 20px;
+  padding: 5px;
 }
 
 .border-red {
-  display: list-item;
-  border: 5px solid red; 
-  width: 90%;
-  height: 60px;
-  color: aliceblue;
-  text-align: center;
   background: linear-gradient(90deg, rgba(86, 10, 116, 0.637) 0%, rgb(128, 20, 20)100%);
+  border: 1px solid red; 
+  width: 20%;
+  height: 50px;
+  color: aliceblue;  
   border-radius: 8px;    
-  font-size: 18px;  
+  font-size: 14px;  
   margin: auto;
   margin-top: 1px;
   
