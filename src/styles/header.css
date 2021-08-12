@@ -1,0 +1,19 @@
+@import url(./colors.css);
+
+.header_trivia {
+  padding: 18px 120px;
+  color: white;
+  background-color: var(--header-background);
+  align-items: center;
+}
+
+.header_trivia img {
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+}
+
+.header_trivia_player p {
+  font-weight: 600;
+  margin-left: 120px;
+}

@@ -1,13 +1,4 @@
-:root {
-
-  --primary-color: #6e4ec6;
-
-  --secondary-color: #ccc;
-
-  --background-dark: #161b22;
-
-  --input-color: #0d1117;
-}
+@import url(./colors.css);
 
 @keyframes appearFromBottom {
 

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { MD5 } from 'crypto-js';
+import '../styles/header.css';
 
 class Header extends React.Component {
   render() {
@@ -12,12 +13,25 @@ class Header extends React.Component {
     // https://github.com/tryber/sd-010-a-project-trivia-react-redux/pull/600/
     // commits/6c6c13f6c3fdfb09f19cf9f33f6e8cd814b7bd04
     return (
-      <div>
+      <div className="header_trivia">
         <header>
-          <img data-testid="header-profile-picture" src={ getImg } alt="user avatar" />
-          <p data-testid="input-gravatar-email">{ gravatarEmail }</p>
-          <p data-testid="header-player-name">{ name }</p>
-          <p data-testid="header-score">{ score }</p>
+          <div className="header_trivia_player">
+            <img data-testid="header-profile-picture" src={ getImg } alt="user avatar" />
+            <p data-testid="input-gravatar-email">
+              Email :
+              { gravatarEmail }
+            </p>
+            <p data-testid="header-player-name">
+              Nome:
+              {' '}
+              { name }
+            </p>
+            <p data-testid="header-score">
+              Pontuação:
+              {' '}
+              { score }
+            </p>
+          </div>
         </header>
       </div>
     );
