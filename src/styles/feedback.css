@@ -11,48 +11,48 @@
 }
 
 .feedback_info {
+  background-color: var(--primary-color);
+  border-radius: 10px;
   color: white;
-  font-size: 24px;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  font-size: 24px;
   font-weight: 600;
-  text-align: center;
-  line-height: 2rem;
-  background-color: var(--primary-color);
-  width: 400px;
   height: 200px;
   justify-content: center;
-  border-radius: 10px;
+  line-height: 2rem;
+  margin: 0 auto;
+  text-align: center;
+  width: 400px;
 }
 
 .feedback_btns {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  margin: 10px auto;
-  align-items: center;
   justify-content: center;
+  margin: 10px auto;
 }
 
 .play_again_btn_feed, .rank_btn_feed {
   border: none;
-  padding: 10px;
+  border-radius: 5px;
   color: white;
   font-weight: 600;
-  border-radius: 5px;
+  padding: 10px;
   width: 400px;
+}
+
+.play_again_btn_feed {
+  background-color: var(--secondary-color);
+  margin-bottom: 10px;
+}
+
+.rank_btn_feed {
+  background-color: var(--rank-color);
 }
 
 .play_again_btn_feed:hover, .rank_btn_feed:hover {
   cursor: pointer;
   filter: brightness(0.8);
-}
-
-.play_again_btn_feed {
-  margin-bottom: 10px;
-  background-color: var(--secondary-color);
-}
-
-.rank_btn_feed {
-  background-color: var(--rank-color);
 }

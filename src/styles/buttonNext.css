@@ -1,17 +1,17 @@
 @import 'colors.css' ;
 
 .next-btn {
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 5px;
+  color: white;
   display: flex;
-  position: relative;
-  top: -30px;
   justify-content: center;
   margin: 10px auto;
-  border: none;
   padding: 10px;
-  border-radius: 5px;
+  position: relative;
+  top: -30px;
   width: 300px;
-  background-color: var(--primary-color);
-  color: white;
 }
 
 .next-btn:hover {

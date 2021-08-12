@@ -5,9 +5,9 @@
 }
 
 .trophy {
-  width: 150px;
   display: flex;
   margin: 10px auto;
+  width: 150px;
 }
 
 .ranking a {
@@ -15,11 +15,11 @@
 }
 
 .rank_title {
-  text-align: center;
   color: white;
   font-size: 30px;
   font-weight: 600;
   margin: 40px 0;
+  text-align: center;
 }
 
 .rank_img {
@@ -27,12 +27,12 @@
 }
 
 .ranking_list {
-  list-style: none;
-  margin: 10px 0;
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  list-style: none;
+  margin: 10px 0;
 }
 
 .ranking_list > li {
@@ -41,9 +41,9 @@
 
 .rank_info {
   border: 1px solid white;
-  width: 400px;
-  padding: 10px;
   border-radius: 8px;
+  padding: 10px;
+  width: 400px;
 }
 
 .rank_name, .rank_score {
@@ -53,16 +53,16 @@
 }
 
 .home_btn {
-  display: flex;
-  margin: 0 auto;
-  border: none;
-  width: 400px;
-  justify-content: center;
-  padding: 10px;
   background-color: var(--primary-color);
+  border: none;
   border-radius: 8px;
-  font-size: 18px;
   color: white;
+  display: flex;
+  font-size: 18px;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 10px;
+  width: 400px;
 }
 
 .home_btn:hover {

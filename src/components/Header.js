@@ -28,8 +28,6 @@ class Header extends React.Component {
               { name }
             </p>
             <p data-testid="header-score">
-              Pontuação:
-              {' '}
               { score }
             </p>
           </div>

@@ -20,23 +20,19 @@ class Ranking extends Component {
                 className="rank_name"
                 data-testid={ `player-name-${index}` }
               >
-                Jogador:
-                {' '}
                 { player.name }
               </p>
               <p
                 className="rank_score"
                 data-testid={ `player-score-${index}` }
               >
-                Pontuação:
-                {' '}
                 { player.score }
               </p>
             </li>
           )) }
         </ul>
-        <Link to="/" data-testid="btn-go-home">
-          <button className="home_btn" type="button">Tela inicial</button>
+        <Link className="home_btn" to="/" data-testid="btn-go-home">
+          Tela inicial
         </Link>
       </div>
     );

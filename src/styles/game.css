@@ -1,52 +1,64 @@
 @import 'colors.css' ;
 
 .questions {
-  padding: 60px 120px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  padding: 60px 120px;
 }
 
 .trivia_logo {
-  width: 500px;
   display: flex;
   margin: 40px auto;
+  width: 500px;
 }
 
 .question_card {
-  color: white;
   border: 1px solid white;
   border-radius: 5px;
-  width: 1250px;
+  color: white;
   display: flex;
   flex-direction: column;
   height: 41vh;
   text-align: center;
+  width: 1250px;
 }
 
 .question_card h1 {
- margin-top: 10px;
+  margin-top: 10px;
 }
 
 .question_card p {
-  margin: 50px 0;
   font-size: 24px;
   font-weight: 600;
+  margin: 50px 0;
 }
 
 .question_card button {
+  align-items: center;
+  background-color: var(--secondary-color);
+  border-radius: 10px;
+  color: white;
   display: flex;
   justify-content: center;
-  align-items: center;
   margin: 10px auto;
   padding: 10px 20px;
   width: 80%;
-  color: white;
-  background-color: var(--secondary-color);
-  border-radius: 10px;
 }
 
 .not-answered {
   border: none;
+}
+
+.question_card > button {
+  margin-top: 5px;
+}
+
+.rank_btn {
+  background-color: var(--rank-color);
+}
+
+.trivia_link_btns button {
+  margin: 0 10px;
 }
 
 .question_card button:disabled {
@@ -55,31 +67,27 @@
   pointer-events: none;
 }
 
-.question_card > button {
-  margin-top: 5px;
-}
-
 .question_card button:hover {
   cursor: pointer;
   filter: brightness(0.8);
 }
 
 .incorrect-answer-btn {
-  border: 2px solid red;
+  border: 3px solid red;
   pointer-events: none;
 }
 
 .correct-answer-btn {
-  border: 2px solid rgb(6, 240, 15);
+  border: 3px solid rgb(6, 240, 15);
   pointer-events: none;
 }
 
 .feed_btn, .play_again_btn, .rank_btn {
   border: none;
-  padding: 10px;
+  border-radius: 5px;
   color: white;
   font-weight: 600;
-  border-radius: 5px;
+  padding: 10px;
   width: 200px;
 }
 
@@ -96,17 +104,8 @@
   filter: brightness(0.8);
 }
 
-.rank_btn {
-  background-color: var(--rank-color);
-}
-
 .trivia_link_btns {
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
-
-.trivia_link_btns button {
-  margin: 0 10px;
-}
-
