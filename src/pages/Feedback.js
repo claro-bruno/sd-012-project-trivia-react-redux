@@ -22,26 +22,24 @@ class Feedback extends React.Component {
 
   render() {
     return (
-      <section>
-        <div className={ styles.sectionFeed }>
-          <Header />
-          <img src={ G4Logo } className={ styles.g4Logo } alt="logo" />
-          <div className={ styles.feedBack }>
-            <FeedbackMessage />
-            <ResultsInfo />
-            <Button
-              buttonText="Jogar novamente"
-              testId="btn-play-again"
-              onClick={ () => this.handleClick('/') }
-            />
-            <Button
-              buttonText="Ver Ranking"
-              testId="btn-ranking"
-              onClick={ () => this.handleClick('/ranking') }
-            />
-          </div>
+      <main className={ styles.sectionFeed }>
+        <Header />
+        <img src={ G4Logo } className={ styles.g4Logo } alt="logo" />
+        <div className={ styles.feedBack }>
+          <FeedbackMessage />
+          <ResultsInfo />
+          <Button
+            buttonText="Jogar novamente"
+            testId="btn-play-again"
+            onClick={ () => this.handleClick('/') }
+          />
+          <Button
+            buttonText="Ver Ranking"
+            testId="btn-ranking"
+            onClick={ () => this.handleClick('/ranking') }
+          />
         </div>
-      </section>
+      </main>
     );
   }
 }

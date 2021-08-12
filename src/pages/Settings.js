@@ -114,7 +114,7 @@ class Settings extends React.Component {
   render() {
     return (
       <main className={ styles.mainSection }>
-        <section className={ styles.settingSection }>
+        <div className={ styles.settingSection }>
           <h1 data-testid="settings-title">
             Settings
           </h1>
@@ -123,7 +123,7 @@ class Settings extends React.Component {
             onClick={ () => this.handleClick('/') }
             buttonText="Tela de preenchimento dos dados"
           />
-        </section>
+        </div>
       </main>
     );
   }

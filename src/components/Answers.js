@@ -5,6 +5,7 @@ import Timer from './Timer';
 import { answerCheck, classChanger, addStateToStorage } from '../helpers';
 import { updateScore, timerRestartChange } from '../redux/action';
 import Button from './Button';
+import styles from './Question.module.css';
 
 const INITIAL_STATE = {
   click: false,
@@ -17,6 +18,8 @@ class Answers extends React.Component {
     super();
     this.handleClick = this.handleClick.bind(this);
     this.disableAnswer = this.disableAnswer.bind(this);
+    this.enableAnswers = this.enableAnswers.bind(this);
+
     this.state = INITIAL_STATE;
   }
 
@@ -41,10 +44,7 @@ class Answers extends React.Component {
   handleClick(isCorrect) {
     const { click } = this.state;
     if (!click) {
-      this.setState({
-        click: true,
-        show: true,
-      });
+      this.disableAnswer();
       this.updateScoreAndQuestions(isCorrect);
     }
   }
@@ -53,35 +53,42 @@ class Answers extends React.Component {
     this.setState({
       disableBtn: true,
       click: true,
+      show: true,
     });
   }
 
+  enableAnswers() {
+    this.setState(INITIAL_STATE);
+  }
+
   render() {
-    const { answers, correctAnswer, nextQuestion, restartTimer } = this.props;
+    const { answers, correctAnswer, restartTimer, nextQuestion } = this.props;
     const { click, disableBtn, show } = this.state;
     return (
       <section className="btnSection">
         <Timer disableAnswer={ this.disableAnswer } clickAnswer={ click } />
-        { answers.map((answer, index) => (
-          <button
-            type="button"
-            className={ classChanger(correctAnswer, answer, click) }
-            key={ index }
-            data-testid={ answerCheck(correctAnswer, answer, index) }
-            onClick={
-              () => this.handleClick(answerCheck(correctAnswer, answer, index))
-            }
-            disabled={ disableBtn }
-          >
-            { answer }
-          </button>)) }
+        <div className={ styles.answersContainer }>
+          { answers.map((answer, index) => (
+            <button
+              type="button"
+              className={ classChanger(correctAnswer, answer, click) }
+              key={ index }
+              data-testid={ answerCheck(correctAnswer, answer, index) }
+              onClick={
+                () => this.handleClick(answerCheck(correctAnswer, answer, index))
+              }
+              disabled={ disableBtn }
+            >
+              { answer }
+            </button>)) }
+        </div>
         { show && <Button
           buttonText="Próxima"
           testId="btn-next"
-          onClick={ () => {
+          onClick={ async () => {
+            await restartTimer();
+            this.enableAnswers();
             nextQuestion();
-            this.setState(INITIAL_STATE);
-            restartTimer();
           } }
         /> }
       </section>

@@ -1,3 +1,4 @@
+import { shuffleArray } from '../../helpers';
 import {
   GET_TRIVIA,
   AWAIT_TRIVIA,
@@ -30,7 +31,13 @@ function game(state = INITIAL_GAME_STATE, action) {
     return ({
       ...state,
       response: action.response,
-      questions: action.questions,
+      questions: action.questions.map((question) => ({
+        ...question,
+        answers: shuffleArray([
+          ...question.incorrect_answers,
+          question.correct_answer,
+        ]),
+      })),
       loading: false,
     });
   case ERR_TRIVIA:

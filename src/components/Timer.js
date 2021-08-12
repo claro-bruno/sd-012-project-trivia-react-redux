@@ -4,65 +4,71 @@ import PropTypes from 'prop-types';
 import { timerAction, timerRestartChange } from '../redux/action';
 import styles from './Question.module.css';
 
+const INITIAL_TIME = 30;
+
 class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.timerCd = this.timerCd.bind(this);
     this.state = {
-      time: 30,
+      time: INITIAL_TIME,
     };
   }
 
   componentDidMount() {
     this.timerCd();
-    const cd = 30000;
-    const { disableAnswer } = this.props;
-    this.timeout = setTimeout(() => disableAnswer(), cd);
   }
 
   componentDidUpdate() {
     const { time } = this.state;
-    const { clickAnswer } = this.props;
-    const { sendTimer } = this.props;
-    if (time > 0 && !clickAnswer) {
+    const { clickAnswer, sendTimer, disableAnswer } = this.props;
+
+    if (time <= 0 || clickAnswer) {
+      sendTimer(time);
+      disableAnswer();
+      clearInterval(this.seconds);
+    } else if (time === INITIAL_TIME) {
       this.timerCd();
-    } else sendTimer(time);
+    }
+
     this.shouldRestartTimer();
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timeout);
-    clearTimeout(this.seconds);
+    this.setState({ time: INITIAL_TIME });
+    clearInterval(this.seconds);
   }
 
   shouldRestartTimer() {
     const { restartTimerChange, restartTimer } = this.props;
     if (restartTimer) {
-      this.setState({ time: 30 });
+      this.setState({ time: INITIAL_TIME });
       restartTimerChange();
+      this.timerCd();
     }
   }
 
   timerCd() {
-    const { time } = this.state;
     const delay = 1000;
-
-    this.seconds = setTimeout(() => {
-      this.setState({
-        time: time - 1,
-      });
+    this.seconds = setInterval(() => {
+      this.setState((prevState) => ({
+        time: prevState.time - 1,
+      }));
     }, delay);
   }
 
   render() {
     const { time } = this.state;
     return (
-      <span
-        className={ styles.timerQuestion }
-        id="time"
-      >
-        { time }
-      </span>
+      <div className={ styles.timerContainer }>
+        <span>Time:</span>
+        <span
+          className={ styles.timerQuestion }
+          id="time"
+        >
+          { time }
+        </span>
+      </div>
     );
   }
 }
