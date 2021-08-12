@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-
 import Header from '../components/Header';
 import './Game.css';
 
@@ -85,15 +84,19 @@ class Game extends React.Component {
   }
 
   handleClick({ target: { value: difficulty, name } }) {
+    const { questionNumber } = this.state;
+    this.changeColorAnswer();
     if (name === 'correct') {
       this.scoreCounter(difficulty);
       this.assertionsCounter();
     }
-    this.changeColorAnswer();
+    if (questionNumber === 0) {
+      this.showNext();
+    }
+  }
 
-    this.setState({
-      disabled: true,
-    });
+  showNext() {
+    document.getElementById('btn-next').style.display = 'block';
   }
 
   scoreCounter(difficulty) {
@@ -116,11 +119,16 @@ class Game extends React.Component {
   }
 
   changeColorAnswer() {
-    const cssValueWrong = '3px solid rgb(255, 0, 0)';
+    const cssWrongValue = '3px solid rgb(255, 0, 0)';
     const cssCorrectValue = '3px solid rgb(6, 240, 15)';
-    document.getElementById('btn-next').style.display = 'block';
-    document.getElementById('correct').style.border = cssCorrectValue;
-    document.getElementById('incorrect').style.border = cssValueWrong;
+    document.getElementById('correctAnswer').style.border = cssCorrectValue;
+    document.getElementById('incorrectAnswer-0').style.border = cssWrongValue;
+    const multipleIncAns1 = document.getElementById('incorrectAnswer-1');
+    const multipleIncAns2 = document.getElementById('incorrectAnswer-2');
+    if (multipleIncAns1) {
+      multipleIncAns1.style.border = cssWrongValue;
+      multipleIncAns2.style.border = cssWrongValue;
+    }
   }
 
   // logica baseada no seguinte repositorio https://github.com/tryber/sd-012-project-trivia-react-redux/pull/8/commits/a93062a005d249fcc708168294a7926669bbf914
@@ -136,7 +144,7 @@ class Game extends React.Component {
           { triviaQuest[questionNumber].question }
         </p>
         <button
-          id="correct"
+          id="correctAnswer"
           type="button"
           data-testid="correct-answer"
           name="correct"
@@ -147,9 +155,9 @@ class Game extends React.Component {
           { triviaQuest[questionNumber].correct_answer }
         </button>
         {
-          triviaQuest[questionNumber].incorrect_answers.map((key, index) => (
+          triviaQuest[questionNumber].incorrect_answers.map((key, index = 0) => (
             <button
-              id="incorrect"
+              id={ `incorrectAnswer-${index}` }
               type="button"
               data-testid={ `wrong-answer-${index}` }
               name="incorrect"
