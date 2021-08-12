@@ -7,7 +7,6 @@ import Ranking from './pages/Ranking';
 import Gametest from './pages/Gametest';
 import Feedback from './pages/Feedback/Feedback';
 
-
 export default function App() {
   return (
     <Switch>
