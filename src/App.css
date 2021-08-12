@@ -5,26 +5,15 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+  border-radius: 35%;
+  margin: 20px;
 }
 
-.red-border {
-  border: 1px solid red;
-}
-
-.green-border {
-  border: 1px solid green;
-}
-
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: shake infinite 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-  }
-}
 
 .App-header {
+  height: 300px;
   align-items: center;
-  background-color: #282c34;
+  background-color: rgb(137, 149, 150);
   color: white;
   display: flex;
   flex-direction: column;
@@ -33,25 +22,22 @@
   min-height: 100vh;
 }
 
+.App-header input {
+  border: none;
+  padding: 10px;
+  margin: 5px;
+}
+
+.App-header button {
+  border: none;
+  width: 200px;
+  padding: 10px;
+  margin: 5px;
+  background-color: rgba(53, 22, 2, 0.692);
+  color: white;
+}
+
 .App-link {
   color: #61dafb;
 }
 
-@keyframes shake {
-
-  10%, 90% {
-    transform: translate3d(-1px, 0, 0);
-  }
-
-  20%, 80% {
-    transform: translate3d(2px, 0, 0);
-  }
-
-  30%, 50%, 70% {
-    transform: translate3d(-4px, 0, 0);
-  }
-
-  40%, 60% {
-    transform: translate3d(4px, 0, 0);
-  }
-}

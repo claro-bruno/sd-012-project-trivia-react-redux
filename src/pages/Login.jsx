@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getLogin, getToken } from '../redux/action/index';
-import logo from '../trivia.png';
+import logoPaturso from '../img/logoPaturso.png';
 
 const regEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/i;
 const nameSize = 3;
@@ -42,10 +42,7 @@ class Login extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={ logo } className="App-logo" alt="logo" />
-          <p>
-            SUA VEZ
-          </p>
+          <img src={ logoPaturso } className="App-logo" alt="logo" />
           <input
             data-testid="input-player-name"
             type="text"
