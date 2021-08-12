@@ -42,6 +42,7 @@
 .rank_info {
   border: 1px solid white;
   border-radius: 8px;
+  color: white;
   padding: 10px;
   width: 400px;
 }

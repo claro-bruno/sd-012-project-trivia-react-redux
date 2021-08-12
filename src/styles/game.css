@@ -3,7 +3,7 @@
 .questions {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  padding: 60px 120px;
+  padding: 60px 10%;
 }
 
 .trivia_logo {
@@ -20,7 +20,7 @@
   flex-direction: column;
   height: 41vh;
   text-align: center;
-  width: 1250px;
+  width: 60vw;
 }
 
 .question_card h1 {
@@ -108,4 +108,19 @@
   align-items: center;
   display: flex;
   justify-content: center;
+}
+
+@media ( max-width : 1371px ) {
+
+  .questions {
+    padding: 60px 5%;
+  }
+
+  .question_card {
+    height: 60vh;
+  }
+
+  .trivia_link_btns {
+    margin-bottom: 20px;
+  }
 }

@@ -15,19 +15,9 @@ class Ranking extends Component {
         <ul className="ranking_list">
           { orderedRanking.map((player, index) => (
             <li className="rank_info" key={ index }>
-              <img className="rank_img" src={ player.gravatarUrl } alt={ player.name } />
-              <p
-                className="rank_name"
-                data-testid={ `player-name-${index}` }
-              >
-                { player.name }
-              </p>
-              <p
-                className="rank_score"
-                data-testid={ `player-score-${index}` }
-              >
-                { player.score }
-              </p>
+              <img src={ player.gravatarUrl } alt={ player.name } />
+              <p data-testid={ `player-name-${index}` }>{ player.name }</p>
+              <p data-testid={ `player-score-${index}` }>{ player.score }</p>
             </li>
           )) }
         </ul>

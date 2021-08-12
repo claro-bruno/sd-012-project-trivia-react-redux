@@ -16,7 +16,7 @@
 .container {
   animation: appearFromBottom 2s;
   margin-top: 60px;
-  padding: 60px 750px;
+  padding: 60px 40%;
   width: 100%;
 }
 
@@ -96,6 +96,10 @@
   width: 100%;
 }
 
+button:disabled, button:disabled:hover {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
 
 .login_card button:hover, .container button:hover {
   cursor: pointer;
@@ -106,7 +110,3 @@
   text-decoration: none;
 }
 
-button:disabled, button:disabled:hover {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
