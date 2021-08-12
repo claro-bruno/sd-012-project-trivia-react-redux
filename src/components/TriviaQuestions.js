@@ -129,15 +129,17 @@ class TriviaQuestions extends Component {
     const { category, question, correct_answer: correct } = playerState[id];
     const arrayQuestions = this.shuffleQuestions(playerState[id]);
     return (
-      <section>
-        <h3 data-testid="question-category">{ category }</h3>
-        <h4 data-testid="question-text">{ question }</h4>
+      <section className="single-question">
+        { myTimer ? <Timer changeClassStyle={ this.changeClassStyle } /> : '' }
+        <h3 className="main-text" data-testid="question-category">{ category }</h3>
+        <h4 className="text" data-testid="question-text">{ question }</h4>
         { arrayQuestions.map((answer, index) => {
           const incorrectAnswers = arrayQuestions.filter((ans) => ans !== correct);
           if (answer === correct) {
             return (
               <button
                 key={ index }
+                className="btn-outline-dark"
                 data-testid="correct-answer"
                 style={ { border: correctanswer } }
                 type="button"
@@ -152,6 +154,7 @@ class TriviaQuestions extends Component {
           return (
             <button
               data-testid={ `wrong-answer-${indexWrong}` }
+              className="btn-outline-dark"
               style={ { border: incorrectanswer } }
               type="button"
               key={ index }
@@ -163,7 +166,6 @@ class TriviaQuestions extends Component {
           );
         }) }
         { answerBtn ? <AnswerButton handleClick={ this.handleClick } /> : '' }
-        { myTimer ? <Timer changeClassStyle={ this.changeClassStyle } /> : '' }
       </section>
     );
   }

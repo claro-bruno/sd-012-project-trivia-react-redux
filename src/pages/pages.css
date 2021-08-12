@@ -1,13 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Georama:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap') ;
+
+/* body {
+  color: red;
+} */
+
+.login-page {
+  align-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
+.welcome-text {
+  font-size: 5em;
+  font-weight: 700;
+  width: 75%;
+}
+
+.msg-component {
+  background-color: #fdd35d;
+  border: 3px solid black;
+}
+
+.welcome-section {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-text, text {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  font-family: Georama , sans-serif;
+  padding-top: 20px;
+}
+
+.text {
+  padding-top: 10px;
+}
+
+.header-name {
+  display: flex;
+  font-family: Georama , sans-serif;
+  font-size: xx-large;
+}
+
+.header-score {
+  font-family: Georama , sans-serif;
+  font-size: x-large;
+}
+
+.game-questions {
+  display: flex;
+}
+
+.single-question {
+  align-items: stretch;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 5px;
+}
+
 .form {
   align-items: center;
+  background-color: lavender;
+  border: 3px solid black;
   display: flex;
   flex-direction: column;
   padding: 100px;
 }
 
 .buttons {
+  background-color: white;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
+}
+
+.btn-link {
+  text-decoration: none;
 }
 
 .header-player {
@@ -58,4 +129,107 @@
   display: flex;
   flex-direction: column;
   width: 50%;
+}
+
+.timer-section {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  font-size: xx-large;
+  padding-top: 20px;
+}
+
+.timer-value {
+  font-size: 1.5em;
+}
+
+.feedback-btns {
+  display: flex;
+  flex-direction: row;
+}
+
+.feedback-section {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.ranking-list {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.players-list {
+  align-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 150px;
+  justify-content: space-between;
+}
+
+.ranking-section {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.btn-go-home {
+  border-radius: 50%;
+  padding: 15px 20px;
+}
+
+.btn-play {
+  padding: 1px 100px;
+}
+
+.btn-play:disabled {
+  border: 1px solid darkgray;
+  color: gray;
+  padding: 1px 100px;
+}
+
+.btn-play:focus {
+  border: 3px solid lightgreen;
+  color: darkgreen;
+  padding: 1px 100px;
+}
+
+.btn-play:disabled:hover {
+  border: 1px solid black;
+  color: gray;
+  padding: 1px 100px;
+  transition: 0.2s;
+}
+
+.btn-settings {
+  padding: 1px 100px;
+}
+
+.btn-settings:hover {
+  border: 1px solid black;
+  color: gray;
+  padding: 1px 100px;
+  transition: 0.2s;
+}
+
+.setting-page {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 80px;
+}
+
+.home-btn {
+  border: 2px solid darkgray;
+  border-radius: 50%;
+}
+
+.ranking-btn {
+  border: 2px solid darkgray;
+  border-radius: 50%;
+}
+
+.play-again-btn {
+  border-radius: 50%;
+  padding: 15px 20px;
 }

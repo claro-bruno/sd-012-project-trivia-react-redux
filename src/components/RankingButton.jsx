@@ -6,10 +6,14 @@ class RankingButton extends Component {
     return (
       <Link to="/ranking">
         <button
+          className="ranking-btn"
           type="button"
           data-testid="btn-ranking"
         >
-          Ver Ranking
+          <img
+            src="https://img.icons8.com/ios-filled/50/000000/leaderboard.png"
+            alt="ranking"
+          />
         </button>
       </Link>
     );

@@ -7,6 +7,7 @@ class AnswerButton extends Component {
     return (
       <button
         type="button"
+        className="btn btn-link"
         data-testid="btn-next"
         onClick={ handleClick }
       >
