@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createLogin, fetchAvatar, resetAssertions } from '../redux/actions';
 import getInfo from '../services/api';
+import brain from '../assets/brain-logo.png';
+
+import '../styles/login.css';
 
 class Login extends Component {
   constructor() {
@@ -37,26 +40,25 @@ class Login extends Component {
     });
   }
 
-  /* https://stackoverflow.com/questions/201323
-  /how-can-i-validate-an-email-address-using-a-regular-expression */
-  render() {
+  renderInputs() {
     const { gravatarEmail, name, disabled } = this.state;
     const validation = /^\S+@\S+\.\S+$/;
     const minLength = 6;
     const validateEmail = validation.test(gravatarEmail);
     return (
-      <div className="container">
-        <h2 className="login-text">Login</h2>
+      <div className="login_card">
         <form className="login-form">
+          <span>Nome de usuário: </span>
           <input
             name="name"
             minLength="6"
-            placeholder="nome de usuario"
+            placeholder="Nome de usuario"
             data-testid="input-player-name"
             type="name"
             value={ name }
             onChange={ this.handleChange }
           />
+          <span>Email: </span>
           <input
             name="gravatarEmail"
             placeholder="E-mail"
@@ -82,6 +84,18 @@ class Login extends Component {
               )}
           </Link>
         </form>
+      </div>
+    );
+  }
+
+  /* https://stackoverflow.com/questions/201323
+  /how-can-i-validate-an-email-address-using-a-regular-expression */
+  render() {
+    return (
+      <div className="container">
+        <img src={ brain } alt="logo" />
+        <h2 className="login-text">Sign in to Trivia</h2>
+        {this.renderInputs()}
         <Link to="/settings">
           <button data-testid="btn-settings" type="button">Configurações</button>
         </Link>
