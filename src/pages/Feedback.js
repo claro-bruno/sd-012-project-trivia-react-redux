@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import md5 from 'crypto-js/md5';
 
 const NUMBER_OF_QUESTIONS = 3;
@@ -9,9 +10,12 @@ class Feedback extends React.Component {
     super(props);
 
     this.getScoreLocalStorage = this.getScoreLocalStorage.bind(this);
+    this.handlePlayAgainClick = this.handlePlayAgainClick.bind(this);
+
     this.state = {
       score: 0,
       assertions: 0,
+      playAgain: false,
     };
   }
 
@@ -24,6 +28,12 @@ class Feedback extends React.Component {
     const { player: { score, assertions } } = state;
     this.setState({ score, assertions });
     // console.log(score);
+  }
+
+  handlePlayAgainClick() {
+    this.setState({
+      playAgain: true,
+    });
   }
 
   renderMessage() {
@@ -42,8 +52,11 @@ class Feedback extends React.Component {
     const { name, gravatarEmail } = this.props;
     const email = md5(gravatarEmail).toString();
     const urlGravatar = `https://www.gravatar.com/avatar/${email}`;
+    const { score, assertions, playAgain } = this.state;
 
-    const { score, assertions } = this.state;
+    if (playAgain) {
+      return <Redirect to="/" />;
+    }
     return (
       <div>
         <header>
@@ -58,7 +71,6 @@ class Feedback extends React.Component {
           <p>Final score:</p>
           <span data-testid="header-score">
             { score }
-            {/* { console.log(score) } */}
           </span>
         </header>
 
@@ -73,6 +85,13 @@ class Feedback extends React.Component {
             { score }
           </p>
         </div>
+        <button
+          data-testid="btn-play-again"
+          type="button"
+          onClick={ this.handlePlayAgainClick }
+        >
+          Play again
+        </button>
       </div>
     );
   }
