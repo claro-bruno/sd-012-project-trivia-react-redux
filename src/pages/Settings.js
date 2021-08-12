@@ -64,27 +64,30 @@ class Settings extends React.Component {
       <div className="settings-page">
         <div className="settings-text">
           <h1 data-testid="settings-title">SETTINGS</h1>
-          <select name="categories" onChange={ this.handleChange }>
+        </div>
+        <div className="inputs-settings">
+          <select className="categories" name="categories" onChange={ this.handleChange }>
             { result.map((category) => (
               <option key={ category.id } value={ category.id }>
                 { category.name }
               </option>
             )) }
           </select>
-
-          <select name="dificulty" onChange={ this.handleChange }>
+          <select className="dificulty" name="dificulty" onChange={ this.handleChange }>
             <option value="any">Any Difficulty</option>
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
           </select>
 
-          <select name="type" onChange={ this.handleChange }>
+          <select className="type" name="type" onChange={ this.handleChange }>
             <option value="any">Any Type</option>
             <option value="multiple">Multiple Choice</option>
             <option value="boolean">True / False</option>
           </select>
+        </div>
 
+        <div className="settings-button-home">
           <Link to="/">
             <button className="settings" type="button">
               VOLTAR PARA PAGINA INICIAL

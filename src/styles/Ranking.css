@@ -46,6 +46,11 @@
   transition: 0.3s;
 }
 
+.button-start:hover {
+  background-color: #84459c;
+  transition: 0.2s;
+}
+
 .ranking-img {
   border-radius: 7px 0 0 7px;
 }
