@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import '../styles/timer.css';
 
 const Timer = ({ timer, answered, index }) => {
   const [counter, setCounter] = useState(timer);
@@ -33,13 +34,11 @@ const Timer = ({ timer, answered, index }) => {
   }, [counter, answered]);
 
   return (
-    <div>
-      Tempo:
-      {' '}
+    <aside className="component_timer">
       <span id="timer">
         {counter}
       </span>
-    </div>
+    </aside>
   );
 };
 

@@ -1,0 +1,15 @@
+@import 'colors.css' ;
+
+.component_timer {
+  align-items: center;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  font-size: 20px;
+  font-weight: 600;
+  height: 20px;
+  justify-content: center;
+  padding: 50px;
+  width: 50px;
+}

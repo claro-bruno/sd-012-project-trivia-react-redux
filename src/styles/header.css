@@ -1,10 +1,10 @@
-@import url(./colors.css);
+@import 'colors.css' ;
 
 .header_trivia {
-  padding: 18px 120px;
-  color: white;
-  background-color: var(--header-background);
   align-items: center;
+  background-color: var(--header-background);
+  color: white;
+  padding: 18px 120px;
 }
 
 .header_trivia img {
