@@ -1,7 +1,7 @@
 .container {
 display: flex;
 height: 100%;
-width: 680px;
+width: 90%;
 border-radius: 5px;
 flex-direction: column;
 align-items: center;
@@ -26,25 +26,53 @@ color: azure;
 }
 
 .butonStyle{
+    display: list-item;
     margin-top: 10px;
-    width: 100%;
+    width: 90%;
     height: 40px;
+    margin: auto;
+    margin-top: 20px;
 }
 .questionsStyle{
-    background: linear-gradient(90deg, rgb(132, 74, 167) 0%, rgb(167, 121, 172)100%);
+    background: linear-gradient(90deg, rgb(18, 100, 59) 0%, rgb(189, 199, 55)100%);
     margin: auto;
     padding:2px;
     height: 100%;
-    width: 645px;
-    border-radius: 8px;
+    width: 80%;
+    border-radius: 100px;
     padding: 20px;
     text-align: center;
     color: aliceblue;
+    margin-top: 20px;
 }
 .questionsStyleTitle {
     font-size: 16;
     color: rgb(59, 28, 99);
+    text-align: center;   
+}
+.timer{
+    display: list-item;
     text-align: center;
-    
-    
+    margin: auto;
+    width: 90%;
+    border-radius: 4px;    
+    background: linear-gradient(90deg, rgb(151, 8, 127) 0%, rgb(38, 40, 167)100%);
+    color: rgb(225, 228, 35);
+    font-size: 50px;
+    list-style: none;
+    margin-top: 5px;
+}
+
+.score {
+    display: list-item;
+    text-align: center;
+    margin: auto;
+    width: 90%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, rgb(151, 8, 127) 0%, rgb(38, 40, 167)100%);
+    color: rgb(225, 228, 35);
+    font-size: 50px;
+    list-style: none;
+    margin-top: 5px;
+    padding: 10px;
 }

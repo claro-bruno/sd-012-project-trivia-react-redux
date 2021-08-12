@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import '../App.css';
+import './Login.css';
 
 class GameScreen extends Component {
   constructor() {
@@ -135,6 +136,7 @@ class GameScreen extends Component {
       <div>
         {isActive ? (
           <button
+            className="butonStyle"
             type="button"
             data-testid="btn-next"
             onClick={ () => this.handleNextButton() }
@@ -198,12 +200,12 @@ class GameScreen extends Component {
         <h1>Tela Jogo</h1>
         <Header />
 
-        { this.renderQuestionsApi() }
-
-        <p>
+        <p className="timer">
           {' '}
           {timeCount}
         </p>
+        { this.renderQuestionsApi() }
+
         {this.createLocalStorage()}
       </div>
     );
