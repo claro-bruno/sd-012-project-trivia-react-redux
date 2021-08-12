@@ -5,17 +5,17 @@ const GameBodyS = styled.main` /* desabilitando problema stylelint */
   background-color: ${({ theme }) => theme.secondary};
   border-radius: 5px;
   box-shadow: 1px 1px 3px gray;
+  color: ${({ theme }) => theme.text};
   margin: 20px auto;
   padding: 30px 50px 50px;
   width: 50%;
 
   h2 {
-    color: ${({ theme }) => theme.text};
     font-size: 30px;
+    margin-top: 0;
   }
 
   h4 {
-    color: ${({ theme }) => theme.text};
     font-size: 25px;
     text-align: center;
   }
@@ -27,21 +27,14 @@ const GameBodyS = styled.main` /* desabilitando problema stylelint */
     border-radius: 50%;
     box-shadow: 1px 1px 3px gray;
     display: flex;
-    font-size: 35px;
-    height: 60px;
+    font-size: 30px;
+    height: 40px;
     justify-content: center;
     margin: 0;
     padding: 5px;
-    position: absolute;
+    position: relative;
     text-align: center;
-    width: 60px;
-
-    @media ( max-width : 768px ) {
-      font-size: 20px;
-      height: 20px;
-      width: 20px;
-    }
-
+    width: 40px;
   }
 
   section {
@@ -57,12 +50,42 @@ const GameBodyS = styled.main` /* desabilitando problema stylelint */
 
       button {
         border-radius: 3px;
+        color: ${({ theme }) => theme.text};
         font-size: 20px;
         font-weight: 550;
-        margin-right: 15px;
         margin-top: 5px;
         padding: 10px 25px;
       }
+
+      .next-button {
+        margin-top: 36px;
+      }
+    }
+  }
+
+  @media ( max-width : 768px ) {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+    p {
+      margin: 16px;
+    }
+
+    h4 {
+      margin: 16px;
+    }
+  }
+
+  @media ( max-width : 568px ) {
+
+    h2 {
+      font-size: 25px;
+      margin-top: 0;
+    }
+
+    h4 {
+      font-size: 20px;
     }
   }
 `;

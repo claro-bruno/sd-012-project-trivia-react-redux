@@ -164,6 +164,7 @@ class ActualQuestion extends Component {
           { this.renderAnswers(answers, correctAnswer, answered) }
           { answered && (questionIndex < maxIndex ? (
             <ButtonS
+              className="next-button"
               type="button"
               onClick={ () => { nextQuestion(); this.handleReset(); } }
               data-testid="btn-next"
@@ -172,6 +173,7 @@ class ActualQuestion extends Component {
             </ButtonS>
           ) : (
             <ButtonS
+              className="next-button"
               type="button"
               onClick={ () => { this.handleRedirect(); this.addToRanking(); } }
               data-testid="btn-next"

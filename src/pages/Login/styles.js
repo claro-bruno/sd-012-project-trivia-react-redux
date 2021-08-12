@@ -47,6 +47,13 @@ export const LoginHeaderS = styled.header` /* desabilitando problema stylelint *
       display: none;
     }
   }
+
+  @media ( max-width : 360px ) {
+
+    h1 {
+      font-size: 18px;
+    }
+  }
 `;
 
 export const LoginMainS = styled.main` /* desabilitando problema stylelint */
