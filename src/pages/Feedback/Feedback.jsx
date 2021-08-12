@@ -12,7 +12,7 @@ class Feedback extends React.Component {
   }
 
   render() {
-    const { userScore, userAssertions, resetQuestions } = this.props;
+    const { userAssertions, resetQuestions } = this.props;
     const assertionsMin = 3;
     const localScore = JSON.parse(localStorage.getItem('state')).player.score;
     const localAssert = JSON.parse(localStorage.getItem('state')).player.assertions;
@@ -62,7 +62,6 @@ class Feedback extends React.Component {
 
 const mapStateToProps = (state) => ({
   userAssertions: state.questions.assertions,
-  userScore: state.questions.score,
 });
 
 const mapDispatchToProps = (dispatch) => ({
