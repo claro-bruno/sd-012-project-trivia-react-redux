@@ -64,6 +64,9 @@ const GameBodyS = styled.main` /* desabilitando problema stylelint */
   }
 
   @media ( max-width : 768px ) {
+    border-radius: 0;
+    box-shadow: none;
+    height: 90vh;
     margin: 0;
     padding: 0;
     width: 100%;

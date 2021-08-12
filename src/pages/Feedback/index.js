@@ -53,7 +53,7 @@ class Feedback extends Component {
           <h2>
             {'Você acertou '}
             <span data-testid="feedback-total-question">{assertions}</span>
-            {' perguntas'}
+            {' pergunta(s)'}
           </h2>
           <div>
             <Link to="/ranking">

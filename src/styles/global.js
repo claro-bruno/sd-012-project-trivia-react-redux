@@ -2,6 +2,11 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle` /* desabilitando problema stylelint */
+  body {
+    min-height: 100vh;
+    position: relative;
+  }
+
   .App-logo {
     pointer-events: none;
   }
