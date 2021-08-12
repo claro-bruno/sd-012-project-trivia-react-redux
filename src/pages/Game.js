@@ -60,7 +60,7 @@ class Game extends Component {
     }
     if (isPlaying && isTiming) this.startTimer();
     if (timer === 0) {
-      this.stopTimer();
+      this.stopTimer('end');
       util.disableAnswers(true);
       util.changeColor(true);
     }
@@ -95,8 +95,15 @@ class Game extends Component {
     if (question < MAX_QUESTIONS) this.startTimer();
   }
 
-  stopTimer() {
+  stopTimer(type) {
     clearInterval(this.gameTimer);
+    console.log(typeof type);
+    if (type === 'end') {
+      this.setState({
+        timer: 'Tempo ESGOTADO!',
+        soundEffect: ESGOTOU,
+      });
+    }
   }
 
   submitAnswer({ target: { className, id } }) {
@@ -104,12 +111,6 @@ class Game extends Component {
     util.disableAnswers(true);
     util.changeColor(true);
     this.stopTimer();
-    if (timer === 0) {
-      this.setState({
-        timer: 'Tempo ESGOTADO!',
-        soundEffect: ESGOTOU,
-      });
-    }
     if (className.split(' ', 2)[1] === CORRECT) {
       this.calculateScore(timer, id);
       this.setState({
@@ -137,7 +138,10 @@ class Game extends Component {
     util.changeColor(false);
     util.adjustTimerStyle(false);
     this.resetTimer();
-    this.setState((prevState) => ({ question: prevState.question + 1 }));
+    this.setState((prevState) => ({
+      question: prevState.question + 1,
+      soundEffect: '',
+    }));
   }
 
   switchMusic() {

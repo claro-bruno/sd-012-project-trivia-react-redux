@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import ReactAudioPlayer from 'react-audio-player';
 import lucianomichelini from '../audio/lucianomichelini.ogg';
+import { Mp3 } from '../components';
 
 class Ranking extends Component {
   constructor(props) {
@@ -38,12 +38,7 @@ class Ranking extends Component {
     const { isRedirecting } = this.state;
     return (
       <>
-        <ReactAudioPlayer
-          src={ lucianomichelini }
-          autoPlay
-          loop
-          volume={ 0.2 }
-        />
+        <Mp3 musicPath={ lucianomichelini } />
         <h1 data-testid="ranking-title">Ranking</h1>
         <div>{ this.rankingList() }</div>
         <div>
