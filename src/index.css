@@ -29,6 +29,10 @@ header {
   width: 80%;
 }
 
+.img {
+  height: 200px;
+}
+
 /* button css code from: https://www.bestcssbuttongenerator.com/ */
 button {
   background: linear-gradient(to bottom, white 5%, #f6f6f6 100%);
@@ -46,6 +50,10 @@ button {
   padding: 6px 24px;
   text-decoration: none;
   text-shadow: 1px 1px 1px white;
+}
+
+li {
+  list-style: none;
 }
 
 button:hover {
@@ -71,7 +79,7 @@ code {
   background-color: #023031;
   display: flex;
   flex-direction: row;
-  height: 948px;
+  height: 100vh;
   justify-content: space-around;
   overflow: hidden;
   width: 100%;
@@ -117,6 +125,7 @@ code {
 .fieldset-question {
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .button-nextQuestion {

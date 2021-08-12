@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import trivia from '../trivia.png';
 import { saveLogin } from '../redux/actions/actionsLogin';
 import { fetchAPI, getTokenLoading } from '../redux/actions';
 import ConfigButton from '../components/ConfigButton';
@@ -55,7 +56,8 @@ class Login extends Component {
     return (
       <div className="main-login">
         <section className="section-logo">
-          G5
+          <img className="img" src={ trivia } alt="trivia img" />
+          É PENTA!!!!!
         </section>
         <section className="section-login">
           <fieldset className="fieldset-login">

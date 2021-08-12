@@ -18,13 +18,13 @@ class Header extends React.Component {
             className="player-name"
             data-testid="header-player-name"
           >
-            { name }
+            { `Nome: ${name || '"Sem Nome"'}` }
           </span>
           <span
             className="player-score"
             data-testid="header-score"
           >
-            { score }
+            { `Pontuação Total: ${score}` }
           </span>
         </section>
       </header>

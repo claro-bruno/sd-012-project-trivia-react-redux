@@ -138,7 +138,6 @@ class Game extends Component {
     correctList.classList.remove('correct');
     const timeOff = false;
     changeTimer({ timeOff });
-    // const lastQuestion = 4;
     const MAX_TIME = 30;
     this.setState({
       timer: MAX_TIME,
@@ -177,11 +176,13 @@ class Game extends Component {
         <Header />
         <section className="section-game">
           <fieldset className="fieldset-question">
-            { timer }
+            <div className="timer">
+              <p>{ timer }</p>
+            </div>
             <h1
               data-testid="question-category"
             >
-              {data.results[currentQuestion].category}
+              {`Category: ${data.results[currentQuestion].category}`}
             </h1>
             <h2
               data-testid="question-text"
