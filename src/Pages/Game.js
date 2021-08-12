@@ -69,7 +69,7 @@ class Game extends React.Component {
 
   savingPoints() {
     // console.log(correct);
-    const { currentTime, index, assertions } = this.state;
+    const { currentTime, index } = this.state;
     const { questions } = this.props;
     const { difficulty } = questions[index];
     console.log(difficulty);
@@ -92,18 +92,19 @@ class Game extends React.Component {
       console.log('erro no switch');
       break;
     }
-    this.setState({ assertions: assertions + 1 });
+    this.setState({ result });
+    console.log(result);
     return result;
   }
 
-  handleClick(correct) {
+  async handleClick(correct) {
     if (correct === 'correct') {
-      const resultado = this.savingPoints();
-      this.setState((prevState) => ({
+      const resultado = await this.savingPoints();
+      await this.setState((prevState) => ({
         // isAnswered: true,
         result: prevState.result + resultado,
-        score: prevState.result + resultado,
-        assertions: prevState.assertions,
+        score: prevState.score + prevState.result,
+        assertions: prevState.assertions + 1,
       }));
     }
     this.setLocalStorage();
