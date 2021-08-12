@@ -52,3 +52,8 @@ export const setScore = (score, assertions) => ({
   payload: score,
   value: assertions,
 });
+
+export const CLEAR_QUESTIONS = 'CLEAR_QUESTIONS';
+export const clearQuestions = () => ({
+  type: CLEAR_QUESTIONS,
+});
