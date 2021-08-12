@@ -35,12 +35,12 @@ class Feedback extends React.Component {
             </h2>
           </div>
           <div>
-            <Link data-testid="btn-ranking" to="/ranking">
+            <Link to="/ranking">
               <button
-                data-testid="btn-settings"
+                data-testid="btn-ranking"
                 type="button"
               >
-                Ver Rankin
+                Ver Ranking
               </button>
             </Link>
             <Link data-testid="btn-play-again" exact to="/">
