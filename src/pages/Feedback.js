@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 
+const NUMBER_OF_QUESTIONS = 3;
 class Feedback extends React.Component {
   constructor(props) {
     super(props);
@@ -10,6 +11,7 @@ class Feedback extends React.Component {
     this.getScoreLocalStorage = this.getScoreLocalStorage.bind(this);
     this.state = {
       score: 0,
+      assertions: 0,
     };
   }
 
@@ -21,6 +23,19 @@ class Feedback extends React.Component {
     const state = JSON.parse(localStorage.getItem('state'));
     const { player: { score, assertions } } = state;
     this.setState({ score, assertions });
+    // console.log(score);
+  }
+
+  renderMessage() {
+    const { assertions } = this.state;
+    if (assertions < NUMBER_OF_QUESTIONS) {
+      return (
+        <h2 data-testid="feedback-text">Podia ser melhor...</h2>
+      );
+    }
+    return (
+      <h2 data-testid="feedback-text">Mandou bem!</h2>
+    );
   }
 
   render() {
@@ -43,12 +58,19 @@ class Feedback extends React.Component {
           <p>Final score:</p>
           <span data-testid="header-score">
             { score }
+            {/* { console.log(score) } */}
           </span>
         </header>
+
         <div>
-          <p data-testid="feedback-text">
-            Feedback text
+          { this.renderMessage() }
+          <p>Respostas corretas:</p>
+          <p data-testid="feedback-total-question">
             { assertions }
+          </p>
+          <p>Pontuação total:</p>
+          <p data-testid="feedback-total-score">
+            { score }
           </p>
         </div>
       </div>
