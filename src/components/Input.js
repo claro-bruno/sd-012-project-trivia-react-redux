@@ -5,7 +5,7 @@ export default class Input extends Component {
   render() {
     const { type, name, id, value, onChange, labelTxt, testId } = this.props;
     return (
-      <label htmlFor={ id }>
+      <label htmlFor={ id } className="text-light">
         { labelTxt }
         <input
           type={ type }

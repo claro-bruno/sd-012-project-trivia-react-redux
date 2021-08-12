@@ -3,24 +3,24 @@ import PropTypes from 'prop-types';
 
 export default class SubmitButton extends Component {
   render() {
-    const { onClick, disabled, buttonTxt, testId } = this.props;
+    const { onClick, disabled, buttonTxt, testId, className } = this.props;
     return (
-      <div>
-        <button
-          type="submit"
-          onClick={ onClick }
-          disabled={ disabled }
-          data-testid={ testId }
-        >
-          { buttonTxt }
-        </button>
-      </div>
+      <button
+        type="submit"
+        onClick={ onClick }
+        disabled={ disabled }
+        data-testid={ testId }
+        className={ className }
+      >
+        { buttonTxt }
+      </button>
     );
   }
 }
 
 SubmitButton.propTypes = {
   buttonTxt: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired,
   testId: PropTypes.string,

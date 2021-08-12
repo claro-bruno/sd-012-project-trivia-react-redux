@@ -6,6 +6,7 @@ import { nameSet, emailSet, getToken } from '../redux/actions/index';
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
 import logo from '../trivia.png';
+import './Login.css';
 
 class Login extends Component {
   constructor(props) {
@@ -43,7 +44,6 @@ class Login extends Component {
 
   render() {
     const { email, name, redirect } = this.state;
-
     const inputEmailProps = {
       type: 'text',
       name: 'email',
@@ -64,22 +64,29 @@ class Login extends Component {
       onClick: this.onSubmitForm,
       disabled: !(name.length > 0 && this.emailIsValid(email)),
       buttonTxt: 'Jogar',
+      className: 'btn btn-primary mt-2 col-12',
     };
     const settingsButtonProps = {
       buttonTxt: 'Configurações',
+      className: 'btn btn-primary mt-2 col-12',
     };
-
     return (
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <form>
-          <Input { ...inputNameProps } testId="input-player-name" />
-          <Input { ...inputEmailProps } testId="input-gravatar-email" />
-          <SubmitButton { ...buttonProps } testId="btn-play" />
-          <Link to="/settings">
-            <SubmitButton { ...settingsButtonProps } testId="btn-settings" />
-          </Link>
-        </form>
+      <header className="d-flex justify-content-xl-around container-fluid bg-dark header">
+        <div className="col-1" />
+        <div className="d-flex flex-colum col-5">
+          <img src={ logo } className="banner-img align-self-center" alt="logo" />
+        </div>
+        <div className="col-1" />
+        <div className="align-self-center ml-auto mr-auto gradient">
+          <form className="form-container mr-5 col-5">
+            <Input { ...inputNameProps } testId="input-player-name" />
+            <Input { ...inputEmailProps } testId="input-gravatar-email" />
+            <SubmitButton { ...buttonProps } testId="btn-play" />
+            <Link to="/settings">
+              <SubmitButton { ...settingsButtonProps } testId="btn-settings" />
+            </Link>
+          </form>
+        </div>
         { redirect ? <Redirect to="/game" /> : null }
       </header>
     );

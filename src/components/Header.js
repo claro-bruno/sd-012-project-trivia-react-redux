@@ -27,6 +27,7 @@ class Header extends React.Component {
             className="navbar-brand mb-0 h1"
             data-testid="header-score"
           >
+            score:
             { score }
           </span>
         </div>

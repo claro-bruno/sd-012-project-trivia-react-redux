@@ -44,7 +44,13 @@ class Questions extends Component {
     buttons.forEach((button) => {
       if (button.id === correct) {
         button.classList.add('correct');
-      } else button.classList.add('wrong');
+        button.classList.add('btn-success');
+        button.classList.add('btn');
+      } else {
+        button.classList.add('wrong');
+        button.classList.add('btn-danger');
+        button.classList.add('btn');
+      }
     });
     if (target.id === correct) {
       this.setState((prevState) => ({
@@ -130,35 +136,41 @@ class Questions extends Component {
 
   displayQuestion() {
     const { quizFromRedux } = this.props;
-    const { index } = this.state;
+    const { index, ceil } = this.state;
     const {
       category,
       question,
       correct_answer: correct,
       sortedArray } = quizFromRedux[index];
     return (
-      <div>
-        <p data-testid="question-category">{ category }</p>
-        <br />
-        <p data-testid="question-text">{ question }</p>
-        <ul>
-          { sortedArray.map((item, i) => (
-            <li
-              key={ item }
-              className="answer-buttons"
-            >
+      <div className="row align-items-start">
+        <div className="col" />
+        <div className="col">
+          <div className="d-flex justify-content-center rounded-pill mt-3 bg-primary">
+            <h3 className="text-light ">{ceil}</h3>
+          </div>
+          <h1 data-testid="question-category" className="text-light">
+            { category }
+          </h1>
+          <br />
+          <h4 data-testid="question-text" className="text-light">
+            { question }
+          </h4>
+          <div className="d-flex flex-column">
+            { sortedArray.map((item, i) => (
               <button
                 id={ this.checkCorrect(item, correct, i) }
                 data-testid={ this.checkCorrect(item, correct, i) }
-                className="answer-buttons"
+                className="answer-buttons ml-auto mr-auto mt-2 btn btn-secondary"
                 type="button"
                 onClick={ this.onClickAnswer }
+                key={ item }
               >
                 {item}
-
-              </button>
-            </li>)) }
-        </ul>
+              </button>)) }
+          </div>
+        </div>
+        <div className="col" />
       </div>
     );
   }
@@ -181,22 +193,25 @@ class Questions extends Component {
   }
 
   render() {
-    const { loading, redirect, index, ceil } = this.state;
+    const { loading, redirect, index } = this.state;
     const redirectNumber = 4;
 
     return (
-      <div>
-        {ceil}
+      <div className="container border border-warning rounded mt-2 bg-dark">
         { loading ? <Loading /> : this.displayQuestion()}
-        <button
-          onClick={ this.handleClick }
-          type="button"
-          className="isVisible btn btn-primary"
-          id="next-button"
-          data-testid="btn-next"
-        >
-          { index < redirectNumber ? 'Proxima' : 'Ver Pontuação' }
-        </button>
+        <div className="row align-items-start">
+          <div className="col" />
+          <button
+            onClick={ this.handleClick }
+            type="button"
+            className="isVisible btn btn-primary mt-2 col-2 mb-2"
+            id="next-button"
+            data-testid="btn-next"
+          >
+            { index < redirectNumber ? 'Proxima' : 'Ver Pontuação' }
+          </button>
+          <div className="col" />
+        </div>
         { redirect ? <Redirect to="/feedback" /> : null }
       </div>
     );
