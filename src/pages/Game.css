@@ -74,6 +74,21 @@
   text-decoration:none;
 }
 
+.headerGame {
+  display: flex;
+  justify-content: space-between;
+  text-shadow: 2px 2px 10px;
+  font-size: x-large;
+  font-style: italic;
+  margin-bottom: 10px;
+  align-items: flex-end;
+}
+
+.headerGame h5 {
+  color: #1e0bd0;
+  margin-left: 10px;
+}
+
 .btn-proximo {
   display: block;
   margin: 5px auto 2px auto;

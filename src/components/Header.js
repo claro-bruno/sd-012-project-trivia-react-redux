@@ -13,8 +13,10 @@ class Header extends React.Component {
           src={ getUrl }
           alt="Profile"
         />
-        <h4 data-testid="header-player-name">{getName}</h4>
-        <h5 data-testid="header-score">{score}</h5>
+        <div className="headerGame">
+          <h4 data-testid="header-player-name">{getName}</h4>
+          <h5 data-testid="header-score">{score}</h5>
+        </div>
       </header>
     );
   }
