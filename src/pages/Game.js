@@ -21,6 +21,7 @@ class Game extends React.Component {
       redirectFeedback: false,
     };
 
+    this.renderQuestions = this.renderQuestions.bind(this);
     this.setCounter = this.setCounter.bind(this);
     this.scoreCounter = this.scoreCounter.bind(this);
     this.assertionsCounter = this.assertionsCounter.bind(this);
