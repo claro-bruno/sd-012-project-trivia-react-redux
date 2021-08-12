@@ -7,7 +7,7 @@ const GameBodyS = styled.main` /* desabilitando problema stylelint */
   box-shadow: 1px 1px 3px gray;
   margin: 20px auto;
   padding: 30px 50px 50px;
-  width: 80%;
+  width: 50%;
 
   h2 {
     color: ${({ theme }) => theme.text};

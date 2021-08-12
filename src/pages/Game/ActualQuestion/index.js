@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import AnswerButtonS from './styles';
+import ButtonS from '../../../styles/buttonStyle';
 
 // Action para adicionar pontos ao score;
 import sumScore from '../../../Redux/reducers/player/actions/sumScore';
@@ -162,21 +163,21 @@ class ActualQuestion extends Component {
         <div>
           { this.renderAnswers(answers, correctAnswer, answered) }
           { answered && (questionIndex < maxIndex ? (
-            <button
+            <ButtonS
               type="button"
               onClick={ () => { nextQuestion(); this.handleReset(); } }
               data-testid="btn-next"
             >
               Próxima
-            </button>
+            </ButtonS>
           ) : (
-            <button
+            <ButtonS
               type="button"
               onClick={ () => { this.handleRedirect(); this.addToRanking(); } }
               data-testid="btn-next"
             >
               Próxima
-            </button>
+            </ButtonS>
           )) }
           { redirect && <Redirect to="/feedback" /> }
         </div>
