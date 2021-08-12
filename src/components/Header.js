@@ -8,26 +8,33 @@ class Header extends React.Component {
     const { image, playerName, playerScore } = this.props;
     return (
       <header className={ styles.headerGame }>
-        <div className={ styles.imgGame }>
-          <img
-            src={ image }
-            alt={ playerName }
-            data-testid="header-profile-picture"
-          />
+        <div className={ styles.headerContainer }>
+          <div className={ styles.imgGame }>
+            <img
+              src={ image }
+              alt={ playerName }
+              data-testid="header-profile-picture"
+            />
+          </div>
+          <div className={ styles.playerGame }>
+            <h1>Player:</h1>
+            <h1
+              data-testid="header-player-name"
+              className={ styles.player }
+            >
+              { playerName }
+            </h1>
+          </div>
+          <div className={ styles.playerPoints }>
+            <h1>Score:</h1>
+            <h1
+              data-testid="header-score"
+              className={ styles.score }
+            >
+              { playerScore }
+            </h1>
+          </div>
         </div>
-        <div className={ styles.playerGame }>
-          <h1
-            data-testid="header-player-name"
-          >
-            { playerName }
-          </h1>
-        </div>
-        <h1
-          data-testid="header-score"
-          className={ styles.playerPoints }
-        >
-          { playerScore }
-        </h1>
       </header>
     );
   }

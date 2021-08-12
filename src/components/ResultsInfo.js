@@ -1,18 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import styles from '../pages/Feedback.module.css';
 
 class ResultsInfo extends React.Component {
   render() {
     const { totalScore, totalQuestions } = this.props;
     return (
       <section>
-        <h2 data-testid="feedback-total-score">
-          { totalScore }
-        </h2>
-        <h2 data-testid="feedback-total-question">
-          { totalQuestions }
-        </h2>
+        <div className={ styles.scoreContainer }>
+          <h2>Score:</h2>
+          <h2
+            data-testid="feedback-total-score"
+            className={ styles.score }
+          >
+            { totalScore }
+          </h2>
+        </div>
+        <div className={ styles.questionContainer }>
+          <h2>Correct Answers:</h2>
+          <h2
+            data-testid="feedback-total-question"
+            className={ styles.question }
+          >
+            { totalQuestions }
+          </h2>
+        </div>
       </section>
     );
   }

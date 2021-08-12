@@ -24,9 +24,27 @@ class Ranking extends React.Component {
             <ol>
               { ranking.map((user, index) => (
                 <li key={ index }>
-                  <img src={ user.picture } alt="Foto" />
-                  <p data-testid={ `player-name-${index}` }>{ user.name }</p>
-                  <p data-testid={ `player-score-${index}` }>{ user.score }</p>
+                  <div className={ styles.rankListItem }>
+                    <img
+                      src={ user.picture }
+                      alt="Foto"
+                      className={ styles.imagePlayer }
+                    />
+                    <div className={ styles.playerInfoContainer }>
+                      <div>
+                        <span className={ styles.player }>Player:</span>
+                        <span data-testid={ `player-name-${index}` }>{ user.name }</span>
+                      </div>
+                      <div>
+                        <span className={ styles.score }>Score:</span>
+                        <span
+                          data-testid={ `player-score-${index}` }
+                        >
+                          { user.score }
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </li>))}
             </ol>
             <Button

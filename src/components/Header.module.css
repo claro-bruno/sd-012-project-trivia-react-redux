@@ -2,20 +2,31 @@
   background-color: #fea418;
   border-radius: 5px;
   display: flex;
-  height: 130px;
+  font-size: 1em;
+  height: 10%;
   justify-content: center;
   width: 100%;
 }
 
-.imgGame, .playerGame {
+.headerContainer {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  width: 50%;
+}
+
+.playerGame {
   color: aliceblue;
-  margin-right: 20px;
-  margin-top: 25px;
+  display: flex;
   text-shadow: 4px 4px 8px #1d2551;
 }
 
 .playerPoints {
   color: aliceblue;
-  margin-top: 45px;
+  display: flex;
   text-shadow: 2px 2px 4px #1d2551;
+}
+
+.player, .score {
+  margin-left: 10px;
 }

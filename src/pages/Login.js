@@ -75,53 +75,61 @@ class Login extends React.Component {
     history.push(route);
   }
 
-  render() {
+  renderForm() {
     const { name, email, emailCheck, nameCheck } = this.state;
     const btnCheck = !(emailCheck === true && nameCheck === true);
     return (
+      <form className={ styles.formLogin }>
+        <label htmlFor="name" className={ styles.labelHeader }>
+          Nome:
+          <input
+            type="text"
+            id="name"
+            data-testid="input-player-name"
+            value={ name }
+            onChange={ this.handleChange }
+          />
+        </label>
+        <label htmlFor="email" className={ styles.labelHeader }>
+          E-mail:
+          <input
+            type="email"
+            id="email"
+            data-testid="input-gravatar-email"
+            value={ email }
+            onChange={ this.handleChange }
+          />
+        </label>
+        <div className={ styles.buttonLogin }>
+          <Button
+            buttonText="Jogar"
+            testId="btn-play"
+            onClick={ async () => {
+              await this.playGame();
+              this.handleClick('/game');
+            } }
+            disabled={ btnCheck }
+          />
+          <Button
+            buttonText="Settings"
+            testId="btn-settings"
+            onClick={ () => this.handleClick('/settings') }
+          />
+        </div>
+      </form>
+    );
+  }
+
+  render() {
+    return (
       <main className={ styles.mainLogin }>
         <img src={ G4Logo } className={ styles.g4Logo } alt="logo" />
-        <header className={ styles.appHeader }>
-          <img src={ logo } className={ styles.appLogo } alt="logo" />
-        </header>
-        <form>
-          <label htmlFor="name" className={ styles.labelHeader }>
-            Nome:
-            <input
-              type="text"
-              id="name"
-              data-testid="input-player-name"
-              value={ name }
-              onChange={ this.handleChange }
-            />
-          </label>
-          <label htmlFor="email" className={ styles.labelHeader }>
-            E-mail:
-            <input
-              type="email"
-              id="email"
-              data-testid="input-gravatar-email"
-              value={ email }
-              onChange={ this.handleChange }
-            />
-          </label>
-          <div className={ styles.buttonLogin }>
-            <Button
-              buttonText="Jogar"
-              testId="btn-play"
-              onClick={ async () => {
-                await this.playGame();
-                this.handleClick('/game');
-              } }
-              disabled={ btnCheck }
-            />
-            <Button
-              buttonText="Settings"
-              testId="btn-settings"
-              onClick={ () => this.handleClick('/settings') }
-            />
-          </div>
-        </form>
+        <section className={ styles.containerLogin }>
+          <header className={ styles.appHeader }>
+            <img src={ logo } className={ styles.appLogo } alt="logo" />
+          </header>
+          { this.renderForm() }
+        </section>
       </main>
     );
   }
