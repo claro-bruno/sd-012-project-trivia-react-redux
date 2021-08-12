@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { loadRankingFromStorage } from '../services/localStorage';
+import '../styles/ranking.css';
+import trophy from '../assets/trophy-icon.png';
 
 class Ranking extends Component {
   render() {
@@ -8,18 +10,33 @@ class Ranking extends Component {
     const orderedRanking = ranking.sort((a, b) => b.score - a.score);
     return (
       <div className="ranking">
-        <p data-testid="ranking-title">Ranking</p>
-        <ul>
+        <img className="trophy" src={ trophy } alt="rank" />
+        <p className="rank_title" data-testid="ranking-title">Ranking</p>
+        <ul className="ranking_list">
           { orderedRanking.map((player, index) => (
-            <li key={ index }>
-              <img src={ player.gravatarUrl } alt={ player.name } />
-              <p data-testid={ `player-name-${index}` }>{ player.name }</p>
-              <p data-testid={ `player-score-${index}` }>{ player.score }</p>
+            <li className="rank_info" key={ index }>
+              <img className="rank_img" src={ player.gravatarUrl } alt={ player.name } />
+              <p
+                className="rank_name"
+                data-testid={ `player-name-${index}` }
+              >
+                Jogador:
+                {' '}
+                { player.name }
+              </p>
+              <p
+                className="rank_score"
+                data-testid={ `player-score-${index}` }
+              >
+                Pontuação:
+                {' '}
+                { player.score }
+              </p>
             </li>
           )) }
         </ul>
         <Link to="/" data-testid="btn-go-home">
-          <button type="button">Tela inicial</button>
+          <button className="home_btn" type="button">Tela inicial</button>
         </Link>
       </div>
     );

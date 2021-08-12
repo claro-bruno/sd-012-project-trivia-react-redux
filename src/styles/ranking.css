@@ -1,0 +1,71 @@
+@import 'colors.css' ;
+
+.ranking {
+  padding: 40px 120px;
+}
+
+.trophy {
+  width: 150px;
+  display: flex;
+  margin: 10px auto;
+}
+
+.ranking a {
+  text-decoration: none;
+}
+
+.rank_title {
+  text-align: center;
+  color: white;
+  font-size: 30px;
+  font-weight: 600;
+  margin: 40px 0;
+}
+
+.rank_img {
+  border-radius: 50%;
+}
+
+.ranking_list {
+  list-style: none;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ranking_list > li {
+  margin-top: 10px;
+}
+
+.rank_info {
+  border: 1px solid white;
+  width: 400px;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.rank_name, .rank_score {
+  color: white;
+  font-weight: 600;
+  margin: 5px 0;
+}
+
+.home_btn {
+  display: flex;
+  margin: 0 auto;
+  border: none;
+  width: 400px;
+  justify-content: center;
+  padding: 10px;
+  background-color: var(--primary-color);
+  border-radius: 8px;
+  font-size: 18px;
+  color: white;
+}
+
+.home_btn:hover {
+  cursor: pointer;
+  filter: brightness(0.8);
+}
