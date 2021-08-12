@@ -64,7 +64,6 @@ const mapStateToProps = (state) => ({
 });
 
 Feedback.propTypes = {
-  userScore: PropTypes.number.isRequired,
   userAssertions: PropTypes.number.isRequired,
 
 };
