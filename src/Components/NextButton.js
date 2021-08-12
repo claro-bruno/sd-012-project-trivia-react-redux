@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Button from '@material-ui/core/Button';
 import { nextQuestion } from '../redux/actions';
 import { getRank } from '../data/helpers';
 
@@ -20,19 +21,20 @@ class NextButton extends Component {
   }
 
   render() {
-    const { dispatchNextQuestion, isLastQuestion, isAnswering } = this.props;
+    const { dispatchNextQuestion, isLastQuestion, isAnswering, className } = this.props;
 
     return (
-      <button
+      <Button
         data-testid="btn-next"
         type="button"
         onClick={ isLastQuestion
           ? this.handleEndGame
           : dispatchNextQuestion }
         style={ isAnswering ? { display: 'none' } : { display: 'inline' } }
+        className={ className }
       >
         Next
-      </button>
+      </Button>
     );
   }
 }
@@ -55,4 +57,5 @@ NextButton.propTypes = {
   isAnswering: PropTypes.bool.isRequired,
   dispatchNextQuestion: PropTypes.func.isRequired,
   isLastQuestion: PropTypes.bool.isRequired,
+  className: PropTypes.string.isRequired,
 };

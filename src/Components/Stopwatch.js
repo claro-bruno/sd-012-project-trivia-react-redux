@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Typography } from '@material-ui/core';
 import {
   isAnsweringAction,
   isOutOfTimeAction,
@@ -74,9 +75,16 @@ class Stopwatch extends Component {
   }
 
   render() {
+    const { className } = this.props;
     const { counter } = this.state;
     return (
-      <h1>{counter}</h1>
+      <Typography
+        className={ className }
+        variant="h2"
+        component="h1"
+      >
+        {counter}
+      </Typography>
     );
   }
 }
@@ -101,4 +109,5 @@ Stopwatch.propTypes = {
   dispatchIsQuestionAnswered: PropTypes.func.isRequired,
   dispatchIsAnswering: PropTypes.func.isRequired,
   dispatchCallbacks: PropTypes.func.isRequired,
+  className: PropTypes.shape().isRequired,
 };
