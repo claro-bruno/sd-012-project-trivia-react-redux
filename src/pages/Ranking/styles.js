@@ -32,11 +32,11 @@ export const PlayerRankingS = styled.section` /* desabilitando problema stylelin
 export const RankingHeaderS = styled.header` /* desabilitando problema stylelint */
   background-color: ${({ theme }) => theme.primary};
   color: ${({ theme }) => theme.secondary};
-  display: flex;
   min-height: 10vh;
   padding: 4px 36px;
 
   h2 {
     margin-top: 25px;
+    text-align: center;
   }
 `;

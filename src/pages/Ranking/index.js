@@ -16,7 +16,7 @@ class Ranking extends Component {
         <PlayerRankingS>
           {
             ranking.map(({ picture, name, score }, index) => (
-              <div key={ index + score }>
+              <div key={ score * Math.random() }>
                 <img
                   src={ `https://www.gravatar.com/avatar/${picture}` }
                   alt="img-user"
