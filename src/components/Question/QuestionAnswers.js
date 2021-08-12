@@ -14,8 +14,7 @@ class QuestionAnswers extends Component {
       wrongAnswers,
       answered,
       answeredTrueCorrect,
-      answeredTrueIncorrect,
-    } = this.props;
+      answeredTrueIncorrect } = this.props;
     const allAnswers = [...wrongAnswers
       .map((answer, index) => ({
         correct: false, answer, index, isCorrect: 'wrong-answer',
@@ -24,25 +23,27 @@ class QuestionAnswers extends Component {
     ];
     const randomIndex = randomize(allAnswers.length, allAnswers.length - 1);
     return (
-      <div>
-        <div>
+      <div className="buttons-container">
+        <div className="buttons-answerers-container">
           {randomIndex.map((number) => {
             const { correct, answer, index: i, isCorrect } = allAnswers[number];
             return (
-              <button
-                type="button"
-                key={ answer }
-                data-testid={ correct ? 'correct-answer' : `wrong-answer-${i}` }
-                disabled={ answered }
-                onClick={ correct ? answeredTrueCorrect : answeredTrueIncorrect }
-                className={ answered ? isCorrect : '' }
-              >
-                {answer}
-              </button>
+              <div key={ answer } className="buttons-answerers">
+                <button
+                  type="button"
+                  key={ answer }
+                  data-testid={ correct ? 'correct-answer' : `wrong-answer-${i}` }
+                  disabled={ answered }
+                  onClick={ correct ? answeredTrueCorrect : answeredTrueIncorrect }
+                  className={ answered ? isCorrect : '' }
+                >
+                  {answer}
+                </button>
+              </div>
             );
           })}
         </div>
-        <div>
+        <div className="next-question">
           {
             answered
             && <NextQuestionBtn

@@ -23,12 +23,24 @@ class Feedback extends Component {
     const totalScore = getScore;
     const qntQuestions = getQuestions.length;
     return (
-      <div>
+      <div
+        className="feedback-container"
+      >
         <header>
-          <h1>Feedback</h1>
+          <div
+            className="feedback"
+          >
+            <h1>Feedback</h1>
+          </div>
           <PlayerImg />
-          <PlayerName />
-          <Score />
+          <div className="player-name-feedback">
+            <PlayerName />
+          </div>
+          <div
+            className="feedback-score"
+          >
+            <Score />
+          </div>
         </header>
         <main>
           <Feed

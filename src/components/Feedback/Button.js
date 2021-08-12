@@ -7,7 +7,9 @@ class Button extends Component {
     const { link, testId, label, onClick } = this.props;
     if (link !== '') {
       return (
-        <div>
+        <div
+          className="jogar-novamente-btn"
+        >
           <Link to={ link }>
             <button
               type="button"
@@ -21,7 +23,9 @@ class Button extends Component {
       );
     }
     return (
-      <div>
+      <div
+        className="ver-ranking-btn"
+      >
         <button
           type="button"
           data-testid={ testId }

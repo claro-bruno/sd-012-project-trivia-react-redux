@@ -5,7 +5,9 @@ class Hits extends Component {
   render() {
     const { assertions, qntQuestions } = this.props;
     return (
-      <div>
+      <div
+        className="feedback-hits"
+      >
         <span
           data-testid="feedback-total-question"
         >

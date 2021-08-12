@@ -7,9 +7,12 @@ class Feed extends Component {
     const msgFeedback = ['Podia ser melhor...', 'Mandou bem!'];
     const minValue = 3;
     return (
-      <div>
+      <div
+        className="feedback-feedback"
+      >
         <span
           data-testid="feedback-text"
+          className={ assertions < minValue ? 'bad-feedback' : 'good-feedback' }
         >
           { assertions < minValue ? msgFeedback[0] : msgFeedback[1] }
         </span>

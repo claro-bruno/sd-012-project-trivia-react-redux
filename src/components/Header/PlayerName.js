@@ -6,11 +6,15 @@ class PlayerName extends Component {
   render() {
     const { Nome } = this.props;
     return (
-      <p
-        data-testid="header-player-name"
+      <div
+        className="player-name-container"
       >
-        { Nome }
-      </p>
+        <p
+          data-testid="header-player-name"
+        >
+          { Nome }
+        </p>
+      </div>
     );
   }
 }

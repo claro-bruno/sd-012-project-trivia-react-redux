@@ -9,11 +9,25 @@ class Header extends Component {
   render() {
     const { timer } = this.props;
     return (
-      <div>
-        <Timer timer={ timer } />
-        <PlayerName />
-        <PlayerImg />
-        <Score />
+      <div
+        className="header-container"
+      >
+        <div
+          className="timer-container"
+        >
+          <Timer timer={ timer } />
+        </div>
+        <div
+          className="player-profile-container"
+        >
+          <PlayerName />
+          <PlayerImg />
+        </div>
+        <div
+          className="score-container"
+        >
+          <Score />
+        </div>
       </div>
     );
   }

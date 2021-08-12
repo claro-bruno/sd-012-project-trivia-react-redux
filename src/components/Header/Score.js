@@ -6,11 +6,17 @@ class Score extends Component {
   render() {
     const { score } = this.props;
     return (
-      <p
-        data-testid="header-score"
-      >
-        {score}
-      </p>
+      <div>
+        <p>
+          Score
+        </p>
+        <div
+          className="score"
+          data-testid="header-score"
+        >
+          {score}
+        </div>
+      </div>
     );
   }
 }

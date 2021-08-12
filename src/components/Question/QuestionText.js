@@ -6,11 +6,15 @@ class QuestionText extends Component {
   render() {
     const { question } = this.props;
     return (
-      <p
-        data-testid="question-text"
+      <div
+        className="question-container"
       >
-        { htmlDecode(question) }
-      </p>
+        <p
+          data-testid="question-text"
+        >
+          { htmlDecode(question) }
+        </p>
+      </div>
     );
   }
 }

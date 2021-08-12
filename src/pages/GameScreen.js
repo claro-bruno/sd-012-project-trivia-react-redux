@@ -79,20 +79,34 @@ class GameScreen extends Component {
     const { timer } = this.state;
     if (getLoading) return <p>Loading...</p>;
     return (
-      <div>
+      <div
+        className="game-screen-container"
+      >
         <Header timer={ timer } />
-        <QuestionCategory
-          category={ getQuestions[getQuestionNumber].category }
-        />
-        <QuestionText
-          question={ getQuestions[getQuestionNumber].question }
-        />
-        <QuestionAnswers
-          startTimer={ this.startTimer }
-          type={ getQuestions[getQuestionNumber].type }
-          correctAnswer={ getQuestions[getQuestionNumber].correct_answer }
-          wrongAnswers={ getQuestions[getQuestionNumber].incorrect_answers }
-        />
+        <div
+          className="game-question-container"
+        >
+          <div
+            className="category-question-container"
+          >
+            <QuestionCategory
+              category={ getQuestions[getQuestionNumber].category }
+            />
+            <QuestionText
+              question={ getQuestions[getQuestionNumber].question }
+            />
+          </div>
+          <div
+            className="answerers-container"
+          >
+            <QuestionAnswers
+              startTimer={ this.startTimer }
+              type={ getQuestions[getQuestionNumber].type }
+              correctAnswer={ getQuestions[getQuestionNumber].correct_answer }
+              wrongAnswers={ getQuestions[getQuestionNumber].incorrect_answers }
+            />
+          </div>
+        </div>
       </div>
     );
   }

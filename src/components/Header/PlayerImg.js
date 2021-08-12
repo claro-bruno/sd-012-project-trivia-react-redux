@@ -8,11 +8,16 @@ class PlayerImg extends Component {
     const { email } = this.props;
     const img = md5(email).toString();
     return (
-      <img
-        src={ `https://www.gravatar.com/avatar/${img}` }
-        alt="user-img"
-        data-testid="header-profile-picture"
-      />
+      <div
+        className="player-image-container"
+      >
+        <img
+          src={ `https://www.gravatar.com/avatar/${img}` }
+          alt="user-img"
+          data-testid="header-profile-picture"
+          className="player-image"
+        />
+      </div>
     );
   }
 }
