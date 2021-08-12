@@ -34,8 +34,8 @@ const questions = (state = STATE_INITIAL, action) => {
   case SET_SCORE:
     return {
       ...state,
-      score: action.payload.score,
-      assertions: action.payload.assertions,
+      score: action.payload,
+      assertions: action.value,
     };
 
   default:
