@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -108,7 +109,7 @@ class Question extends Component {
       classes,
     } = this.props;
     return (
-      <div className={ classes.root }>
+      <div className={ classes.root } style={ { position: 'relative', top: '150px' } }>
         <CardContent>
           <Stopwatch className={ classes.stopwatch } />
         </CardContent>
