@@ -38,49 +38,45 @@ class Login extends Component {
   render() {
     const { email, name } = this.state;
     return (
-      <form onSubmit={ this.handleSubmit }>
-        <label
-          htmlFor="name"
-        >
-          Name:
-          <input
-            id="name"
-            type="text"
-            value={ name }
-            onChange={ this.handleChange }
-            data-testid="input-player-name"
-          />
-        </label>
-
-        <label
-          htmlFor="email"
-        >
-          Email:
-          <input
-            id="email"
-            type="email"
-            value={ email }
-            onChange={ this.handleChange }
-            data-testid="input-gravatar-email"
-          />
-        </label>
-
-        <button
-          type="submit"
-          data-testid="btn-play"
-          disabled={ !(email && name) }
-        >
-          Jogar
-        </button>
-        <Link to="/configs">
+      <div className="login">
+        <form className="login-son" onSubmit={ this.handleSubmit }>
+          <label className="label-login" htmlFor="name">
+            Name:
+            <input
+              id="name"
+              type="text"
+              value={ name }
+              onChange={ this.handleChange }
+              data-testid="input-player-name"
+            />
+          </label>
+          <label className="label-login" htmlFor="email">
+            Email:
+            <input
+              id="email"
+              type="email"
+              value={ email }
+              onChange={ this.handleChange }
+              data-testid="input-gravatar-email"
+            />
+          </label>
           <button
-            type="button"
-            data-testid="btn-settings"
+            type="submit"
+            data-testid="btn-play"
+            disabled={ !(email && name) }
           >
-            Configurações
+            Jogar
           </button>
-        </Link>
-      </form>
+          <Link to="/configs">
+            <button
+              type="button"
+              data-testid="btn-settings"
+            >
+              Configurações
+            </button>
+          </Link>
+        </form>
+      </div>
     );
   }
 }

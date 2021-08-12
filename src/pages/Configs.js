@@ -24,9 +24,9 @@ class Configs extends Component {
   render() {
     const { categories, difficulties, types } = this.props;
     return (
-      <div>
-        <h1 data-testid="settings-title">Config</h1>
-        <form onSubmit={ this.handleSubmit }>
+      <div className="config">
+        <h1 className="title-config" data-testid="settings-title">Config</h1>
+        <form className="config-son" onSubmit={ this.handleSubmit }>
           <ConfigSelect
             id="selectedCategory"
             label="Categories"
@@ -42,7 +42,7 @@ class Configs extends Component {
             label="Types"
             options={ types }
           />
-          <input type="submit" value="Go Back" />
+          <input className="config-button" type="submit" value="Go Back" />
         </form>
       </div>
     );

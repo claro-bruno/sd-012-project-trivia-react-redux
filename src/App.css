@@ -56,3 +56,116 @@
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24) , 0 17px 50px 0 rgba(0, 0, 0, 0.19);
   opacity: 2;
 }
+
+.login {
+  align-items: center;
+  background-image: url('background.png');
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  font-size: 30px;
+  height: 100vh;
+  justify-content: center;
+  text-align: center;
+
+}
+
+.login-son {
+  background: crimson;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: large;
+  height: 300;
+  margin: 10px;
+  margin-top: 100px;
+  opacity: 70%;
+  padding: 20px;
+  position: absolute;
+  width: 500;
+}
+
+.label-login {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+}
+/* COrrigindo css */
+.label-login input {
+  border-radius: 5px;
+  margin-bottom: 5px;
+  padding: 5px 7px;
+  width: 75%;
+}
+
+.login-son button {
+  background-color: chocolate;
+  width: 300px;
+}
+
+.login-son button:hover {
+  background-color: #19b319;
+}
+
+.config {
+  align-items: center;
+  background-image: url('background.png');
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  font-size: 30;
+  height: 100vh;
+  justify-content: center;
+  text-align: center;
+}
+
+/* .title-config {
+
+} */
+
+.config-son {
+  background: crimson;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: large;
+  height: 300;
+  margin: 10px;
+  margin-top: 100px;
+  opacity: 70%;
+  padding: 20px;
+  position: absolute;
+  width: 500;
+}
+
+.config-son input {
+  align-items: flex-start;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  padding: 5px 7px;
+  width: 75%;
+}
+
+.config-son label {
+  align-items: center;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  padding: 5px 7px;
+  width: 75%;
+}
+
+.config-button {
+  background-color: chocolate;
+  width: 10px;
+
+}
+
+
+.config-button:hover {
+  background-color: #19b319;
+}
