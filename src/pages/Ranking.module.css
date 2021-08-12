@@ -24,5 +24,19 @@
 
 .rankListItem {
   display: flex;
-  margin-top: 40px;
+  margin-top: 50px;
 }
+
+.imagePlayer {
+  height: 100px;
+  width: 100px;
+}
+
+.playerInfoContainer {
+  margin-left: 10px;
+}
+
+.score, .player {
+  margin-right: 10px;
+}
+
