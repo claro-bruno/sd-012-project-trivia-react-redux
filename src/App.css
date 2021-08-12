@@ -1,7 +1,28 @@
 .border-green {
-  border: 3px solid rgb(6, 240, 15);
+  display: list-item;
+  text-align: center;
+  border: 5px solid rgb(5, 168, 5);
+  width: 90%;
+  height: 60px;
+  color: aliceblue;
+  background: green;
+  border-radius: 8px;  
+  font-size: 18px;  
+  margin: auto;
+  margin-top: 1px;
 }
 
 .border-red {
-  border: 3px solid red;
+  display: list-item;
+  border: 5px solid red; 
+  width: 90%;
+  height: 60px;
+  color: aliceblue;
+  text-align: center;
+  background: linear-gradient(90deg, rgba(86, 10, 116, 0.637) 0%, rgb(128, 20, 20)100%);
+  border-radius: 8px;    
+  font-size: 18px;  
+  margin: auto;
+  margin-top: 1px;
+  
 }

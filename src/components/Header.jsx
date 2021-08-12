@@ -7,7 +7,7 @@ class Header extends Component {
     const { userPlayer: { name, gravatarEmail } } = this.props;
     const { player: { score } } = JSON.parse(localStorage.getItem('state'));
     return (
-      <header>
+      <header className="container">
         <img
           src={ `https://www.gravatar.com/avatar/${gravatarEmail}` }
           alt="Imagem Avatar"

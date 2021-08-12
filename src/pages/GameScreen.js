@@ -156,8 +156,10 @@ class GameScreen extends Component {
       <>
         {dataResults && dataResults.map((item) => (
           <>
-            <p data-testid="question-category">{item.category}</p>
-            <p data-testid="question-text">{item.question}</p>
+            <div className="questionsStyle">
+              <h2 data-testid="question-category">{item.category}</h2>
+              <p data-testid="question-text">{item.question}</p>
+            </div>
             <button
               name="correct"
               type="button"
@@ -182,6 +184,7 @@ class GameScreen extends Component {
           >
             {item}
           </button>
+
         ))}
         {this.renderNextButton()}
       </>
@@ -194,7 +197,9 @@ class GameScreen extends Component {
       <div>
         <h1>Tela Jogo</h1>
         <Header />
+
         { this.renderQuestionsApi() }
+
         <p>
           {' '}
           {timeCount}

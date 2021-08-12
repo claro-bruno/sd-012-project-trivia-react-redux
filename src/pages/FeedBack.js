@@ -10,7 +10,7 @@ class Feedback extends Component {
     const { assertions, score } = player;
     const minAssertions = 3;
     return (
-      <div>
+      <div className="container">
         <Header />
         <p data-testid="feedback-text">
           { assertions >= minAssertions ? 'Mandou bem!' : 'Podia ser melhor...!' }
