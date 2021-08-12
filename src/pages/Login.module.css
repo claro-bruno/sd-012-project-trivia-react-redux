@@ -54,3 +54,8 @@ button:hover {
   color: white;
   padding: 10px;
 }
+
+input {
+  margin-left: 20px;
+  width: 250px;
+}
