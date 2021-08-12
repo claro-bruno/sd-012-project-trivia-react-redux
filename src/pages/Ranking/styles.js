@@ -1,9 +1,16 @@
 import styled from 'styled-components';
 
 export const RankinMainS = styled.main` /* desabilitando problema stylelint */
+  min-height: 100vh;
+  position: relative;
+
   button {
     font-size: 20px;
     padding: 6px 56px;
+  }
+
+  @media ( max-width : 768px ) {
+    background-color: ${({ theme }) => theme.secondary};
   }
 `;
 
