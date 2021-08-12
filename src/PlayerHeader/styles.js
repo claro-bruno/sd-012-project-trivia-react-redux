@@ -21,7 +21,7 @@ const PlayerHeaderS = styled.header` /* desabilitando problema stylelint */
 
     h3 {
       align-self: flex-end;
-      margin: 0 0 2px 8px;
+      margin: 0 0 0 8px;
     }
   }
 
@@ -29,6 +29,25 @@ const PlayerHeaderS = styled.header` /* desabilitando problema stylelint */
     border-radius: 50%;
     height: 55px;
     width: 55px;
+  }
+
+  @media ( max-width : 620px ) {
+
+    section h3 {
+      align-self: center;
+    }
+  }
+
+  @media ( max-width : 400px ) {
+
+    img {
+      height: 45px;
+      width: 45px;
+    }
+
+    h3, section h3 {
+      font-size: 16px;
+    }
   }
 `;
 
