@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Typography } from '@material-ui/core';
 
 class Score extends Component {
   render() {
     const { score, dataTestId } = this.props;
     return (
-      <h1
-        className="feedText"
-        data-testid={ dataTestId }
-      >
-        {score}
-      </h1>
+      // <div
+      //   className="feedText"
+      //   data-testid={ dataTestId }
+      // >
+      //   {`Score: ${score}`}
+      // </div>
+      <Typography variant="h6" style={ { flexGrow: 1 } } data-testid={ dataTestId }>
+        {`Score: ${score}`}
+      </Typography>
     );
   }
 }

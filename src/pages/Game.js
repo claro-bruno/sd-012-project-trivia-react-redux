@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Backdrop, CircularProgress, withStyles } from '@material-ui/core';
 import Header from '../Components/Header';
 import { fetchQuestions, resetScore } from '../redux/actions';
 import Question from '../Components/Question';
-import Score from '../Components/Score';
+// import Score from '../Components/Score';
+
+const styles = (theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
+});
 
 class Game extends Component {
   componentDidMount() {
@@ -14,14 +22,21 @@ class Game extends Component {
   }
 
   render() {
-    const { isFetchingQuestions, questions, currentQuestion, history } = this.props;
-
-    if (isFetchingQuestions) { return <h1> Loading.... </h1>; }
+    const {
+      isFetchingQuestions,
+      questions,
+      currentQuestion,
+      history,
+      classes,
+    } = this.props;
 
     return (
       <>
+        <Backdrop className={ classes.backdrop } open={ isFetchingQuestions }>
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <Header />
-        <Score dataTestId="header-score" />
+        {/* <Score dataTestId="header-score" /> */}
         { questions
           .map((question, index) => (
             index === currentQuestion
@@ -50,6 +65,7 @@ Game.propTypes = {
   dispatchFetchQuestions: PropTypes.func.isRequired,
   dispatchResetScore: PropTypes.func.isRequired,
   currentQuestion: PropTypes.number.isRequired,
+  classes: PropTypes.shape().isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -63,4 +79,6 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchResetScore: () => dispatch(resetScore()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(styles, { withTheme: false })(Game),
+);
