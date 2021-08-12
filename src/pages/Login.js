@@ -6,6 +6,7 @@ import { changePlayerInfo } from '../actions';
 import * as api from '../services/api';
 import logo from '../trivia.png';
 import './Login.css';
+import Mp3 from '../components/Mp3';
 
 class Login extends React.Component {
   constructor(props) {
@@ -17,11 +18,19 @@ class Login extends React.Component {
       isDisable: true,
       token: '',
       gravatar: '',
+      startMusic: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.verifyLogin = this.verifyLogin.bind(this);
     this.validateLogin = this.validateLogin.bind(this);
+    this.renderLoginButtons = this.renderLoginButtons.bind(this);
+    this.startMusicController = this.startMusicController.bind(this);
+    this.playMusic = this.playMusic.bind(this);
+  }
+
+  componentDidMount() {
+    this.startMusicController();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -46,6 +55,10 @@ class Login extends React.Component {
     }
   }
 
+  playMusic() {
+    return (<Mp3 />);
+  }
+
   validateLogin() {
     const { player: { assertions, score }, changePlayerInfoHandler } = this.props;
     const { name, email } = this.state;
@@ -56,12 +69,52 @@ class Login extends React.Component {
     changePlayerInfoHandler({ name, gravatarEmail });
   }
 
+  startMusicController() {
+    this.setState({ startMusic: true });
+  }
+
+  renderLoginButtons() {
+    const { isDisable } = this.state;
+    return (
+      <>
+        <Link to="/game">
+          <button
+            onClick={ this.validateLogin }
+            disabled={ isDisable }
+            type="submit"
+            data-testid="btn-play"
+          >
+            Jogar
+          </button>
+          {/* <button
+            onClick={ Mp3 }
+            type="button"
+            data-testid="btn-sound"
+          >
+            Som
+          </button> */}
+        </Link>
+        <Link to="/Settings">
+          <button
+            data-testid="btn-settings"
+            type="button"
+          >
+            Configurações
+          </button>
+        </Link>
+      </>
+    );
+  }
+
   render() {
-    const { name, email, isDisable } = this.state;
+    const { name, email, startMusic } = this.state;
     return (
       <header className="App-header">
+        {startMusic ? this.playMusic() : <> </> }
         <img src={ logo } className="App-logo" alt="logo" />
-        <p>SUA VEZ</p>
+        <p>
+          SUA VEZ
+        </p>
         <form className="login">
           <label htmlFor="input-text">
             <input
@@ -85,26 +138,10 @@ class Login extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
-          <Link to="/game">
-            <button
-              onClick={ this.validateLogin }
-              disabled={ isDisable }
-              type="submit"
-              data-testid="btn-play"
-            >
-              Jogar
-            </button>
-          </Link>
-          <Link to="/Settings">
-            <button
-              data-testid="btn-settings"
-              type="button"
-            >
-              Configurações
-            </button>
-          </Link>
+          { this.renderLoginButtons() }
         </form>
-      </header>);
+      </header>
+    );
   }
 }
 

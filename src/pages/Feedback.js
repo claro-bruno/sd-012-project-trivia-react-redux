@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { resetScore, willPlayAgain, fetchQuestions } from '../actions';
-import { Header } from '../components';
+import { Header, Mp3 } from '../components';
+import acertoupouco from '../audio/acertoupouco.ogg';
+import foibem from '../audio/foibem.ogg';
 import './Feedback.css';
 
 class Feedback extends Component {
@@ -119,6 +121,16 @@ class Feedback extends Component {
         <h1 className="feedback-message" data-testid="feedback-text">
           { assertions >= AVERAGE ? 'Mandou bem!' : 'Podia ser melhor...'}
         </h1>
+        <div>
+          { assertions >= AVERAGE ? (
+            <Mp3 musicPath={ foibem } />
+
+          ) : (
+            <Mp3 musicPath={ acertoupouco } />
+
+          ) }
+
+        </div>
         { this.renderButtons() }
       </div>
     );
