@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from './Header';
+import { clearQuestions } from '../../redux/action';
 
 class Feedback extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class Feedback extends React.Component {
   }
 
   render() {
-    const { userAssertions } = this.props;
+    const { userAssertions, resetQuestions } = this.props;
     const assertionsMin = 3;
     const localScore = JSON.parse(localStorage.getItem('state')).player.score;
     const localAssert = JSON.parse(localStorage.getItem('state')).player.assertions;
@@ -47,6 +48,7 @@ class Feedback extends React.Component {
               <button
                 data-testid="btn-settings"
                 type="button"
+                onClick={ resetQuestions }
               >
                 Jogar Novamente
               </button>
@@ -60,12 +62,15 @@ class Feedback extends React.Component {
 
 const mapStateToProps = (state) => ({
   userAssertions: state.questions.assertions,
-  userScore: state.questions.score,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  resetQuestions: () => dispatch(clearQuestions()),
 });
 
 Feedback.propTypes = {
   userAssertions: PropTypes.number.isRequired,
-
+  resetQuestions: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Feedback);
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);

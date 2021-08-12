@@ -14,7 +14,6 @@ class Login extends Component {
     this.state = {
       email: '',
       name: '',
-      redirect: false,
     };
     this.handle = this.handle.bind(this);
     this.handleClickToken = this.handleClickToken.bind(this);
@@ -30,6 +29,10 @@ class Login extends Component {
     const { fetchToken, dataUser } = this.props;
     await fetchToken();
     dataUser(this.state);
+    this.setState({
+      email: '',
+      name: '',
+    });
   }
 
   render() {

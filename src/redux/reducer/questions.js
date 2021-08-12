@@ -1,5 +1,5 @@
 import { GET_QUESTION, GET_QUESTION_SUCCESS,
-  GET_QUESTION_ERROR, SET_SCORE } from '../action';
+  GET_QUESTION_ERROR, SET_SCORE, CLEAR_QUESTIONS } from '../action';
 
 const STATE_INITIAL = ({
   results: [],
@@ -36,6 +36,15 @@ const questions = (state = STATE_INITIAL, action) => {
       ...state,
       score: action.payload,
       assertions: action.value,
+    };
+
+  case CLEAR_QUESTIONS:
+    return {
+      results: [],
+      loading: false,
+      error: null,
+      score: 0,
+      assertions: 0,
     };
 
   default:
