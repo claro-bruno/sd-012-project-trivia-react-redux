@@ -6,7 +6,7 @@ const ButtonS = styled.button` /* desabilitando problema stylelint */
   border-radius: 3px;
   color: whitesmoke;
   font-weight: 600;
-  padding: 8px 0;
+  padding: 8px;
 
   :hover {
     cursor: pointer;
