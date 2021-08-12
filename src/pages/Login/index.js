@@ -3,9 +3,20 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import logo from '../../trivia.png';
+import mapa from '../../assets/images/mapa.png';
+
+// Componentes estilizados;
+import {
+  LoginPageS,
+  LoginHeaderS,
+  LoginMainS,
+  LoginFormS,
+} from './styles';
 
 // Iportando action "getInfo"
 import getInfo from '../../Redux/reducers/player/actions/getEmail';
+import InputSection from './InputSection';
+import ButtonSection from './ButtonSection';
 
 class Login extends Component {
   constructor() {
@@ -16,6 +27,7 @@ class Login extends Component {
       redirect: false,
       redirectConfig: false,
     };
+    this.isValid = this.isValid.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSendUserInfo = this.handleSendUserInfo.bind(this);
     this.handleFetch = this.handleFetch.bind(this);
@@ -30,9 +42,13 @@ class Login extends Component {
     this.setState({ redirectConfig: true });
   }
 
-  isValid(name, email) {
+  // Link do regex = https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex/
+  isValid() {
+    const { name, email } = this.state;
+    const validEmail = /\S+@\S+\.\S+/;
     if (!name || !email) return true;
-    return false;
+    // Validação correta do Regex deve retornar false para "disabled={ false }";
+    return !validEmail.test(email);
   }
 
   handleSendUserInfo() {
@@ -53,50 +69,30 @@ class Login extends Component {
   render() {
     const { name, email, redirect, redirectConfig } = this.state;
     return (
-      <div className="App">
-        <header>
+      <LoginPageS>
+        <LoginHeaderS>
+          <img alt="efeito" src={ mapa } />
+          <h1>PROJECT TRÍVIA REACT REDUX</h1>
+        </LoginHeaderS>
+        <LoginMainS>
           <img src={ logo } className="App-logo" alt="logo" />
-          <p>SUA VEZ</p>
-        </header>
-        <main>
-          <form>
-            <input
-              type="text"
-              placeholder="nome"
-              name="name"
-              value={ name }
-              onChange={ this.handleChange }
-              data-testid="input-player-name"
+          <LoginFormS>
+            <InputSection
+              name={ name }
+              email={ email }
+              handleChange={ this.handleChange }
             />
-            <input
-              type="text"
-              placeholder="email"
-              name="email"
-              value={ email }
-              onChange={ this.handleChange }
-              data-testid="input-gravatar-email"
+            <ButtonSection
+              isValid={ this.isValid }
+              handleFetch={ this.handleFetch }
+              handleSendUserInfo={ this.handleSendUserInfo }
+              handleRedirectConfig={ this.handleRedirectConfig }
             />
-            <button
-              type="button"
-              data-testid="btn-play"
-              onClick={ () => { this.handleFetch(); this.handleSendUserInfo(); } }
-              disabled={ this.isValid(name, email) }
-            >
-              Jogar
-            </button>
             { redirect && <Redirect to="/game" /> }
-
-            <button
-              type="button"
-              data-testid="btn-settings"
-              onClick={ this.handleRedirectConfig }
-            >
-              Configurar
-            </button>
             { redirectConfig && <Redirect to="/config" /> }
-          </form>
-        </main>
-      </div>
+          </LoginFormS>
+        </LoginMainS>
+      </LoginPageS>
     );
   }
 }

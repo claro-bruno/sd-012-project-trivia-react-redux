@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import AnswerButtonS from './styles';
+import ButtonS from '../../../styles/buttonStyle';
 
 // Action para adicionar pontos ao score;
 import sumScore from '../../../Redux/reducers/player/actions/sumScore';
@@ -116,7 +117,7 @@ class ActualQuestion extends Component {
             onClick={ () => { this.handleChangeStyle(); this.submitCorrectAnswer(); } }
             disabled={ answered }
           >
-            { answer }
+            { atob(answer) }
           </AnswerButtonS>
         );
       }
@@ -131,7 +132,7 @@ class ActualQuestion extends Component {
           onClick={ this.handleChangeStyle }
           disabled={ answered }
         >
-          { answer }
+          { atob(answer) }
         </AnswerButtonS>
       );
     });
@@ -152,31 +153,33 @@ class ActualQuestion extends Component {
 
     const answers = [...incorrectAnswers, correctAnswer];
     answers.sort();
-    const maxLength = 4;
+    const maxIndex = 4;
 
     return (
       <section>
         <p>{ timer }</p>
-        <h2 data-testid="question-category">{ category }</h2>
-        <p data-testid="question-text">{ question }</p>
+        <h2 data-testid="question-category">{ atob(category) }</h2>
+        <h4 data-testid="question-text">{ atob(question) }</h4>
         <div>
           { this.renderAnswers(answers, correctAnswer, answered) }
-          { answered && (questionIndex < maxLength ? (
-            <button
+          { answered && (questionIndex < maxIndex ? (
+            <ButtonS
+              className="next-button"
               type="button"
               onClick={ () => { nextQuestion(); this.handleReset(); } }
               data-testid="btn-next"
             >
               Próxima
-            </button>
+            </ButtonS>
           ) : (
-            <button
+            <ButtonS
+              className="next-button"
               type="button"
               onClick={ () => { this.handleRedirect(); this.addToRanking(); } }
               data-testid="btn-next"
             >
               Próxima
-            </button>
+            </ButtonS>
           )) }
           { redirect && <Redirect to="/feedback" /> }
         </div>

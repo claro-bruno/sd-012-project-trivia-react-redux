@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5'; // Utilizando biblioteca CryptoJS conforme README.md;
 
 import ActualQuestion from './ActualQuestion';
+import GameBodyS from './styles';
+import PlayerHeader from '../../PlayerHeader';
 
 class Game extends Component {
   constructor() {
@@ -22,8 +24,9 @@ class Game extends Component {
   }
 
   getQuestions() {
+    const numberOfQuestions = 5;
     const token = localStorage.getItem('token');
-    const endpoind = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    const endpoind = `https://opentdb.com/api.php?amount=${numberOfQuestions}&encode=base64&token=${token}`;
     fetch(endpoind)
       .then((response) => response.json())
       .then(({ results }) => this.setState({ questions: results, loaded: true }));
@@ -31,8 +34,8 @@ class Game extends Component {
 
   nextQuestion() {
     const { questionIndex: actualIndex } = this.state;
-    const maxLength = 4;
-    if (actualIndex < maxLength) {
+    const maxIndex = 4;
+    if (actualIndex < maxIndex) {
       this.setState(({ questionIndex }) => ({
         questionIndex: questionIndex + 1,
       }));
@@ -48,17 +51,12 @@ class Game extends Component {
 
     return (
       <div>
-        <header>
-          <img
-            // url da foto do usuário, com o formato que está no README.md;
-            src={ `https://www.gravatar.com/avatar/${encodeEmail}` }
-            alt="profile"
-            data-testid="header-profile-picture"
-          />
-          <span data-testid="header-player-name">{ name }</span>
-          <span data-testid="header-score">{ score }</span>
-        </header>
-        <main>
+        <PlayerHeader
+          name={ name }
+          score={ score }
+          encodeEmail={ encodeEmail }
+        />
+        <GameBodyS>
           { loaded
           && (
             <ActualQuestion
@@ -70,7 +68,7 @@ class Game extends Component {
               score={ score }
             />
           ) }
-        </main>
+        </GameBodyS>
       </div>
     );
   }
