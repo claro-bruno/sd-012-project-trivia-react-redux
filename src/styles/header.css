@@ -4,13 +4,13 @@
   align-items: center;
   background-color: var(--header-background);
   color: white;
-  padding: 18px 120px;
+  padding: 20px 120px;
 }
 
 .header_trivia img {
   border-radius: 50%;
   position: absolute;
-  top: 5px;
+  top: 10px;
 }
 
 .header_trivia_player p {

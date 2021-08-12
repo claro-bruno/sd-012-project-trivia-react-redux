@@ -1,0 +1,58 @@
+@import 'colors.css' ;
+
+.feedback_page {
+  padding: 10px 120px;
+}
+
+.sad, .happy {
+  display: flex;
+  margin: 40px auto;
+  width: 150px;
+}
+
+.feedback_info {
+  color: white;
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  font-weight: 600;
+  text-align: center;
+  line-height: 2rem;
+  background-color: var(--primary-color);
+  width: 400px;
+  height: 200px;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.feedback_btns {
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.play_again_btn_feed, .rank_btn_feed {
+  border: none;
+  padding: 10px;
+  color: white;
+  font-weight: 600;
+  border-radius: 5px;
+  width: 400px;
+}
+
+.play_again_btn_feed:hover, .rank_btn_feed:hover {
+  cursor: pointer;
+  filter: brightness(0.8);
+}
+
+.play_again_btn_feed {
+  margin-bottom: 10px;
+  background-color: var(--secondary-color);
+}
+
+.rank_btn_feed {
+  background-color: var(--rank-color);
+}
