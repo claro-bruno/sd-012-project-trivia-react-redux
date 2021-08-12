@@ -1,0 +1,14 @@
+.footer-trivia {
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.916);
+  border-radius: 20px 20px 4px;
+  bottom: 0;
+  display: flex;
+  height: 20px;
+  justify-content: space-evenly;
+  margin: 10px;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  width: 80%;
+}

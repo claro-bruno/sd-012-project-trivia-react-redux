@@ -55,7 +55,7 @@ class Question extends React.Component {
         type="button"
         data-testid={ testid }
         id={ testid }
-        className={ answered ? className : '' }
+        className={ answered ? `${className} answer` : 'answer' }
         disabled={ answered }
         onClick={ this.handleClick }
       >
@@ -99,17 +99,15 @@ class Question extends React.Component {
     const { qnObj: { category, question: text },
       question: { answered, qnNum } } = this.props;
     return (
-      <>
+      <section className="question-container">
         <Cronometer callback={ this.pointsCalculator } />
-        <section className="question-container">
-          <h4 data-testid="question-category">{ atob(category) }</h4>
-          <p data-testid="question-text">{ atob(text) }</p>
-          <section className="answers-container">
-            { this.shuffleAnswers() }
-          </section>
+        <h4 data-testid="question-category">{ atob(category) }</h4>
+        <p data-testid="question-text">{ atob(text) }</p>
+        <section className="answers-container">
+          { this.shuffleAnswers() }
         </section>
         { answered && <NextButton qnNum={ qnNum } /> }
-      </>
+      </section>
     );
   }
 }

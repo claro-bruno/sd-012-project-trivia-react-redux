@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
-import { fetchQuestions, getPlayerInfo } from '../redux/actions';
-import logo from '../trivia.png';
+import { fetchCategories, fetchQuestions, getPlayerInfo } from '../redux/actions';
+import logo from '../img/trivia.png';
 
 const URL_GRAVATAR = 'https://www.gravatar.com/avatar/';
 
@@ -33,30 +33,39 @@ class Login extends React.Component {
   }
 
   btnClick(destiny) {
+    const { getCategories, getPlayer, getQuestions, category, difficulty,
+      type } = this.props;
     if (destiny === '/trivia') {
       const { name, email } = this.state;
-      const { getPlayer, getQuestions } = this.props;
+      if (name === 'Prince Rogers Nelson') {
+        /* Source: https://reactgo.com/react-redirect-to-external-url/ */
+        window.location.href = 'https://www.youtube.com/watch?v=TvnYmWpD_T8';
+        return;
+      }
       const picture = URL_GRAVATAR + md5(email).toString();
       const state = JSON.stringify({
         player: { name, assertions: 0, score: 0, gravatarEmail: email } });
       localStorage.setItem('state', state);
       getPlayer({ name, email, picture });
-      getQuestions();
-    }
+      getQuestions({ category, difficulty, type });
+    } else { getCategories(); }
     this.setState({ destiny });
   }
 
   createInput(inputProperties) {
-    const [type, id, value, text, testid, func] = inputProperties;
+    const [type, id, value, text, testid, className, func] = inputProperties;
     return (
-      <input
-        type={ type }
-        id={ id }
-        value={ value }
-        placeholder={ text }
-        data-testid={ testid }
-        onChange={ func }
-      />
+      <label htmlFor={ id }>
+        { text }
+        <input
+          type={ type }
+          id={ id }
+          value={ value }
+          data-testid={ testid }
+          className={ className }
+          onChange={ func }
+        />
+      </label>
     );
   }
 
@@ -66,6 +75,7 @@ class Login extends React.Component {
       <button
         type="button"
         data-testid={ testid }
+        className={ testid }
         disabled={ bool }
         onClick={ () => func(destiny) }
       >
@@ -83,12 +93,12 @@ class Login extends React.Component {
         <header className="App-header">
           <img src={ logo } className="App-logo" alt="logo" />
           <div className="loginContainer">
-            {createInput(['text', 'name', name, 'NOME:', 'input-player-name',
-              handleChange])}
-            {createInput(['text', 'email', email, 'E-MAIL:', 'input-gravatar-email',
-              handleChange])}
-            {this.createBtn(['PLAY!!!', 'btn-play', disableBtn, '/trivia', btnClick])}
-            {this.createBtn(['CONFIGURAÇÕES', 'btn-settings', false, '/config',
+            {createInput(['text', 'name', name, 'Name:',
+              'input-player-name', 'form__field', handleChange])}
+            {createInput(['text', 'email', email, 'E-mail:', 'input-gravatar-email',
+              'form__field', handleChange])}
+            {this.createBtn(['PLAY', 'btn-play', disableBtn, '/trivia', btnClick])}
+            {this.createBtn(['SETTINGS', 'btn-settings', false, '/settings',
               btnClick])}
           </div>
         </header>
@@ -98,13 +108,20 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  getQuestions: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
+  difficulty: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  getCategories: PropTypes.func.isRequired,
   getPlayer: PropTypes.func.isRequired,
+  getQuestions: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = (state) => ({ ...state.config });
+
 const mapDispatchToProps = (dispatch) => ({
-  getQuestions: () => dispatch(fetchQuestions()),
+  getCategories: () => dispatch(fetchCategories),
   getPlayer: (info) => dispatch(getPlayerInfo(info)),
+  getQuestions: (config) => dispatch(fetchQuestions(config)),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -46,7 +46,7 @@ class Cronometer extends React.Component {
   render() {
     const { timer } = this.state;
     return (
-      <div>
+      <div className="timer">
         { timer }
       </div>
     );

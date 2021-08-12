@@ -1,19 +1,22 @@
 .header-trivia {
   align-items: center;
-  background-color: lightgrey;
-  border: 5px double darkgrey;
+  background-color: rgba(255, 255, 255, 0.916);
+  border-radius: 20px;
   display: flex;
+  height: 50px;
   justify-content: space-evenly;
-  margin: 10px;
+  margin: 10px auto;
   padding: 10px;
+  width: 63.5%;
 }
 
 .profile-picture {
   border-radius: 50%;
+  height: 115%;
 }
 
 .player-name {
-  color: gray;
+  color: black;
   font-size: 30px;
 }
 

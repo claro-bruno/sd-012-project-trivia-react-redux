@@ -4,7 +4,14 @@ import * as types from './actionTypes';
 export const getPlayerInfo = (info) => ({ type: types.GET_PLAYER_INFO, info });
 
 // Bloco de funções auxiliares para os fetch's
+const requestCategories = () => ({ type: types.REQUEST_CATEGORIES });
+
 const requestTriviaQuestions = () => ({ type: types.REQUEST_TRIVIA_QUESTIONS });
+
+export const getCategories = (categories) => ({
+  type: types.GET_CATEGORIES,
+  categories,
+});
 
 export const getTriviaQuestions = (questions) => ({
   type: types.GET_TRIVIA_QUESTIONS,
@@ -12,6 +19,19 @@ export const getTriviaQuestions = (questions) => ({
 });
 
 const getFetchError = (error) => ({ type: types.GET_FETCH_ERROR, error });
+
+// Fetch Categories
+export const fetchCategories = async (dispatch) => {
+  const URL_CATEGORIES = 'https://opentdb.com/api_category.php';
+  try {
+    dispatch(requestCategories());
+    const response = await fetch(URL_CATEGORIES);
+    const { trivia_categories: triviaCategories } = await response.json();
+    dispatch(getCategories(triviaCategories));
+  } catch (error) {
+    dispatch(getFetchError(`Erro em buscar categorias: ${error}`));
+  }
+};
 
 // Fetch Token
 const fetchToken = async (dispatch) => {
@@ -27,7 +47,8 @@ const fetchToken = async (dispatch) => {
 };
 
 // Fetch Questions
-export const fetchQuestions = () => async (dispatch) => {
+export const fetchQuestions = (config) => async (dispatch) => {
+  const { category, difficulty, type } = config;
   const apiMessage = {
     0: (results) => getTriviaQuestions(results),
     1: () => getFetchError('No Results Could not return results.'),
@@ -37,7 +58,8 @@ export const fetchQuestions = () => async (dispatch) => {
   };
   dispatch(requestTriviaQuestions());
   const token = await fetchToken(dispatch);
-  const URL_QUESTIONS = `https://opentdb.com/api.php?amount=5&encode=base64&token=${token}`;
+  const URL_QUESTIONS = `https://opentdb.com/api.php?amount=5&category=${category}`
+  + `&difficulty=${difficulty}&type=${type}&encode=base64&token=${token}`;
   try {
     const response = await fetch(URL_QUESTIONS);
     const { response_code: responseCode, results } = await response.json();
@@ -55,3 +77,6 @@ export const updateQuestion = (payload) => ({ type: types.UPDATE_QUESTION, paylo
 
 // Atualiza o tempo de resposta
 export const setAnswerTime = (payload) => ({ type: types.SET_ANSWER_TIME, payload });
+
+// Atualiza configuração
+export const updateConfig = (config) => ({ type: types.UPDATE_CONFIG, config });
