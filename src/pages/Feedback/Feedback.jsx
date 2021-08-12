@@ -11,21 +11,32 @@ class Feedback extends React.Component {
   }
 
   render() {
-    const { score, assertions } = this.props;
+    const { userScore, userAssertions } = this.props;
     const assertionsMin = 3;
     return (
       <>
         <Header />
+        <h1>Parabéns! Você concluiu o desafio!</h1>
         <div>
           <h3 data-testid="feedback-text">
             {
-              (assertions >= assertionsMin)
+              (userAssertions >= assertionsMin)
                 ? <span>Mandou bem!</span> : <span>Podia ser melhor...</span>
             }
           </h3>
           <div>
-            <p data-testid="feedback-total-score">{score}</p>
-            <p data-testid="feedback-total-question">{assertions}</p>
+            <h2>
+              <span data-testid="feedback-total-score">
+                {`Você acertou ${userAssertions} de 5 perguntas.`}
+              </span>
+            </h2>
+            <h2>
+              <span data-testid="feedback-total-question">
+                {`Você fez: ${userScore} pontos.`}
+              </span>
+            </h2>
+          </div>
+          <div>
             <Link data-testid="btn-ranking" to="/ranking">
               <button
                 data-testid="btn-settings"
@@ -34,7 +45,7 @@ class Feedback extends React.Component {
                 Ver Rankin
               </button>
             </Link>
-            <Link data-testid="btn-play-again" to="/">
+            <Link data-testid="btn-play-again" exact to="/">
               <button
                 data-testid="btn-settings"
                 type="button"
@@ -43,19 +54,6 @@ class Feedback extends React.Component {
               </button>
             </Link>
           </div>
-          <div>
-            <h1>Parabéns! Você concluiu o desafio!</h1>
-            <h2>
-              Você acertou
-              <span data-testid="feedback-total-score"> 0 </span>
-              de 5 perguntas.
-            </h2>
-            <h2>
-              Você fez:
-              <span data-testid="feedback-total-question"> 0 </span>
-              pontos.
-            </h2>
-          </div>
         </div>
       </>
     );
@@ -63,13 +61,13 @@ class Feedback extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  assertions: state.questions.assertions,
-  score: state.questions.score,
+  userAssertions: state.questions.assertions,
+  userScore: state.questions.score,
 });
 
 Feedback.propTypes = {
-  score: PropTypes.number.isRequired,
-  assertions: PropTypes.number.isRequired,
+  userScore: PropTypes.number.isRequired,
+  userAssertions: PropTypes.number.isRequired,
 
 };
 
