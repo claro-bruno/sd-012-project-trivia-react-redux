@@ -1,13 +1,13 @@
-input, select {
+.settingSection input, .settingSection select {
   margin-bottom: 5px;
   margin-left: 5px;
-  width: 270px;
+  width: 80%;
 }
 
 .mainSection {
   background-color: #1d2551;
   display: flex;
-  height: 800px;
+  height: 100vh;
   justify-content: center;
   width: 100%;
 }
@@ -16,7 +16,10 @@ input, select {
   background-color: #fea418;
   border-radius: 10px;
   box-shadow: 3px 3px 5px #7ea8df;
-  height: 250px;
+  display: flex;
+  flex-direction: column;
+  height: 25%;
   margin-top: 50px;
-  width: 350px;
+  padding: 20px;
+  width: 40%;
 }
