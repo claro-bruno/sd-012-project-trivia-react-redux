@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-
+import Questions from '../components/Questions';
 import Header from '../components/Header';
 import './Game.css';
 
@@ -21,7 +21,6 @@ class Game extends React.Component {
       redirectFeedback: false,
     };
 
-    this.renderQuestions = this.renderQuestions.bind(this);
     this.setCounter = this.setCounter.bind(this);
     this.scoreCounter = this.scoreCounter.bind(this);
     this.assertionsCounter = this.assertionsCounter.bind(this);
@@ -123,53 +122,6 @@ class Game extends React.Component {
     document.getElementById('incorrect').style.border = cssValueWrong;
   }
 
-  // logica baseada no seguinte repositorio https://github.com/tryber/sd-012-project-trivia-react-redux/pull/8/commits/a93062a005d249fcc708168294a7926669bbf914
-  renderQuestions() {
-    const { triviaQuest } = this.props;
-    const { count, disabled, questionNumber } = this.state;
-    return (
-      <div>
-        <p data-testid="question-category">
-          { triviaQuest[questionNumber].category }
-        </p>
-        <p data-testid="question-text">
-          { triviaQuest[questionNumber].question }
-        </p>
-        <button
-          id="correct"
-          type="button"
-          data-testid="correct-answer"
-          name="correct"
-          value={ triviaQuest[questionNumber].difficulty }
-          disabled={ disabled }
-          onClick={ this.handleClick }
-        >
-          { triviaQuest[questionNumber].correct_answer }
-        </button>
-        {
-          triviaQuest[questionNumber].incorrect_answers.map((key, index) => (
-            <button
-              id="incorrect"
-              type="button"
-              data-testid={ `wrong-answer-${index}` }
-              name="incorrect"
-              value={ triviaQuest[questionNumber].difficulty }
-              disabled={ disabled }
-              onClick={ this.handleClick }
-              key={ key }
-            >
-              { key }
-            </button>
-          ))
-        }
-        <h3>
-          Tempo:
-          { count }
-        </h3>
-      </div>
-    );
-  }
-
   renderNextBtn() {
     return (
       <button
@@ -186,7 +138,8 @@ class Game extends React.Component {
   render() {
     const { triviaQuest } = this.props;
     const firstQuestion = triviaQuest[0];
-    const { redirectFeedback } = this.state;
+    const { redirectFeedback, questionNumber, count, disabled } = this.state;
+
     if (redirectFeedback) {
       return <Redirect to="/feedback" />;
     }
@@ -194,8 +147,17 @@ class Game extends React.Component {
       <div>
         <Header />
         <section>
-          { firstQuestion ? this.renderQuestions() : <p>LOADING</p> }
-          { this.renderNextBtn() }
+          <main>
+            { firstQuestion ? <Questions
+              questionNumber={ questionNumber }
+              count={ count }
+              disabled={ disabled }
+              handleClick={ this.handleClick }
+            /> : <p>LOADING</p> }
+          </main>
+          <div>
+            { this.renderNextBtn() }
+          </div>
         </section>
       </div>
     );
