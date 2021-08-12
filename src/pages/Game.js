@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { decode } from 'html-entities';
 import { getQuestions } from '../services/api';
 import { localStorageRankingInit } from '../services/localStorage';
 import ButtonNextQuestion from '../components/ButtonNextQuestion';
 import Timer from '../components/Timer';
 import Header from '../components/Header';
-import '../App.css';
 import { getScore } from '../redux/actions';
+import '../styles/game.css';
+import triviaLogo from '../trivia.png';
 
 class Game extends Component {
   constructor(props) {
@@ -29,8 +31,6 @@ class Game extends Component {
     this.score = this.score.bind(this);
     this.saveOnLocalStorage = this.saveOnLocalStorage.bind(this);
   }
-
-  // refactor: e possivel colocar o timer dentro do componentDidMount
 
   componentDidMount() {
     this.getQuestions1();
@@ -114,29 +114,31 @@ class Game extends Component {
             answered={ answered }
             index={ questionIndex }
           />
-          <h3 data-testid="question-category">{quest.category}</h3>
-          <p data-testid="question-text">{quest.question}</p>
-          <button
-            type="button"
-            data-testid="correct-answer"
-            className={ answered ? 'correct-answer-btn' : '' }
-            id="correct-btn"
-            onClick={ () => this.score(quest) }
-          >
-            {quest.correct_answer}
-          </button>
-          {quest.incorrect_answers.map((wrong, index1) => (
+          <div className="question_card">
+            <h1 data-testid="question-category">{quest.category}</h1>
+            <p data-testid="question-text">{decode(quest.question)}</p>
             <button
-              data-testid={ `wrong-answer-${index1}` }
-              key={ index1 }
               type="button"
-              id="incorrect-btn"
-              className={ answered ? 'incorrect-answer-btn' : '' }
-              onClick={ () => this.setState({ answered: true }) }
+              data-testid="correct-answer"
+              className={ answered ? 'correct-answer-btn' : 'not-answered' }
+              id="correct-btn"
+              onClick={ () => this.score(quest) }
             >
-              {wrong}
+              {quest.correct_answer}
             </button>
-          ))}
+            {quest.incorrect_answers.map((wrong, index1) => (
+              <button
+                data-testid={ `wrong-answer-${index1}` }
+                key={ index1 }
+                type="button"
+                id="incorrect-btn"
+                className={ answered ? 'incorrect-answer-btn' : 'not-answered' }
+                onClick={ () => this.setState({ answered: true }) }
+              >
+                {wrong}
+              </button>
+            ))}
+          </div>
         </div>
       ))
     );
@@ -149,8 +151,9 @@ class Game extends Component {
     // https://github.com/tryber/sd-010-a-project-trivia-react-redux/pull/600/
     // commits/6c6c13f6c3fdfb09f19cf9f33f6e8cd814b7bd04
     return (
-      <div>
+      <div className="trivia_game">
         <Header score={ score } />
+        <img className="trivia_logo" src={ triviaLogo } alt="logo" />
         {this.renderQuestions()}
         {questionIndex === limit ? (
           <Redirect to="/feedback" />
@@ -162,25 +165,27 @@ class Game extends Component {
             index={ questionIndex }
           />
         )}
-        <Link to="/feedback">
-          <button data-testid="feedbackButton" type="button">Feedback</button>
-        </Link>
-        <Link to="/game">
-          <button
-            type="button"
-            data-testid="btn-play-again"
-          >
-            Jogar novamente
-          </button>
-        </Link>
-        <Link to="/ranking">
-          <button
-            type="button"
-            data-testid="btn-ranking"
-          >
-            Ranking
-          </button>
-        </Link>
+        <div className="trivia_link_btns">
+          <Link to="/feedback">
+            <button data-testid="feedbackButton" type="button" className="feed_btn">
+              Feedback
+            </button>
+          </Link>
+          <Link to="/game">
+            <button
+              type="button"
+              data-testid="btn-play-again"
+              className="play_again_btn"
+            >
+              Jogar novamente
+            </button>
+          </Link>
+          <Link to="/ranking">
+            <button type="button" data-testid="btn-ranking" className="rank_btn">
+              Ranking
+            </button>
+          </Link>
+        </div>
       </div>
     );
   }

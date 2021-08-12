@@ -34,11 +34,11 @@ const Timer = ({ timer, answered, index }) => {
   }, [counter, answered]);
 
   return (
-    <aside className="component_timer">
+    <div className="component_timer">
       <span id="timer">
         {counter}
       </span>
-    </aside>
+    </div>
   );
 };
 

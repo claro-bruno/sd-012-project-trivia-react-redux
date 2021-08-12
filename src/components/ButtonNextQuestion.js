@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../styles/buttonNext.css';
 
 class ButtonNextQuestion extends React.Component {
   render() {
@@ -8,6 +9,7 @@ class ButtonNextQuestion extends React.Component {
       <div>
         {!disableButton && answered ? (
           <button
+            className="next-btn"
             type="button"
             data-testid="btn-next"
             onClick={ onClick }

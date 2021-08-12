@@ -18,7 +18,8 @@ class Header extends React.Component {
           <div className="header_trivia_player">
             <img data-testid="header-profile-picture" src={ getImg } alt="user avatar" />
             <p data-testid="input-gravatar-email">
-              Email :
+              Email:
+              {' '}
               { gravatarEmail }
             </p>
             <p data-testid="header-player-name">
