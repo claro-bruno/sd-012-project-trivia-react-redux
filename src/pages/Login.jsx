@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import trivia from '../trivia.png';
 import { saveLogin } from '../redux/actions/actionsLogin';
+import { actionResetPlayer } from '../redux/actions/actionPlayer';
 import { fetchAPI, getTokenLoading } from '../redux/actions';
 import ConfigButton from '../components/ConfigButton';
 
@@ -31,14 +32,15 @@ class Login extends Component {
   }
 
   handleClick() {
-    const { fetchAPItoken, token, saveData, Loading } = this.props;
-    fetchAPItoken();
+    const { fetchAPItoken, token, saveData, Loading, resetPlayer } = this.props;
     localStorage.setItem('token', token);
     saveData(this.state);
     localStorage
       .setItem('state', JSON
         .stringify({ player: { name: '', assertions: 0, score: 0, gravatarEmail: '' } }));
     Loading();
+    fetchAPItoken();
+    resetPlayer();
   }
 
   btnDisable() {
@@ -100,11 +102,12 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  fetchAPItoken: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
+  fetchAPItoken: PropTypes.func,
+  token: PropTypes.string,
   saveData: PropTypes.func,
   Loading: PropTypes.func,
-};
+  resetPlayer: PropTypes.func,
+}.isRequired;
 
 Login.defaultProps = {
   saveData: () => {},
@@ -125,6 +128,7 @@ const mapDispatchToProps = (dispatch) => ({
     return dispatch(saveLogin(state, hashEmail));
   },
   Loading: () => dispatch(getTokenLoading()),
+  resetPlayer: () => dispatch(actionResetPlayer),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

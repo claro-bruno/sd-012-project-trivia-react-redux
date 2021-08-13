@@ -20,11 +20,12 @@ class Header extends React.Component {
           >
             { `Nome: ${name || '"Sem Nome"'}` }
           </span>
+          <span>Pontuação Total:</span>
           <span
             className="player-score"
             data-testid="header-score"
           >
-            { `Pontuação Total: ${score}` }
+            {score}
           </span>
         </section>
       </header>

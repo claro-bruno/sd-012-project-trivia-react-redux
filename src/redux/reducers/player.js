@@ -1,4 +1,4 @@
-import { PLAYER } from '../actions/actionPlayer';
+import { PLAYER, RESET_PLAYER } from '../actions/actionPlayer';
 
 const INITIAL_STATE = {
   name: '',
@@ -17,6 +17,8 @@ const player = (state = INITIAL_STATE, action) => {
       score: state.score + action.score,
       gravatarEmail: action.gravatarEmail,
     };
+  case RESET_PLAYER:
+    return INITIAL_STATE;
   default:
     return ({ ...state });
   }
