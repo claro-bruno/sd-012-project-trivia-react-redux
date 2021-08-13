@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
-
 import Loading from '../Components/Loading';
 import Answers from '../Components/Answers';
-
 import HeaderGame from '../Components/HeaderGame';
 import { actionFetchApiGame, dispatchScore, showAnswers } from '../redux/actions';
 
@@ -146,7 +144,6 @@ class Game extends React.Component {
     const { index } = this.state;
     const numberQuestions = 4;
     const { show } = this.props;
-
     if (show && index < numberQuestions) {
       return (
         <button
@@ -182,9 +179,7 @@ class Game extends React.Component {
   render() {
     const { questions, isFetching, show } = this.props;
     const { index, currentTime, score } = this.state;
-
     if (isFetching) return <Loading />;
-
     return (
       <>
         <HeaderGame score={ score } />
@@ -221,22 +216,14 @@ class Game extends React.Component {
 
 Game.propTypes = {
   fetchApiGame: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
+  history: PropTypes.arrayOf().isRequired,
   isFetching: PropTypes.bool.isRequired,
-  questions: PropTypes.arrayOf(
-    PropTypes.shape({
-      category: PropTypes.string.isRequired,
-      question: PropTypes.string.isRequired,
-      difficulty: PropTypes.string.isRequired,
-    }).isRequired,
-  ).isRequired,
+  name: PropTypes.string.isRequired,
+  questions: PropTypes.arrayOf().isRequired,
   sendShowAnswers: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
   token: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  gravatarEmail: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
