@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
+import SettingsBodyS from './styles';
+
 import fetchAPI from '../../Redux/reducers/questions/actions/fetchAPI';
 import getConfig from '../../Redux/reducers/questions/actions/getConfig';
 
@@ -16,7 +18,7 @@ class Settings extends Component {
       amount: props.config.amount,
       category: props.config.category,
       difficulty: props.config.difficulty,
-      type: props.config.type,
+      type: props.config.configType,
       redirect: false,
     };
   }
@@ -38,7 +40,7 @@ class Settings extends Component {
     const { amount, category, difficulty, type, redirect } = this.state;
 
     return (
-      <div>
+      <SettingsBodyS>
         <form onSubmit={ (e) => e.preventDefault() }>
           <h1 data-testid="settings-title">Configurações</h1>
           <select name="amount" value={ amount } onChange={ this.handleChange }>
@@ -66,7 +68,7 @@ class Settings extends Component {
           <button type="button" onClick={ this.handleSubmit }>Alterar</button>
           { redirect && <Redirect to="/" /> }
         </form>
-      </div>
+      </SettingsBodyS>
     );
   }
 }
@@ -79,7 +81,7 @@ Settings.propTypes = {
     amount: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     difficulty: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
+    configType: PropTypes.string.isRequired,
   }).isRequired,
 };
 

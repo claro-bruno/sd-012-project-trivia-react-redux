@@ -2,13 +2,14 @@ import { GET_QUESTIONS } from './actions/getQuestions';
 import { GET_CHANGES } from './actions/getChanges';
 import { GET_CATEGORIES } from './actions/getCategories';
 import { GET_CONFIG } from './actions/getConfig';
+import { RESET_CONFIG } from './actions/resetConfig';
 
 const INITIAL_STATE = {
   config: {
-    amount: '1',
+    amount: '5',
     category: '',
     difficulty: '',
-    type: '',
+    configType: '',
   },
   questions: [],
   loaded: false,
@@ -26,6 +27,8 @@ const questions = (state = INITIAL_STATE, action) => {
     return { ...state, categories: action.categories };
   case GET_CONFIG:
     return { ...state, config: { ...state.config, ...action.config } };
+  case RESET_CONFIG:
+    return { ...state, config: { ...INITIAL_STATE.config } };
   default:
     return state;
   }

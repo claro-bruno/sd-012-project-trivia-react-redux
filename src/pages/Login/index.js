@@ -20,11 +20,11 @@ import ButtonSection from './ButtonSection';
 import fetchCategories from '../../Redux/reducers/questions/actions/fetchCategories';
 
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      name: '',
-      email: '',
+      name: props.pName,
+      email: props.pEmail,
       redirect: false,
       redirectConfig: false,
     };
@@ -45,6 +45,9 @@ class Login extends Component {
   }
 
   handleRedirectConfig() {
+    const { name, email } = this.state;
+    const { getInfoAction } = this.props;
+    getInfoAction({ name, email });
     this.setState({ redirectConfig: true });
   }
 
@@ -104,7 +107,14 @@ class Login extends Component {
 Login.propTypes = {
   getInfoAction: PropTypes.func.isRequired,
   requestCategories: PropTypes.func.isRequired,
+  pName: PropTypes.string.isRequired,
+  pEmail: PropTypes.string.isRequired,
 };
+
+const mapStateToProps = ({ player }) => ({
+  pName: player.name,
+  pEmail: player.gravatarEmail,
+});
 
 // Enviando action "getEmail" para via props, com o nome "getEmailAction";
 const mapDispatchToProps = (dispatch) => ({
@@ -112,4 +122,4 @@ const mapDispatchToProps = (dispatch) => ({
   requestCategories: () => dispatch(fetchCategories()),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

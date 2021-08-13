@@ -1,4 +1,5 @@
 import { GET_USER_INFO } from './actions/getEmail';
+import { RESET_DATA } from './actions/resetData';
 import { SUM_SCORE } from './actions/sumScore';
 
 // Funções para auxiliar reducer e localStorage;
@@ -41,6 +42,10 @@ const player = (state = INITIAL_STATE, action) => {
   case SUM_SCORE:
     saveAssistent(state, action, changeScore);
     return changeScore(state, action);
+  case RESET_DATA:
+    localStorage
+      .setItem('state', JSON.stringify({ player: { name: '', gravatarEmail: '' } }));
+    return { ...state, ...INITIAL_STATE };
   default:
     return state;
   }

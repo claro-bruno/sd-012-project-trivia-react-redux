@@ -6,6 +6,8 @@ import md5 from 'crypto-js/md5';
 import PlayerHeader from '../../PlayerHeader';
 import { FeedbackMainS, MessageSectionS } from './styles';
 
+import resetConfig from '../../Redux/reducers/questions/actions/resetConfig';
+import resetData from '../../Redux/reducers/player/actions/resetData';
 import homerFeliz from '../../assets/images/homer-excited.png';
 import homerDonut from '../../assets/images/homer_donut.png';
 
@@ -24,7 +26,8 @@ class Feedback extends Component {
   }
 
   render() {
-    const { gravatarEmail, name, score, assertions } = this.props;
+    const { gravatarEmail, name, score, assertions,
+      resetPlayer, resetSettings } = this.props;
     const encodeEmail = md5(gravatarEmail).toString();
     return (
       <div>
@@ -59,8 +62,13 @@ class Feedback extends Component {
             <Link to="/ranking">
               <button type="button" data-testid="btn-ranking">Ver Ranking</button>
             </Link>
-            <Link to="/">
-              <button type="button" data-testid="btn-play-again">Jogar novamente</button>
+            <Link to="/" onClick={ () => { resetPlayer(); resetSettings(); } }>
+              <button
+                type="button"
+                data-testid="btn-play-again"
+              >
+                Jogar novamente
+              </button>
             </Link>
           </div>
         </FeedbackMainS>
@@ -74,6 +82,8 @@ Feedback.propTypes = {
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
   assertions: PropTypes.number.isRequired,
+  resetPlayer: PropTypes.func.isRequired,
+  resetSettings: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ player }) => ({
@@ -83,4 +93,9 @@ const mapStateToProps = ({ player }) => ({
   assertions: player.assertions,
 });
 
-export default connect(mapStateToProps)(Feedback);
+const mapDispatchToProps = (dispatch) => ({
+  resetPlayer: () => dispatch(resetData()),
+  resetSettings: () => dispatch(resetConfig()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
