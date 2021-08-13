@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
 import Loading from '../Components/Loading';
 import Answers from '../Components/Answers';
-
 import HeaderGame from '../Components/HeaderGame';
 import { actionFetchApiGame, dispatchScore, showAnswers } from '../redux/actions';
 
@@ -20,6 +20,7 @@ class Game extends React.Component {
 
     };
     this.showNextQuestion = this.showNextQuestion.bind(this);
+    this.showFeedback = this.showFeedback.bind(this);
     this.btnNext = this.btnNext.bind(this);
     this.incorrectAndCorrectQuestion = this.incorrectAndCorrectQuestion.bind(this);
     this.changeCurrentTime = this.changeCurrentTime.bind(this);
@@ -97,6 +98,25 @@ class Game extends React.Component {
     return result;
   }
 
+  showFeedback() {
+    const { history, sendShowAnswers } = this.props;
+
+    const state = JSON.parse(localStorage.state);
+
+    const ranking = localStorage.ranking
+      ? JSON.parse(localStorage.ranking)
+      : [];
+
+    const { player: { name, score, gravatarEmail } } = state;
+
+    const hash = md5(gravatarEmail);
+    const picture = `https://www.gravatar.com/avatar/${hash}`;
+
+    localStorage.ranking = JSON.stringify([...ranking, { name, picture, score }]);
+    history.push('/feedback');
+    sendShowAnswers(false);
+  }
+
   async handleClick(correct) {
     if (correct === 'correct') {
       const resultado = await this.savingPoints();
@@ -121,11 +141,9 @@ class Game extends React.Component {
 
   // requisito 10
   btnNext() {
-    const { history: { push } } = this.props;
     const { index } = this.state;
     const numberQuestions = 4;
     const { show } = this.props;
-
     if (show && index < numberQuestions) {
       return (
         <button
@@ -143,7 +161,7 @@ class Game extends React.Component {
         <button
           type="button"
           data-testid="btn-next"
-          onClick={ () => push('/feedback') } // fazer push para a tela de feedback
+          onClick={ () => this.showFeedback() } // fazer push para a tela de feedback
         >
           Ver Resultado
         </button>
@@ -161,9 +179,7 @@ class Game extends React.Component {
   render() {
     const { questions, isFetching, show } = this.props;
     const { index, currentTime, score } = this.state;
-
     if (isFetching) return <Loading />;
-
     return (
       <>
         <HeaderGame score={ score } />
@@ -200,22 +216,14 @@ class Game extends React.Component {
 
 Game.propTypes = {
   fetchApiGame: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
+  history: PropTypes.arrayOf().isRequired,
   isFetching: PropTypes.bool.isRequired,
-  questions: PropTypes.arrayOf(
-    PropTypes.shape({
-      category: PropTypes.string.isRequired,
-      question: PropTypes.string.isRequired,
-      difficulty: PropTypes.string.isRequired,
-    }).isRequired,
-  ).isRequired,
+  name: PropTypes.string.isRequired,
+  questions: PropTypes.arrayOf().isRequired,
   sendShowAnswers: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
   token: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  gravatarEmail: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
