@@ -4,18 +4,19 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import fetchAPI from '../../Redux/reducers/questions/actions/fetchAPI';
+import getConfig from '../../Redux/reducers/questions/actions/getConfig';
 
 class Settings extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
-      amount: '1',
-      category: '',
-      difficulty: '',
-      type: '',
+      amount: props.config.amount,
+      category: props.config.category,
+      difficulty: props.config.difficulty,
+      type: props.config.type,
       redirect: false,
     };
   }
@@ -25,8 +26,9 @@ class Settings extends Component {
   }
 
   handleSubmit() {
-    const { requestFetch } = this.props;
+    const { requestFetch, sendConfig } = this.props;
     const { amount, category, difficulty, type } = this.state;
+    sendConfig(this.state);
     requestFetch(amount, category, difficulty, type);
     this.setState({ redirect: true });
   }
@@ -61,7 +63,7 @@ class Settings extends Component {
             <option value="multiple">Multiple</option>
             <option value="boolean">True/False</option>
           </select>
-          <button type="submit" onClick={ this.handleSubmit }>Alterar</button>
+          <button type="button" onClick={ this.handleSubmit }>Alterar</button>
           { redirect && <Redirect to="/" /> }
         </form>
       </div>
@@ -71,16 +73,25 @@ class Settings extends Component {
 
 Settings.propTypes = {
   requestFetch: PropTypes.func.isRequired,
+  sendConfig: PropTypes.func.isRequired,
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+  config: PropTypes.shape({
+    amount: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    difficulty: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = ({ questions }) => ({
   categories: questions.categories,
+  config: questions.config,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   requestFetch: (amount, category, difficulty, type) => (
     dispatch(fetchAPI(amount, category, difficulty, type))),
+  sendConfig: (config) => dispatch(getConfig(config)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
