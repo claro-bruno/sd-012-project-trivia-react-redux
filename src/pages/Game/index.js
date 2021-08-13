@@ -6,35 +6,27 @@ import md5 from 'crypto-js/md5'; // Utilizando biblioteca CryptoJS conforme READ
 import ActualQuestion from './ActualQuestion';
 import GameBodyS from './styles';
 import PlayerHeader from '../../PlayerHeader';
+import WithoutQuestions from './WithoutQuestions';
+import fetchAPI from '../../Redux/reducers/questions/actions/fetchAPI';
 
 class Game extends Component {
   constructor() {
     super();
-    this.getQuestions = this.getQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.state = {
-      questions: [],
       questionIndex: 0,
-      loaded: false,
     };
   }
 
   componentDidMount() {
-    this.getQuestions();
-  }
-
-  getQuestions() {
-    const numberOfQuestions = 5;
-    const token = localStorage.getItem('token');
-    const endpoind = `https://opentdb.com/api.php?amount=${numberOfQuestions}&encode=base64&token=${token}`;
-    fetch(endpoind)
-      .then((response) => response.json())
-      .then(({ results }) => this.setState({ questions: results, loaded: true }));
+    const { requestFetch, receivedSettings } = this.props;
+    if (!receivedSettings) requestFetch();
   }
 
   nextQuestion() {
+    const { questions } = this.props;
     const { questionIndex: actualIndex } = this.state;
-    const maxIndex = 4;
+    const maxIndex = questions.length - 1;
     if (actualIndex < maxIndex) {
       this.setState(({ questionIndex }) => ({
         questionIndex: questionIndex + 1,
@@ -43,8 +35,8 @@ class Game extends Component {
   }
 
   render() {
-    const { questions, questionIndex, loaded } = this.state;
-    const { gravatarEmail, name, score } = this.props;
+    const { questionIndex } = this.state;
+    const { questions, loaded, gravatarEmail, name, score } = this.props;
 
     // Passando email para formato md5 de criptografia;
     const encodeEmail = md5(gravatarEmail).toString();
@@ -57,9 +49,11 @@ class Game extends Component {
           encodeEmail={ encodeEmail }
         />
         <GameBodyS>
-          { loaded
+          { questions.length < 1 && loaded && <WithoutQuestions /> }
+          { loaded && questions.length > 0
           && (
             <ActualQuestion
+              questions={ questions }
               question={ questions[questionIndex] }
               questionIndex={ questionIndex }
               nextQuestion={ this.nextQuestion }
@@ -78,13 +72,25 @@ Game.propTypes = {
   gravatarEmail: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
+  questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loaded: PropTypes.bool.isRequired,
+  requestFetch: PropTypes.func.isRequired,
+  receivedSettings: PropTypes.bool.isRequired,
 };
 
 // Enviando propriedades do estado do reducer "player" para props do meu componente;
-const mapStateToProps = ({ player }) => ({
+const mapStateToProps = ({ player, questions }) => ({
   name: player.name,
   gravatarEmail: player.gravatarEmail,
   score: player.score,
+  questions: questions.questions,
+  loaded: questions.loaded,
+  receivedSettings: questions.receivedSettings,
 });
 
-export default connect(mapStateToProps)(Game);
+const mapDispatchToProps = (dispatch) => ({
+  requestFetch: () => (
+    dispatch(fetchAPI())),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

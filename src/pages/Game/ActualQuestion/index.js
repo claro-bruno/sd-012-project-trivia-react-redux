@@ -148,12 +148,13 @@ class ActualQuestion extends Component {
       },
       nextQuestion,
       questionIndex,
+      questions,
     } = this.props;
     const { answered, timer, redirect } = this.state;
 
     const answers = [...incorrectAnswers, correctAnswer];
     answers.sort();
-    const maxIndex = 4;
+    const maxIndex = questions.length - 1;
 
     return (
       <section>
@@ -200,6 +201,7 @@ ActualQuestion.propTypes = {
   pointsToScore: PropTypes.func.isRequired,
   nextQuestion: PropTypes.func.isRequired,
   questionIndex: PropTypes.number.isRequired,
+  questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   picture: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,

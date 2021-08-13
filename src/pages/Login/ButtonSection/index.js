@@ -8,8 +8,7 @@ class ButtonSection extends Component {
   render() {
     const {
       isValid,
-      handleFetch,
-      handleSendUserInfo,
+      handleSubmit,
       handleRedirectConfig,
     } = this.props;
     return (
@@ -24,7 +23,7 @@ class ButtonSection extends Component {
         <PlayButtonS
           type="button"
           data-testid="btn-play"
-          onClick={ () => { handleFetch(); handleSendUserInfo(); } }
+          onClick={ () => { handleSubmit(); } }
           disabled={ isValid() }
         >
           JOGAR
@@ -36,8 +35,7 @@ class ButtonSection extends Component {
 
 ButtonSection.propTypes = {
   isValid: PropTypes.func.isRequired,
-  handleFetch: PropTypes.func.isRequired,
-  handleSendUserInfo: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   handleRedirectConfig: PropTypes.func.isRequired,
 };
 

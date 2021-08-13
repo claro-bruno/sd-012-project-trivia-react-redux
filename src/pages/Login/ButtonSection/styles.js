@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 /* eslint-disable indent */
 import styled from 'styled-components';
 
@@ -28,6 +29,7 @@ export const PlayButtonS = styled.button` /* desabilitando problema stylelint */
   border-radius: 3px;
   color: whitesmoke;
   font-weight: 600;
+  opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
   padding: 8px 0;
   width: 90%;
 

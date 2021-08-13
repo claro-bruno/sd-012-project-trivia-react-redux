@@ -17,6 +17,7 @@ import {
 import getInfo from '../../Redux/reducers/player/actions/getEmail';
 import InputSection from './InputSection';
 import ButtonSection from './ButtonSection';
+import fetchCategories from '../../Redux/reducers/questions/actions/fetchCategories';
 
 class Login extends Component {
   constructor() {
@@ -29,9 +30,14 @@ class Login extends Component {
     };
     this.isValid = this.isValid.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSendUserInfo = this.handleSendUserInfo.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFetch = this.handleFetch.bind(this);
     this.handleRedirectConfig = this.handleRedirectConfig.bind(this);
+  }
+
+  componentDidMount() {
+    const { requestCategories } = this.props;
+    requestCategories();
   }
 
   handleChange({ target: { name, value } }) {
@@ -51,19 +57,18 @@ class Login extends Component {
     return !validEmail.test(email);
   }
 
-  handleSendUserInfo() {
+  handleSubmit() {
     const { name, email } = this.state;
-    // Recebendo action passada pelo mapDispatchToProps();
     const { getInfoAction } = this.props;
-    // Passando email do estado no parâmetro da action;
     getInfoAction({ name, email });
+    this.handleFetch();
+    this.setState({ redirect: true });
   }
 
   async handleFetch() {
-    const fetchAPI = await fetch('https://opentdb.com/api_token.php?command=request');
-    const { token } = await fetchAPI.json();
+    const fetching = await fetch('https://opentdb.com/api_token.php?command=request');
+    const { token } = await fetching.json();
     localStorage.setItem('token', token);
-    this.setState({ redirect: true });
   }
 
   render() {
@@ -84,8 +89,7 @@ class Login extends Component {
             />
             <ButtonSection
               isValid={ this.isValid }
-              handleFetch={ this.handleFetch }
-              handleSendUserInfo={ this.handleSendUserInfo }
+              handleSubmit={ this.handleSubmit }
               handleRedirectConfig={ this.handleRedirectConfig }
             />
             { redirect && <Redirect to="/game" /> }
@@ -99,11 +103,13 @@ class Login extends Component {
 
 Login.propTypes = {
   getInfoAction: PropTypes.func.isRequired,
+  requestCategories: PropTypes.func.isRequired,
 };
 
 // Enviando action "getEmail" para via props, com o nome "getEmailAction";
 const mapDispatchToProps = (dispatch) => ({
   getInfoAction: (info) => dispatch(getInfo(info)),
+  requestCategories: () => dispatch(fetchCategories()),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
