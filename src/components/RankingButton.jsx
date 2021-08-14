@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { TiStarFullOutline } from 'react-icons/ti';
 
 class RankingButton extends Component {
   render() {
@@ -10,10 +11,7 @@ class RankingButton extends Component {
           type="button"
           data-testid="btn-ranking"
         >
-          <img
-            src="https://img.icons8.com/ios-filled/50/000000/leaderboard.png"
-            alt="ranking"
-          />
+          <TiStarFullOutline />
         </button>
       </Link>
     );

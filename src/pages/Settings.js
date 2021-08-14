@@ -5,7 +5,7 @@ class Settings extends PureComponent {
   render() {
     return (
       <section className="setting-page">
-        <h1 data-testid="settings-title">
+        <h1 className="main-text" data-testid="settings-title">
           Acredite, o jogo já está difícil demais!
         </h1>
         <PlayAgainButton />
