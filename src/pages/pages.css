@@ -6,9 +6,12 @@
 
 .login-page {
   align-items: center;
+  background-color: blueviolet;
   display: flex;
   flex-flow: row nowrap;
+  height: 100vh;
   justify-content: center;
+  width: 100vw;
 }
 
 .welcome-text {
@@ -20,20 +23,37 @@
 .msg-component {
   background-color: #fdd35d;
   border: 3px solid black;
+  width: 40vw;
 }
 
 .welcome-section {
-  align-items: flex-end;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
 }
 
-.main-text, text {
+.main-text, .text {
   align-items: center;
   display: flex;
   flex-flow: column nowrap;
   font-family: Georama , sans-serif;
   padding-top: 20px;
+  text-shadow: 0.1px 5px 4px #a3987b;
+}
+
+.score-text-name {
+  font-family: Georama , sans-serif;
+  font-size: 1.4em;
+  font-weight: 600;
+  text-shadow: 0.1px 5px 4px #a3987b;
+}
+
+.score-text {
+  font-family: Georama , sans-serif;
+  font-size: 1.6em;
+  font-weight: 700;
+  margin-right: 20px;
+  text-shadow: 0.1px 5px 4px #a3987b;
 }
 
 .text {
@@ -43,20 +63,30 @@
 .header-name {
   display: flex;
   font-family: Georama , sans-serif;
-  font-size: xx-large;
+  font-size: 5em;
+  text-shadow: 1px 1px 3px #181611;
 }
 
 .header-score {
   font-family: Georama , sans-serif;
-  font-size: x-large;
+  font-size: 1.7em;
+  text-shadow: 1px 1px 2px #181611;
 }
 
 .game-questions {
+  align-items: center;
+  background-color: #fdc835;
+  border: 3px solid;
+  border-radius: 15px 160px 80px;
+  box-shadow: 5px 4px 10px 0.1px #181611;
   display: flex;
+  flex-flow: column nowrap;
+  height: 60vh;
+  width: 50vw;
 }
 
 .single-question {
-  align-items: stretch;
+  align-items: center;
   display: flex;
   flex-flow: column nowrap;
   gap: 5px;
@@ -68,6 +98,7 @@
   border: 3px solid black;
   display: flex;
   flex-direction: column;
+  gap: 10px;
   padding: 100px;
 }
 
@@ -83,25 +114,37 @@
 
 .header-player {
   align-items: center;
+  background-color: #9c74e7;
+  border: 3px solid;
+  border-radius: 40px 10px;
+  box-shadow: 5px 4px 10px 1px #181611;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center;
+  height: 25vh;
+  justify-content: space-around;
+  margin-bottom: 40px;
+  width: 60vw;
 }
 
 .player-img {
   border-radius: 25%;
+  box-shadow: 1px 1px 5px 0.1px #181611;
 }
 
 .player-game-section {
   align-items: center;
+  background-color: #8f63e3;
   display: flex;
   flex-flow: column nowrap;
+  height: 100vh;
+  width: 100vw;
 }
 
 .player-score {
-  align-items: flex-start;
+  align-items: center;
   display: flex;
-  flex-direction: column;
+  flex-flow: row nowrap;
+  gap: 60px;
 }
 
 .list-questions {
@@ -133,6 +176,10 @@
 
 .timer-section {
   align-items: center;
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 25%;
+  box-shadow: 1px 1px 4px 0.1px black;
   display: flex;
   flex-flow: column nowrap;
   font-size: xx-large;
@@ -141,6 +188,7 @@
 
 .timer-value {
   font-size: 1.5em;
+  margin-top: -20px;
 }
 
 .feedback-btns {
@@ -150,8 +198,11 @@
 
 .feedback-section {
   align-items: center;
+  background-color: #8f63e3;
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  width: 100vw;
 }
 
 .ranking-list {
@@ -160,15 +211,23 @@
 }
 
 .players-list {
+  align-content: center;
   align-items: center;
+  background-color: #fdc835;
+  border: 3px solid;
+  border-radius: 23px 30px 10px 22px;
+  box-shadow: 3px 2px 10px black;
   display: flex;
   flex-flow: row nowrap;
   gap: 150px;
-  justify-content: space-between;
+  grid-gap: 150px;
+  justify-content: space-evenly;
+  margin-top: 10px;
 }
 
 .ranking-section {
   align-items: center;
+  background-color: #8f63e3;
   display: flex;
   flex-flow: column nowrap;
 }
@@ -179,57 +238,136 @@
 }
 
 .btn-play {
-  padding: 1px 100px;
+  background-clip: padding-box;
+  background-color: darkmagenta;
+  border: none;
+  border-radius: 25px;
+  color: #beb7a4;
+  outline: none;
+  padding: 10px 100px;
+}
+
+.btn-play:hover {
+  background-clip: padding-box;
+  background-color: darkmagenta;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  outline: none;
+  padding: 10px 100px;
 }
 
 .btn-play:disabled {
-  border: 1px solid darkgray;
-  color: gray;
-  padding: 1px 100px;
-}
-
-.btn-play:focus {
-  border: 3px solid lightgreen;
-  color: darkgreen;
-  padding: 1px 100px;
+  background-clip: padding-box;
+  background-color: #9c74e7;
+  border: none;
+  border-radius: 25px;
+  color: #beb7a4;
+  outline: none;
+  padding: 10px 100px;
 }
 
 .btn-play:disabled:hover {
-  border: 1px solid black;
-  color: gray;
-  padding: 1px 100px;
-  transition: 0.2s;
+  background-clip: padding-box;
+  background-color: #beb7a4;
+  color: #ff1b1c;
+  outline: none;
+  transition: 0.3s;
 }
 
 .btn-settings {
-  padding: 1px 100px;
+  background-clip: padding-box;
+  background-color: black;
+  border: none;
+  border-radius: 25px;
+  color: #beb7a4;
+  outline: none;
+  padding: 10px 100px;
 }
 
 .btn-settings:hover {
-  border: 1px solid black;
-  color: gray;
-  padding: 1px 100px;
+  background-clip: padding-box;
+  background-color: black;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  outline: none;
+  padding: 10px 100px;
+  transition: 0.3s;
+}
+
+.btn-questions {
+  background-color: #ccc7b7;
+  border: 3px solid black;
+  border-radius: 100px 10px;
+  box-shadow: 2px 1px 5px 0.1px #181611;
+  font-weight: 500;
+  outline: none;
+  width: 30vw;
+}
+
+.btn-questions:hover {
+  border: 2px solid #9c74e7;
+  box-shadow: 2px 1px 5px 0.1px #181611;
   transition: 0.2s;
 }
 
 .setting-page {
   align-items: center;
+  background-color: #8f63e3;
   display: flex;
   flex-flow: column nowrap;
   gap: 80px;
+  height: 100vh;
+  width: 100vw;
 }
 
 .home-btn {
   border: 2px solid darkgray;
   border-radius: 50%;
+  box-shadow: 1px 1px 5px black;
+  height: 6vh;
+  width: 3vw;
 }
 
 .ranking-btn {
   border: 2px solid darkgray;
   border-radius: 50%;
+  box-shadow: 1px 1px 5px black;
+  height: 6vh;
+  margin-left: 20px;
+  width: 3vw;
 }
 
 .play-again-btn {
   border-radius: 50%;
   padding: 15px 20px;
+}
+
+.input-name-email {
+  border: 2px solid slateblue;
+  border-radius: 20px;
+  outline: none;
+  padding: 5px 20px;
+  text-align: center;
+}
+
+.input-name-email:focus {
+  border: 3px solid #8452e0;
+  border-radius: 20px;
+  outline: none;
+  padding: 5px 20px;
+  text-align: center;
+}
+
+.feedback-result {
+  align-items: center;
+  background-color: #fdc835;
+  border: 3px solid;
+  border-radius: 15px 160px 80px;
+  box-shadow: 5px 4px 10px 0.1px #181611;
+  display: flex;
+  flex-flow: column nowrap;
+  height: 35vh;
+  width: 30vw;
 }

@@ -139,7 +139,7 @@ class TriviaQuestions extends Component {
             return (
               <button
                 key={ index }
-                className="btn-outline-dark"
+                className="btn-questions"
                 data-testid="correct-answer"
                 style={ { border: correctanswer } }
                 type="button"
@@ -154,7 +154,7 @@ class TriviaQuestions extends Component {
           return (
             <button
               data-testid={ `wrong-answer-${indexWrong}` }
-              className="btn-outline-dark"
+              className="btn-questions"
               style={ { border: incorrectanswer } }
               type="button"
               key={ index }

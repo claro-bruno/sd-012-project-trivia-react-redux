@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { TiHome } from 'react-icons/ti';
 
 class PlayAgainButton extends Component {
   render() {
@@ -10,10 +11,7 @@ class PlayAgainButton extends Component {
           data-testid="btn-play-again"
           type="button"
         >
-          <img
-            src="https://img.icons8.com/material-outlined/48/000000/home--v2.png"
-            alt="home"
-          />
+          <TiHome />
         </button>
       </Link>
     );

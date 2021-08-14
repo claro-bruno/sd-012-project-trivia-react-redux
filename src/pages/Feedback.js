@@ -26,33 +26,42 @@ class Feedback extends Component {
     const getAssertion = JSON.parse(localStorage.getItem('state'));
     const { player } = getAssertion;
     const { userFeedback } = this.props;
-
     return (
       <section className="feedback-section">
-        <section>
+        <section className="header-player">
           <img
             className="player-img"
             data-testid="header-profile-picture"
             src={ userFeedback.hash }
             alt={ `${userFeedback.name}` }
           />
-          <span data-testid="header-player-name">{ userFeedback.name }</span>
-          <span data-testid="header-score">{ userFeedback.score }</span>
+          <span
+            className="header-name"
+            data-testid="header-player-name"
+          >
+            { userFeedback.name }
+          </span>
+          <span
+            className="header-score"
+            data-testid="header-score"
+          >
+            { userFeedback.score }
+          </span>
         </section>
-        <h1 data-testid="feedback-text">{ this.alertScore() }</h1>
-        <h2 data-testid="feedback-total-score">
-          { player.score }
-          {' '}
-          pontos
-        </h2>
-        <h3 data-testid="feedback-total-question">
-          { player.assertions }
-          {' '}
-          acerto(s)
-        </h3>
-        <section className="feedback-btns">
-          <PlayAgainButton />
-          <RankingButton />
+        <section className="feedback-result">
+          <h1 className="main-text" data-testid="feedback-text">
+            { this.alertScore() }
+          </h1>
+          <h2 className="text" data-testid="feedback-total-score">
+            { `${player.score} pontos` }
+          </h2>
+          <h3 className="text" data-testid="feedback-total-question">
+            { `${player.assertions} acerto(s)` }
+          </h3>
+          <section className="feedback-btns">
+            <PlayAgainButton />
+            <RankingButton />
+          </section>
         </section>
       </section>
     );

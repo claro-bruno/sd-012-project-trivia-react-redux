@@ -100,7 +100,7 @@ class Login extends PureComponent {
               placeholder="Email"
               type="email"
               name="email"
-              className="form-control"
+              className="input-name-email"
               data-testid="input-gravatar-email"
               value={ email }
               onChange={ this.handleInput }
@@ -113,7 +113,7 @@ class Login extends PureComponent {
               placeholder="Nome"
               type="text"
               name="name"
-              className="form-control"
+              className="input-name-email"
               data-testid="input-player-name"
               value={ name }
               onChange={ this.handleInput }
