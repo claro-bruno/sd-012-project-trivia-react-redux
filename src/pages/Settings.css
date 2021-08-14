@@ -41,10 +41,18 @@ select:active {
 .configuration-button {
   background-color: transparent;
   border: 4px solid white;
-  border-radius: 4px;
-  box-shadow: 0 0 15px currentColor;
+  border-radius: 15px;
   color: white;
   font-size: 0.9em;
   font-weight: 600;
   margin: 1.5em auto 0;
+  padding: 0.2em 0.5em;
+}
+
+.configuration-button:hover {
+  background-color: white;
+  border: 4px solid white;
+  border-radius: 15px;
+  box-shadow: 0 0 10px white;
+  color: rgb(45, 17, 51);
 }
