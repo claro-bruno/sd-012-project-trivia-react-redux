@@ -56,3 +56,34 @@ select:active {
   box-shadow: 0 0 10px white;
   color: rgb(45, 17, 51);
 }
+
+@media screen and ( min-width : 300px ) and ( max-width : 450px ) {
+
+  .text-config {
+    font-size: 2em;
+    margin: 1.5em auto;
+    max-width: 85%;
+    padding: 0.2em 0;
+  }
+
+  .configuration-menu {
+    align-items: center;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .configuration-options {
+    font-size: 1.2em;
+    height: 2em;
+    margin: 0.5em 0;
+    width: 85%;
+  }
+
+  .configuration-button {
+    font-size: 1.2em;
+    margin: 1.5em auto 0;
+    padding: 0.2em 0.5em;
+  }
+
+}

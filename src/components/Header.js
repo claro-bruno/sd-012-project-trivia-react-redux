@@ -35,39 +35,37 @@ class Header extends Component {
 
     return (
       <header className="feedback-player-container">
-        <div className="feedback-player-header">
-          <div className="feedback-images-container">
-            <img
-              data-testid="header-profile-picture"
-              className="feedback-profile-picture"
-              src={ gravatar }
-              alt="Imagem do Player"
-            />
-            <h1 className="feedback-title material-icons">emoji_events</h1>
-            <h5 data-testid="header-score">{ score }</h5>
-          </div>
-          <div className="feedback-data-container">
-            <h2 className="feedback-player-name" data-testid="header-player-name">
-              { name }
-            </h2>
-            <h3
-              className="feedback-score"
-              data-testid="feedback-total-score"
-            >
-              {/* { `Placar final: ${score}` } */}
-              { score }
-            </h3>
-            <h4
-              className="feedback-assetions"
-              data-testid="feedback-total-question"
-            >
-              {/* { `Total de acertos: ${assertions}` } */}
-              { assertions }
-            </h4>
-          </div>
-
+        <div className="feedback-player-image">
+          <img
+            data-testid="header-profile-picture"
+            className="feedback-profile-picture"
+            src={ gravatar }
+            alt="Imagem do Player"
+          />
+          <h2 className="feedback-player-name" data-testid="header-player-name">
+            { name }
+          </h2>
         </div>
-
+        <div className="feedback-score-container">
+          <h1 className="feedback-title material-icons">emoji_events</h1>
+          <h3
+            className="feedback-score"
+            data-testid="feedback-total-score"
+          >
+            {/* { `Placar final: ${score}` } */}
+            { score }
+          </h3>
+        </div>
+        <div className="feedback-assertions-score">
+          <h5 data-testid="header-score">{ score }</h5>
+          <h4
+            className="feedback-assetions"
+            data-testid="feedback-total-question"
+          >
+            {/* { `Total de acertos: ${assertions}` } */}
+            { assertions }
+          </h4>
+        </div>
       </header>
     );
   }

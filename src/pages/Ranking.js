@@ -42,19 +42,19 @@ class Ranking extends Component {
         <Mp3 musicPath={ lucianoMichelini } />
         <h1 data-testid="ranking-title">Ranking</h1>
         <div>{ this.rankingList() }</div>
-        <div>
+        <div className="option-container">
           { (isRedirecting) ? <Redirect to="/" /> : (
             <div className="rank-home-btn-container">
               <button
                 type="button"
-                className="btn-home home-one material-icons"
+                className="rank-btn-home rank-home-one material-icons"
                 onClick={ () => this.handleClick() }
               >
                 home
               </button>
               <button
                 type="button"
-                className="btn-home-label"
+                className="rank-btn-home-label"
                 data-testid="btn-go-home"
                 onClick={ () => this.handleClick() }
               >
@@ -62,7 +62,7 @@ class Ranking extends Component {
               </button>
               <button
                 type="button"
-                className="btn-home home-two material-icons"
+                className="rank-btn-home rank-home-two material-icons"
                 onClick={ () => this.handleClick() }
               >
                 home

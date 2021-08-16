@@ -2,7 +2,6 @@
   background-color: rgb(45, 17, 51);
 }
 
-
 .App-logo {
   animation: game 1s ease infinite;
   background-size: 200% 200%;
@@ -129,4 +128,67 @@ a {
 .btn-play:disabled {
   background-color: rgba(0, 0, 0, 0.6);
   box-shadow: none;
+}
+
+@media screen and ( min-width : 300px ) and ( max-width : 450px ) {
+
+  .App-header {
+    justify-content: flex-start;
+  }
+
+  .App-logo {
+    margin: 0 auto;
+    margin-top: 1.5em;
+    max-width: 85%;
+    width: auto;
+  }
+
+  p {
+    font-family: Palette Mosaic , cursive;
+    font-size: 1.5em;
+    margin: 2.5em 0;
+    max-width: 70%;
+  }
+
+  .login {
+    height: 12em;
+    margin: 0 auto;
+    width: 85%;
+  }
+
+  .input-text {
+    font-size: 1.2em;
+    height: 1.6em;
+    margin-bottom: 0.6em;
+    width: 14em;
+  }
+
+  .input-email {
+    font-size: 1.2em;
+    height: 1.6em;
+    width: 14em;
+  }
+
+  .options-menu {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1.2em;
+
+  }
+
+  .jogar-container {
+    height: 2em;
+    margin: 0 1.8em;
+  }
+
+  .btn-container {
+    font-size: 1.2em;
+    height: 100%;
+  }
+
+  .btn-play:disabled {
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: none;
+  }
+
 }
