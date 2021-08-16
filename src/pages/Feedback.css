@@ -39,12 +39,12 @@
   color: gold;
   font-size: 4em;
   margin: 0;
-  margin-right: 33%;
+  margin-right: 30%;
 }
 
 .feedback-score {
   margin: 0;
-  margin-right: 20%;
+  margin-right: 28%;
 }
 
 .feedback-assertions-score {
@@ -57,12 +57,12 @@
 
 h5 {
   margin: 0;
-  margin-right: 45%;
+  margin-right: 41%;
 }
 
 .feedback-assetions {
   margin: 0;
-  margin-right: 17%;
+  margin-right: 22%;
 }
 
 .options-container {
