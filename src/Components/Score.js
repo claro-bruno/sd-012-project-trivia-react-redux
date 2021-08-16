@@ -7,12 +7,6 @@ class Score extends Component {
   render() {
     const { score, dataTestId } = this.props;
     return (
-      // <div
-      //   className="feedText"
-      //   data-testid={ dataTestId }
-      // >
-      //   {`Score: ${score}`}
-      // </div>
       <Typography variant="h6" style={ { flexGrow: 1 } } data-testid={ dataTestId }>
         {`Score: ${score}`}
       </Typography>

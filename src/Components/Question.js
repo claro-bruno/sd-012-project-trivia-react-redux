@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -13,16 +12,7 @@ import Stopwatch from './Stopwatch';
 import NextButton from './NextButton';
 import '../App.css';
 
-const styles = (theme) => ({
-  root: {
-    display: 'flex', flexFlow: 'column', alignItems: 'center',
-  },
-  card: {
-    minWidth: '200px', maxWidth: '700px', width: '70%',
-  },
-  question: {
-    color: theme.palette.grey.A400,
-  },
+const buttonStyles = (theme) => ({
   buttonsContainer: {
     width: '100%',
     'align-items': 'stretch',
@@ -60,6 +50,19 @@ const styles = (theme) => ({
       color: '#B71C1C',
       borderBottom: '0px',
     },
+  },
+});
+
+const styles = (theme) => ({
+  ...buttonStyles(theme),
+  root: {
+    display: 'flex', flexFlow: 'column', alignItems: 'center',
+  },
+  card: {
+    minWidth: '200px', maxWidth: '700px', width: '70%',
+  },
+  question: {
+    color: theme.palette.grey.A400,
   },
   stopwatch: {
     color: theme.palette.info.main,
@@ -101,6 +104,36 @@ class Question extends Component {
     return isOutOfTime || isQuestionAnswered;
   }
 
+  renderButtons(answers, classes) {
+    return (
+      answers.map((answer, index) => (
+        (answer.correctAnswer)
+          ? (
+            <Button
+              data-testid="correct-answer"
+              key={ answer.correctAnswer }
+              onClick={ () => this.handleAnswer(true) }
+              disabled={ this.isNotAnswering() }
+              className={ classes.correctButton }
+            >
+              {AllHtmlEntities.decode(answer.correctAnswer)}
+            </Button>
+          )
+          : (
+            <Button
+              data-testid={ `wrong-answer-${index}` }
+              key={ answer }
+              onClick={ () => this.handleAnswer(false) }
+              disabled={ this.isNotAnswering() }
+              className={ classes.incorrectButton }
+            >
+              {AllHtmlEntities.decode(answer)}
+            </Button>
+          )
+      ))
+    );
+  }
+
   render() {
     const { answers } = this.state;
     const {
@@ -134,31 +167,7 @@ class Question extends Component {
               variant="contained"
               className={ classes.buttonsContainer }
             >
-              {answers.map((answer, index) => (
-                (answer.correctAnswer)
-                  ? (
-                    <Button
-                      data-testid="correct-answer"
-                      key={ answer.correctAnswer }
-                      onClick={ () => this.handleAnswer(true) }
-                      disabled={ this.isNotAnswering() }
-                      className={ classes.correctButton }
-                    >
-                      {answer.correctAnswer}
-                    </Button>
-                  )
-                  : (
-                    <Button
-                      data-testid={ `wrong-answer-${index}` }
-                      key={ answer }
-                      onClick={ () => this.handleAnswer(false) }
-                      disabled={ this.isNotAnswering() }
-                      className={ classes.incorrectButton }
-                    >
-                      {answer}
-                    </Button>
-                  )
-              ))}
+              {this.renderButtons(answers, classes)}
               <NextButton history={ history } className={ classes.nextButton } />
             </ButtonGroup>
           </CardActions>

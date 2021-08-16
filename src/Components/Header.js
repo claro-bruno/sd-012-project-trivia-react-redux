@@ -44,7 +44,7 @@ class Header extends Component {
         <AppBar position="static">
           <Toolbar className={ classes.toolBar }>
             <Typography variant="h6" className={ classes.title }>
-              {name || 'Anonimous'}
+              {name || 'Guest'}
             </Typography>
             <Typography variant="h6" className={ classes.title }>
               {`Score: ${score}`}

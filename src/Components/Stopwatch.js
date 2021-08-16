@@ -39,6 +39,10 @@ class Stopwatch extends Component {
     dispatchRemainingTime(counter);
   }
 
+  componentWillUnmount() {
+    this.resetTimer();
+  }
+
   updateCounter() {
     const { counter } = this.state;
     this.setState({ counter: (counter - counterDecrement) });
@@ -50,7 +54,6 @@ class Stopwatch extends Component {
 
   startTimer() {
     this.resetCounter();
-    this.resetTimer();
     const { dispatchIsAnswering } = this.props;
     dispatchIsAnswering();
     this.interval = setInterval(this.updateCounter, oneSecond);
