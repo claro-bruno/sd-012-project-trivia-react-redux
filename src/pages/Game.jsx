@@ -1,9 +1,10 @@
 import React from 'react';
+import Questions from './Questions';
 
 class Game extends React.Component {
   render() {
     return (
-      <h1>TRIVIA</h1>
+      <Questions />
     );
   }
 }

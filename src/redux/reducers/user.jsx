@@ -1,21 +1,23 @@
-import { USER_LOGIN, REQUEST_API, REQUEST_API_SUCCESS } from '../actions';
+import { USER_LOGIN, RIGTH_ANSWERS } from '../actions';
 
 const INITIAL_STATE = {
-  email: '',
   name: '',
-  token: '',
+  email: '',
+  score: 0,
+  assertions: 0,
 };
 
-const user = (state = INITIAL_STATE, action) => {
+const login = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case USER_LOGIN:
-    return { ...state, email: action.payload, name: action.payload };
-  case REQUEST_API:
-    return { ...state };
-  case REQUEST_API_SUCCESS:
-    return { ...state, token: action.payload };
-  default: return state;
+    return { ...state, name: action.name, email: action.email,
+    };
+  case RIGTH_ANSWERS:
+    return { ...state, score: action.score, assertions: action.assertions,
+    };
+  default:
+    return state;
   }
 };
 
-export default user;
+export default login;

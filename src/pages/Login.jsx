@@ -1,132 +1,136 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { userLogin, fetchAPI } from '../redux/actions/index';
+import { Link, Redirect } from 'react-router-dom';
+import { userLogin, getToken } from '../redux/actions/index';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      email: '',
+      loginUser: false,
       name: '',
+      email: '',
+      checkName: true,
+      checkEmail: true,
     };
     this.handleChange = this.handleChange.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
-    this.checkLogin = this.checkLogin.bind(this);
-    this.checkToken = this.checkToken.bind(this);
-    this.redirectSettingsBtn = this.redirectSettingsBtn.bind(this);
+    this.handleButton = this.handleButton.bind(this);
+    this.emailValidation = this.emailValidation.bind(this);
+  }
+
+  async fetchToken() {
+    const token = await getToken();
+    localStorage.setItem('token', token);
+    this.setState({
+      loginUser: true,
+    });
   }
 
   handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-    this.checkLogin();
+    const { name, value } = event.target;
+    this.setState({ [name]: value },
+      () => { this.emailValidation(); });
+  }
+
+  handleButton() {
+    const { name, email, checkEmail, checkName } = this.state;
+    if (name === '' && email === '') { return true; }
+    return (checkEmail || checkName);
   }
 
   // Referencia de como validar email com regex em https://ui.dev/validate-email-address-javascript/
-  emailValidation(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  emailValidation() {
+    const { name, email } = this.state;
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email.match(regex)) {
+      this.setState({
+        checkEmail: false,
+      });
+    } else {
+      this.setState({
+        checkEmail: true,
+      });
+    } if (name.length !== 0) {
+      this.setState({
+        checkName: false,
+      });
+    } else {
+      this.setState({
+        checkName: true,
+      });
+    }
   }
 
-  checkName(name) {
-    const nameLength = 2;
-    return name.length >= nameLength;
-  }
-
-  // handleClick(event) {
-  //   event.preventDefault();
-  //   const { login, history } = this.props;
-  //   const { email } = this.state;
-  //   login(email);
-  //   history.push('/game');
-  // }
-
-  redirectSettingsBtn(event) {
-    event.preventDefault();
-    const { login, history } = this.props;
-    const { email } = this.state;
-    login(email);
-    history.push('/settings');
-  }
-
-  checkLogin() {
-    const { email, name } = this.state;
-    return (this.emailValidation(email)) && (this.checkName(name));
-  }
-
-  checkToken() {
-    const { fetchToken, token } = this.props;
-    fetchToken();
-    localStorage.setItem('token', token);
+  playerState(name, email) {
+    const state = { player: {
+      name,
+      assertions: 0,
+      score: 0,
+      gravatarEmail: email,
+    } };
+    localStorage.setItem('state', JSON.stringify(state));
   }
 
   render() {
-    const { email, name } = this.state;
-
+    const { name, email, loginUser } = this.state;
+    const { login } = this.props;
+    if (loginUser) return <Redirect to="/game" />;
     return (
       <form>
-        <label htmlFor="email">
-          Email
+        <label htmlFor="name">
+          Nome:
           <input
             type="text"
-            name="email"
-            placeholder="Digite seu email"
-            required="true"
-            minLength="6"
-            value={ email }
-            data-testid="input-gravatar-email"
-            onChange={ this.handleChange }
+            name="name"
+            data-testid="input-player-name"
+            value={ name }
+            placeholder="Seu nome aqui"
+            onChange={ (event) => { this.handleChange(event); } }
           />
-          <label htmlFor="name">
-            Nome
-            <input
-              type="text"
-              name="name"
-              placeholder="Digite seu nome"
-              required
-              value={ name }
-              data-testid="input-player-name"
-              onChange={ this.handleChange }
-            />
-          </label>
-          <Link to="/game">
-            <button
-              type="submit"
-              data-testid="btn-play"
-              onClick={ this.checkToken() }
-              disabled={ !this.checkLogin() }
-            >
-              Jogar
-            </button>
-          </Link>
         </label>
+        <label htmlFor="email">
+          Email:
+          <input
+            data-testid="input-gravatar-email"
+            type="email"
+            name="email"
+            value={ email }
+            placeholder="Seu email aqui"
+            onChange={ (event) => { this.handleChange(event); } }
+          />
+        </label>
+
         <button
-          type="submit"
-          data-testid="btn-settings"
-          onClick={ this.redirectSettingsBtn }
+          type="button"
+          data-testid="btn-play"
+          disabled={ this.handleButton() }
+          onClick={ () => {
+            login({ name, email });
+            this.fetchToken();
+            this.playerState(name, email);
+          } }
         >
-          Settings
+          Play
         </button>
+        <Link to="/settings" data-testid="btn-settings">
+          <button type="button">Settings</button>
+        </Link>
       </form>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (payload) => dispatch(userLogin(payload)),
-  fetchToken: () => dispatch(fetchAPI),
+  login: (player) => dispatch(userLogin(player)),
+});
+
+const mapStateToProps = (state) => ({
+  playerLogin: state.login.name,
+  playerEmail: state.login.email,
 });
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
-  fetchToken: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
 };
-
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

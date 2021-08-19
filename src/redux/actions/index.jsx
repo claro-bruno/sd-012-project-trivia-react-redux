@@ -1,34 +1,37 @@
 export const USER_LOGIN = 'USER_LOGIN';
-export const userLogin = (payload) => ({
-  type: 'USER_LOGIN',
-  payload,
+export const userLogin = ({ email, name }) => ({
+  type: USER_LOGIN,
+  email,
+  name,
 });
 
-export const REQUEST_API = 'REQUEST_API';
-export const requestAPI = () => ({
-  type: 'REQUEST_API',
+export const USER_QUESTIONS = 'USER_QUESTIONS';
+export const userQuestions = (result) => ({
+  type: USER_QUESTIONS,
+  result,
 });
 
-export const REQUEST_API_SUCCESS = 'REQUEST_API_SUCCESS';
-export const requestAPISuccess = (payload) => ({
-  type: 'REQUEST_API_SUCCESS',
-  payload,
+export const PLAYER_TIMER = 'PLAYER_TIMER';
+export const playerTimer = (value) => ({
+  type: PLAYER_TIMER,
+  value,
 });
 
-// export const fetchAPI = () => async (dispatch) => {
-// //   try {
-//   const response = await fetch('https://opentdb.com/api_token.php?command=request');
-//   const result = await response.json();
-//   await dispatch(requestAPI(result.token));
-// //   } catch (error) {
-// //     dispatch(requestAPI('ERROR!!!'));
-// //   }
-// };
+export const RIGTH_ANSWERS = 'CORRECT_ANSWER';
+export const rightAnswers = ({ score, assertions }) => ({
+  type: RIGTH_ANSWERS,
+  score,
+  assertions,
+});
 
-export const fetchAPI = () => async (dispatch) => {
-  dispatch(requestAPI());
-  fetch('https://opentdb.com/api_token.php?command=request')
-    .then((result) => result.json())
-    .then(({ token }) => dispatch(requestAPISuccess(token)))
-    .catch(() => console.log('error'));
+export const getToken = async () => {
+  const response = await fetch('https://opentdb.com/api_token.php?command=request');
+  const token = await response.json();
+  return token.token;
+};
+
+export const getQuestions = async (token) => {
+  const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
+  const questions = await response.json();
+  return questions.results;
 };

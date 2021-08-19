@@ -1,0 +1,46 @@
+.correct-answers {
+    background-color: rgb(6, 240, 15);
+    border: 3px solid rgb(6, 240, 15);
+  }
+
+.incorrect-answers {
+    background-color: red;
+    border: 3px solid red;
+  }
+
+  .img-container {
+    align-items: center;
+  }
+  
+  .in-game-header .img-container {
+    visibility: visible;
+  }
+  
+  .answer-button {
+    background-color: white;
+  }
+  
+ 
+  .answer-options {
+    align-items: center;
+  }
+  
+  button:active {
+    border: none;
+    outline: none;
+  }
+  
+  .next-question {
+    background-color: blue;
+  }
+  
+  .next {
+    visibility: hidden;
+  }
+  
+  .header-text-container {
+    width: 100px;
+  }
+  
+
+  
