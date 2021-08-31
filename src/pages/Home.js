@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LoginForm from '../components/Login';
+import Login from '../components/Login';
 
 class Home extends React.Component {
   render() {
     const { history } = this.props;
     return (
       <>
-        <LoginForm />
+        <Login />
 
         <button
           type="button"
