@@ -4,16 +4,25 @@ import { connect } from 'react-redux';
 
 const correctAnswer = 'correct-answer';
 class TrueOrFalse extends React.Component {
+  constructor() {
+    super();
+    this.handleClickScore = this.handleClickScore.bind(this);
+  }
+
+  handleClickScore(event) {
+    const { changeColor, toggleNextButtonVisibility, setScore } = this.props;
+    changeColor(event);
+    toggleNextButtonVisibility();
+    if (event.target.dataset.testid === correctAnswer) setScore();
+  }
+
   render() {
-    const { question, changeColor, toggleNextButtonVisibility, disabled } = this.props;
+    const { question, disabled } = this.props;
     return (
       <>
         <button
           type="button"
-          onClick={ (event) => {
-            changeColor(event);
-            toggleNextButtonVisibility();
-          } }
+          onClick={ this.handleClickScore }
           disabled={ disabled }
           data-testid={
             question.correct_answer === 'True' ? correctAnswer : 'wrong-answer-0'
@@ -23,10 +32,7 @@ class TrueOrFalse extends React.Component {
         </button>
         <button
           type="button"
-          onClick={ (event) => {
-            changeColor(event);
-            toggleNextButtonVisibility();
-          } }
+          onClick={ this.handleClickScore }
           disabled={ disabled }
           data-testid={
             question.correct_answer === 'False' ? correctAnswer : 'wrong-answer-0'
