@@ -7,7 +7,7 @@ const scoreMedia = 3;
 
 class Feedback extends React.Component {
   render() {
-    const { assertions, score } = this.props;
+    const { assertions, score, history } = this.props;
 
     return (
       <div>
@@ -22,6 +22,13 @@ class Feedback extends React.Component {
               : 'Podia ser melhor...'
           }
         </p>
+        <button
+          type="button"
+          onClick={ () => history.push('/') }
+          data-testid="btn-play-again"
+        >
+          Jogar novamente
+        </button>
       </div>
     );
   }
