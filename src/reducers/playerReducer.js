@@ -1,5 +1,5 @@
 import md5 from 'crypto-js/md5';
-import { SAVE_USER } from '../actions';
+import { SAVE_PLAYER } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -14,7 +14,7 @@ const getGravatar = (email) => {
 
 const playerReducer = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
-  case SAVE_USER:
+  case SAVE_PLAYER:
     return {
       ...state,
       name: payload.name,

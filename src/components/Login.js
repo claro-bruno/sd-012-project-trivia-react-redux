@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { saveUser, fetchQuestions } from '../actions';
+import { savePlayer, fetchQuestions } from '../actions';
 import { fetchToken } from '../services/api';
 
 class Login extends React.Component {
@@ -25,11 +25,17 @@ class Login extends React.Component {
     this.setQuestions();
   }
 
-  setUser() {
-    const { dispatchUser } = this.props;
+  setPlayer() {
+    const { dispatchPlayer } = this.props;
     const { email, name } = this.state;
-
-    dispatchUser({ email, name });
+    const player = {
+      name,
+      assertions: 0,
+      score: 0,
+      gravatarEmail: email,
+    };
+    localStorage.setItem('state', JSON.stringify({ player }));
+    dispatchPlayer({ email, name });
   }
 
   setQuestions() {
@@ -41,7 +47,7 @@ class Login extends React.Component {
 
   handleSubmit() {
     this.setToken();
-    this.setUser();
+    this.setPlayer();
   }
 
   handleChange({ target }) {
@@ -105,13 +111,13 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchUser: (player) => dispatch(saveUser(player)),
+  dispatchPlayer: (player) => dispatch(savePlayer(player)),
   dispatchQuestions: (token) => dispatch(fetchQuestions(token)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
-  dispatchUser: PropTypes.func,
+  dispatchPlayer: PropTypes.func,
   dispatchQuestions: PropTypes.func,
 }.isRequired;

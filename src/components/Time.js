@@ -1,15 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { resetTimer, updateTimer } from '../actions';
 
 const interval = 1000;
-const maxTime = 30;
 
 class Time extends React.Component {
   constructor() {
     super();
-
     this.state = {
-      timer: maxTime,
       setIntervalRef: null,
     };
   }
@@ -18,8 +17,9 @@ class Time extends React.Component {
     this.timerControl();
   }
 
-  shouldComponentUpdate(_nextProps, nextState) {
-    const { timer, setIntervalRef } = nextState;
+  shouldComponentUpdate(nextProps, nextState) {
+    const { setIntervalRef } = nextState;
+    const { timer } = nextProps;
 
     if (timer === 0 && setIntervalRef) {
       this.clearTimer(setIntervalRef);
@@ -30,15 +30,16 @@ class Time extends React.Component {
   }
 
   timerControl() {
+    const { dispatchtUpdateTimer, dispatchResetTimer } = this.props;
+
     const ref = setInterval(() => {
-      this.setState((previousState) => ({
-        timer: previousState.timer - 1,
-      }));
+      dispatchtUpdateTimer();
     }, interval);
 
     this.setState({
       setIntervalRef: ref,
     });
+    dispatchResetTimer();
   }
 
   clearTimer(setIntervalRef) {
@@ -49,13 +50,12 @@ class Time extends React.Component {
     toggleDisableButtons();
 
     this.setState({
-      timer: 0,
       setIntervalRef: null,
     });
   }
 
   render() {
-    const { timer } = this.state;
+    const { timer } = this.props;
 
     return (
       <span>{ `Tempo: ${timer}` }</span>
@@ -63,7 +63,16 @@ class Time extends React.Component {
   }
 }
 
-export default Time;
+const mapStateToProps = ({ gameReducer: { timer } }) => ({
+  timer,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchtUpdateTimer: () => dispatch(updateTimer()),
+  dispatchResetTimer: () => dispatch(resetTimer()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Time);
 
 Time.propTypes = {
   toggleDisableButtons: PropTypes.func,

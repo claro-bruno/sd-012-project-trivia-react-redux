@@ -1,10 +1,12 @@
-export const SAVE_USER = 'SAVE_USER';
+export const SAVE_PLAYER = 'SAVE_PLAYER';
 export const GET_QUESTIONS = 'GET_QUESTIONS';
 export const GET_QUESTIONS_SUCCESS = 'GET_QUESTIONS_SUCCESS';
 export const GET_QUESTIONS_ERROR = 'GET_QUESTIONS_ERROR';
+export const UPDATE_TIMER = 'UPDATE_TIMER';
+export const RESET_TIMER = 'RESET_TIMER';
 
-export const saveUser = (payload) => ({
-  type: SAVE_USER,
+export const savePlayer = (payload) => ({
+  type: SAVE_PLAYER,
   payload,
 });
 
@@ -20,6 +22,14 @@ export const getQuestionsSuccess = (payload) => ({
 export const getQuestionsError = (payload) => ({
   type: GET_QUESTIONS_ERROR,
   payload,
+});
+
+export const updateTimer = () => ({
+  type: UPDATE_TIMER,
+});
+
+export const resetTimer = () => ({
+  type: RESET_TIMER,
 });
 
 export const fetchQuestions = (token) => (dispatch) => {

@@ -6,16 +6,51 @@ import TrueOrFalse from './TrueOrFalse';
 import MultipleChoice from './MultipleChoice';
 import Time from './Time';
 
-class Question extends React.Component {
-  constructor() {
-    super();
+const baseScore = 10;
+
+class QuestionCard extends React.Component {
+  constructor(props) {
+    super(props);
 
     this.state = {
-      questionIndex: 0,
       disableButtons: false,
+      question: null,
     };
 
     this.toggleDisableButtons = this.toggleDisableButtons.bind(this);
+    this.setScore = this.setScore.bind(this);
+  }
+
+  shouldComponentUpdate({ isLoading, questions }, { question }) {
+    if (!isLoading && !question) {
+      this.setQuestion(questions[0]);
+      return false;
+    }
+    return true;
+  }
+
+  setQuestion(question) {
+    this.setState({
+      question,
+    });
+  }
+
+  setScore() {
+    const { question } = this.state;
+    const { timer } = this.props;
+
+    const difficultyScore = {
+      easy: 1,
+      medium: 2,
+      hard: 3,
+    };
+
+    const stateObj = JSON.parse(localStorage.getItem('state'));
+
+    stateObj.player.score += baseScore + (timer * difficultyScore[question.difficulty]);
+    stateObj.player.assertions += 1;
+
+    localStorage.setItem('state', JSON.stringify(stateObj));
   }
 
   toggleDisableButtons() {
@@ -25,9 +60,8 @@ class Question extends React.Component {
   }
 
   render() {
-    const { questions, isLoading, error } = this.props;
-    const { questionIndex, disableButtons } = this.state;
-    const question = questions[questionIndex];
+    const { isLoading, error } = this.props;
+    const { question, disableButtons } = this.state;
 
     if (isLoading) return <Loading />;
     if (error) return <p>{error.message}</p>;
@@ -49,8 +83,20 @@ class Question extends React.Component {
         <section>
           {
             question.type === 'boolean'
-              ? <TrueOrFalse question={ question } disabled={ disableButtons } />
-              : <MultipleChoice question={ question } disabled={ disableButtons } />
+              ? (
+                <TrueOrFalse
+                  question={ question }
+                  setScore={ this.setScore }
+                  disabled={ disableButtons }
+                />
+              )
+              : (
+                <MultipleChoice
+                  question={ question }
+                  setScore={ this.setScore }
+                  disabled={ disableButtons }
+                />
+              )
           }
         </section>
         <Time toggleDisableButtons={ this.toggleDisableButtons } />
@@ -59,13 +105,14 @@ class Question extends React.Component {
   }
 }
 
-const mapStateToProps = ({ gameReducer: { questions, isLoading, error } }) => ({
+const mapStateToProps = ({ gameReducer: { questions, timer, isLoading, error } }) => ({
   questions,
+  timer,
   isLoading,
   error,
 });
 
-Question.propTypes = {
+QuestionCard.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object),
   isLoading: PropTypes.bool,
   error: PropTypes.shape({
@@ -73,4 +120,4 @@ Question.propTypes = {
   }),
 }.isRequired;
 
-export default connect(mapStateToProps)(Question);
+export default connect(mapStateToProps)(QuestionCard);

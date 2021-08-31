@@ -1,7 +1,16 @@
-import { GET_QUESTIONS, GET_QUESTIONS_SUCCESS, GET_QUESTIONS_ERROR } from '../actions';
+import {
+  GET_QUESTIONS,
+  GET_QUESTIONS_SUCCESS,
+  GET_QUESTIONS_ERROR,
+  UPDATE_TIMER,
+  RESET_TIMER,
+} from '../actions';
+
+const maxTime = 30;
 
 const INITIAL_STATE = {
   questions: [],
+  timer: maxTime,
   isLoading: true,
   error: null,
 };
@@ -23,6 +32,16 @@ const gameReducer = (state = INITIAL_STATE, { type, payload }) => {
       ...state,
       error: payload,
       isLoading: false,
+    };
+  case UPDATE_TIMER:
+    return {
+      ...state,
+      timer: state.timer - 1,
+    };
+  case RESET_TIMER:
+    return {
+      ...state,
+      timer: maxTime,
     };
   default:
     return state;
