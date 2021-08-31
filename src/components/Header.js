@@ -4,21 +4,24 @@ import PropTypes from 'prop-types';
 
 class Header extends React.Component {
   render() {
-    const { name, gravatar } = this.props;
+    const { name, gravatar, score } = this.props;
 
     return (
       <header>
         <img src={ gravatar } alt="gravatar" data-testid="header-profile-picture" />
         <p data-testid="header-player-name">{`Jogador: ${name}`}</p>
-        <p data-testid="header-score">Pontos: 0</p>
+        <p data-testid="header-score">{score}</p>
       </header>
     );
   }
 }
 
-const mapStateToProps = ({ playerReducer: { name, gravatar } }) => ({
+const mapStateToProps = (
+  { playerReducer: { name, gravatar }, gameReducer: { score } },
+) => ({
   name,
   gravatar,
+  score,
 });
 
 export default connect(mapStateToProps)(Header);
