@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { saveUser } from '../actions';
-import fetchToken from '../services/api';
+import { saveUser, fetchQuestions } from '../actions';
+import { fetchToken } from '../services/api';
 
 class Login extends React.Component {
   constructor() {
@@ -16,13 +16,13 @@ class Login extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.setToken = this.setToken.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   async setToken() {
     const token = await fetchToken();
     localStorage.setItem('token', token);
-    this.setUser();
+    this.setQuestions();
   }
 
   setUser() {
@@ -30,6 +30,18 @@ class Login extends React.Component {
     const { email, name } = this.state;
 
     dispatchUser({ email, name });
+  }
+
+  setQuestions() {
+    const { dispatchQuestions } = this.props;
+    const token = localStorage.getItem('token');
+
+    dispatchQuestions(token);
+  }
+
+  handleSubmit() {
+    this.setToken();
+    this.setUser();
   }
 
   handleChange({ target }) {
@@ -81,7 +93,7 @@ class Login extends React.Component {
           <button
             type="button"
             disabled={ isDisabled }
-            onClick={ this.setToken }
+            onClick={ this.handleSubmit }
             data-testid="btn-play"
           >
             JOGAR!
@@ -94,10 +106,12 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchUser: (player) => dispatch(saveUser(player)),
+  dispatchQuestions: (token) => dispatch(fetchQuestions(token)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   dispatchUser: PropTypes.func,
+  dispatchQuestions: PropTypes.func,
 }.isRequired;
