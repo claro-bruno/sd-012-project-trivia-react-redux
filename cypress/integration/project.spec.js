@@ -525,7 +525,7 @@ describe('14 - [TELA DE FEEDBACK] Exiba as informações relacionadas aos result
   });
 });
 
-describe.only('15 - [TELA DE FEEDBACK] Crie a opção para a pessoa jogadora poder jogar novamente', () => {
+describe('15 - [TELA DE FEEDBACK] Crie a opção para a pessoa jogadora poder jogar novamente', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     cy.clearLocalStorage();
@@ -550,7 +550,7 @@ describe.only('15 - [TELA DE FEEDBACK] Crie a opção para a pessoa jogadora pod
   });
 });
 
-describe('16 - [TELA DE FEEDBACK] Crie a opção para a pessoa jogadora poder visualizar a tela de _ranking_', () => {
+describe.only('16 - [TELA DE FEEDBACK] Crie a opção para a pessoa jogadora poder visualizar a tela de _ranking_', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     cy.clearLocalStorage();
