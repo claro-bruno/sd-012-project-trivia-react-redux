@@ -4,16 +4,22 @@ import {
   GET_QUESTIONS_ERROR,
   UPDATE_TIMER,
   RESET_TIMER,
+  NEXT_QUESTION,
 } from '../actions';
 
 const maxTime = 30;
 
 const INITIAL_STATE = {
   questions: [],
+  question: {},
   timer: maxTime,
   isLoading: true,
   error: null,
 };
+
+const getNextQuestion = (
+  { questions, question },
+) => questions[questions.indexOf(question) + 1];
 
 const gameReducer = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
@@ -25,6 +31,7 @@ const gameReducer = (state = INITIAL_STATE, { type, payload }) => {
     return {
       ...state,
       questions: payload,
+      question: payload[0],
       isLoading: false,
     };
   case GET_QUESTIONS_ERROR:
@@ -42,6 +49,11 @@ const gameReducer = (state = INITIAL_STATE, { type, payload }) => {
     return {
       ...state,
       timer: maxTime,
+    };
+  case NEXT_QUESTION:
+    return {
+      ...state,
+      question: getNextQuestion(state),
     };
   default:
     return state;
