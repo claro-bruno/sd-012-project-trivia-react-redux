@@ -5,6 +5,7 @@ export const GET_QUESTIONS_ERROR = 'GET_QUESTIONS_ERROR';
 export const UPDATE_TIMER = 'UPDATE_TIMER';
 export const RESET_TIMER = 'RESET_TIMER';
 export const NEXT_QUESTION = 'NEXT_QUESTION';
+export const UPDATE_SCORE = 'UPDATE_SCORE';
 
 export const savePlayer = (payload) => ({
   type: SAVE_PLAYER,
@@ -35,6 +36,11 @@ export const resetTimer = () => ({
 
 export const nextQuestion = () => ({
   type: NEXT_QUESTION,
+});
+
+export const updateScore = (payload) => ({
+  type: UPDATE_SCORE,
+  payload,
 });
 
 export const fetchQuestions = (token) => (dispatch) => {

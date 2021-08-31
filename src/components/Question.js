@@ -5,11 +5,11 @@ import Loading from './Loading';
 import TrueOrFalse from './TrueOrFalse';
 import MultipleChoice from './MultipleChoice';
 import Time from './Time';
-import { nextQuestion, resetTimer } from '../actions';
+import { nextQuestion, resetTimer, updateScore } from '../actions';
 
 const baseScore = 10;
 
-class Question extends React.Component {
+class QuestionCard extends React.Component {
   constructor() {
     super();
 
@@ -25,7 +25,7 @@ class Question extends React.Component {
   }
 
   setScore() {
-    const { question, timer } = this.props;
+    const { question, timer, dispatchUpdateScore } = this.props;
 
     const difficultyScore = {
       easy: 1,
@@ -39,6 +39,8 @@ class Question extends React.Component {
     stateObj.player.assertions += 1;
 
     localStorage.setItem('state', JSON.stringify(stateObj));
+
+    dispatchUpdateScore(stateObj.player.score);
   }
 
   toggleDisableButtons() {
@@ -76,7 +78,7 @@ class Question extends React.Component {
       if (getButtons[index].dataset.testid === 'correct-answer') {
         getButtons[index].classList.add('correct');
       } else {
-        getButtons[index].classList.add('incorrect');
+        getButtons[index].classList.add('wrong');
       }
     }
   }
@@ -165,11 +167,12 @@ const mapStateToProps = (
 const mapDispatchToProps = (dispatch) => ({
   dispatchNextQuestion: () => dispatch(nextQuestion()),
   dispatchResetTimer: () => dispatch(resetTimer()),
+  dispatchUpdateScore: (score) => dispatch(updateScore(score)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Question);
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionCard);
 
-Question.propTypes = {
+QuestionCard.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object),
   question: PropTypes.shape({
     category: PropTypes.string,

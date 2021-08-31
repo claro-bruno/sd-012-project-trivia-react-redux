@@ -5,6 +5,7 @@ import {
   UPDATE_TIMER,
   RESET_TIMER,
   NEXT_QUESTION,
+  UPDATE_SCORE,
 } from '../actions';
 
 const maxTime = 30;
@@ -15,6 +16,8 @@ const INITIAL_STATE = {
   timer: maxTime,
   isLoading: true,
   error: null,
+  score: 0,
+  assertions: 0,
 };
 
 const getNextQuestion = (
@@ -54,6 +57,12 @@ const gameReducer = (state = INITIAL_STATE, { type, payload }) => {
     return {
       ...state,
       question: getNextQuestion(state),
+    };
+  case UPDATE_SCORE:
+    return {
+      ...state,
+      score: payload,
+      assertions: state.assertions + 1,
     };
   default:
     return state;
