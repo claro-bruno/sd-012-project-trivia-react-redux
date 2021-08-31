@@ -5,7 +5,7 @@ import Loading from './Loading';
 import TrueOrFalse from './TrueOrFalse';
 import MultipleChoice from './MultipleChoice';
 import Time from './Time';
-import { nextQuestion } from '../actions';
+import { nextQuestion, resetTimer } from '../actions';
 
 const baseScore = 10;
 
@@ -55,13 +55,18 @@ class Question extends React.Component {
   }
 
   handleNextQuestion() {
-    const { dispatchNextQuestion } = this.props;
+    const { dispatchNextQuestion, dispatchResetTimer,
+      questions, question, history } = this.props;
 
-    dispatchNextQuestion();
+    if (questions.indexOf(question) === questions.length - 1) {
+      history.push('/feedback');
+    } else {
+      dispatchNextQuestion();
+      dispatchResetTimer();
 
-    this.resetColor();
-
-    this.toggleNextButtonVisibility();
+      this.resetColor();
+      this.toggleNextButtonVisibility();
+    }
   }
 
   changeColor({ target }) {
@@ -71,7 +76,7 @@ class Question extends React.Component {
       if (getButtons[index].dataset.testid === 'correct-answer') {
         getButtons[index].classList.add('correct');
       } else {
-        getButtons[index].classList.add('wrong');
+        getButtons[index].classList.add('incorrect');
       }
     }
   }
@@ -159,6 +164,7 @@ const mapStateToProps = (
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchNextQuestion: () => dispatch(nextQuestion()),
+  dispatchResetTimer: () => dispatch(resetTimer()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question);
