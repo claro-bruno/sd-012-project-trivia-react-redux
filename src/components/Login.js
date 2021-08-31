@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { saveUser } from '../actions';
 import fetchToken from '../services/api';
 
 class Login extends React.Component {
@@ -13,11 +16,20 @@ class Login extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.setToken = this.setToken.bind(this);
   }
 
   async setToken() {
     const token = await fetchToken();
     localStorage.setItem('token', token);
+    this.setUser();
+  }
+
+  setUser() {
+    const { dispatchUser } = this.props;
+    const { email, name } = this.state;
+
+    dispatchUser({ email, name });
   }
 
   handleChange({ target }) {
@@ -80,4 +92,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchUser: (player) => dispatch(saveUser(player)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  dispatchUser: PropTypes.func,
+}.isRequired;
