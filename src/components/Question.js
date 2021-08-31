@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Loading from './Loading';
 import TrueOrFalse from './TrueOrFalse';
 import MultipleChoice from './MultipleChoice';
+import Time from './Time';
 
 class Question extends React.Component {
   constructor() {
@@ -11,15 +12,26 @@ class Question extends React.Component {
 
     this.state = {
       questionIndex: 0,
+      disableButtons: false,
     };
+
+    this.toggleDisableButtons = this.toggleDisableButtons.bind(this);
+  }
+
+  toggleDisableButtons() {
+    this.setState((previousState) => ({
+      disableButtons: !previousState.disableButtons,
+    }));
   }
 
   render() {
     const { questions, isLoading, error } = this.props;
-    const { questionIndex } = this.state;
+    const { questionIndex, disableButtons } = this.state;
     const question = questions[questionIndex];
+
     if (isLoading) return <Loading />;
     if (error) return <p>{error.message}</p>;
+
     return (
       <section>
         <section>
@@ -37,10 +49,11 @@ class Question extends React.Component {
         <section>
           {
             question.type === 'boolean'
-              ? <TrueOrFalse question={ question } />
-              : <MultipleChoice question={ question } />
+              ? <TrueOrFalse question={ question } disabled={ disableButtons } />
+              : <MultipleChoice question={ question } disabled={ disableButtons } />
           }
         </section>
+        <Time toggleDisableButtons={ this.toggleDisableButtons } />
       </section>
     );
   }
