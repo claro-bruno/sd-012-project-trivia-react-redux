@@ -1,27 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 const correctAnswer = 'correct-answer';
 class TrueOrFalse extends React.Component {
-  changeColor({ target }) {
-    const getButtons = target.parentElement.children;
-
-    for (let index = 0; index < getButtons.length; index += 1) {
-      if (getButtons[index].dataset.testid === correctAnswer) {
-        getButtons[index].classList.add('correct');
-      } else {
-        getButtons[index].classList.add('wrong');
-      }
-    }
-  }
-
   render() {
-    const { question, disabled } = this.props;
+    const { question, changeColor, toggleNextButtonVisibility, disabled } = this.props;
     return (
       <>
         <button
           type="button"
-          onClick={ this.changeColor }
+          onClick={ (event) => {
+            changeColor(event);
+            toggleNextButtonVisibility();
+          } }
           disabled={ disabled }
           data-testid={
             question.correct_answer === 'True' ? correctAnswer : 'wrong-answer-0'
@@ -31,7 +23,10 @@ class TrueOrFalse extends React.Component {
         </button>
         <button
           type="button"
-          onClick={ this.changeColor }
+          onClick={ (event) => {
+            changeColor(event);
+            toggleNextButtonVisibility();
+          } }
           disabled={ disabled }
           data-testid={
             question.correct_answer === 'False' ? correctAnswer : 'wrong-answer-0'
@@ -44,7 +39,11 @@ class TrueOrFalse extends React.Component {
   }
 }
 
-export default TrueOrFalse;
+const mapStateToProps = ({ gameReducer: { question } }) => ({
+  question,
+});
+
+export default connect(mapStateToProps)(TrueOrFalse);
 
 TrueOrFalse.propTypes = {
   question: PropTypes.shape({

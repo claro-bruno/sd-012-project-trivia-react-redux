@@ -5,39 +5,27 @@ import Loading from './Loading';
 import TrueOrFalse from './TrueOrFalse';
 import MultipleChoice from './MultipleChoice';
 import Time from './Time';
+import { nextQuestion } from '../actions';
 
 const baseScore = 10;
 
-class QuestionCard extends React.Component {
-  constructor(props) {
-    super(props);
+class Question extends React.Component {
+  constructor() {
+    super();
 
     this.state = {
       disableButtons: false,
-      question: null,
+      nexButtonVisible: false,
     };
 
     this.toggleDisableButtons = this.toggleDisableButtons.bind(this);
     this.setScore = this.setScore.bind(this);
-  }
-
-  shouldComponentUpdate({ isLoading, questions }, { question }) {
-    if (!isLoading && !question) {
-      this.setQuestion(questions[0]);
-      return false;
-    }
-    return true;
-  }
-
-  setQuestion(question) {
-    this.setState({
-      question,
-    });
+    this.handleNextQuestion = this.handleNextQuestion.bind(this);
+    this.toggleNextButtonVisibility = this.toggleNextButtonVisibility.bind(this);
   }
 
   setScore() {
-    const { question } = this.state;
-    const { timer } = this.props;
+    const { question, timer } = this.props;
 
     const difficultyScore = {
       easy: 1,
@@ -59,9 +47,73 @@ class QuestionCard extends React.Component {
     }));
   }
 
+  resetColor() {
+    const buttons = document.querySelectorAll('button[data-testid*="answer"]');
+    for (let index = 0; index < buttons.length; index += 1) {
+      buttons[index].classList.remove(...buttons[index].classList);
+    }
+  }
+
+  handleNextQuestion() {
+    const { dispatchNextQuestion } = this.props;
+
+    dispatchNextQuestion();
+
+    this.resetColor();
+
+    this.toggleNextButtonVisibility();
+  }
+
+  changeColor({ target }) {
+    const getButtons = target.parentElement.children;
+
+    for (let index = 0; index < getButtons.length; index += 1) {
+      if (getButtons[index].dataset.testid === 'correct-answer') {
+        getButtons[index].classList.add('correct');
+      } else {
+        getButtons[index].classList.add('wrong');
+      }
+    }
+  }
+
+  toggleNextButtonVisibility() {
+    this.setState((previousState) => ({
+      nexButtonVisible: !previousState.nexButtonVisible,
+    }));
+  }
+
+  renderAnswers() {
+    const { question } = this.props;
+    const { disableButtons } = this.state;
+
+    return (
+      <section>
+        {
+          question.type === 'boolean'
+            ? (
+              <TrueOrFalse
+                changeColor={ this.changeColor }
+                toggleNextButtonVisibility={ this.toggleNextButtonVisibility }
+                setScore={ this.setScore }
+                disabled={ disableButtons }
+              />
+            )
+            : (
+              <MultipleChoice
+                changeColor={ this.changeColor }
+                toggleNextButtonVisibility={ this.toggleNextButtonVisibility }
+                setScore={ this.setScore }
+                disabled={ disableButtons }
+              />
+            )
+        }
+      </section>
+    );
+  }
+
   render() {
-    const { isLoading, error } = this.props;
-    const { question, disableButtons } = this.state;
+    const { question, isLoading, error } = this.props;
+    const { nexButtonVisible } = this.state;
 
     if (isLoading) return <Loading />;
     if (error) return <p>{error.message}</p>;
@@ -80,44 +132,49 @@ class QuestionCard extends React.Component {
             { question.question }
           </p>
         </section>
-        <section>
-          {
-            question.type === 'boolean'
-              ? (
-                <TrueOrFalse
-                  question={ question }
-                  setScore={ this.setScore }
-                  disabled={ disableButtons }
-                />
-              )
-              : (
-                <MultipleChoice
-                  question={ question }
-                  setScore={ this.setScore }
-                  disabled={ disableButtons }
-                />
-              )
-          }
-        </section>
+        { this.renderAnswers() }
         <Time toggleDisableButtons={ this.toggleDisableButtons } />
+        <button
+          type="button"
+          onClick={ this.handleNextQuestion }
+          hidden={ !nexButtonVisible }
+          data-testid="btn-next"
+        >
+          Próxima
+        </button>
       </section>
     );
   }
 }
 
-const mapStateToProps = ({ gameReducer: { questions, timer, isLoading, error } }) => ({
+const mapStateToProps = (
+  { gameReducer: { questions, question, timer, isLoading, error } },
+) => ({
   questions,
+  question,
   timer,
   isLoading,
   error,
 });
 
-QuestionCard.propTypes = {
+const mapDispatchToProps = (dispatch) => ({
+  dispatchNextQuestion: () => dispatch(nextQuestion()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Question);
+
+Question.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object),
+  question: PropTypes.shape({
+    category: PropTypes.string,
+    type: PropTypes.string,
+    difficulty: PropTypes.string,
+    question: PropTypes.string,
+    correct_answer: PropTypes.string,
+    incorrect_answer: PropTypes.arrayOf(PropTypes.string),
+  }),
   isLoading: PropTypes.bool,
   error: PropTypes.shape({
     message: PropTypes.string,
   }),
 }.isRequired;
-
-export default connect(mapStateToProps)(QuestionCard);
